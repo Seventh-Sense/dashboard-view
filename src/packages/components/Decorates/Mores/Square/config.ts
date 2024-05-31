@@ -5,8 +5,8 @@ import cloneDeep from 'lodash/cloneDeep'
 
 export const option = {
   radius: 18,
-  opacity: 0.8,
-  backgroundColor: '#0004'
+  opacity: 1.0,
+  backgroundColor: '#000044'
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

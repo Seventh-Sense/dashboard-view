@@ -18,8 +18,6 @@ const props = defineProps({
 const { w, h } = toRefs(props.chartConfig.attr)
 const { radius, backgroundColor, opacity } = toRefs(props.chartConfig.option)
 
-
-console.log(w, h,opacity)
 </script>
 
 <style lang="scss" scoped>

@@ -68,9 +68,6 @@ dependencies:
   iconify-icon:
     specifier: ^1.0.8
     version: 1.0.8
-  js-cookie:
-    specifier: ^3.0.5
-    version: 3.0.5
   keymaster:
     specifier: ^1.6.2
     version: 1.6.2
@@ -178,9 +175,6 @@ devDependencies:
   eslint-plugin-vue:
     specifier: ^8.5.0
     version: 8.7.1(eslint@8.17.0)
-  husky:
-    specifier: ^8.0.1
-    version: 8.0.1
   lodash:
     specifier: ~4.17.21
     version: 4.17.21
@@ -3839,12 +3833,6 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /husky@8.0.1:
-    resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: true
-
   /iconify-icon@1.0.8:
     resolution: {integrity: sha512-jvbUKHXf8EnGGArmhlP2IG8VqQLFFyTvTqb9LVL2TKTh7/eCCD1o2HHE9thpbJJb6B8hzhcFb6rOKhvo7reNKA==}
     dependencies:
@@ -4188,11 +4176,6 @@ packages:
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
-
-  /js-cookie@3.0.5:
-    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==, tarball: https://registry.npmmirror.com/js-cookie/-/js-cookie-3.0.5.tgz}
-    engines: {node: '>=14'}
-    dev: false
 
   /js-stringify@1.0.2:
     resolution: {integrity: sha512-rtS5ATOo2Q5k1G+DADISilDA6lv79zIiwFd6CcjuIxGKLFm5C+RLImRscVap9k55i+MOZwgliw+NejvkLuGD5g==}

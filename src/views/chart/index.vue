@@ -82,7 +82,7 @@ onMounted(() => {
   }
   
 
-  console.log(chartEditStore.getStorageInfo())
+  //console.log(chartEditStore.getStorageInfo())
 })
 
 </script>
