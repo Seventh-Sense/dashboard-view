@@ -1,0 +1,17 @@
+export default {
+  device_list: '设备列表',
+  operations: '操作',
+  detail: '详情',
+  no: '序号',
+  device_name: '设备名称',
+  link_type: '所属链路',
+  b_device: '所属设备',
+  status: '状态',
+  reset: '重置',
+  search: '查询',
+  device_info: '设备详情',
+  object_info: '对象详情',
+  object_list: '对象列表',
+  object_name: '对象名称',
+  object_msg: '对象信息',
+}

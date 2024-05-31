@@ -1,0 +1,26 @@
+  .card-outer {
+    height: 96px;
+    border: 1px solid #EEEEEE;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .left-style {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right-text {
+    font-size: 20px;
+    font-weight: 1000;
+    line-height: 24px;
+  }
+
+  .right-down {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--theme_text_color);
+    line-height: 15px;
+  }

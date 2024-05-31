@@ -1,0 +1,42 @@
+export default {
+  /*header */
+  workspace: 'Work Space',
+  input_name_text: 'Please input project name',
+  new_project: 'New Project',
+  preview: 'Preview',
+  save: 'Save',
+  chart_component: 'Chart Component',
+  layer_control: 'Layer control',
+  detail_setting: 'Detail Setting',
+  recoil: 'Recoil',
+  advance: 'Advance',
+
+  /*aside */
+  layer: 'Layer',
+  layer_no_text: 'No Layer~',
+  thumbnail: 'Thumbnail',
+  text_list: 'Text List',
+
+  /*right side */
+  configuration: 'Configuration',
+  width: 'Width',
+  height: 'Height',
+  background_prev: 'File must be less than',
+  background_last: ', png/jpg/gif format',
+  background_color: 'Background Color',
+  application_type: 'Application Type',
+  applied_color: 'Applied Color',
+  applied_background: 'Applied Background',
+  background_control: 'Background Control',
+  clear_background: 'Clear Background',
+  clear_color: 'Clear Color',
+  adaptate_mode: 'Adaptation Mode',
+  self_adaptation: 'Adaptive scale display, the page will have white space',
+  Yaxis_rolling: 'X-axis full, Y-axis adaptive rolling',
+  Xaxis_rolling: 'Y-axis full, X-axis adaptive rolling',
+  carpeting: 'Forcibly stretch the screen to fill all views',
+  custom: 'Custom',
+  data: 'Data',
+  point_bind: 'Point Binding',
+  point_bind_placeholder: 'Please select a point position',
+}
