@@ -28,6 +28,13 @@
             v-model:value="dialConfig.detail.color"
           ></n-color-picker>
         </SettingItem>
+        <!-- <SettingItem name="单位">
+          <n-select
+            v-model:value="unit"
+            size="small"
+            :options="unitOptions"
+          ></n-select>
+        </SettingItem> -->
       </SettingItemBox>
       <!-- Echarts 全局设置 -->
       <!-- 表盘 -->
@@ -64,7 +71,7 @@
         </SettingItem>
         <SettingItem name="圆角">
           <n-select
-            v-model:value="config.series[0].axisLine.roundCap"
+            v-model:value="radius"
             size="small"
             :options="capOptions"
           ></n-select>
@@ -111,18 +118,37 @@
   </template>
   
   <script setup lang="ts">
-  import { PropType, computed, watch } from 'vue'
+  import { PropType, computed, watch, ref } from 'vue'
   import { CollapseItem, SettingItemBox, SettingItem } from '../../../../../components/Pages/ChartItemSetting'
   import { GlobalThemeJsonType } from '../../../../../settings/chartThemes'
   
   const capOptions = [
     {
-      label: "True",
-      value: true,
+      label: "有圆角",
+      value: "true",
     },
     {
-      label: "False",
-      value: false,
+      label: "无圆角",
+      value: "false",
+    }
+  ]
+
+  const unitOptions = [
+    {
+      label: "℃",
+      value: "℃",
+    },
+    {
+      label: "%RH",
+      value: "%RH",
+    },
+    {
+      label: "mA",
+      value: "mA",
+    },
+    {
+      label: "V",
+      value: "V",
     }
   ]
   
@@ -140,6 +166,42 @@
   const dialConfig = computed(() => {
     return props.optionData.series[0]
   })
+
+  const radius = ref("false");
+
+  watch(
+    () => radius.value,
+    newData => {
+      try {
+        props.optionData.series[0].axisLine.roundCap = newData === "true" ? true : false
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    {
+      immediate: true,
+      deep: false
+    }
+  )
+
+  const unit = ref("℃");
+
+  watch(
+    () => unit.value,
+    newData => {
+      try {
+        props.optionData.unit = newData
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    {
+      immediate: true,
+      deep: false
+    }
+  )
+
+  
   
   watch(
     () => props.optionData.series[0].detail.fontSize,

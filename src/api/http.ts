@@ -245,3 +245,13 @@ export const onLogin = async (user: any) => {
     throw error
   }
 }
+
+export const readDemoData = async () => {
+  try {
+    const response = await get(`/items`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}

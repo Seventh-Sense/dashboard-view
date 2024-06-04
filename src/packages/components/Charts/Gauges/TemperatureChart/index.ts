@@ -5,7 +5,7 @@ export const TemperatureChartConfig: ConfigType = {
   key: 'TemperatureChart',
   chartKey: 'VTemperatureChart',
   conKey: 'VCTemperatureChart',
-  title: '电流仪表盘',
+  title: '湿度仪表盘',
   category: ChatCategoryEnum.Gauge,
   categoryName: ChatCategoryEnumName.Gauge,
   package: PackagesCategoryEnum.CHARTS,

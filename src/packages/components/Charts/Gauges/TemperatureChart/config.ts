@@ -98,7 +98,7 @@ const option = {
         fontSize: 54,
         fontWeight: 'bolder',
         formatter: function (value: any) {
-          return value.toFixed(1) + '\nmA';
+          return value.toFixed(1) + '\n%RH';
         },
         color: '#ffffff'
       },

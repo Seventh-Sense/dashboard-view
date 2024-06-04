@@ -5,7 +5,7 @@ export const VoltageChartConfig: ConfigType = {
   key: 'VoltageChart',
   chartKey: 'VVoltageChart',
   conKey: 'VCVoltageChart',
-  title: '电压仪表盘',
+  title: '温度仪表盘',
   category: ChatCategoryEnum.Gauge,
   categoryName: ChatCategoryEnumName.Gauge,
   package: PackagesCategoryEnum.CHARTS,

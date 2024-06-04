@@ -5,9 +5,14 @@ import cloneDeep from 'lodash/cloneDeep'
 
 export const includes = []
 
+const dataFormatter = (value: any) => {
+  return value.toFixed(1) + '\n' + option.unit
+}
+
 const option = {
   backgroundColor: '#0E1327',
   dataset: 5,
+  unit: '℃',
   series: [
     {
       type: 'gauge',
@@ -98,7 +103,7 @@ const option = {
         fontSize: 54,
         fontWeight: 'bolder',
         formatter: function (value: any) {
-          return value.toFixed(1) + '\nV';
+          return value.toFixed(1) + '\n℃'
         },
         color: '#ffffff'
       },
@@ -107,7 +112,63 @@ const option = {
           value: 15
         }
       ]
-    }
+    },
+    // {
+    //   type: 'gauge',
+    //   center: ['50%', '55%'],
+    //   radius: '100%',
+    //   min: 0,
+    //   max: 10,
+    //   startAngle: 210,
+    //   endAngle: -30,
+    //   splitNumber: 1,
+    //   itemStyle: {
+    //     color: '#FFAB91'
+    //   },
+    //   progress: {
+    //     show: false,
+    //   },
+    //   pointer: {
+    //     show: false
+    //   },
+    //   axisLine: {
+    //     show: false,
+    //   },
+    //   axisTick: {
+    //     show: false
+    //   },
+    //   splitLine: {
+    //     show: false
+    //   },
+    //   axisLabel: {
+    //     show: false,
+    //   },
+    //   anchor: {
+    //     show: false
+    //   },
+    //   title: {
+    //     show: false
+    //   },
+    //   detail: {
+    //     show: true,
+    //     valueAnimation: true,
+    //     width: '60%',
+    //     lineHeight: 54,
+    //     borderRadius: 8,
+    //     offsetCenter: [0, 54],
+    //     fontSize: 54,
+    //     fontWeight: 'bolder',
+    //     formatter: function (value: any) {
+    //       return value.toFixed(1)
+    //     },
+    //     color: '#ffffff'
+    //   },
+    //   data: [
+    //     {
+    //       value: 15
+    //     }
+    //   ]
+    // }
   ]
 }
 

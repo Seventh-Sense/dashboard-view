@@ -5,11 +5,11 @@ import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
 export interface OptionType {
-    dataset: number | string
+    dataset: boolean
 }
 
 export const option: OptionType = {
-    dataset: 10,
+    dataset: true,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

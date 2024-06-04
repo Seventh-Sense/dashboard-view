@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="linear-gradient" x1="88" y1="128" x2="168" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff9"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
+    <feFlood flood-color="rgb(255,255,255)" flood-opacity="0.5" in="SourceGraphic" />
+    <feComposite operator="in" in2="SourceGraphic" />
+    <feGaussianBlur stdDeviation="10" />
+    <feComponentTransfer result="glow1">
+      <feFuncA type="linear" slope="4" intercept="0" />
+    </feComponentTransfer>
+    <feMerge>
+       <feMergeNode in="glow1" />
+       <feMergeNode in="SourceGraphic" />
+    </feMerge>
+  </filter>
+  </defs>
+  <rect x="88" y="48" width="80" height="160" rx="40" ry="40" style="fill: url(#linear-gradient); stroke-width: 0px;" filter="url(#neon)"/>
+</svg>

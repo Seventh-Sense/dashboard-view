@@ -1,5 +1,8 @@
 <template>
-  <div :class="`go-preview ${chartEditStore.editCanvasConfig.previewScaleType}`" @mousedown="dragCanvas">
+  <div
+    :class="`go-preview ${chartEditStore.editCanvasConfig.previewScaleType}`"
+    @mousedown="dragCanvas"
+  >
     <template v-if="showEntity">
       <!-- 实体区域 -->
       <div ref="entityRef" class="go-preview-entity">
@@ -30,7 +33,7 @@
 import { computed, onMounted, onUnmounted } from 'vue'
 import { PreviewRenderList } from './components/PreviewRenderList'
 import { getFilterStyle, setTitle } from '@/utils'
-import { getEditCanvasConfigStyle, getSessionStorageInfo, keyRecordHandle, dragCanvas } from './utils'
+import { getEditCanvasConfigStyle, getLocalStorageInfo, getSessionStorageInfo, keyRecordHandle, dragCanvas } from './utils'
 import { useComInstall } from './hooks/useComInstall.hook'
 import { useScale } from './hooks/useScale.hook'
 import { useStore } from './hooks/useStore.hook'
@@ -38,10 +41,11 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { setOption } from '@/packages/public'
+import { readDemoData } from '@/api/http'
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
-
 await getSessionStorageInfo()
+//await getLocalStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
@@ -69,27 +73,82 @@ const { show } = useComInstall(chartEditStore)
 keyRecordHandle()
 
 function getRandomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+type DataType = {
+  led1: string
+  led2: string
+  temperature: string
+  humidity: string
+  motor1: string
+  motor2: string
+}
+
+const writeValue = (data: any) => {
+  chartEditStore.componentList.map(com => {
+    if (com.id === '2k4mcgv1zc8000') {
+      com.option.dataset = data.motor1 === 'active' ? true : false
+    }
+
+    if (com.id === '2m2ijew63j4000') {
+      com.option.dataset = data.motor2 === 'active' ? true : false
+    }
+
+    if (com.id === '3k64i2nejzu000') {
+      com.option.dataset = data.temperature
+    }
+
+    if (com.id === '5274loe8xwc000') {
+      com.option.dataset = data.humidity
+    }
+
+    if (com.id === '5rww0f9w4rk000') {
+      com.option.dataset = data.led1 === 'active' ? true : false
+    }
+
+    if (com.id === '2m0jx66djfc000') {
+      com.option.dataset = data.led2 === 'active' ? true : false
+    }
+  })
 }
 
 onMounted(() => {
-  console.log(chartEditStore.componentList)
-  chartEditStore.componentList[0].option.dataset = 0.7
-  setInterval(() => {
-    chartEditStore.componentList.map(com => {
-      console.log(com)
-      //setOption(com, { dataset: Math.random() })
-    if (com.option.dataset) {
-      com.option.dataset = getRandomNumber(1, 20);
+  //console.log(chartEditStore.componentList)
+  chartEditStore.componentList.map(com => {
+    if (com.key === 'Motor') {
+      console.log('Motor', com.id)
+    }
+
+    if (com.key === 'Led') {
+      console.log('Led', com.id)
+    }
+
+    if (com.key === 'VoltageChart') {
+      console.log('temperature', com.id)
+    }
+
+    if (com.key === 'TemperatureChart') {
+      console.log('humidity', com.id)
     }
   })
-  }, 3000)
-  
+  setInterval(() => {
+    readDemoData()
+      .then(data => {
+        //console.log('aasdasdas', data)
+        if (data !== undefined) {
+          writeValue(data)
+        } else {
+          console.log('no data!')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, 1000)
 })
 
-onUnmounted(() => {
-  
-})
+onUnmounted(() => {})
 </script>
 
 <style lang="scss" scoped>
