@@ -39,6 +39,7 @@
     "mitt": "^3.0.0",
     "monaco-editor": "^0.33.0",
     "naive-ui": "2.34.3",
+    "nanoid": "^5.0.7",
     "pinia": "^2.0.13",
     "screenfull": "^6.0.1",
     "three": "^0.145.0",

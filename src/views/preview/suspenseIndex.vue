@@ -30,10 +30,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { PreviewRenderList } from './components/PreviewRenderList'
 import { getFilterStyle, setTitle } from '@/utils'
-import { getEditCanvasConfigStyle, getLocalStorageInfo, getSessionStorageInfo, keyRecordHandle, dragCanvas } from './utils'
+import {
+  getEditCanvasConfigStyle,
+  getLocalStorageInfo,
+  getSessionStorageInfo,
+  keyRecordHandle,
+  dragCanvas
+} from './utils'
 import { useComInstall } from './hooks/useComInstall.hook'
 import { useScale } from './hooks/useScale.hook'
 import { useStore } from './hooks/useStore.hook'
@@ -41,7 +47,7 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { setOption } from '@/packages/public'
-import { readDemoData } from '@/api/http'
+import { readDeivceData } from '@/api/http'
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
 await getSessionStorageInfo()
@@ -57,6 +63,8 @@ const previewRefStyle = computed(() => {
     ...getFilterStyle(chartEditStore.editCanvasConfig)
   }
 })
+
+let interval: number | null = null
 
 //适配方式的配置
 const showEntity = computed(() => {
@@ -86,56 +94,29 @@ type DataType = {
 }
 
 const writeValue = (data: any) => {
-  chartEditStore.componentList.map(com => {
-    if (com.id === '2k4mcgv1zc8000') {
-      com.option.dataset = data.motor1 === 'active' ? true : false
-    }
+  chartEditStore.componentList.map((com: any) => {
+    
+    let bindInfo = com.request.bindParams;
 
-    if (com.id === '2m2ijew63j4000') {
-      com.option.dataset = data.motor2 === 'active' ? true : false
-    }
+    data.length > 0 && data.map((value: any) => {
+      if (value.device === bindInfo.deviceID && value.attr === bindInfo.objectID) {
+        com.option.dataset = value.value
+        console.log("com", com.option.dataset)
+      }
+    })
+    
 
-    if (com.id === '3k64i2nejzu000') {
-      com.option.dataset = data.temperature
-    }
-
-    if (com.id === '5274loe8xwc000') {
-      com.option.dataset = data.humidity
-    }
-
-    if (com.id === '5rww0f9w4rk000') {
-      com.option.dataset = data.led1 === 'active' ? true : false
-    }
-
-    if (com.id === '2m0jx66djfc000') {
-      com.option.dataset = data.led2 === 'active' ? true : false
-    }
+    // if (com.id === '2m0jx66djfc000') {
+    //   com.option.dataset = data.led2 === 'active' ? true : false
+    // }
   })
 }
 
 onMounted(() => {
   //console.log(chartEditStore.componentList)
-  chartEditStore.componentList.map(com => {
-    if (com.key === 'Motor') {
-      console.log('Motor', com.id)
-    }
-
-    if (com.key === 'Led') {
-      console.log('Led', com.id)
-    }
-
-    if (com.key === 'VoltageChart') {
-      console.log('temperature', com.id)
-    }
-
-    if (com.key === 'TemperatureChart') {
-      console.log('humidity', com.id)
-    }
-  })
-  setInterval(() => {
-    readDemoData()
+  interval = window.setInterval(() => {
+    readDeivceData()
       .then(data => {
-        //console.log('aasdasdas', data)
         if (data !== undefined) {
           writeValue(data)
         } else {
@@ -148,7 +129,11 @@ onMounted(() => {
   }, 1000)
 })
 
-onUnmounted(() => {})
+onUnmounted(() => {
+  if (interval) {
+    window.clearInterval(interval)
+  }
+})
 </script>
 
 <style lang="scss" scoped>

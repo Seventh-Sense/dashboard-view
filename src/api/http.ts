@@ -255,3 +255,23 @@ export const readDemoData = async () => {
     throw error
   }
 }
+
+export const readDeivceList = async () => {
+  try {
+    const response = await get(`/devices`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readDeivceData = async () => {
+  try {
+    const response = await get(`/points`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}

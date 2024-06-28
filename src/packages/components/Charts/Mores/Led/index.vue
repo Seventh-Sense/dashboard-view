@@ -25,7 +25,7 @@ const option = shallowReactive({
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    //console.log('led',  typeof newVal, newVal)
+    console.log('led',  typeof newVal, newVal)
     if (typeof newVal === 'boolean') {
       option.dataset = newVal
     } else if (typeof newVal === 'number') {

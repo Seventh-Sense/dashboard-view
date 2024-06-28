@@ -86,8 +86,8 @@ const { ConstructIcon, FlashIcon, DesktopOutlineIcon, LeafIcon, RocketIcon } = i
 const ContentEdit = loadAsyncComponent(() => import('../ContentEdit/index.vue'))
 const CanvasPage = loadAsyncComponent(() => import('./components/CanvasPage/index.vue'))
 const ChartSetting = loadAsyncComponent(() => import('./components/ChartSetting/index.vue'))
-const ChartData = loadAsyncComponent(() => import('./components/ChartData/index.vue'))
-//const ChartData = loadAsyncComponent(() => import('./components/ChartBindData/index.vue'))
+//const ChartData = loadAsyncComponent(() => import('./components/ChartData/index.vue'))
+const ChartData = loadAsyncComponent(() => import('./components/ChartBindData/index.vue'))
 const ChartEvent = loadAsyncComponent(() => import('./components/ChartEvent/index.vue'))
 const ChartAnimation = loadAsyncComponent(() => import('./components/ChartAnimation/index.vue'))
 

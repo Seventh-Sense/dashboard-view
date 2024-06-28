@@ -39,6 +39,12 @@ export const requestConfig: RequestConfigType = {
     },
     Header: {},
     Params: {}
+  },
+  bindParams: {
+    deviceName: '',
+    deviceID: '',
+    objectName: '',
+    objectID: '',
   }
 }
 
