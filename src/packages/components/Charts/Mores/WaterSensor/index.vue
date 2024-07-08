@@ -1,6 +1,6 @@
 <template>
-  <img v-if="option.dataset" width="96" height="96" :src="SVG_ICON.card_icons.lightOn" />
-  <img v-else width="96" height="96" :src="SVG_ICON.card_icons.lightOff" />
+  <img v-if="option.dataset" width="96" height="96" :src="SVG_ICON.card_icons.waterLeakSensorOn" />
+  <img v-else width="96" height="96" :src="SVG_ICON.card_icons.waterLeakSensorOff" />
 </template>
 
 <script setup lang="ts">
@@ -8,8 +8,7 @@ import { PropType, shallowReactive, watch } from 'vue'
 import { CreateComponentType } from '../../../../../packages/index.d'
 import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
-import { OptionType } from './config'
-import SVG_ICON from '@/svg/SVG_ICON'
+import SVG_ICON from '../../../../../svg/SVG_ICON'
 
 const props = defineProps({
   chartConfig: {
@@ -25,7 +24,6 @@ const option = shallowReactive({
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    console.log('led',  typeof newVal, newVal)
     if (typeof newVal === 'boolean') {
       option.dataset = newVal
     } else if (typeof newVal === 'number') {
@@ -48,11 +46,4 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 })
 </script>
 
-<style lang="scss" scoped>
-svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-</style>
+<style lang="scss" scoped></style>

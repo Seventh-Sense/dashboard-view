@@ -1,11 +1,15 @@
 <template>
-  <n-progress
+  
+    <a-progress type="dashboard" :percent="75" :size="[w, h]"/>
+  
+  
+  <!-- <n-progress
     :type="type"
     :height="h"
     :processing="processing"
     :percentage="dataset"
     :indicator-placement="indicatorPlacement"
-    :color="color"
+    :color="['#ff6666ff', '#fff76f83']"
     :rail-color="railColor"
     :offset-degree="offsetDegree"
   >
@@ -17,15 +21,15 @@
         {{ unit }}
       </div>
     </div>
-    <!-- <n-text
+    <n-text
       :style="{
         color: indicatorTextColor,
         fontSize: `${indicatorTextSize}px`
       }"
     >
       {{ dataset }} {{ unit }}
-    </n-text> -->
-  </n-progress>
+    </n-text>
+  </n-progress> -->
 </template>
 
 <script setup lang="ts">
@@ -84,3 +88,7 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newData: number) => {
   option.dataset = toNumber(newData, 2)
 })
 </script>
+
+<style lang="scss" scoped>
+
+</style>

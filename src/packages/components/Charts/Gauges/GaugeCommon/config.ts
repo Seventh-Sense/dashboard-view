@@ -1,99 +1,68 @@
-import { echartOptionProfixHandle, PublicConfigClass } from '@/packages/public'
+import { PublicConfigClass } from '@/packages/public'
 import { GaugeCommonConfig } from './index'
 import { CreateComponentType } from '@/packages/index.d'
+import { chartInitConfig } from '@/settings/designSetting'
 import cloneDeep from 'lodash/cloneDeep'
 
-export const includes = []
+export const units = [
+  {
+    label: '℃',
+    value: '℃'
+  },
+  {
+    label: '%',
+    value: '%'
+  },
+  {
+    label: 'mg/m3',
+    value: 'mg/m3'
+  },
+  {
+    label: 'μg/m3',
+    value: 'μg/m3'
+  },
+  {
+    label: 'ppm',
+    value: 'ppm'
+  }
+]
 
-const option = {
-  backgroundColor: '#0E1327',
-  dataset: 70,
-  series: [
-    {
-      type: 'gauge',
-      data: [
-        {
-          value: 70,
-          itemStyle: {
-            // 指针样式
-            color: '#2AF4FF'
-          }
-        }
-      ],
-      min: 0, //最小刻度
-      max: 100, //最大刻度
-      splitNumber: 10, //刻度数量
-      center: ['50%', '55%'],
-      radius: '80%',
-      axisLine: {
-        lineStyle: {
-          color: [
-            [0, 'rgba(0,212,230,0.5)'],
-            [1, 'rgba(28,128,245,0)']
-          ],
-          width: 170
-        }
-      },
-      axisLabel: {
-        // 文字样式
-        color: '#eee',
-        fontSize: 14
-      },
-      axisTick: {
-        show: false
-      },
-      splitLine: {
-        show: false
-      },
-      detail: {
-        show: false
-      },
-      pointer: {
-        length: '80%',
-        width: 4
-      },
-      animationDuration: 2000
-    },
-    {
-      name: '外部刻度',
-      type: 'gauge',
-      center: ['50%', '55%'],
-      radius: '90%',
-      axisLine: {
-        show: true,
-        lineStyle: {
-          width: 25,
-          color: [
-            // 表盘外部颜色
-            [0, '#1369E380'],
-            [1, '#1369E380']
-          ]
-        }
-      },
-      axisLabel: {
-        show: false
-      },
-      axisTick: {
-        splitNumber: 5,
-        lineStyle: {
-          //刻度颜色
-          color: '#42E5FB',
-          width: 2
-        }
-      },
-      splitLine: {
-        length: 15,
-        lineStyle: {
-          color: '#42E5FB'
-        }
-      }
-    }
-  ]
+export const option = {
+  dataset: 36,
+  // data颜色
+  dataColor: '#FFFFFFFF',
+  // data字体大小
+  dataSize: 32,
+  // 默认类型
+  type: 'dashboard',
+  // 主颜色
+  color: ['#F76F83', '#6666FF'],
+  // 轨道颜色
+  railColor: '#708090',
+  // 轨道宽度
+  strokeWidth: 9,
+  // 单位
+  unit: '%',
+  // 单位颜色
+  unitColor: '#708090',
+  // 单位字体大小
+  unitSize: 24,
+  minValue: 0,
+  maxValue: 100,
+  minColor: '#ffffff',
+  maxColor: '#ffffff',
+  minSize: 24,
+  maxSize: 24,
+  minLeft: 10,
+  maxLeft: 5,
+  minTop: -33,
+  maxTop: -33,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key: string = GaugeCommonConfig.key
+  public attr = { ...chartInitConfig, w: 150, h: 200, zIndex: 1 }
   public chartConfig = cloneDeep(GaugeCommonConfig)
   // 图表配置项
-  public option = echartOptionProfixHandle(option, includes)
+  public option = cloneDeep(option)
 }

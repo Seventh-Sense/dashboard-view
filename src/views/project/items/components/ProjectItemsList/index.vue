@@ -32,6 +32,7 @@ import { icon } from '@/plugins'
 import { useModalDataInit } from './hooks/useModal.hook'
 import { useDataListInit } from './hooks/useData.hook'
 import { ProjectLayoutCreate } from '../../../layout/components/ProjectLayoutCreate/index'
+
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
 const { list, deleteHandle } = useDataListInit()
 const { modalData, modalShow, closeModal, resizeHandle, editHandle } = useModalDataInit()

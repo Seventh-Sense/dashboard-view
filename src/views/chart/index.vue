@@ -52,10 +52,12 @@ import { RequestBodyEnum, RequestHttpEnum, RequestHttpIntervalEnum } from '@/enu
 import { ChartFrameEnum } from '@/packages/index.d'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import { StorageEnum } from '@/enums/storageEnum'
+import { useRoute } from 'vue-router'
 
 const chartHistoryStoreStore = useChartHistoryStore()
 const chartEditStore = useChartEditStore()
 const { updateComponent } = useSync()
+const routerParamsInfo = useRoute()
 
 // 记录初始化
 chartHistoryStoreStore.canvasInit(chartEditStore.getEditCanvas)
@@ -71,20 +73,24 @@ const ContentLoad = loadAsyncComponent(() => import('./ContentLoad/index.vue'))
 // 右键
 const { menuOptions, onClickOutSide, mousePosition, handleMenuSelect } = useContextMenu()
 
-
 onMounted(() => {
+  const { id } = routerParamsInfo.params
+  const previewId = typeof id === 'string' ? id : id[0]
 
   const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+
   if (sessionStorageInfo.length > 0) {
-    nextTick(() => {
-      updateComponent(sessionStorageInfo[0], false, true)
+    sessionStorageInfo.forEach((data: any) => {
+      if (data.id === previewId) {
+        nextTick(() => {
+          updateComponent(data, false, true)
+        })
+      }
     })
   }
-  
 
   //console.log(chartEditStore.getStorageInfo())
 })
-
 </script>
 
 <style lang="scss" scoped>

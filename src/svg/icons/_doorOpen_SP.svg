@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="SP" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="linear-gradient" x1="17.85" y1="1.88" x2="6.15" y2="22.12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#eee"/>
+      <stop offset="1" stop-color="#ccc"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="17.25" y1="2.91" x2="6.75" y2="21.09" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#94ffff"/>
+      <stop offset="1" stop-color="#66f"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="14.21" y1="5.45" x2="6.06" y2="19.55" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffdf66"/>
+      <stop offset="1" stop-color="#d0b43b"/>
+    </linearGradient>
+    <filter id="X_Shadow_3" x="-200%" y="-200%" width="400%" height="400%">
+      <feDropShadow dx="-0.75" dy="0.75" flood-color="black" flood-opacity="0.3" stdDeviation="0.75"/>
+    </filter>
+    <linearGradient id="linear-gradient-4" x1="13.62" y1="10.92" x2="12.38" y2="13.08" xlink:href="#linear-gradient"/>
+  </defs>
+  <rect x="4.4" y="2" width="15.2" height="20" rx="2.1" ry="2.1" style="fill: url(#linear-gradient); stroke-width: 0px;"/>
+  <rect x="5.6" y="3.2" width="12.8" height="17.6" rx=".9" ry=".9" style="fill: url(#linear-gradient-2); stroke-width: 0px;"/>
+  <path d="M7,20c-.13,0-.26-.04-.37-.13-.15-.11-.23-.29-.23-.47V4.6c0-.18.09-.36.23-.47.15-.11.34-.15.51-.11l8,2c.27.07.45.31.45.58v10.8c0,.28-.19.52-.45.58l-8,2s-.1.02-.15.02Z" style="fill: url(#linear-gradient-3); stroke-width: 0px;"/>
+  <g style="filter: url(#X_Shadow_3);">
+    <path d="M13,13.35c-.33,0-.6-.27-.6-.6v-1.5c0-.33.27-.6.6-.6s.6.27.6.6v1.5c0,.33-.27.6-.6.6Z" style="fill: url(#linear-gradient-4); stroke-width: 0px;"/>
+  </g>
+</svg>

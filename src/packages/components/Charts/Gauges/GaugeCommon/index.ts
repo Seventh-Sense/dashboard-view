@@ -5,7 +5,7 @@ export const GaugeCommonConfig: ConfigType = {
   key: 'GaugeCommon',
   chartKey: 'VGaugeCommon',
   conKey: 'VCGaugeCommon',
-  title: '表盘',
+  title: '渐变色表盘',
   category: ChatCategoryEnum.Gauge,
   categoryName: ChatCategoryEnumName.Gauge,
   package: PackagesCategoryEnum.CHARTS,

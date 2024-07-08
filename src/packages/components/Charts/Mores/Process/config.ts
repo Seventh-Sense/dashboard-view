@@ -38,7 +38,7 @@ export const option = {
   // 进行时效果
   processing: true,
   // 主颜色
-  color: '#4992FFFF',
+  color: ['#6666FF ', '#F76F83 '],
   // 轨道颜色
   railColor: '#3e3e3f', 
   // 指标
@@ -55,7 +55,7 @@ export const option = {
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key = ProcessConfig.key
-  public attr = { ...chartInitConfig, h: 500, zIndex: -1 }
+  public attr = { ...chartInitConfig, w: 150, h: 150, zIndex: -1 }
   public chartConfig = cloneDeep(ProcessConfig)
   public option = cloneDeep(option)
 }

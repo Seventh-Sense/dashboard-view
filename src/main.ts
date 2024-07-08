@@ -22,6 +22,9 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import VueCookies from 'vue-cookies'
+import 'ant-design-vue/dist/reset.css';
+
+import Antd from 'ant-design-vue';
 
 // 注册图标
 addCollection(uimIcons)
@@ -66,6 +69,7 @@ async function appInit() {
   // 配置vue-cookies
   app.use(VueCookies)
 
+  app.use(Antd)
   // 挂载到页面
   app.mount('#app', true)
 

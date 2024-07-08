@@ -82,7 +82,6 @@
         <SettingItem name="最小值">
           <n-input-number
             v-model:value="dialConfig.min"
-            :min="0"
             :step="1"
             size="small"
             placeholder="数值"
@@ -91,7 +90,6 @@
         <SettingItem name="最大值">
           <n-input-number
             v-model:value="dialConfig.max"
-            :min="0"
             :step="1"
             size="small"
             placeholder="数值"

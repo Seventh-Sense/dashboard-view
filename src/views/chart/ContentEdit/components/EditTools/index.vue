@@ -257,7 +257,7 @@ $asideBottom: 70px;
       }
     }
     &.unMini {
-      animation: aside-in 0.4s ease forwards;
+      // animation: aside-in 0.4s ease forwards;
       @keyframes aside-in {
         0% {
           opacity: 0.5;

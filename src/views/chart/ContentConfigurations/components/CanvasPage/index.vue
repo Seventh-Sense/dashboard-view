@@ -84,7 +84,7 @@
           size="small"
           :disabled="!canvasConfig.backgroundImage"
           @click="clearImage"
-          style="padding: 0 15px"
+          
         >
           {{ $t('dashboard.clear_background') }}
         </n-button>
@@ -354,10 +354,10 @@ $uploadHeight: 193px;
     padding-left: 2.25em;
     padding-right: 2.25em;
   }
-  .select-preview-icon {
-    padding-right: 0.68em;
-    padding-left: 0.68em;
-  }
+  // .select-preview-icon {
+  //   padding-right: 0.68em;
+  //   padding-left: 0.68em;
+  // }
   .tabs-box {
     margin-top: 20px;
   }

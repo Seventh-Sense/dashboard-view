@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="SP" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="linear-gradient" x1="5" y1="12" x2="19" y2="12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff9"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <filter id="neon" x="-200%" y="-200%" width="400%" height="400%">
+    <feFlood flood-color="rgb(255,255,255)" flood-opacity="0.4" in="SourceGraphic" />
+    <feComposite operator="in" in2="SourceGraphic" />
+    <feGaussianBlur stdDeviation="1" />
+    <feComponentTransfer result="glow1">
+      <feFuncA type="linear" slope="4" intercept="0" />
+    </feComponentTransfer>
+    <feMerge>
+       <feMergeNode in="glow1" />
+       <feMergeNode in="SourceGraphic" />
+    </feMerge>
+  </filter>
+  </defs>
+ <g style="filter: url(#neon);">
+  <circle cx="10.5" cy="4.1" r="2.1" style="fill: url(#linear-gradient); stroke-width: 0px;"/>
+  <path d="M15.63,15.36l.36-3.76c.01-.11,0-.22-.06-.32l-1.57-3.21,2.97,1.27-.08,3.11c0,.33.25.61.58.61.34.03.61-.25.61-.58l.09-3.52c0-.25-.14-.47-.36-.57l-4.82-2.06c-.13-.05-.27-.06-.4-.03l-3.15.9c-.18.05-.33.19-.4.36l-1.43,3.73-2.23,1.38c-.28.17-.37.54-.19.83.11.18.31.28.51.28.11,0,.22-.03.31-.09l2.4-1.48c.11-.07.2-.17.25-.3l.89-2.33,1.27,3.91-2.74,4.07c-.03.05-.06.11-.08.17l-1.02,3.5c-.09.32.09.65.41.74.06.02.11.02.17.02.26,0,.5-.17.58-.43l1-3.41,2.54-3.77,2.52,1.5,2.76,5.77c.1.22.32.34.54.34.09,0,.18-.02.26-.06.3-.14.42-.5.28-.8l-2.77-5.78Z" style="fill: url(#linear-gradient); stroke-width: 0px;"/>
+</g>
+</svg>

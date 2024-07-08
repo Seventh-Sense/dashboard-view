@@ -33,11 +33,13 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 import { syncData } from '../../ContentEdit/components/EditTools/hooks/useSyncUpdate.hook'
 import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash'
+import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
 
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
 
 const routerParamsInfo = useRoute()
+const { addHandle } = useDataListInit()
 const t = window['$t']
 // 预览
 const previewHandle = () => {
@@ -69,19 +71,43 @@ const previewHandle = () => {
   routerTurnByPath(path, [previewId], undefined, true)
 }
 
-// 保存
+// 保存画布数据
 const sendHandle = () => {
   //获取画布数据
   const storageInfo = chartEditStore.getStorageInfo()
 
-  console.log(storageInfo)
-  
   //提示保存成功
   const { id } = routerParamsInfo.params
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
-  setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{ id: previewId, ...storageInfo }])
   
+  //存储在菜单中
+  //addHandle({id: id, ...storageInfo})
+  //存储在本地浏览器中
+  saveLocalStorage(previewId, storageInfo)
+  
+  
+}
+
+const saveLocalStorage = (id: any, storageInfo: any) => {
+  let data = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+  
+  let flag = true 
+  data && data.forEach((d: any) => {
+    if (d.id === id) {
+      flag = false
+      d.componentList = storageInfo.componentList;
+      d.editCanvasConfig = storageInfo.editCanvasConfig;
+      d.requestGlobalConfig = storageInfo.requestGlobalConfig;
+    }
+  })
+
+  if (flag) {
+    data.push({id: id, ...storageInfo})
+  }
+
+  console.log(data)
+  setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, data)
 }
 
 const btnList = [

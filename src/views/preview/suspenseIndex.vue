@@ -95,13 +95,13 @@ type DataType = {
 
 const writeValue = (data: any) => {
   chartEditStore.componentList.map((com: any) => {
-    
+    console.log("com", com)
     let bindInfo = com.request.bindParams;
 
     data.length > 0 && data.map((value: any) => {
       if (value.device === bindInfo.deviceID && value.attr === bindInfo.objectID) {
         com.option.dataset = value.value
-        console.log("com", com.option.dataset)
+        
       }
     })
     
@@ -134,6 +134,10 @@ onUnmounted(() => {
     window.clearInterval(interval)
   }
 })
+
+const dataHandle = (type: string, value: any) => {
+
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,119 +1,131 @@
 <template>
-  <!-- 遍历 seriesList -->
-  <CollapseItem :name="`圆环`" :expanded="true">
-    <SettingItemBox name="数据">
+  <CollapseItem name="仪表盘" :expanded="true">
+    <SettingItemBox name="内容">
       <SettingItem name="数值">
-        <n-input-number
-          v-model:value="config.dataset"
-          :min="dialConfig.min"
-          :max="dialConfig.max"
-          :step="1"
-          size="small"
-          placeholder="数值"
-        ></n-input-number>
+        <!-- 与 config.ts 里的 option 对应 -->
+        <!-- n-input-number 是 NaiveUI 的控件 -->
+        <n-input-number v-model:value="optionData.dataset" size="small" :min="0"></n-input-number>
       </SettingItem>
-    </SettingItemBox>
-    <!-- Echarts 全局设置 -->
-    <!-- 表盘刻度字体 -->
-    <SettingItemBox name="字体">
-      <SettingItem name="颜色">
+      <setting-item name="单位">
+        <n-select v-model:value="optionData.unit" :options="units" size="small" />
+      </setting-item>
+      <SettingItem name="数值颜色">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          v-model:value="dialConfig.axisLabel.color"
+          v-model:value="optionData.dataColor"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem name="字体大小">
-        <n-input-number
-          v-model:value="dialConfig.axisLabel.fontSize"
-          :min="0"
-          :step="1"
-          size="small"
-          placeholder="字体大小"
-        ></n-input-number>
-      </SettingItem>
-    </SettingItemBox>
-    <!-- 表盘 -->
-    <SettingItemBox name="表盘外部">
-      <SettingItem name="颜色">
+      <SettingItem name="单位颜色">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          v-model:value="config.series[1].axisLine.lineStyle.color[1][1]"
+          v-model:value="optionData.unitColor"
         ></n-color-picker>
       </SettingItem>
+      <SettingItem name="数值字体大小">
+        <n-input-number v-model:value="optionData.dataSize" size="small"></n-input-number>
+      </SettingItem>
+      <SettingItem name="单位字体大小">
+        <n-input-number v-model:value="optionData.unitSize" size="small"></n-input-number>
+      </SettingItem>
     </SettingItemBox>
-    <!-- 指针 -->
-    <SettingItemBox name="指针">
-      <SettingItem name="颜色">
+    <SettingItemBox name="轨道">
+      <SettingItem name="0% 进度条颜色">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          v-model:value="dialConfig.data[0].itemStyle.color"
+          v-model:value="optionData.color[0]"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem name="宽度">
-        <n-input-number
-          v-model:value="dialConfig.pointer.width"
-          :min="0"
-          :step="1"
+      <SettingItem name="100% 进度条颜色">
+        <n-color-picker
           size="small"
-          placeholder="数值"
-        ></n-input-number>
+          :modes="['hex']"
+          v-model:value="optionData.color[1]"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem name="轨道颜色">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.railColor"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem name="轨道宽度">
+        <n-input-number v-model:value="optionData.strokeWidth" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox name="刻度">
       <SettingItem name="最小值">
-        <n-input-number
-          v-model:value="dialConfig.min"
-          :min="0"
-          :step="1"
-          size="small"
-          placeholder="数值"
-        ></n-input-number>
+        <n-input-number v-model:value="optionData.minValue" size="small"></n-input-number>
       </SettingItem>
       <SettingItem name="最大值">
-        <n-input-number
-          v-model:value="dialConfig.max"
-          :min="0"
-          :step="1"
-          size="small"
-          placeholder="数值"
-        ></n-input-number>
+        <n-input-number v-model:value="optionData.maxValue" size="small"></n-input-number>
       </SettingItem>
-      <SettingItem name="颜色">
+      <SettingItem name="最小值颜色">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          v-model:value="config.series[1].axisTick.lineStyle.color"
-          @update:value="updateClick"
+          v-model:value="optionData.minColor"
         ></n-color-picker>
+      </SettingItem>
+      <SettingItem name="最大值颜色">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.maxColor"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem name="最小值字体">
+        <n-input-number v-model:value="optionData.minSize" size="small"></n-input-number>
+      </SettingItem>
+      <SettingItem name="最大值字体">
+        <n-input-number v-model:value="optionData.maxSize" size="small"></n-input-number>
+      </SettingItem>
+      <SettingItem name="最小值">
+        <n-input-number v-model:value="optionData.minTop" size="small" placeholder="px">
+          <template #prefix>
+            <n-text depth="3">上</n-text>
+          </template>
+        </n-input-number>
+      </SettingItem>
+      <SettingItem name="">
+        <n-input-number v-model:value="optionData.minLeft" size="small" placeholder="px">
+          <template #prefix>
+            <n-text depth="3">左</n-text>
+          </template>
+        </n-input-number>
+      </SettingItem>
+      <SettingItem name="最大值">
+        <n-input-number v-model:value="optionData.maxTop" size="small" placeholder="px">
+          <template #prefix>
+            <n-text depth="3">上</n-text>
+          </template>
+        </n-input-number>
+      </SettingItem>
+      <SettingItem name="">
+        <n-input-number v-model:value="optionData.maxLeft" size="small" placeholder="px">
+          <template #prefix>
+            <n-text depth="3">右</n-text>
+          </template>
+        </n-input-number>
       </SettingItem>
     </SettingItemBox>
   </CollapseItem>
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { PropType } from 'vue'
 import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
-import { GlobalThemeJsonType } from '@/settings/chartThemes'
+import { option, units } from './config'
 
 const props = defineProps({
   optionData: {
-    type: Object as PropType<GlobalThemeJsonType>,
+    type: Object as PropType<typeof option>,
     required: true
   }
 })
-
-const config = computed(() => {
-  return props.optionData
-})
-
-const dialConfig = computed(() => {
-  return props.optionData.series[0]
-})
-
-const updateClick = (val: any) => {
-  props.optionData.series[1].splitLine.lineStyle.color = val
-}
 </script>
+
+<style lang="scss" scoped></style>
