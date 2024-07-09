@@ -79,7 +79,7 @@ const dataConversion = (data: any) => {
     })
   }
 
-  //console.log(options.value)
+  console.log(options.value)
 }
 </script>
 

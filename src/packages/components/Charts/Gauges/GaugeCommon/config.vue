@@ -35,14 +35,14 @@
         <n-color-picker
           size="small"
           :modes="['hex']"
-          v-model:value="optionData.color[0]"
+          v-model:value="optionData.color[1]"
         ></n-color-picker>
       </SettingItem>
       <SettingItem name="100% 进度条颜色">
         <n-color-picker
           size="small"
           :modes="['hex']"
-          v-model:value="optionData.color[1]"
+          v-model:value="optionData.color[0]"
         ></n-color-picker>
       </SettingItem>
       <SettingItem name="轨道颜色">

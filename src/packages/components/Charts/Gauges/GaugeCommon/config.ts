@@ -36,21 +36,21 @@ export const option = {
   // 默认类型
   type: 'dashboard',
   // 主颜色
-  color: ['#F76F83', '#6666FF'],
+  color: ['#F76F83FF', '#6666FFFF'],
   // 轨道颜色
-  railColor: '#708090',
+  railColor: '#FFFFFF87',
   // 轨道宽度
   strokeWidth: 9,
   // 单位
   unit: '%',
   // 单位颜色
-  unitColor: '#708090',
+  unitColor: '#FFFFFF87',
   // 单位字体大小
   unitSize: 24,
   minValue: 0,
   maxValue: 100,
-  minColor: '#ffffff',
-  maxColor: '#ffffff',
+  minColor: '#FFFFFF87',
+  maxColor: '#FFFFFF87',
   minSize: 24,
   maxSize: 24,
   minLeft: 10,
