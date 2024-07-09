@@ -95,7 +95,7 @@ type DataType = {
 
 const writeValue = (data: any) => {
   chartEditStore.componentList.map((com: any) => {
-    console.log("com", com)
+    //console.log("com", com)
     let bindInfo = com.request.bindParams;
 
     data.length > 0 && data.map((value: any) => {

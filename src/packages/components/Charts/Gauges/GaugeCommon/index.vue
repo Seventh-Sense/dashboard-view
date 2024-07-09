@@ -101,10 +101,27 @@ const option = shallowReactive({
 })
 
 const dataHandle = (newData: any) => {
-  value.value = newData;
-  let range = (maxValue.value - minValue.value);
-  process.value = newData * 100 / range
+  value.value = newData
+  let range = maxValue.value - minValue.value
+  process.value = (newData * 100) / range
+}
 
+function convertToNumberAndRound(str: any) {
+  let value = 0.0
+
+  if (!str) {
+    return value
+  }
+
+  if (typeof str === 'string') {
+    value = Number(parseFloat(str).toFixed(1))
+  }
+
+  if (typeof str === 'number') {
+    value = Number(str.toFixed(1))
+  }
+
+  return value
 }
 
 // 配置时
@@ -112,7 +129,9 @@ watch(
   () => props.chartConfig.option.dataset,
   newData => {
     try {
-      dataHandle(newData)
+      let num = convertToNumberAndRound(newData)
+      console.log(newData, num)
+      dataHandle(num)
     } catch (error) {
       console.log(error)
     }

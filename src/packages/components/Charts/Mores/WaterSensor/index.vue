@@ -32,6 +32,13 @@ watch(
       } else {
         option.dataset = false
       }
+    } else if (typeof newVal === 'string') {
+      let value = parseFloat(newVal)
+      if (value > 0) {
+        option.dataset = true
+      } else {
+        option.dataset = false
+      }
     }
   },
   {
