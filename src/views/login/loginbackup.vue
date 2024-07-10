@@ -45,7 +45,7 @@
               <div class="login-account-top">
                 <img
                   class="login-account-top-logo"
-                  src="~@/assets/images/login/input.png"
+                  src="~@/assets/images/login/login.png"
                   alt="展示图片"
                 />
               </div>
@@ -318,7 +318,7 @@ $carousel-image-height: 60vh;
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background: url('@/assets/images/login/login-bg.png') no-repeat 0 -120px;
+    background: url('@/assets/images/login/login.png') no-repeat 0 -120px;
     .bg-slot {
       width: $carousel-width;
     }
