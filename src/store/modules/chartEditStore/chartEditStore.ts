@@ -172,12 +172,36 @@ export const useChartEditStore = defineStore({
         [ChartEditStoreEnum.REQUEST_GLOBAL_CONFIG]: this.getRequestGlobalConfig
       }
     },
+    // * 获取针对 componentList 顺序排过序的 selectId
+    getSelectIdSortList(ids?: string[]): string[] {
+      if (!this.getTargetChart.selectId.length && !ids) return []
+      const sortArr: string[] = []
+      this.getComponentList.forEach((item: CreateComponentType | CreateComponentGroupType) => {
+        if (ids) {
+          ids.forEach((id: string) => {
+            if (item.id === id) {
+              sortArr.push(id)
+            }
+          })
+        } else {
+          this.getTargetChart.selectId.forEach((id: string) => {
+            if (item.id === id) {
+              sortArr.push(id)
+            }
+          })
+        }
+      })
+      return sortArr
+    },
     // * 设置 editCanvas 数据项
     setEditCanvas<T extends keyof EditCanvasType, K extends EditCanvasType[T]>(key: T, value: K) {
       this.editCanvas[key] = value
     },
     // * 设置 editCanvasConfig（需保存后端） 数据项
-    setEditCanvasConfig<T extends keyof EditCanvasConfigType, K extends EditCanvasConfigType[T]>(key: T, value: K) {
+    setEditCanvasConfig<T extends keyof EditCanvasConfigType, K extends EditCanvasConfigType[T]>(
+      key: T,
+      value: K
+    ) {
       this.editCanvasConfig[key] = value
     },
     // * 设置右键菜单
@@ -236,7 +260,8 @@ export const useChartEditStore = defineStore({
     },
     // * 找到目标 id 数据的下标位置，id可为父级或子集数组（无则返回-1）
     fetchTargetIndex(id?: string): number {
-      const targetId = id || (this.getTargetChart.selectId.length && this.getTargetChart.selectId[0]) || undefined
+      const targetId =
+        id || (this.getTargetChart.selectId.length && this.getTargetChart.selectId[0]) || undefined
       if (!targetId) {
         loadingFinish()
         return -1
@@ -325,7 +350,10 @@ export const useChartEditStore = defineStore({
       }
     },
     // * 重置组件位置
-    resetComponentPosition(item: CreateComponentType | CreateComponentGroupType, isForward: boolean): void {
+    resetComponentPosition(
+      item: CreateComponentType | CreateComponentGroupType,
+      isForward: boolean
+    ): void {
       const index = this.fetchTargetIndex(item.id)
       if (index > -1) {
         const componentInstance = this.getComponentList[index]
@@ -381,7 +409,10 @@ export const useChartEditStore = defineStore({
           }
 
           // 记录原有位置
-          const setIndex = (componentInstance: CreateComponentType | CreateComponentGroupType, i: number) => {
+          const setIndex = (
+            componentInstance: CreateComponentType | CreateComponentGroupType,
+            i: number
+          ) => {
             const temp = cloneDeep(componentInstance)
             temp.attr.zIndex = i
             return temp
@@ -506,7 +537,7 @@ export const useChartEditStore = defineStore({
           e.id = getUUID()
           // 分组列表生成新 id
           if (e.isGroup) {
-            (e as CreateComponentGroupType).groupList.forEach((item: CreateComponentType) => {
+            ;(e as CreateComponentGroupType).groupList.forEach((item: CreateComponentType) => {
               item.id = getUUID()
             })
           }
@@ -514,7 +545,9 @@ export const useChartEditStore = defineStore({
           return e
         }
         const isCut = recordCharts.type === HistoryActionTypeEnum.CUT
-        const targetList = Array.isArray(recordCharts.charts) ? recordCharts.charts : [recordCharts.charts]
+        const targetList = Array.isArray(recordCharts.charts)
+          ? recordCharts.charts
+          : [recordCharts.charts]
         // 多项
         targetList.forEach((e: CreateComponentType | CreateComponentGroupType) => {
           this.addComponentList(parseHandle(e), undefined, true)
@@ -542,7 +575,9 @@ export const useChartEditStore = defineStore({
       this.setTargetSelectChart()
 
       // 重新选中
-      let historyData = HistoryItem.historyData as Array<CreateComponentType | CreateComponentGroupType>
+      let historyData = HistoryItem.historyData as Array<
+        CreateComponentType | CreateComponentGroupType
+      >
       if (isArray(historyData)) {
         // 选中目标元素，支持多个
         historyData.forEach((item: CreateComponentType | CreateComponentGroupType) => {
@@ -624,7 +659,11 @@ export const useChartEditStore = defineStore({
         if (historyData.length > 1) {
           this.setUnGroup([(historyData[0] as CreateComponentType).id], undefined, false)
         } else {
-          this.setUnGroup([(historyData[0] as CreateComponentGroupType).groupList[0].id], undefined, false)
+          this.setUnGroup(
+            [(historyData[0] as CreateComponentGroupType).groupList[0].id],
+            undefined,
+            false
+          )
         }
         return
       }
@@ -715,18 +754,12 @@ export const useChartEditStore = defineStore({
     // * 创建分组
     setGroup(id?: string | string[], isHistory = true) {
       try {
-        const selectIds = this.idPreFormat(id) || this.getTargetChart.selectId
+        let selectIds = this.idPreFormat(id) || this.getTargetChart.selectId
+        selectIds = this.getSelectIdSortList(selectIds)
         if (selectIds.length < 2) return
 
         loadingStart()
         const groupClass = new PublicGroupConfigClass()
-        // 记录整体坐标
-        const groupAttr = {
-          l: this.getEditCanvasConfig.width,
-          t: this.getEditCanvasConfig.height,
-          r: 0,
-          b: 0
-        }
         const targetList: CreateComponentType[] = []
         const historyList: CreateComponentType[] = []
 
@@ -749,21 +782,38 @@ export const useChartEditStore = defineStore({
             newSelectIds.push(id)
           }
         })
-        newSelectIds.forEach((id: string) => {
+         // 记录整体坐标
+         const groupAttr = {
+          l: 0,
+          t: 0,
+          r: 0,
+          b: 0
+        }
+        newSelectIds.forEach((id: string, index: number) => {
           // 获取目标数据并从 list 中移除 (成组后不可再次成组, 断言处理)
-          const item = this.componentList.splice(this.fetchTargetIndex(id), 1)[0] as CreateComponentType
+          const item = this.componentList.splice(
+            this.fetchTargetIndex(id),
+            1
+          )[0] as CreateComponentType
           const { x, y, w, h } = item.attr
-          const { l, t, r, b } = groupAttr
-          // 左
-          groupAttr.l = l > x ? x : l
-          // 上
-          groupAttr.t = t > y ? y : t
-          // 宽
-          groupAttr.r = r < x + w ? x + w : r
-          // 高
-          groupAttr.b = b < y + h ? y + h : b
+          if (index === 0) {
+            groupAttr.l = x
+            groupAttr.t = y
+            groupAttr.r = x + w
+            groupAttr.b = y + h
+          } else {
+            const { l, t, r, b } = groupAttr
+            // 左
+            groupAttr.l = l > x ? x : l
+            // 上
+            groupAttr.t = t > y ? y : t
+            // 宽
+            groupAttr.r = r < x + w ? x + w : r
+            // 高
+            groupAttr.b = b < y + h ? y + h : b
+          }
 
-          targetList.unshift(item)
+          targetList.push(item)
           historyList.push(toRaw(item))
         })
 
@@ -789,7 +839,7 @@ export const useChartEditStore = defineStore({
         loadingFinish()
       } catch (error) {
         console.log(error)
-        window['$message'].error('创建分组失败，请联系管理员！')
+        window['$message'].error('创建分组失败，请联系管理员')
         loadingFinish()
       }
     },
@@ -809,7 +859,7 @@ export const useChartEditStore = defineStore({
           if (isHistory) chartHistoryStore.createUnGroupHistory(cloneDeep([targetGroup]))
 
           // 分离组件并还原位置属性
-          targetGroup.groupList.reverse().forEach(item => {
+          targetGroup.groupList.forEach(item => {
             item.attr.x = item.attr.x + targetGroup.attr.x
             item.attr.y = item.attr.y + targetGroup.attr.y
             if (!callBack) {
@@ -834,7 +884,7 @@ export const useChartEditStore = defineStore({
         loadingFinish()
       } catch (error) {
         console.log(error)
-        window['$message'].error('解除分组失败，请联系管理员！')
+        window['$message'].error('解除分组失败，请联系管理员')
         loadingFinish()
       }
     },
@@ -914,7 +964,8 @@ export const useChartEditStore = defineStore({
     computedScale() {
       if (this.getEditCanvas.editLayoutDom) {
         // 现有展示区域
-        const width = this.getEditCanvas.editLayoutDom.clientWidth - this.getEditCanvas.offset * 2 - 5
+        const width =
+          this.getEditCanvas.editLayoutDom.clientWidth - this.getEditCanvas.offset * 2 - 5
         const height = this.getEditCanvas.editLayoutDom.clientHeight - this.getEditCanvas.offset * 4
 
         // 用户设定大小

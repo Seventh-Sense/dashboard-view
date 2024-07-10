@@ -10,5 +10,5 @@ export const TemperatureChartConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Gauge,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.ECHARTS,
-  image: 'electricity_breviary.png'
+  image: 'dial.png'
 }

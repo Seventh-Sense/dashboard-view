@@ -10,10 +10,9 @@
       :startY="startY"
       :lines="lines"
       :palette="paletteStyle"
-    >
-    </sketch-rule>
+    ></sketch-rule>
     <div ref="$app" class="edit-screens" @scroll="handleScroll">
-      <div ref="$container" class="edit-screen-container" :style="{ width: width * 2 + 'px' }">
+      <div ref="$container" class="edit-screen-container" :style="{ width: containerWidth }">
         <div
           ref="refSketchRuleBox"
           class="canvas"
@@ -62,8 +61,13 @@ const scale = computed(() => {
   return chartEditStore.getEditCanvas.scale
 })
 
-// 滚动条拖动的高度
+// 滚动条拖动的宽度
 const containerWidth = computed(() => {
+  return `${window.innerWidth * 2}px`
+})
+
+// 滚动条拖动的高度
+const containerHeight = computed(() => {
   return `${height.value * 2}px`
 })
 
@@ -141,9 +145,13 @@ const dragCanvas = (e: any) => {
     prevMoveYValue = [prevMoveY2, ny]
 
     $app.value.scrollLeft -=
-      prevMoveX2 > prevMoveX1 ? Math.abs(prevMoveX2 - prevMoveX1) : -Math.abs(prevMoveX2 - prevMoveX1)
+      prevMoveX2 > prevMoveX1
+        ? Math.abs(prevMoveX2 - prevMoveX1)
+        : -Math.abs(prevMoveX2 - prevMoveX1)
     $app.value.scrollTop -=
-      prevMoveY2 > prevMoveY1 ? Math.abs(prevMoveY2 - prevMoveY1) : -Math.abs(prevMoveY2 - prevMoveY1)
+      prevMoveY2 > prevMoveY1
+        ? Math.abs(prevMoveY2 - prevMoveY1)
+        : -Math.abs(prevMoveY2 - prevMoveY1)
   })
 
   const listenMouseup = listen(window, 'mouseup', () => {
@@ -159,7 +167,7 @@ const dragCanvas = (e: any) => {
 const canvasBox = () => {
   const layoutDom = document.getElementById('go-chart-edit-layout')
   if (layoutDom) {
-    // 此处减去滚动条的宽度和高度 
+    // 此处减去滚动条的宽度和高度
     const scrollW = 20
     return {
       height: layoutDom.clientHeight - scrollW,
@@ -173,16 +181,17 @@ const canvasBox = () => {
 }
 
 // 重绘标尺
-const reDraw = () => {
+const reDraw = throttle(() => {
   sketchRuleReDraw.value = false
   setTimeout(() => {
     sketchRuleReDraw.value = true
   }, 10)
-}
+}, 20)
 
 // 滚动居中
 const canvasPosCenter = () => {
-  const { width: containerWidth, height: containerHeight } = $container.value.getBoundingClientRect()
+  const { width: containerWidth, height: containerHeight } =
+    $container.value.getBoundingClientRect()
   const { width, height } = canvasBox()
 
   $app.value.scrollLeft = containerWidth / 2 - width / 2
@@ -203,14 +212,12 @@ watch(
   (newValue, oldValue) => {
     if (oldValue !== newValue && chartLayoutStore.getRePositionCanvas) {
       chartLayoutStore.setItemUnHandle(ChartLayoutStoreEnum.RE_POSITION_CANVAS, false)
-      handleScroll()
-      setTimeout(() => {
-        canvasPosCenter()
-        reDraw()
-      }, 400)
-    } else {
-      throttle(reDraw, 20)
     }
+    handleScroll()
+    setTimeout(() => {
+      canvasPosCenter()
+      reDraw()
+    }, 400)
   }
 )
 
@@ -337,14 +344,14 @@ window.onKeySpacePressHold = (isHold: boolean) => {
 
   .edit-screen-container {
     position: absolute;
-    height: v-bind('containerWidth');
+    height: v-bind('containerHeight');
     top: 0;
     left: 0;
   }
 
   .canvas {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
     transform-origin: 50% 0;
     transform: translateY(-50%);
