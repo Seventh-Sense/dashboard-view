@@ -6,8 +6,8 @@ export const SquareConfig: ConfigType = {
   chartKey: 'VSquare',
   conKey: 'VCSquare',
   title: '方形块',
-  category: ChatCategoryEnum.BORDER,
-  categoryName: ChatCategoryEnumName.BORDER,
+  category: ChatCategoryEnum.MORE,
+  categoryName: ChatCategoryEnumName.MORE,
   package: PackagesCategoryEnum.DECORATES,
   chartFrame: ChartFrameEnum.STATIC,
   image: 'block_breviary.png'

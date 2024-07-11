@@ -50,8 +50,8 @@ import { setOption } from '@/packages/public'
 import { readDeivceData } from '@/api/http'
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
-await getSessionStorageInfo()
-//await getLocalStorageInfo()
+//await getSessionStorageInfo()
+await getLocalStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
@@ -84,15 +84,6 @@ function getRandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-type DataType = {
-  led1: string
-  led2: string
-  temperature: string
-  humidity: string
-  motor1: string
-  motor2: string
-}
-
 const writeValue = (data: any) => {
   chartEditStore.componentList.map((com: any) => {
     //console.log("com", com)
@@ -104,11 +95,6 @@ const writeValue = (data: any) => {
         
       }
     })
-    
-
-    // if (com.id === '2m0jx66djfc000') {
-    //   com.option.dataset = data.led2 === 'active' ? true : false
-    // }
   })
 }
 

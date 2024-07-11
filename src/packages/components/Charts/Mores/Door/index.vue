@@ -33,10 +33,13 @@ watch(
         option.dataset = false
       }
     } else if (typeof newVal === 'string') {
+      console.log(newVal, typeof newVal)
       let value = parseFloat(newVal)
       if (value > 0) {
+        console.log(true)
         option.dataset = true
       } else {
+        console.log(false)
         option.dataset = false
       }
     }
