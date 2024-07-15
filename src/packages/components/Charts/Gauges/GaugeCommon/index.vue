@@ -103,7 +103,8 @@ const option = shallowReactive({
 const dataHandle = (newData: any) => {
   value.value = newData
   let range = maxValue.value - minValue.value
-  process.value = (newData * 100) / range
+  process.value = (Math.abs(minValue.value - newData) * 100) / range
+  console.log(newData, process.value, range)
 }
 
 function convertToNumberAndRound(str: any) {

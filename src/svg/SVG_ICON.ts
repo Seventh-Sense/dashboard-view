@@ -11,6 +11,16 @@ import humanSensorOff from './icons/humanSensorOff.svg?url'
 import humanSensorOn from './icons/humanSensorOn.svg?url'
 import waterLeakSensorOff from './icons/waterLeakSensorOff.svg?url'
 import waterLeakSensorOn from './icons/waterLeakSensorOn.svg?url'
+import dry_TF from './icons/_dry_TF.svg?url'
+import dry_TL from './icons/_dry_TL.svg?url'
+import fan2_TF from './icons/_fan2_TF.svg?url'
+import fan2_TL from './icons/_fan2_TL.svg?url'
+import humidify_TF from './icons/_humidify_TF.svg?url'
+import humidify_TL from './icons/_humidify_TL.svg?url'
+import snow_TF from './icons/_snow_TF.svg?url'
+import snow_TL from './icons/_snow_TL.svg?url'
+import sun_TF from './icons/_sun_TF.svg?url'
+import sun_TL from './icons/_sun_TL.svg?url'
 
 export default {
     card_icons: {
@@ -27,5 +37,15 @@ export default {
         humanSensorOn: humanSensorOn,
         waterLeakSensorOff: waterLeakSensorOff,
         waterLeakSensorOn: waterLeakSensorOn,
+        dry_TF: dry_TF,
+        dry_TL: dry_TL,
+        fan2_TF: fan2_TF,
+        fan2_TL: fan2_TL,
+        humidify_TF: humidify_TF,
+        humidify_TL: humidify_TL,
+        snow_TF: snow_TF,
+        snow_TL: snow_TL,
+        sun_TF: sun_TF,
+        sun_TL: sun_TL,
     }
 }

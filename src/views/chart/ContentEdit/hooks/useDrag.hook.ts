@@ -18,7 +18,7 @@ export const dragHandle = async (e: DragEvent) => {
 
   try {
     loadingStart()
-
+    
     // 获取拖拽数据
     const drayDataString = e!.dataTransfer!.getData(DragKeyEnum.DRAG_KEY)
     if (!drayDataString) {

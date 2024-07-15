@@ -23,7 +23,7 @@
                     :model="formInline"
                     :rules="rules"
                   >
-                    <n-form-item path="username">
+                    <!-- <n-form-item path="username">
                       <n-input
                         v-model:value="formInline.username"
                         type="text"
@@ -60,7 +60,7 @@
                           </n-checkbox>
                         </div>
                       </div>
-                    </n-form-item>
+                    </n-form-item> -->
                     <n-form-item>
                       <n-button
                         type="primary"

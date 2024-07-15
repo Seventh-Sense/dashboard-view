@@ -2,7 +2,7 @@
   <setting-item-box name="尺寸">
     <n-input-number
       v-model:value="chartAttr.w"
-      :min="50"
+      :min="0"
       :disabled="isGroup"
       size="small"
       placeholder="px"
@@ -13,7 +13,7 @@
     </n-input-number>
     <n-input-number
       v-model:value="chartAttr.h"
-      :min="50"
+      :min="0"
       :disabled="isGroup"
       size="small"
       placeholder="px"

@@ -6,7 +6,8 @@ export enum ChatCategoryEnum {
   SCATTER = 'Scatters',
   MAP = 'Maps',
   MORE = 'Mores',
-  Gauge = 'Gauges'
+  Gauge = 'Gauges',
+  Air = 'AirConditioner',
 }
 
 export enum ChatCategoryEnumName {
@@ -17,5 +18,6 @@ export enum ChatCategoryEnumName {
   MAP = '地图',
   COMBINATION = '组合图',
   MORE = '更多',
-  Gauge = '表盘'
+  Gauge = '表盘',
+  Air = '空调',
 }

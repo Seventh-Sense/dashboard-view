@@ -101,18 +101,19 @@ const writeValue = (data: any) => {
 onMounted(() => {
   //console.log(chartEditStore.componentList)
   interval = window.setInterval(() => {
-    readDeivceData()
-      .then(data => {
-        if (data !== undefined) {
-          writeValue(data)
-        } else {
-          console.log('no data!')
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, 1000)
+    writeValue2();
+    // readDeivceData()
+    //   .then(data => {
+    //     if (data !== undefined) {
+    //       writeValue(data)
+    //     } else {
+    //       console.log('no data!')
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+  }, 3000)
 })
 
 onUnmounted(() => {
@@ -120,6 +121,21 @@ onUnmounted(() => {
     window.clearInterval(interval)
   }
 })
+
+const writeValue2 = () => {
+  chartEditStore.componentList.map((com: any) => {
+    
+    if (com.key === "GaugeCommon") {
+      com.option.dataset = getRandomNumber(com.option.minValue, com.option.maxValue)
+    }
+    
+    if (com.key === "DigitFrame") { 
+      com.option.dataset = getRandomNumber(0, 10)
+    }
+
+    
+  })
+}
 
 const dataHandle = (type: string, value: any) => {
 

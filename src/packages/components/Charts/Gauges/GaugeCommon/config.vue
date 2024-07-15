@@ -4,7 +4,7 @@
       <SettingItem name="数值">
         <!-- 与 config.ts 里的 option 对应 -->
         <!-- n-input-number 是 NaiveUI 的控件 -->
-        <n-input-number v-model:value="optionData.dataset" size="small" :min="0"></n-input-number>
+        <n-input-number v-model:value="optionData.dataset" size="small"></n-input-number>
       </SettingItem>
       <setting-item name="单位">
         <n-select v-model:value="optionData.unit" :options="units" size="small" />

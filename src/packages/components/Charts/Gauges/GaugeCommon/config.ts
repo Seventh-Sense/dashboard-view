@@ -14,6 +14,10 @@ export const units = [
     value: '%'
   },
   {
+    label: '%Rh',
+    value: '%Rh'
+  },
+  {
     label: 'mg/m3',
     value: 'mg/m3'
   },
@@ -24,6 +28,10 @@ export const units = [
   {
     label: 'ppm',
     value: 'ppm'
+  },
+  {
+    label: 'Pa',
+    value: 'Pa'
   }
 ]
 
