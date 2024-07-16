@@ -57,4 +57,5 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 </script>
 
 <style lang="scss" scoped>
+
 </style>

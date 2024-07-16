@@ -1,3 +1,3 @@
+import { InputsInputConfig } from './InputsInput/index'
 
-
-export default []
+export default [InputsInputConfig]

@@ -87,6 +87,10 @@ $centerHeight: 52px;
 $centerMiniHeight: 28px;
 $textSize: 10px;
 
+*, *::before, *::after {
+    box-sizing: content-box;
+  }
+
 @include go(content-layers-list-item) {
   position: relative;
   height: $centerHeight;
