@@ -6,9 +6,9 @@ export const SliderConfig: ConfigType = {
   chartKey: 'VSlider',
   conKey: 'VCSlider',
   title: '滑动输入条',
-  category: ChatCategoryEnum.MORE,
-  categoryName: ChatCategoryEnumName.MORE,
-  package: PackagesCategoryEnum.CHARTS,
-  chartFrame: ChartFrameEnum.COMMON,
+  category: ChatCategoryEnum.INPUTS,
+  categoryName: ChatCategoryEnumName.INPUTS,
+  package: PackagesCategoryEnum.INFORMATIONS,
+  chartFrame: ChartFrameEnum.STATIC,
   image: 'door.png'
 }

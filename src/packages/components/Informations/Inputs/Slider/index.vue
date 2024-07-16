@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-slider v-model:value="option.dataset" />
+    <n-slider v-model:value="option.dataset" :step="10" />
   </div>
 </template>
 
@@ -17,6 +17,7 @@ const props = defineProps({
   }
 })
 
+const { w, h } = toRefs(props.chartConfig.attr)
 const { size, color } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({

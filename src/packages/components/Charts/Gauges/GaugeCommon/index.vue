@@ -68,7 +68,9 @@ const props = defineProps({
     required: true
   }
 })
-
+const onss = () => {
+  alert("请输入账号密码")
+}
 const process = ref(90)
 const value = ref(35)
 

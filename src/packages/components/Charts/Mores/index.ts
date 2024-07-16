@@ -4,7 +4,7 @@ import { WaterSensorConfig } from './WaterSensor/index'
 import { HumanSensorConfig } from './HumanSensor/index'
 import { DoorConfig } from './Door/index'
 import { DigitFrameConfig } from './DigitFrame/index'
-import { SliderConfig } from './Slider/index'
+
 
 export default [
   MotorConfig,
@@ -12,6 +12,5 @@ export default [
   WaterSensorConfig,
   HumanSensorConfig,
   DoorConfig,
-  DigitFrameConfig,
-  SliderConfig
+  DigitFrameConfig
 ]

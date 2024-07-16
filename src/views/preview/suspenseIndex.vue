@@ -101,7 +101,7 @@ const writeValue = (data: any) => {
 onMounted(() => {
   //console.log(chartEditStore.componentList)
   interval = window.setInterval(() => {
-    //writeValue2();
+    writeValue2();
     // readDeivceData()
     //   .then(data => {
     //     if (data !== undefined) {
