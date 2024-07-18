@@ -1,8 +1,8 @@
 {
   "editCanvasConfig": {
-    "projectName": "1",
-    "width": 1024,
-    "height": 600,
+    "projectName": "i",
+    "width": 1280,
+    "height": 800,
     "filterShow": false,
     "hueRotate": 0,
     "saturate": 1,
@@ -137,683 +137,13 @@
   },
   "componentList": [
     {
-      "id": "id_3sqfg6emvtq000",
+      "id": "id_yjd9l6ew65c00",
       "isGroup": false,
       "attr": {
-        "x": 47,
-        "y": 70,
-        "w": 275,
-        "h": 330,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Square",
-      "chartConfig": {
-        "key": "Square",
-        "chartKey": "VSquare",
-        "conKey": "VCSquare",
-        "title": "方形块",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "block_breviary.png"
-      },
-      "option": {
-        "radius": 18,
-        "opacity": 1,
-        "backgroundColor": "#000044"
-      }
-    },
-    {
-      "id": "id_341gb545d8a000",
-      "isGroup": false,
-      "attr": {
-        "x": 388,
-        "y": 70,
-        "w": 275,
-        "h": 330,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Square",
-      "chartConfig": {
-        "key": "Square",
-        "chartKey": "VSquare",
-        "conKey": "VCSquare",
-        "title": "方形块",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "block_breviary.png"
-      },
-      "option": {
-        "radius": 18,
-        "opacity": 1,
-        "backgroundColor": "#000044"
-      }
-    },
-    {
-      "id": "id_3ms7n7gjbc4000",
-      "isGroup": false,
-      "attr": {
-        "x": 713,
-        "y": 70,
-        "w": 275,
-        "h": 330,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Square",
-      "chartConfig": {
-        "key": "Square",
-        "chartKey": "VSquare",
-        "conKey": "VCSquare",
-        "title": "方形块",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "block_breviary.png"
-      },
-      "option": {
-        "radius": 18,
-        "opacity": 1,
-        "backgroundColor": "#000044"
-      }
-    },
-    {
-      "id": "id_5ke3r3em8uo000",
-      "isGroup": false,
-      "attr": {
-        "x": 46,
-        "y": 420,
-        "w": 220,
-        "h": 150,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Square",
-      "chartConfig": {
-        "key": "Square",
-        "chartKey": "VSquare",
-        "conKey": "VCSquare",
-        "title": "方形块",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "block_breviary.png"
-      },
-      "option": {
-        "radius": 18,
-        "opacity": 1,
-        "backgroundColor": "#000044"
-      }
-    },
-    {
-      "id": "id_59syya5jg84000",
-      "isGroup": false,
-      "attr": {
-        "x": 47,
-        "y": 70,
-        "w": 93,
-        "h": 55,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": " 温度",
-        "fontSize": 24,
-        "fontColor": "#FFFFFF87",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 1,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_3wgj54creom000",
-      "isGroup": false,
-      "attr": {
-        "x": 282,
-        "y": 420,
-        "w": 220,
-        "h": 150,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Square",
-      "chartConfig": {
-        "key": "Square",
-        "chartKey": "VSquare",
-        "conKey": "VCSquare",
-        "title": "方形块",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "block_breviary.png"
-      },
-      "option": {
-        "radius": 18,
-        "opacity": 1,
-        "backgroundColor": "#000044"
-      }
-    },
-    {
-      "id": "id_2qfcbxauqa4000",
-      "isGroup": false,
-      "attr": {
-        "x": 526,
-        "y": 420,
-        "w": 220,
-        "h": 150,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Square",
-      "chartConfig": {
-        "key": "Square",
-        "chartKey": "VSquare",
-        "conKey": "VCSquare",
-        "title": "方形块",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "block_breviary.png"
-      },
-      "option": {
-        "radius": 18,
-        "opacity": 1,
-        "backgroundColor": "#000044"
-      }
-    },
-    {
-      "id": "id_5ddtcc1defw000",
-      "isGroup": false,
-      "attr": {
-        "x": 768,
-        "y": 420,
-        "w": 220,
-        "h": 150,
+        "x": 93,
+        "y": 180,
+        "w": 346,
+        "h": 460,
         "offsetX": 0,
         "offsetY": 0,
         "zIndex": -1
@@ -901,13 +231,389 @@
       }
     },
     {
-      "id": "id_1ubf6fanxxi80",
+      "id": "id_5govu3twxrc000",
       "isGroup": false,
       "attr": {
-        "x": 388,
-        "y": 70,
+        "x": 467,
+        "y": 180,
+        "w": 346,
+        "h": 460,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": true,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "Square",
+      "chartConfig": {
+        "key": "Square",
+        "chartKey": "VSquare",
+        "conKey": "VCSquare",
+        "title": "方形块",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Decorates",
+        "chartFrame": "static",
+        "image": "block_breviary.png"
+      },
+      "option": {
+        "radius": 18,
+        "opacity": 1,
+        "backgroundColor": "#000044"
+      }
+    },
+    {
+      "id": "id_20tb1cznrnhc00",
+      "isGroup": false,
+      "attr": {
+        "x": 846,
+        "y": 181,
+        "w": 346,
+        "h": 220,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": true,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "Square",
+      "chartConfig": {
+        "key": "Square",
+        "chartKey": "VSquare",
+        "conKey": "VCSquare",
+        "title": "方形块",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Decorates",
+        "chartFrame": "static",
+        "image": "block_breviary.png"
+      },
+      "option": {
+        "radius": 18,
+        "opacity": 1,
+        "backgroundColor": "#000044"
+      }
+    },
+    {
+      "id": "id_5lljkktffm8000",
+      "isGroup": false,
+      "attr": {
+        "x": 846,
+        "y": 419,
+        "w": 160,
+        "h": 220,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": true,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "Square",
+      "chartConfig": {
+        "key": "Square",
+        "chartKey": "VSquare",
+        "conKey": "VCSquare",
+        "title": "方形块",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Decorates",
+        "chartFrame": "static",
+        "image": "block_breviary.png"
+      },
+      "option": {
+        "radius": 18,
+        "opacity": 1,
+        "backgroundColor": "#000044"
+      }
+    },
+    {
+      "id": "id_4c7pu76ho0w000",
+      "isGroup": false,
+      "attr": {
+        "x": 1032,
+        "y": 418,
+        "w": 160,
+        "h": 220,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": true,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "Square",
+      "chartConfig": {
+        "key": "Square",
+        "chartKey": "VSquare",
+        "conKey": "VCSquare",
+        "title": "方形块",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Decorates",
+        "chartFrame": "static",
+        "image": "block_breviary.png"
+      },
+      "option": {
+        "radius": 18,
+        "opacity": 1,
+        "backgroundColor": "#000044"
+      }
+    },
+    {
+      "id": "id_1gzxr62t1uqo00",
+      "isGroup": false,
+      "attr": {
+        "x": 93,
+        "y": 190,
         "w": 93,
-        "h": 55,
+        "h": 37,
         "offsetX": 0,
         "offsetY": 0,
         "zIndex": -1
@@ -991,8 +697,8 @@
       "option": {
         "link": "",
         "linkHead": "http://",
-        "dataset": " 湿度",
-        "fontSize": 24,
+        "dataset": "    温度",
+        "fontSize": 16,
         "fontColor": "#FFFFFF87",
         "paddingX": 10,
         "paddingY": 10,
@@ -1001,19 +707,19 @@
         "borderWidth": 0,
         "borderColor": "#ffffff",
         "borderRadius": 5,
-        "letterSpacing": 1,
+        "letterSpacing": 0,
         "writingMode": "horizontal-tb",
         "backgroundColor": "#00000000"
       }
     },
     {
-      "id": "id_32w2rclm3o0000",
+      "id": "id_239s3kvkkxnk00",
       "isGroup": false,
       "attr": {
-        "x": 713,
-        "y": 70,
+        "x": 466,
+        "y": 190,
         "w": 93,
-        "h": 55,
+        "h": 37,
         "offsetX": 0,
         "offsetY": 0,
         "zIndex": -1
@@ -1097,8 +803,8 @@
       "option": {
         "link": "",
         "linkHead": "http://",
-        "dataset": " 压差",
-        "fontSize": 24,
+        "dataset": "    湿度",
+        "fontSize": 16,
         "fontColor": "#FFFFFF87",
         "paddingX": 10,
         "paddingY": 10,
@@ -1107,19 +813,337 @@
         "borderWidth": 0,
         "borderColor": "#ffffff",
         "borderRadius": 5,
-        "letterSpacing": 1,
+        "letterSpacing": 0,
         "writingMode": "horizontal-tb",
         "backgroundColor": "#00000000"
       }
     },
     {
-      "id": "id_4n4iutosph2000",
+      "id": "id_12rkre0zusnk00",
       "isGroup": false,
       "attr": {
-        "x": 73,
-        "y": 141,
-        "w": 230,
-        "h": 230,
+        "x": 834,
+        "y": 188,
+        "w": 144,
+        "h": 37,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "TextCommon",
+      "chartConfig": {
+        "key": "TextCommon",
+        "chartKey": "VTextCommon",
+        "conKey": "VCTextCommon",
+        "title": "文字",
+        "category": "Texts",
+        "categoryName": "文本",
+        "package": "Informations",
+        "chartFrame": "common",
+        "image": "text_static.png"
+      },
+      "option": {
+        "link": "",
+        "linkHead": "http://",
+        "dataset": "    水浸传感器",
+        "fontSize": 16,
+        "fontColor": "#FFFFFF87",
+        "paddingX": 10,
+        "paddingY": 10,
+        "textAlign": "start",
+        "fontWeight": "bold",
+        "borderWidth": 0,
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "letterSpacing": 0,
+        "writingMode": "horizontal-tb",
+        "backgroundColor": "#00000000"
+      }
+    },
+    {
+      "id": "id_3lezws9t6oy000",
+      "isGroup": false,
+      "attr": {
+        "x": 1032,
+        "y": 426,
+        "w": 144,
+        "h": 37,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "TextCommon",
+      "chartConfig": {
+        "key": "TextCommon",
+        "chartKey": "VTextCommon",
+        "conKey": "VCTextCommon",
+        "title": "文字",
+        "category": "Texts",
+        "categoryName": "文本",
+        "package": "Informations",
+        "chartFrame": "common",
+        "image": "text_static.png"
+      },
+      "option": {
+        "link": "",
+        "linkHead": "http://",
+        "dataset": " 人在传感器",
+        "fontSize": 16,
+        "fontColor": "#FFFFFF87",
+        "paddingX": 10,
+        "paddingY": 10,
+        "textAlign": "start",
+        "fontWeight": "bold",
+        "borderWidth": 0,
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "letterSpacing": 0,
+        "writingMode": "horizontal-tb",
+        "backgroundColor": "#00000000"
+      }
+    },
+    {
+      "id": "id_1qlq6mi4rzpc00",
+      "isGroup": false,
+      "attr": {
+        "x": 854,
+        "y": 423,
+        "w": 144,
+        "h": 37,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": -1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "TextCommon",
+      "chartConfig": {
+        "key": "TextCommon",
+        "chartKey": "VTextCommon",
+        "conKey": "VCTextCommon",
+        "title": "文字",
+        "category": "Texts",
+        "categoryName": "文本",
+        "package": "Informations",
+        "chartFrame": "common",
+        "image": "text_static.png"
+      },
+      "option": {
+        "link": "",
+        "linkHead": "http://",
+        "dataset": " 门",
+        "fontSize": 16,
+        "fontColor": "#FFFFFF87",
+        "paddingX": 10,
+        "paddingY": 10,
+        "textAlign": "start",
+        "fontWeight": "bold",
+        "borderWidth": 0,
+        "borderColor": "#ffffff",
+        "borderRadius": 5,
+        "letterSpacing": 0,
+        "writingMode": "horizontal-tb",
+        "backgroundColor": "#00000000"
+      }
+    },
+    {
+      "id": "id_3qxapuc1252000",
+      "isGroup": false,
+      "attr": {
+        "x": 935.5,
+        "y": 237,
+        "w": 141,
+        "h": 124,
         "offsetX": 0,
         "offsetY": 0,
         "zIndex": 1
@@ -1168,10 +1192,286 @@
           "Params": {}
         },
         "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
+          "deviceName": "水浸传感器",
+          "deviceID": "048727fffeef3084",
+          "objectName": "zone_status",
+          "objectID": "device.zone_status"
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "WaterSensor",
+      "chartConfig": {
+        "key": "WaterSensor",
+        "chartKey": "VWaterSensor",
+        "conKey": "VCWaterSensor",
+        "title": "水浸传感器",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Charts",
+        "chartFrame": "common",
+        "image": "led_breviary.png"
+      },
+      "option": {
+        "dataset": false
+      }
+    },
+    {
+      "id": "id_1flf4aayf3nk00",
+      "isGroup": false,
+      "attr": {
+        "x": 866,
+        "y": 469,
+        "w": 120,
+        "h": 130,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": 1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "门禁开关",
+          "deviceID": "a46dd4fffeeda1ff",
+          "objectName": "zone_status",
+          "objectID": "device.zone_status"
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "Door",
+      "chartConfig": {
+        "key": "Door",
+        "chartKey": "VDoor",
+        "conKey": "VCDoor",
+        "title": "门",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Charts",
+        "chartFrame": "common",
+        "image": "led_breviary.png"
+      },
+      "option": {
+        "dataset": false
+      }
+    },
+    {
+      "id": "id_u876jnvh1ow00",
+      "isGroup": false,
+      "attr": {
+        "x": 1050,
+        "y": 472,
+        "w": 120,
+        "h": 130,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": 1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "红外人体移动传感器",
+          "deviceID": "a46dd4fffeee6d9b",
+          "objectName": "zone_status",
+          "objectID": "device.zone_status"
+        }
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "HumanSensor",
+      "chartConfig": {
+        "key": "HumanSensor",
+        "chartKey": "VHumanSensor",
+        "conKey": "VCHumanSensor",
+        "title": "人在传感器",
+        "category": "Mores",
+        "categoryName": "更多",
+        "package": "Charts",
+        "chartFrame": "common",
+        "image": "led_breviary.png"
+      },
+      "option": {
+        "dataset": true
+      }
+    },
+    {
+      "id": "id_w6fpnuri2vk00",
+      "isGroup": false,
+      "attr": {
+        "x": 139.5,
+        "y": 300,
+        "w": 239,
+        "h": 291,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": 1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "温湿度传感器",
+          "deviceID": "f4b3b1fffe6e517d",
+          "objectName": "temperature",
+          "objectID": "device.temperature"
         }
       },
       "filter": null,
@@ -1201,13 +1501,13 @@
         "image": "dial.png"
       },
       "option": {
-        "dataset": 28.4,
+        "dataset": 18,
         "dataColor": "#FFFFFFFF",
         "dataSize": 32,
         "type": "dashboard",
         "color": [
-          "#F76F83FF",
-          "#6666FFFF"
+          "#F76F83",
+          "#6666FF"
         ],
         "railColor": "#FFFFFF87",
         "strokeWidth": 9,
@@ -1220,20 +1520,20 @@
         "maxColor": "#FFFFFF87",
         "minSize": 24,
         "maxSize": 24,
-        "minLeft": 6,
-        "maxLeft": 15,
-        "minTop": -52,
-        "maxTop": -52
+        "minLeft": 5,
+        "maxLeft": 10,
+        "minTop": -50,
+        "maxTop": -50
       }
     },
     {
-      "id": "id_sn6sc7d2fk000",
+      "id": "id_38oxdpjr4bo000",
       "isGroup": false,
       "attr": {
-        "x": 410,
-        "y": 141,
-        "w": 230,
-        "h": 230,
+        "x": 521,
+        "y": 300,
+        "w": 239,
+        "h": 291,
         "offsetX": 0,
         "offsetY": 0,
         "zIndex": 1
@@ -1282,10 +1582,10 @@
           "Params": {}
         },
         "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
+          "deviceName": "温湿度传感器",
+          "deviceID": "f4b3b1fffe6e517d",
+          "objectName": "humidity",
+          "objectID": "device.humidity"
         }
       },
       "filter": null,
@@ -1315,2136 +1615,39 @@
         "image": "dial.png"
       },
       "option": {
-        "dataset": 55.8,
+        "dataset": 50,
         "dataColor": "#FFFFFFFF",
         "dataSize": 32,
         "type": "dashboard",
         "color": [
-          "#F76F83FF",
-          "#6666FFFF"
+          "#F76F83",
+          "#6666FF"
         ],
         "railColor": "#FFFFFF87",
         "strokeWidth": 9,
-        "unit": "%Rh",
+        "unit": "%",
         "unitColor": "#FFFFFF87",
         "unitSize": 24,
-        "minValue": 0,
+        "minValue": 20,
         "maxValue": 100,
         "minColor": "#FFFFFF87",
         "maxColor": "#FFFFFF87",
         "minSize": 24,
         "maxSize": 24,
-        "minLeft": 15,
-        "maxLeft": 15,
-        "minTop": -52,
-        "maxTop": -52
+        "minLeft": 10,
+        "maxLeft": 6,
+        "minTop": -50,
+        "maxTop": -50
       }
     },
     {
-      "id": "id_2xksiup5rpm000",
+      "id": "id_45fl1ncimbc000",
       "isGroup": false,
       "attr": {
-        "x": 736,
-        "y": 141,
-        "w": 230,
-        "h": 230,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "GaugeCommon",
-      "chartConfig": {
-        "key": "GaugeCommon",
-        "chartKey": "VGaugeCommon",
-        "conKey": "VCGaugeCommon",
-        "title": "渐变色表盘",
-        "category": "Gauges",
-        "categoryName": "表盘",
-        "package": "Charts",
-        "chartFrame": "echarts",
-        "image": "dial.png"
-      },
-      "option": {
-        "dataset": 2,
-        "dataColor": "#FFFFFFFF",
-        "dataSize": 32,
-        "type": "dashboard",
-        "color": [
-          "#F76F83FF",
-          "#6666FFFF"
-        ],
-        "railColor": "#FFFFFF87",
-        "strokeWidth": 9,
-        "unit": "Pa",
-        "unitColor": "#FFFFFF87",
-        "unitSize": 24,
-        "minValue": -30,
-        "maxValue": 30,
-        "minColor": "#FFFFFF87",
-        "maxColor": "#FFFFFF87",
-        "minSize": 24,
-        "maxSize": 24,
-        "minLeft": 15,
-        "maxLeft": 15,
-        "minTop": -52,
-        "maxTop": -52
-      }
-    },
-    {
-      "id": "id_4l43xttk8eg000",
-      "isGroup": false,
-      "attr": {
-        "x": 49,
-        "y": 421,
-        "w": 92,
-        "h": 42,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": " 房间",
-        "fontSize": 24,
-        "fontColor": "#FFFFFF87",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 1,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_3dpb1dfgae2000",
-      "isGroup": false,
-      "attr": {
-        "x": 282,
-        "y": 420,
-        "w": 179,
-        "h": 42,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": " 通风柜面风速",
-        "fontSize": 24,
-        "fontColor": "#FFFFFF87",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 1,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_2658lno95syo00",
-      "isGroup": false,
-      "attr": {
-        "x": 529,
-        "y": 420,
-        "w": 92,
-        "h": 42,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": " **",
-        "fontSize": 24,
-        "fontColor": "#FFFFFF87",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 1,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_4i9uo2m97gk000",
-      "isGroup": false,
-      "attr": {
-        "x": 772,
-        "y": 420,
-        "w": 153,
-        "h": 42,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": " 空气质量",
-        "fontSize": 24,
-        "fontColor": "#FFFFFF87",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 1,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_33hn2afnnrs000",
-      "isGroup": false,
-      "attr": {
-        "x": 353,
-        "y": 511,
-        "w": 63,
-        "h": 32,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "m/s",
-        "fontSize": 16,
-        "fontColor": "#FFFFFF87",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "center",
-        "fontWeight": "normal",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_3aawdhij7by000",
-      "isGroup": false,
-      "attr": {
-        "x": 772,
-        "y": 463,
-        "w": 79,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "PM2.5",
-        "fontSize": 16,
-        "fontColor": "#FFFFFFED",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_1idem9hjhfvk00",
-      "isGroup": false,
-      "attr": {
-        "x": 772,
-        "y": 485,
-        "w": 79,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "PM10",
-        "fontSize": 16,
-        "fontColor": "#FFFFFFED",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_5l7h3eoj9qc000",
-      "isGroup": false,
-      "attr": {
-        "x": 772,
-        "y": 511,
-        "w": 79,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "CO2",
-        "fontSize": 16,
-        "fontColor": "#FFFFFFED",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_4a7u3tv8c2u000",
-      "isGroup": false,
-      "attr": {
-        "x": 772,
-        "y": 536,
-        "w": 79,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "TVOC",
-        "fontSize": 14,
-        "fontColor": "#FFFFFFED",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "start",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_en1t4e81rxk00",
-      "isGroup": false,
-      "attr": {
-        "x": 347,
-        "y": 478,
-        "w": 74,
-        "h": 40,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "DigitFrame",
-      "chartConfig": {
-        "key": "DigitFrame",
-        "chartKey": "VDigitFrame",
-        "conKey": "VCDigitFrame",
-        "title": "数值",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "door.png"
-      },
-      "option": {
-        "dataset": 2.6,
-        "size": 24,
-        "color": "#FFFFFFFF",
-        "unit": ""
-      }
-    },
-    {
-      "id": "id_10229tp2sg0000",
-      "isGroup": false,
-      "attr": {
-        "x": 889,
-        "y": 463,
-        "w": 99,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "DigitFrame",
-      "chartConfig": {
-        "key": "DigitFrame",
-        "chartKey": "VDigitFrame",
-        "conKey": "VCDigitFrame",
-        "title": "数值",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "door.png"
-      },
-      "option": {
-        "dataset": 6,
-        "size": 16,
-        "color": "#FFFFFFED",
-        "unit": "μg/m3"
-      }
-    },
-    {
-      "id": "id_zczxrftk9e800",
-      "isGroup": false,
-      "attr": {
-        "x": 889,
-        "y": 485,
-        "w": 99,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "DigitFrame",
-      "chartConfig": {
-        "key": "DigitFrame",
-        "chartKey": "VDigitFrame",
-        "conKey": "VCDigitFrame",
-        "title": "数值",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "door.png"
-      },
-      "option": {
-        "dataset": 13,
-        "size": 14,
-        "color": "#FFFFFFED",
-        "unit": "μg/m3"
-      }
-    },
-    {
-      "id": "id_3noolcdyhgy000",
-      "isGroup": false,
-      "attr": {
-        "x": 889,
-        "y": 511,
-        "w": 99,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "DigitFrame",
-      "chartConfig": {
-        "key": "DigitFrame",
-        "chartKey": "VDigitFrame",
-        "conKey": "VCDigitFrame",
-        "title": "数值",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "door.png"
-      },
-      "option": {
-        "dataset": 650,
-        "size": 16,
-        "color": "#FFFFFFED",
-        "unit": "ppm"
-      }
-    },
-    {
-      "id": "id_3o4no6sjx22000",
-      "isGroup": false,
-      "attr": {
-        "x": 889,
-        "y": 536,
-        "w": 99,
-        "h": 23,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "DigitFrame",
-      "chartConfig": {
-        "key": "DigitFrame",
-        "chartKey": "VDigitFrame",
-        "conKey": "VCDigitFrame",
-        "title": "数值",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "door.png"
-      },
-      "option": {
-        "dataset": 0.03,
-        "size": 16,
-        "color": "#FFFFFFED",
-        "unit": "μg/m3"
-      }
-    },
-    {
-      "id": "id_4nz0corknuw000",
-      "isGroup": false,
-      "attr": {
-        "x": 1193,
-        "y": 21,
-        "w": 40,
-        "h": 40,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "FullScreen",
-      "chartConfig": {
-        "key": "FullScreen",
-        "chartKey": "VFullScreen",
-        "conKey": "VCFullScreen",
-        "title": "全屏按钮",
-        "category": "Mores",
-        "categoryName": "更多",
-        "package": "Decorates",
-        "chartFrame": "static",
-        "image": "fullScreen.png"
-      },
-      "option": {
-        "border": 6,
-        "bgColor": "#84a5e9",
-        "borderColor": "#84a5e9"
-      }
-    },
-    {
-      "id": "id_3vwcnwe8iys000",
-      "isGroup": false,
-      "attr": {
-        "x": 663,
-        "y": 490,
-        "w": 32,
-        "h": 32,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Humidify",
-      "chartConfig": {
-        "key": "Humidify",
-        "chartKey": "VHumidify",
-        "conKey": "VCHumidify",
-        "title": "Humidify",
-        "category": "AirConditioner",
-        "categoryName": "空调",
-        "package": "Charts",
-        "chartFrame": "echarts",
-        "image": "dial.png"
-      },
-      "option": {
-        "dataset": true
-      }
-    },
-    {
-      "id": "id_59eeeyc42uk000",
-      "isGroup": false,
-      "attr": {
-        "x": 575,
-        "y": 490,
-        "w": 32,
-        "h": 32,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Dry",
-      "chartConfig": {
-        "key": "Dry",
-        "chartKey": "VDry",
-        "conKey": "VCDry",
-        "title": "Dry",
-        "category": "AirConditioner",
-        "categoryName": "空调",
-        "package": "Charts",
-        "chartFrame": "echarts",
-        "image": "dial.png"
-      },
-      "option": {
-        "dataset": true
-      }
-    },
-    {
-      "id": "id_zgihowf49e800",
-      "isGroup": false,
-      "attr": {
-        "x": 77,
-        "y": 490,
-        "w": 32,
-        "h": 32,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Snow",
-      "chartConfig": {
-        "key": "Snow",
-        "chartKey": "VSnow",
-        "conKey": "VCSnow",
-        "title": "Snow",
-        "category": "AirConditioner",
-        "categoryName": "空调",
-        "package": "Charts",
-        "chartFrame": "echarts",
-        "image": "snow.png"
-      },
-      "option": {
-        "dataset": true
-      }
-    },
-    {
-      "id": "id_1zdo05xptj1c00",
-      "isGroup": false,
-      "attr": {
-        "x": 140,
-        "y": 490,
-        "w": 32,
-        "h": 32,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Sun",
-      "chartConfig": {
-        "key": "Sun",
-        "chartKey": "VSun",
-        "conKey": "VCSun",
-        "title": "Sun",
-        "category": "AirConditioner",
-        "categoryName": "空调",
-        "package": "Charts",
-        "chartFrame": "echarts",
-        "image": "sun.png"
-      },
-      "option": {
-        "dataset": true
-      }
-    },
-    {
-      "id": "id_fip3bgn2mzk00",
-      "isGroup": false,
-      "attr": {
-        "x": 203,
-        "y": 490,
-        "w": 32,
-        "h": 32,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "Fan2",
-      "chartConfig": {
-        "key": "Fan2",
-        "chartKey": "VFan2",
-        "conKey": "VCFan2",
-        "title": "Fan2",
-        "category": "AirConditioner",
-        "categoryName": "空调",
-        "package": "Charts",
-        "chartFrame": "echarts",
-        "image": "fan2.png"
-      },
-      "option": {
-        "dataset": true
-      }
-    },
-    {
-      "id": "id_4ibamaq8lv2000",
-      "isGroup": false,
-      "attr": {
-        "x": 47,
-        "y": -1,
+        "x": 93,
+        "y": 39,
         "w": 300,
-        "h": 70,
+        "h": 90,
         "offsetX": 0,
         "offsetY": 0,
         "zIndex": -1
@@ -3518,7 +1721,7 @@
         "key": "Image",
         "chartKey": "VImage",
         "conKey": "VCImage",
-        "title": "University_logo.png",
+        "title": "微信图片_20240717092006.png",
         "category": "Mores",
         "categoryName": "更多",
         "package": "Informations",
@@ -3526,123 +1729,17 @@
         "image": "photo.png"
       },
       "option": {
-        "dataset": "data:image/png;base64,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",
+        "dataset": "data:image/png;base64,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",
         "fit": "contain",
         "borderRadius": 10
       }
     },
     {
-      "id": "id_4btsa9ifcis000",
+      "id": "id_1xf4fqv3pyao00",
       "isGroup": false,
       "attr": {
-        "x": 337,
-        "y": 17,
-        "w": 144,
-        "h": 41,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        }
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "文字",
-        "category": "Texts",
-        "categoryName": "文本",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "浦东校区",
-        "fontSize": 24,
-        "fontColor": "#ffffff",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "center",
-        "fontWeight": "normal",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 5,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_2i4fdpg8te0000",
-      "isGroup": false,
-      "attr": {
-        "x": 926,
-        "y": 16,
+        "x": 1152,
+        "y": 53,
         "w": 40,
         "h": 40,
         "offsetX": 0,

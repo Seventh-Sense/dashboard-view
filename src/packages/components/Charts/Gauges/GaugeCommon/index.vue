@@ -4,7 +4,7 @@
       :type="type"
       :percent="process"
       :size="w"
-      stroke-linecap="butt"
+      :stroke-linecap="linecap"
       :stroke-color="{
         '0%': color[0],
         '100%': color[1]
@@ -68,9 +68,7 @@ const props = defineProps({
     required: true
   }
 })
-const onss = () => {
-  alert("请输入账号密码")
-}
+
 const process = ref(90)
 const value = ref(35)
 
@@ -95,7 +93,8 @@ const {
   minLeft,
   maxLeft,
   minTop,
-  maxTop
+  maxTop,
+  linecap
 } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({

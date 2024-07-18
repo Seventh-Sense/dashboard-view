@@ -35,6 +35,21 @@ export const units = [
   }
 ]
 
+export const caps = [
+  {
+    label: 'butt',
+    value: 'butt'
+  },
+  {
+    label: 'round',
+    value: 'round'
+  },
+  {
+    label: 'square',
+    value: 'square'
+  },
+]
+
 export const option = {
   dataset: 36,
   // data颜色
@@ -65,6 +80,7 @@ export const option = {
   maxLeft: 5,
   minTop: -33,
   maxTop: -33,
+  linecap: "butt",
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

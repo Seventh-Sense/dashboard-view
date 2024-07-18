@@ -101,18 +101,18 @@ const writeValue = (data: any) => {
 onMounted(() => {
   //console.log(chartEditStore.componentList)
   interval = window.setInterval(() => {
-    writeValue2();
-    // readDeivceData()
-    //   .then(data => {
-    //     if (data !== undefined) {
-    //       writeValue(data)
-    //     } else {
-    //       console.log('no data!')
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
+    //writeValue2();
+    readDeivceData()
+      .then(data => {
+        if (data !== undefined) {
+          writeValue(data)
+        } else {
+          console.log('no data!')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, 3000)
 })
 

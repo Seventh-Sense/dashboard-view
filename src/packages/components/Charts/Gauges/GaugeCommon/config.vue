@@ -55,6 +55,9 @@
       <SettingItem name="轨道宽度">
         <n-input-number v-model:value="optionData.strokeWidth" size="small"></n-input-number>
       </SettingItem>
+      <SettingItem name="轨道边缘">
+        <n-select v-model:value="optionData.linecap" :options="caps" size="small" />
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox name="刻度">
       <SettingItem name="最小值">
@@ -118,7 +121,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
-import { option, units } from './config'
+import { option, units, caps } from './config'
 
 const props = defineProps({
   optionData: {
