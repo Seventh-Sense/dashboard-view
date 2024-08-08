@@ -8,6 +8,7 @@ const importPath = {
   'PageEnum.BASE_LOCAL_NAME': () => import('@/page/Home/index.vue'),
   'PageEnum.BASE_LOCAL_MAN_NAME': () => import('@/page/ObjectManage/LocalObject/index.vue'),
   'PageEnum.BASE_REMOTE_MAN_NAME': () => import('@/page/ObjectManage/RemoteObject/index.vue'),
+  'PageEnum.BASE_MODBUS_MAN_NAME': () => import('@/page/ObjectManage/Modbus/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_NAME': () => import('@/views/project/mtTemplate/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME': () =>
     import('@/views/project/templateMarket/index.vue')
@@ -36,7 +37,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_LOCAL_MAN_NAME,
       component: importPath['PageEnum.BASE_LOCAL_MAN_NAME'],
       meta: {
-        title: 'IP'
+        title: 'Local'
       }
     },
     {
@@ -44,7 +45,15 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_REMOTE_MAN_NAME,
       component: importPath['PageEnum.BASE_REMOTE_MAN_NAME'],
       meta: {
-        title: 'IP'
+        title: 'Remote'
+      }
+    },
+    {
+      path: PageEnum.BASE_MODBUS_MAN,
+      name: PageEnum.BASE_MODBUS_MAN_NAME,
+      component: importPath['PageEnum.BASE_MODBUS_MAN_NAME'],
+      meta: {
+        title: 'Modbus'
       }
     },
     {

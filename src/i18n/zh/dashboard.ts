@@ -36,5 +36,7 @@ export default {
   custom: '定制',
   data: '数据',
   point_bind: '点位绑定',
+  point: '点位',
   point_bind_placeholder: '请选择点位',
+  modbus_bind: 'Modbus 配置',
 }

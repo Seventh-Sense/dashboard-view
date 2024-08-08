@@ -49,6 +49,9 @@ export enum PageEnum {
   BASE_REMOTE_MAN = '/object/remote',
   BASE_REMOTE_MAN_NAME = 'Remote-Object',
 
+  BASE_MODBUS_MAN = '/object/modbus',
+  BASE_MODBUS_MAN_NAME = 'Modbus-Object',
+
   // 我的模板
   BASE_HOME_TEMPLATE = '/project/my-template',
   BASE_HOME_TEMPLATE_NAME = 'Project-My-Template',

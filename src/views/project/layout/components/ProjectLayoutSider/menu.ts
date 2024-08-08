@@ -69,6 +69,19 @@ export const menuOptionsInit = () => {
               { default: () => t('menu.remote_object_manage') }
             ),
           key: PageEnum.BASE_REMOTE_MAN_NAME
+        },
+        {
+          label: () =>
+            h(
+              RouterLink,
+              {
+                to: {
+                  name: PageEnum.BASE_MODBUS_MAN_NAME
+                }
+              },
+              { default: () => t('menu.modbus_manage') }
+            ),
+          key: PageEnum.BASE_MODBUS_MAN_NAME
         }
       ]
     },

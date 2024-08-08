@@ -35,7 +35,6 @@ import { PreviewRenderList } from './components/PreviewRenderList'
 import { getFilterStyle, setTitle } from '@/utils'
 import {
   getEditCanvasConfigStyle,
-  getLocalStorageInfo,
   getSessionStorageInfo,
   keyRecordHandle,
   dragCanvas
@@ -47,11 +46,10 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { setOption } from '@/packages/public'
-import { readDeivceData } from '@/api/http'
+import { readDeivceData, readPoints, readProject } from '@/api/http'
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
-//await getSessionStorageInfo()
-await getLocalStorageInfo()
+await getSessionStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
@@ -87,24 +85,27 @@ function getRandomNumber(min: number, max: number) {
 const writeValue = (data: any) => {
   chartEditStore.componentList.map((com: any) => {
     //console.log("com", com)
-    let bindInfo = com.request.bindParams;
+    let bindInfo = com.request.bindParams
 
-    data.length > 0 && data.map((value: any) => {
-      if (value.device === bindInfo.deviceID && value.attr === bindInfo.objectID) {
-        com.option.dataset = value.value
-        
-      }
-    })
+    data.length > 0 &&
+      data.map((value: any) => {
+        if (
+          value.modbus_id.toString() === bindInfo.deviceID &&
+          value.id.toString() === bindInfo.objectID
+        ) {
+          //console.log("com", value, bindInfo)
+          com.option.dataset = value.value
+        }
+      })
   })
 }
 
 onMounted(() => {
   //console.log(chartEditStore.componentList)
   interval = window.setInterval(() => {
-    //writeValue2();
-    readDeivceData()
+    readPoints()
       .then(data => {
-        if (data !== undefined) {
+        if (data) {
           writeValue(data)
         } else {
           console.log('no data!')
@@ -121,25 +122,6 @@ onUnmounted(() => {
     window.clearInterval(interval)
   }
 })
-
-const writeValue2 = () => {
-  chartEditStore.componentList.map((com: any) => {
-    
-    if (com.key === "GaugeCommon") {
-      com.option.dataset = getRandomNumber(com.option.minValue, com.option.maxValue)
-    }
-    
-    if (com.key === "DigitFrame") { 
-      com.option.dataset = getRandomNumber(0, 10)
-    }
-
-    
-  })
-}
-
-const dataHandle = (type: string, value: any) => {
-
-}
 </script>
 
 <style lang="scss" scoped>

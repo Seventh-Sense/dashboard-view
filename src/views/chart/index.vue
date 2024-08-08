@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-import { getLocalStorage, loadAsyncComponent } from '@/utils'
+import { getLocalStorage, JSONParse, loadAsyncComponent } from '@/utils'
 import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -53,6 +53,7 @@ import { ChartFrameEnum } from '@/packages/index.d'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import { StorageEnum } from '@/enums/storageEnum'
 import { useRoute } from 'vue-router'
+import { readProject } from '@/api/http'
 
 const chartHistoryStoreStore = useChartHistoryStore()
 const chartEditStore = useChartEditStore()
@@ -77,19 +78,32 @@ onMounted(() => {
   const { id } = routerParamsInfo.params
   const previewId = typeof id === 'string' ? id : id[0]
 
-  const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
-
-  if (sessionStorageInfo.length > 0) {
-    sessionStorageInfo.forEach((data: any) => {
-      if (data.id === previewId) {
+  readProject(previewId)
+    .then((res: any) => {
+      if (res && res.content !== '') {
         nextTick(() => {
-          updateComponent(data, false, true)
+          updateComponent(JSONParse(res.content), false, true)
         })
+      } else {
+        window['$message'].error('加载失败')
       }
+      console.log(res)
     })
-  }
+    .catch(err => {
+      console.log(err)
+    })
 
-  //console.log(chartEditStore.getStorageInfo())
+  // const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+
+  // if (sessionStorageInfo.length > 0) {
+  //   sessionStorageInfo.forEach((data: any) => {
+  //     if (data.id === previewId) {
+  //       nextTick(() => {
+  //         updateComponent(data, false, true)
+  //       })
+  //     }
+  //   })
+  // }
 })
 </script>
 

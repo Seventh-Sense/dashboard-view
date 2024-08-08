@@ -11,6 +11,7 @@ import type {
   RequestGlobalConfigType,
   RequestConfigType
 } from '@/store/modules/chartEditStore/chartEditStore.d'
+import { da } from 'element-plus/es/locale'
 
 export const get = (url: string, params?: object) => {
   return axiosInstance({
@@ -258,7 +259,7 @@ export const readDemoData = async () => {
 
 export const readDeivceList = async () => {
   try {
-    const response = await get(`/devices`)
+    const response = await get(`/allpoints`)
     
     return response
   } catch (error) {
@@ -269,6 +270,128 @@ export const readDeivceList = async () => {
 export const readDeivceData = async () => {
   try {
     const response = await get(`/points`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+//modbus
+export const createModbusConfig = async (data: any) => {
+  try {
+    const response = await post(`/modbus`, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readModbusConfig = async () => {
+  try {
+    const response = await get(`/modbus`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const writeModbusConfig = async (id: any, data: any) => {
+  try {
+    const response = await patch(`/modbus/` + id, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readPoints = async () => {
+  try {
+    const response = await get(`/point`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const writePoint = async (data: any) => {
+  try {
+    const response = await post(`/point`, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updatePoint = async (id: any, data: any) => {
+  try {
+    const response = await patch(`/point/` + id, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deletePoint = async (id: any) => {
+  try {
+    const response = await del(`/point/` + id)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+//project
+export const readProjectList = async () => {
+  try {
+    const response = await get(`/project`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const createProject = async (data: any) => {
+  try {
+    const response = await post(`/project`, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readProject = async (id: any) => {
+  try {
+    const response = await get(`/project/` + id)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updateProject = async (id: any, data: any) => {
+  try {
+    const response = await patch(`/project/` + id, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deleteProject = async (id: any) => {
+  try {
+    const response = await del(`/project/` + id)
     
     return response
   } catch (error) {

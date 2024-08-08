@@ -1,5 +1,10 @@
 <template>
-  <n-modal v-model:show="showRef" class="go-create-modal" @afterLeave="closeHandle">
+  <n-modal
+    v-model:show="showRef"
+    class="go-create-modal"
+    :mask-closable="false"
+    @afterLeave="closeHandle"
+  >
     <n-space size="large">
       <n-card class="card-box" hoverable>
         <template #header>
@@ -12,7 +17,11 @@
             </n-icon>
           </n-text>
         </template>
-        <n-space class="card-box-content" justify="center">
+        <div class="card-box-con">
+          <div class="card-box-title">Project Name:</div>
+          <n-input v-model:value="project_name" type="text" />
+        </div>
+        <!-- <n-space class="card-box-content" justify="center">
           <n-button
             size="large"
             :disabled="item.disabled"
@@ -27,27 +36,38 @@
               </n-icon>
             </template>
           </n-button>
-        </n-space>
+        </n-space> -->
         <template #action></template>
+        <template #footer>
+          <n-space justify="end">
+            <n-button @click="closeHandle">取消</n-button>
+            <n-button type="info" @click="onPositiveClick">创建</n-button>
+          </n-space>
+        </template>
       </n-card>
     </n-space>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, shallowRef } from 'vue'
+import { ref, watch, shallowRef, inject  } from 'vue'
 import { icon } from '@/plugins'
 import { PageEnum, ChartEnum } from '@/enums/pageEnum'
 import { fetchPathByName, routerTurnByPath, renderLang, getUUID } from '@/utils'
+import { createProject } from '@/api/http'
 
 const { FishIcon, CloseIcon } = icon.ionicons5
 const { StoreIcon, ObjectStorageIcon } = icon.carbon
 const showRef = ref(false)
 
+const initTable: any = inject('initTable');
 const emit = defineEmits(['close'])
+
 const props = defineProps({
   show: Boolean
 })
+
+const project_name = ref('')
 
 const typeList = shallowRef([
   {
@@ -62,6 +82,37 @@ watch(props, newValue => {
   showRef.value = newValue.show
 })
 
+const onPositiveClick = () => {
+  if (paramCheck()) {
+    createProject({
+      name: project_name.value,
+      cover: '',
+      content: ''
+    })
+      .then((res: any) => {
+        //通知页面刷新
+        initTable()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        emit('close', false)
+      })
+  }
+}
+
+const paramCheck = () => {
+  let flag = true
+
+  if (project_name.value === '') {
+    flag = false
+    window['$message'].error('Project name is not filled in!')
+  }
+
+  return flag
+}
+
 // 关闭对话框
 const closeHandle = () => {
   emit('close', false)
@@ -75,6 +126,7 @@ const btnHandle = (key: string) => {
   routerTurnByPath(path, [id], undefined, true)
 }
 </script>
+
 <style lang="scss" scoped>
 $cardWidth: 570px;
 
@@ -99,15 +151,27 @@ $cardWidth: 570px;
       padding: 0px 10px;
       width: 100%;
     }
+    &-con {
+      height: 80px;
+      width: 100%;
+    }
+    &-title {
+      font-size: 18px;
+      line-height: 32px;
+      margin-bottom: 12px;
+    }
   }
 }
-
 
 ::v-deep(.n-card-header) {
   padding: 12px !important;
 }
 
 ::v-deep(.n-card__content) {
+  padding: 0 12px 12px 12px !important;
+}
+
+::v-deep(.n-card__footer) {
   padding: 0 12px 12px 12px !important;
 }
 </style>

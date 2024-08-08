@@ -24,7 +24,8 @@ import {
   routerTurnByPath,
   setSessionStorage,
   getLocalStorage,
-setLocalStorage
+setLocalStorage,
+JSONStringify
 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
@@ -34,6 +35,7 @@ import { syncData } from '../../ContentEdit/components/EditTools/hooks/useSyncUp
 import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash'
 import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
+import { updateProject } from '@/api/http'
 
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
@@ -84,8 +86,21 @@ const sendHandle = () => {
   //存储在菜单中
   //addHandle({id: id, ...storageInfo})
   //存储在本地浏览器中
-  saveLocalStorage(previewId, storageInfo)
+  //saveLocalStorage(previewId, storageInfo)
   
+  console.log(storageInfo)
+  updateProject(previewId, {
+    name: '',
+    content: JSONStringify(storageInfo),
+    cover: '',
+  }).then(res => {
+    if (res) {
+      window['$message'].success('保存成功')
+    }
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
   
 }
 

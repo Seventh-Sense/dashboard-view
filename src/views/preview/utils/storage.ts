@@ -3,6 +3,7 @@ import { StorageEnum } from '@/enums/storageEnum'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import dataJson from '@/assets/data/demonstration.json'
+import { readProject } from '@/api/http'
 
 const chartEditStore = useChartEditStore()
 
@@ -16,9 +17,7 @@ export const getSessionStorageInfo = () => {
   const toPathArray = urlHash.split('/')
   const id = toPathArray && toPathArray[toPathArray.length - 1]
 
-  const storageList: ChartEditStorageType[] = getSessionStorage(
-    StorageEnum.GO_CHART_STORAGE_LIST
-  )
+  const storageList: ChartEditStorageType[] = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST)
 
   if (storageList) {
     for (let i = 0; i < storageList.length; i++) {
@@ -35,7 +34,7 @@ export const getSessionStorageInfo = () => {
 
 //演示获取本地数据
 export const getLocalStorageInfo = () => {
-  const filedata = JSONParse(JSONStringify(dataJson)) 
+  const filedata = JSONParse(JSONStringify(dataJson))
 
   console.log(filedata)
   chartEditStore.editCanvasConfig = filedata.editCanvasConfig

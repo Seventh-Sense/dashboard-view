@@ -38,5 +38,7 @@ export default {
   custom: 'Custom',
   data: 'Data',
   point_bind: 'Point Binding',
+  point: 'Point',
   point_bind_placeholder: 'Please select a point position',
+  modbus_bind: 'Modbus Setting',
 }

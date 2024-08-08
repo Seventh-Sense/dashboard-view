@@ -1,6 +1,6 @@
 <template>
   <div class="go-chart-configurations-data">
-    <setting-item-box :name="$t('dashboard.point_bind')" :alone="true">
+    <setting-item-box :name="$t('dashboard.point')" :alone="true">
       <n-cascader
         size="small"
         v-model:value="value"
@@ -59,11 +59,11 @@ onMounted(() => {
 })
 
 const dataConversion = (data: any) => {
-  if (data.devices && data.devices.length > 0) {
-    data.devices.map((device: any) => {
+  if (data.length > 0) {
+    data.map((device: any) => {
       let children: Array<any> = []
-      if (device.attributes.length > 0) {
-        device.attributes.map((attr: any) => {
+      if (device.points.length > 0) {
+        device.points.map((attr: any) => {
           children.push({
             label: attr.name,
             value: device.name + '-' + device.id + '-' + attr.id
