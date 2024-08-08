@@ -10,5 +10,5 @@ export const SliderConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.INPUTS,
   package: PackagesCategoryEnum.INFORMATIONS,
   chartFrame: ChartFrameEnum.STATIC,
-  image: 'door.png'
+  image: 'sliber.png'
 }
