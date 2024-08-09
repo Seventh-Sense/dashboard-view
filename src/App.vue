@@ -6,10 +6,12 @@
     :date-locale="dateLocale"
     :theme-overrides="overridesTheme"
   >
-    <go-app-provider>
-      <I18n></I18n>
-      <router-view></router-view>
-    </go-app-provider>
+    <n-theme-editor>
+      <go-app-provider>
+        <I18n></I18n>
+        <router-view></router-view>
+      </go-app-provider>
+    </n-theme-editor>
   </n-config-provider>
 </template>
 
@@ -18,7 +20,7 @@ import { NConfigProvider } from 'naive-ui'
 import { GoAppProvider } from '@/components/GoAppProvider'
 import { I18n } from '@/components/I18n'
 import { useDarkThemeHook, useThemeOverridesHook, useCode, useLang } from '@/hooks'
-
+import { NThemeEditor } from 'naive-ui'
 // 暗黑主题
 const darkTheme = useDarkThemeHook()
 

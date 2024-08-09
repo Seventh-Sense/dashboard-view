@@ -17,7 +17,9 @@
             object-fit="contain"
             height="180"
             preview-disabled
-            :src="requireUrl('project/moke-20211219181327.png')"
+            :src="
+              cardData.image === '' ? requireUrl('project/moke-20211219181327.png') : cardData.image
+            "
             :alt="cardData.title"
             :fallback-src="requireErrorImg()"
           ></n-image>
@@ -86,7 +88,7 @@ const {
   SendIcon
 } = icon.ionicons5
 
-const emit = defineEmits(['delete', 'resize', 'edit'])
+const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
@@ -103,10 +105,15 @@ const fnBtnList = reactive([
     key: 'edit',
     icon: renderIcon(HammerIcon)
   },
+  // {
+  //   lable: renderLang('global.r_more'),
+  //   key: 'select',
+  //   icon: renderIcon(EllipsisHorizontalCircleSharpIcon)
+  // },
   {
-    lable: renderLang('global.r_more'),
-    key: 'select',
-    icon: renderIcon(EllipsisHorizontalCircleSharpIcon)
+    label: renderLang('global.r_delete'),
+    key: 'delete',
+    icon: renderIcon(TrashIcon)
   }
 ])
 
@@ -125,6 +132,9 @@ const selectOptions = ref([
 
 const handleSelect = (key: string) => {
   switch (key) {
+    case 'preview':
+      previewHandle()
+      break
     case 'delete':
       deleteHanlde()
       break
@@ -147,6 +157,11 @@ const editHandle = () => {
 // 放大处理
 const resizeHandle = () => {
   emit('resize', props.cardData)
+}
+
+//预览处理
+const previewHandle = () => {
+  emit('preview', props.cardData)
 }
 </script>
 

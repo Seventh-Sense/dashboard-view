@@ -24,8 +24,8 @@ import {
   routerTurnByPath,
   setSessionStorage,
   getLocalStorage,
-setLocalStorage,
-JSONStringify
+  setLocalStorage,
+  JSONStringify
 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
@@ -36,6 +36,7 @@ import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash'
 import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
 import { updateProject } from '@/api/http'
+import html2canvas from 'html2canvas'
 
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
@@ -74,7 +75,7 @@ const previewHandle = () => {
 }
 
 // 保存画布数据
-const sendHandle = () => {
+const sendHandle = async () => {
   //获取画布数据
   const storageInfo = chartEditStore.getStorageInfo()
 
@@ -82,43 +83,53 @@ const sendHandle = () => {
   const { id } = routerParamsInfo.params
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
-  
+
   //存储在菜单中
   //addHandle({id: id, ...storageInfo})
   //存储在本地浏览器中
   //saveLocalStorage(previewId, storageInfo)
-  
+
   console.log(storageInfo)
-  updateProject(previewId, {
-    name: '',
-    content: JSONStringify(storageInfo),
-    cover: '',
-  }).then(res => {
-    if (res) {
-      window['$message'].success('保存成功')
-    }
-    console.log(res)
-  }).catch(err => {
-    console.log(err)
+
+  const range = document.querySelector('.go-edit-range') as HTMLElement
+  html2canvas(range, {
+    backgroundColor: null,
+    allowTaint: true,
+    useCORS: true
+  }).then((canvas: HTMLCanvasElement) => {
+    updateProject(previewId, {
+      name: storageInfo.editCanvasConfig.projectName,
+      content: JSONStringify(storageInfo),
+      cover: canvas.toDataURL()
+    })
+      .then(res => {
+        if (res) {
+          window['$message'].success('保存成功')
+        }
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   })
-  
 }
 
 const saveLocalStorage = (id: any, storageInfo: any) => {
   let data = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
-  
-  let flag = true 
-  data && data.forEach((d: any) => {
-    if (d.id === id) {
-      flag = false
-      d.componentList = storageInfo.componentList;
-      d.editCanvasConfig = storageInfo.editCanvasConfig;
-      d.requestGlobalConfig = storageInfo.requestGlobalConfig;
-    }
-  })
+
+  let flag = true
+  data &&
+    data.forEach((d: any) => {
+      if (d.id === id) {
+        flag = false
+        d.componentList = storageInfo.componentList
+        d.editCanvasConfig = storageInfo.editCanvasConfig
+        d.requestGlobalConfig = storageInfo.requestGlobalConfig
+      }
+    })
 
   if (flag) {
-    data.push({id: id, ...storageInfo})
+    data.push({ id: id, ...storageInfo })
   }
 
   console.log(data)

@@ -21,55 +21,55 @@ export const menuOptionsInit = () => {
       key: 'divider-1',
       type: 'divider'
     },
-    {
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: {
-              name: PageEnum.BASE_LOCAL_NAME
-            }
-          },
-          { default: () => t('menu.Local') }
-        ),
-      key: PageEnum.BASE_LOCAL_NAME,
-      icon: renderIcon(HomeIcon)
-    },
-    {
-      key: 'divider-2',
-      type: 'divider'
-    },
+    // {
+    //   label: () =>
+    //     h(
+    //       RouterLink,
+    //       {
+    //         to: {
+    //           name: PageEnum.BASE_LOCAL_NAME
+    //         }
+    //       },
+    //       { default: () => t('menu.Local') }
+    //     ),
+    //   key: PageEnum.BASE_LOCAL_NAME,
+    //   icon: renderIcon(HomeIcon)
+    // },
+    // {
+    //   key: 'divider-2',
+    //   type: 'divider'
+    // },
     {
       label: () => t('menu.object_manage'),
       key: PageEnum.BASE_Object_MAN_NAME,
       icon: renderIcon(DevicesIcon),
       children: [
-        {
-          label: () =>
-            h(
-              RouterLink,
-              {
-                to: {
-                  name: PageEnum.BASE_LOCAL_MAN_NAME
-                }
-              },
-              { default: () => t('menu.local_object_manage') }
-            ),
-          key: PageEnum.BASE_LOCAL_MAN_NAME
-        },
-        {
-          label: () =>
-            h(
-              RouterLink,
-              {
-                to: {
-                  name: PageEnum.BASE_REMOTE_MAN_NAME
-                }
-              },
-              { default: () => t('menu.remote_object_manage') }
-            ),
-          key: PageEnum.BASE_REMOTE_MAN_NAME
-        },
+        // {
+        //   label: () =>
+        //     h(
+        //       RouterLink,
+        //       {
+        //         to: {
+        //           name: PageEnum.BASE_LOCAL_MAN_NAME
+        //         }
+        //       },
+        //       { default: () => t('menu.local_object_manage') }
+        //     ),
+        //   key: PageEnum.BASE_LOCAL_MAN_NAME
+        // },
+        // {
+        //   label: () =>
+        //     h(
+        //       RouterLink,
+        //       {
+        //         to: {
+        //           name: PageEnum.BASE_REMOTE_MAN_NAME
+        //         }
+        //       },
+        //       { default: () => t('menu.remote_object_manage') }
+        //     ),
+        //   key: PageEnum.BASE_REMOTE_MAN_NAME
+        // },
         {
           label: () =>
             h(

@@ -6,7 +6,7 @@ import designColor from './designColor.json'
 export const lang = LangEnum.ZH
 
 // 水印文字
-export const watermarkText = 'SmartLab'
+export const watermarkText = 'XPlay'
 
 // 分组名称
 export const groupTitle = '分组'
@@ -14,7 +14,7 @@ export const groupTitle = '分组'
 // 主题配置
 export const theme = {
   // 默认是否开启深色主题
-  darkTheme: false,
+  darkTheme: true,
   //默认主题色
   appTheme: '#66a9c9',
   appThemeDetail: null

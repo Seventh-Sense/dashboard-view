@@ -10,6 +10,7 @@
           @resize="resizeHandle"
           @delete="deleteHandle($event, index)"
           @edit="editHandle"
+          @preview="previewHandle"
         ></project-items-card>
       </n-grid-item>
     </n-grid>
@@ -32,10 +33,11 @@ import { useDataListInit } from './hooks/useData.hook'
 import { ProjectLayoutCreate } from '../../../layout/components/ProjectLayoutCreate/index'
 import { provide, onMounted, ref, watch } from 'vue'
 import { readProjectList } from '@/api/http'
+import { setLocalStorage } from '@/utils'
 
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
 const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
-const { modalData, modalShow, closeModal, resizeHandle, editHandle } = useModalDataInit()
+const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } = useModalDataInit()
 
 onMounted(() => {
   initTable()
@@ -46,17 +48,30 @@ const initTable = () => {
 
   readProjectList()
     .then((res: any) => {
-      console.log(res)
-
       if (res && res.length > 0) {
         res.forEach((item: any) => {
           addProject(item)
         })
+        storageInfo(res)
       }
     })
     .catch(err => {
       console.log(err)
     })
+}
+
+//保存项目信息
+const storageInfo = (res: any[]) => {
+  let array: any[] = []
+
+  res.forEach(item => {
+    array.push({
+      name: item.name,
+      id: item.id
+    })
+  })
+
+  setLocalStorage('ProjectInfo', array);
 }
 
 provide('initTable', initTable)

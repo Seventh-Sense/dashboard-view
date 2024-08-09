@@ -29,7 +29,13 @@
 
 <script setup lang="ts">
 import { ref, nextTick, computed } from 'vue'
-import { fetchRouteParamsLocation, fetchRouteParams, setTitle, renderLang } from '@/utils'
+import {
+  fetchRouteParamsLocation,
+  fetchRouteParams,
+  setTitle,
+  renderLang,
+  getLocalStorage
+} from '@/utils'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { EditCanvasConfigEnum } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { icon } from '@/plugins'
@@ -61,17 +67,34 @@ const t = window['$t']
 const comTitle = computed(() => {
   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
   title.value = title.value.replace(/\s/g, '')
-  const newTitle = title.value.length ? title.value : t('dashboard.new_project')
+  const id = title.value.length ? title.value : t('dashboard.new_project')
+  const newTitle = getProjectNameByID(id)
+
   setTitle(t('dashboard.workspace') + '-' + newTitle)
   chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.PROJECT_NAME, newTitle)
+
   return newTitle
 })
 
+const getProjectNameByID = (id: any) => {
+  let title = ''
+  let info = getLocalStorage('ProjectInfo')
+
+  info &&
+    info.forEach((item: any) => {
+      if (item.id.toString() === id) {
+        title = item.name
+      }
+    })
+
+  return title
+}
+
 const handleFocus = () => {
-  focus.value = true
-  nextTick(() => {
-    inputInstRef.value && (inputInstRef.value as any).focus()
-  })
+  // focus.value = true
+  // nextTick(() => {
+  //   inputInstRef.value && (inputInstRef.value as any).focus()
+  // })
 }
 
 const handleBlur = () => {

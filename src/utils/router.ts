@@ -40,6 +40,7 @@ export const fetchPathByName = (pageName: string, p?: string) => {
     const pathData = router.resolve({
       name: pageName
     })
+    
     return p ? (pathData as any)[p] : pathData
   } catch (error) {
     window['$message'].warning('查询路由信息失败，请联系管理员！')

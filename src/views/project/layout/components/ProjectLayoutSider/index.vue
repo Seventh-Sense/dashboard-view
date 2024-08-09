@@ -15,7 +15,8 @@
       <aside>
         <n-space vertical class="go-project-sider-top">
           <!-- <project-layout-create :collapsed="collapsed"></project-layout-create> -->
-          <img src="~@/assets/images/login/logo_dark.png" height="32" width="200" />
+          <!-- <img src="~@/assets/images/tips/loadingSvg.svg" height="32" width="200" /> -->
+          <img width="100" height="32" :src="SVG_ICON.card_icons.XPlay"/>
         </n-space>
         <n-menu
           :value="menuValue"
@@ -35,6 +36,7 @@ import { asideWidth } from '@/settings/designSetting'
 import { useRoute } from 'vue-router'
 import { useSettingStore } from '@/store/modules/settingStore/settingStore'
 import { menuOptionsInit, expandedKeys } from './menu'
+import SVG_ICON from '@/svg/SVG_ICON'
 
 const collapsed = ref<boolean>(false)
 const { getAsideCollapsedWidth } = toRefs(useSettingStore())

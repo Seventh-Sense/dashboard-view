@@ -1,95 +1,95 @@
 <template>
   <!-- 登录 -->
   <div class="go-login-box">
-    <layout-header>
-      <template #left></template>
-      <template #right>
-        <go-lang-select></go-lang-select>
-        <go-theme-select></go-theme-select>
-      </template>
-    </layout-header>
     <div class="go-login">
-      <n-grid x-gap="12" :cols="12">
-        <n-gi :span="4">
-          <div class="go-login-form" :style="'height: ' + height + 'px;'">
-            <div class="login-account">
-              <div class="login-account-container">
-                <n-card class="login-account-card" :title="$t('login.desc')">
-                  <div class="login-account-top">实验室智慧管理系统</div>
-                  <n-form
-                    ref="formRef"
-                    label-placement="left"
-                    size="large"
-                    :model="formInline"
-                    :rules="rules"
-                  >
-                    <!-- <n-form-item path="username">
-                      <n-input
-                        v-model:value="formInline.username"
-                        type="text"
-                        maxlength="16"
-                        :placeholder="$t('global.form_account')"
-                      >
-                        <template #prefix>
-                          <n-icon size="18">
-                            <PersonOutlineIcon></PersonOutlineIcon>
-                          </n-icon>
-                        </template>
-                      </n-input>
-                    </n-form-item>
-                    <n-form-item path="password">
-                      <n-input
-                        v-model:value="formInline.password"
-                        type="password"
-                        maxlength="16"
-                        show-password-on="click"
-                        :placeholder="$t('global.form_password')"
-                      >
-                        <template #prefix>
-                          <n-icon size="18">
-                            <LockClosedOutlineIcon></LockClosedOutlineIcon>
-                          </n-icon>
-                        </template>
-                      </n-input>
-                    </n-form-item>
-                    <n-form-item>
-                      <div class="flex justify-between">
-                        <div class="flex-initial">
-                          <n-checkbox v-model:checked="autoLogin">
-                            {{ $t('login.form_auto') }}
-                          </n-checkbox>
-                        </div>
-                      </div>
-                    </n-form-item> -->
-                    <n-form-item>
-                      <n-button
-                        type="primary"
-                        @click="handleSubmit"
-                        size="large"
-                        :loading="loading"
-                        block
-                      >
-                        {{ $t('login.form_button') }}
-                      </n-button>
-                    </n-form-item>
-                  </n-form>
-                </n-card>
+      <n-grid>
+        <n-gi :span="12">
+          <div class="go-login-form">
+            <div class="go-login-form-header">
+              <img width="40" height="80" :src="SVG_ICON.card_icons.logo" />
+              <img width="144" height="80" :src="SVG_ICON.card_icons.lubanx" />
+            </div>
+            <div class="go-login-form-account">
+              <n-text class="go-login-form-account-title">欢迎登录</n-text>
+              <div class="go-login-form-account-desc">
+                <img width="100" height="32" :src="SVG_ICON.card_icons.XPlay" />
+                <n-text style="color: rgba(255, 255, 255, 0.93)">楼宇逻辑控制器</n-text>
               </div>
+
+              <n-form
+                ref="formRef"
+                label-placement="left"
+                size="large"
+                :model="formInline"
+                :rules="rules"
+              >
+                <n-form-item path="username">
+                  <n-input
+                    v-model:value="formInline.username"
+                    type="text"
+                    maxlength="16"
+                    :placeholder="$t('global.form_account')"
+                  >
+                    <template #prefix>
+                      <n-icon size="18">
+                        <PersonOutlineIcon></PersonOutlineIcon>
+                      </n-icon>
+                    </template>
+                  </n-input>
+                </n-form-item>
+                <n-form-item path="password">
+                  <n-input
+                    v-model:value="formInline.password"
+                    type="password"
+                    maxlength="16"
+                    show-password-on="click"
+                    :placeholder="$t('global.form_password')"
+                  >
+                    <template #prefix>
+                      <n-icon size="18">
+                        <LockClosedOutlineIcon></LockClosedOutlineIcon>
+                      </n-icon>
+                    </template>
+                  </n-input>
+                </n-form-item>
+                <n-form-item>
+                  <div class="flex justify-between">
+                    <div class="flex-initial">
+                      <n-checkbox v-model:checked="autoLogin">
+                        {{ $t('login.form_auto') }}
+                      </n-checkbox>
+                    </div>
+                  </div>
+                </n-form-item>
+                <n-form-item>
+                  <n-button
+                    type="primary"
+                    @click="handleSubmit"
+                    size="large"
+                    :loading="loading"
+                    block
+                  >
+                    {{ $t('login.form_button') }}
+                  </n-button>
+                </n-form-item>
+              </n-form>
+            </div>
+            <div class="go-login-form-footer">
+              <span>Adveco © 2024</span>
+              <span>About us</span>
+              <span>Contact us</span>
             </div>
           </div>
         </n-gi>
-        <n-gi :span="8">
-          <div class="go-login-img" :style="'height: ' + height + 'px;'">
+        <n-gi :span="12">
+          <div class="go-login-img">
             <img
-              src="@/assets/images/login/login.png"
+              src="@/assets/images/login/login_background.png"
               style="display: block; width: 100%; height: 100%"
             />
           </div>
         </n-gi>
       </n-grid>
-    </div>
-    <div class="go-login-box-footer">
-      <!-- <layout-footer></layout-footer> -->
     </div>
   </div>
 </template>
@@ -108,6 +108,7 @@ import { icon } from '@/plugins'
 import { StorageEnum } from '@/enums/storageEnum'
 import { routerTurnByName, cryptoEncode, setLocalStorage } from '@/utils'
 import { onLogin } from '@/api/http'
+import SVG_ICON from '@/svg/SVG_ICON'
 
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 
@@ -214,17 +215,13 @@ const handleSubmit = (e: Event) => {
       window['$message'].error(`${t('login.login_message')}!`)
     }
   })
-
-  
 }
 
 onMounted(() => {
   shuffleHandle()
 })
 
-const login = (newAccessToken: string, refreshToken: string) => {
-    
-}
+const login = (newAccessToken: string, refreshToken: string) => {}
 </script>
 
 <style lang="scss" scoped>
@@ -241,7 +238,7 @@ $carousel-image-height: 60vh;
 @include go(login-box) {
   height: $go-login-height;
   overflow: hidden;
-  @include background-image('background-image');
+  //@include background-image('background-image');
   &-header {
     display: flex;
     justify-content: space-between;
@@ -257,57 +254,57 @@ $carousel-image-height: 60vh;
   @include go(login) {
     height: $go-login-height;
     width: 100vw;
+    background-image: radial-gradient(farthest-side at 0% 0%, #383477, #19162a);
 
     &-img {
-      padding: 24px 24px 24px 0;
+      padding: 0;
+      height: 100%;
     }
 
     &-form {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
+      height: 100%;
 
-      .login-account {
+      &-header {
+        height: 80px;
+        padding-left: 16px;
+        width: 100%;
+      }
+
+      &-account {
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         margin: 0 160px;
-        &-container {
-          width: $width;
-        }
+        width: 420px;
 
-        &-card {
-          @extend .go-background-filter;
-          @include fetch-bg-color('filter-color');
-          box-shadow: 0 0 20px 5px rgba(40, 40, 40, 0.3);
-        }
-
-        &-top {
-          padding-top: 10px;
-          text-align: center;
+        &-title {
           font-size: 40px;
-          height: $account-img-height;
-          margin-bottom: 20px;
+          font-weight: bold;
+          color: rgba(255, 255, 255, 0.93);
+        }
+
+        &-desc {
+          font-size: 24px;
+          font-weight: 400;
+          margin-bottom: 28px;
         }
       }
+
+      &-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        height: 60px;
+        padding-bottom: 12px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.93);
+      }
     }
-  }
-
-  &-footer {
-    z-index: 2;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-  }
-
-  &-bg {
-    z-index: 0;
-    position: fixed;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background: url('@/assets/images/login/login.png') no-repeat 0 -120px;
   }
 }
 @media only screen and (max-width: 1200px) {
@@ -316,8 +313,9 @@ $carousel-image-height: 60vh;
   .go-login-carousel {
     display: none !important;
   }
-  .go-login-box-footer {
-    position: relative;
-  }
+}
+
+::v-deep(.n-grid) {
+  height: 100vh;
 }
 </style>

@@ -21,6 +21,9 @@ import snow_TF from './icons/_snow_TF.svg?url'
 import snow_TL from './icons/_snow_TL.svg?url'
 import sun_TF from './icons/_sun_TF.svg?url'
 import sun_TL from './icons/_sun_TL.svg?url'
+import XPlay from './icons/XPlay.svg?url'
+import lubanx from './icons/lubanx_dark.svg?url'
+import logo from './icons/logo.svg?url'
 
 export default {
     card_icons: {
@@ -47,5 +50,8 @@ export default {
         snow_TL: snow_TL,
         sun_TF: sun_TF,
         sun_TL: sun_TL,
+        XPlay: XPlay,
+        lubanx: lubanx,
+        logo: logo,
     }
 }

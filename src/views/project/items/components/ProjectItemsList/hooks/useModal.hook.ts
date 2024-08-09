@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { ChartEnum } from '@/enums/pageEnum'
+import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
 import { fetchPathByName, routerTurnByPath } from '@/utils'
 import { Chartype } from '../../../index.d'
 
@@ -13,18 +13,26 @@ export const useModalDataInit = () => {
     modalData.value = null
   }
 
-  // 打开 modal
+  // 放大
   const resizeHandle = (cardData: Chartype) => {
     if (!cardData) return
     modalShow.value = true
     modalData.value = cardData
   }
 
-  // 打开 modal
+  // 编辑
   const editHandle = (cardData: Chartype) => {
     if (!cardData) return
     const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
+
     routerTurnByPath(path, [cardData.id], undefined, true)
+  }
+
+  // 预览
+  const previewHandle = (cardData: Chartype) => {
+    // if (!cardData) return
+    // const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'href')
+    // routerTurnByPath(path, [cardData.id], undefined, true)
   }
 
   return {
@@ -32,6 +40,7 @@ export const useModalDataInit = () => {
     modalShow,
     closeModal,
     resizeHandle,
-    editHandle
+    editHandle,
+    previewHandle,
   }
 }

@@ -1,10 +1,6 @@
 <template>
   <!-- mask-closable 暂时是失效的，不知道为啥 -->
-  <n-modal
-    class="go-modal-box"
-    v-model:show="showRef"
-    @afterLeave="closeHandle"
-  >
+  <n-modal class="go-modal-box" v-model:show="showRef" @afterLeave="closeHandle">
     <n-card hoverable size="small">
       <div class="list-content">
         <!-- 标题 -->
@@ -21,13 +17,13 @@
             :narrow="true"
             :hidden="['close']"
             @remove="closeHandle"
-         ></mac-os-control-btn>
+          ></mac-os-control-btn>
         </n-space>
         <!-- 中间 -->
         <div class="list-content-img">
           <img
             :src="
-              requireUrl('project/moke-20211219181327.png')
+              cardData.image === '' ? requireUrl('project/moke-20211219181327.png') : cardData.image
             "
             :alt="cardData?.title"
           />
@@ -42,16 +38,12 @@
           <!-- 工具 -->
           <n-space>
             <n-text>
-              <n-badge
+              <!-- <n-badge
                 class="go-animation-twinkle"
                 dot
                 :color="cardData?.release ? '#34c749' : '#fcbc40'"
-             ></n-badge>
-              {{
-                cardData?.release
-                  ? $t('project.release')
-                  : $t('project.unreleased')
-              }}
+              ></n-badge>
+              {{ cardData?.release ? $t('project.release') : $t('project.unreleased') }} -->
             </n-text>
 
             <template v-for="item in fnBtnList" :key="item.key">

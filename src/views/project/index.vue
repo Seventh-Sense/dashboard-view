@@ -19,7 +19,7 @@
           </n-layout-content>
         </n-layout>
         <n-layout-footer bordered position="absolute" class="go-footer">
-          <div>服务器时间: 2023/12/12</div>
+          <!-- <div>服务器时间: 2023/12/12</div> -->
         </n-layout-footer>
       </n-layout>
     </n-layout>
