@@ -16,7 +16,7 @@
         <n-space vertical class="go-project-sider-top">
           <!-- <project-layout-create :collapsed="collapsed"></project-layout-create> -->
           <!-- <img src="~@/assets/images/tips/loadingSvg.svg" height="32" width="200" /> -->
-          <img width="100" height="32" :src="SVG_ICON.card_icons.XPlay"/>
+          <img width="100" height="50" :src="SVG_ICON.card_icons.XPlay"/>
         </n-space>
         <n-menu
           :value="menuValue"
@@ -75,7 +75,7 @@ $siderHeight: 100vh;
       flex-flow: row !important;
       align-items: center;
       height: 50px;
-      padding-left: 24px;
+      padding-left: 16px;
     }
     &-flex {
       display: flex;

@@ -1,6 +1,6 @@
 export default {
   create_btn: 'Create',
-  create_tip: 'Please select a content for development',
+  create_tip: 'Chart Creation',
   project: 'Project',
   my: 'My',
   new_project: 'New Project',

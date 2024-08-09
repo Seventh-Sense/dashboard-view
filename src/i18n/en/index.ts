@@ -27,7 +27,12 @@ const global = {
   r_unpublish: 'Unpublish',
   r_download: 'Download',
   r_delete: 'Delete',
-  r_more: 'More'
+  r_more: 'More',
+  r_add: 'Add',
+  r_ok: 'Ok',
+  r_cancel: 'Cancel',
+  r_save: 'Save',
+  r_create: 'Create'
 }
 
 export default {

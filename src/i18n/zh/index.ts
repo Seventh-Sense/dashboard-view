@@ -27,7 +27,12 @@ const global = {
   r_unpublish: '取消发布',
   r_download: '下载',
   r_delete: '删除',
-  r_more: '更多'
+  r_more: '更多',
+  r_add: '新增',
+  r_ok: '确认',
+  r_cancel: '取消',
+  r_save: '保存',
+  r_create: '创建',
 }
 
 export default {

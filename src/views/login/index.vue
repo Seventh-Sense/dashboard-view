@@ -10,10 +10,10 @@
               <img width="144" height="80" :src="SVG_ICON.card_icons.lubanx" />
             </div>
             <div class="go-login-form-account">
-              <n-text class="go-login-form-account-title">欢迎登录</n-text>
+              <n-text class="go-login-form-account-title">{{$t('login.title_1')}}</n-text>
               <div class="go-login-form-account-desc">
                 <img width="100" height="32" :src="SVG_ICON.card_icons.XPlay" />
-                <n-text style="color: rgba(255, 255, 255, 0.93)">楼宇逻辑控制器</n-text>
+                <n-text style="color: rgba(255, 255, 255, 0.93)">{{$t('login.title_2')}}</n-text>
               </div>
 
               <n-form
@@ -28,7 +28,7 @@
                     v-model:value="formInline.username"
                     type="text"
                     maxlength="16"
-                    :placeholder="$t('global.form_account')"
+                    :placeholder="$t('login.user_placeholder')"
                   >
                     <template #prefix>
                       <n-icon size="18">
@@ -43,7 +43,7 @@
                     type="password"
                     maxlength="16"
                     show-password-on="click"
-                    :placeholder="$t('global.form_password')"
+                    :placeholder="$t('login.password_placeholder')"
                   >
                     <template #prefix>
                       <n-icon size="18">
@@ -56,7 +56,7 @@
                   <div class="flex justify-between">
                     <div class="flex-initial">
                       <n-checkbox v-model:checked="autoLogin">
-                        {{ $t('login.form_auto') }}
+                        {{ $t('login.login_auto') }}
                       </n-checkbox>
                     </div>
                   </div>
@@ -69,15 +69,15 @@
                     :loading="loading"
                     block
                   >
-                    {{ $t('login.form_button') }}
+                    {{ $t('login.login_button') }}
                   </n-button>
                 </n-form-item>
               </n-form>
             </div>
             <div class="go-login-form-footer">
               <span>Adveco © 2024</span>
-              <span>About us</span>
-              <span>Contact us</span>
+              <span>{{ $t('login.about_us') }}</span>
+              <span>{{ $t('login.contact_us') }}</span>
             </div>
           </div>
         </n-gi>

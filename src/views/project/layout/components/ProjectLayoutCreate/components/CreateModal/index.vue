@@ -18,7 +18,7 @@
           </n-text>
         </template>
         <div class="card-box-con">
-          <div class="card-box-title">Project Name:</div>
+          <div class="card-box-title">{{ $t('device.project_name') }}:</div>
           <n-input v-model:value="project_name" type="text" />
         </div>
         <!-- <n-space class="card-box-content" justify="center">
@@ -40,8 +40,8 @@
         <template #action></template>
         <template #footer>
           <n-space justify="end">
-            <n-button @click="closeHandle">取消</n-button>
-            <n-button type="info" @click="onPositiveClick">创建</n-button>
+            <n-button @click="closeHandle">{{ $t('global.r_cancel') }}</n-button>
+            <n-button type="info" @click="onPositiveClick">{{ $t('global.r_create') }}</n-button>
           </n-space>
         </template>
       </n-card>

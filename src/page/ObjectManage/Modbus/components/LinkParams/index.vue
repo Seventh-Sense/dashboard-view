@@ -9,7 +9,7 @@
       size="small"
     >
       <n-grid :cols="24" :x-gap="24">
-        <n-form-item-gi :span="12" label="Connection" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.connection')" label-align="left" path="connect_mode">
           <n-select
             v-model:value="data.connect_mode"
             placeholder="Select"
@@ -18,7 +18,7 @@
           />
         </n-form-item-gi>
         <n-form-item-gi :span="12" label="" path=""></n-form-item-gi>
-        <n-form-item-gi :span="12" label="Serial Settings" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.serial_settings')" label-align="left" path="connect_mode">
           <n-select
             v-model:value="data.serial_port"
             placeholder="Select"
@@ -27,19 +27,19 @@
           />
         </n-form-item-gi>
         <n-form-item-gi :span="12" label="" path=""></n-form-item-gi>
-        <n-form-item-gi :span="12" label="Baud" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.baud')" label-align="left" path="connect_mode">
           <n-select v-model:value="data.baudrate" placeholder="Select" :options="baudOptions" />
         </n-form-item-gi>
-        <n-form-item-gi :span="12" label="Data bits" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.data_bits')" label-align="left" path="connect_mode">
           <n-select v-model:value="data.data_bit" placeholder="Select" :options="databitOptions" />
         </n-form-item-gi>
-        <n-form-item-gi :span="12" label="Parity" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.parity')" label-align="left" path="connect_mode">
           <n-select v-model:value="data.parity" placeholder="Select" :options="parityOptions" />
         </n-form-item-gi>
-        <n-form-item-gi :span="12" label="Stop bits" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.stop_bits')" label-align="left" path="connect_mode">
           <n-select v-model:value="data.stop_bit" placeholder="Select" :options="stopbitOptions" />
         </n-form-item-gi>
-        <n-form-item-gi :span="12" label="Mode" label-align="left" path="connect_mode">
+        <n-form-item-gi :span="12" :label="$t('device.mode')" label-align="left" path="connect_mode">
           <n-radio-group v-model:value="data.mode" name="radiogroup1">
             <n-space>
               <n-radio value="RTU">RTU</n-radio>

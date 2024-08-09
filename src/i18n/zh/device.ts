@@ -14,4 +14,19 @@ export default {
   object_list: '对象列表',
   object_name: '对象名称',
   object_msg: '对象信息',
+
+  //Modbus
+  config: '配置',
+  modbus_link: '链路',
+  name: '名称',
+  reg_attr: '寄存器地址',
+  value: '值',
+  connection: '连接',
+  serial_settings: '串口设置',
+  baud: '波特率',
+  data_bits: '数据位',
+  parity: '奇偶校验',
+  stop_bits: '停止位',
+  mode: '模式',
+  project_name: '项目名称',
 }

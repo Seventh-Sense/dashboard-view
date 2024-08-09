@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="add-btn">
-      <n-button type="info" @click="add">ADD</n-button>
+      <n-button type="info" @click="add">{{ $t('global.r_add') }}</n-button>
     </div>
     <n-data-table :columns="columns" :data="data" :bordered="false" />
     <n-modal
@@ -9,30 +9,30 @@
       :mask-closable="false"
       preset="card"
       :style="{ width: '600px' }"
-      title="配置"
+      :title="$t('device.config')"
       :bordered="false"
     >
       <div>
-        <div class="tip-title">Link:</div>
+        <div class="tip-title">{{ $t('device.modbus_link') }}:</div>
         <n-select
           v-model:value="selectedRow.modbus_id"
           size="small"
           placeholder="Select"
           :options="linkOptions"
         />
-        <div class="tip-title">Name:</div>
+        <div class="tip-title">{{ $t('device.name') }}:</div>
         <n-input v-model:value="selectedRow.name" size="small" type="text" />
         <div class="tip-title">Slave ID:</div>
         <n-input-number v-model:value="selectedRow.slaveid" size="small" clearable />
-        <div class="tip-title">Register address:</div>
+        <div class="tip-title">{{ $t('device.reg_attr') }}:</div>
         <n-input-number v-model:value="selectedRow.addr" size="small" clearable />
-        <div class="tip-title">Data Value:</div>
+        <div class="tip-title">{{ $t('device.value') }}:</div>
         <n-input v-model:value="selectedRow.value" size="small" type="text" />
       </div>
       <template #footer>
         <div class="modal-footer">
-          <n-button @click="onNegativeClick">取消</n-button>
-          <n-button type="info" @click="onPositiveClick">确认</n-button>
+          <n-button @click="onNegativeClick">{{ $t('global.r_cancel') }}</n-button>
+          <n-button type="info" @click="onPositiveClick">{{ $t('global.r_ok') }}</n-button>
         </div>
       </template>
     </n-modal>
@@ -70,14 +70,14 @@ const selectedRow = ref({
 function createColumns(): DataTableColumns<any> {
   return [
     {
-      title: 'Link',
+      title: window['$t']('device.modbus_link'),
       key: 'modbus_id',
       render(row) {
         return row.modbus_id === 1 ? '/dev/ttyS3' : '/dev/ttyS4'
       }
     },
     {
-      title: 'Name',
+      title: window['$t']('device.name'),
       key: 'name'
     },
     {
@@ -85,16 +85,16 @@ function createColumns(): DataTableColumns<any> {
       key: 'slaveid'
     },
     {
-      title: 'Register address',
+      title: window['$t']('device.reg_attr'),
       key: 'addr'
     },
     {
-      title: 'Data Value',
+      title: window['$t']('device.value'),
       key: 'value'
     },
 
     {
-      title: 'Action',
+      title: '',
       key: 'actions',
       render(row) {
         return h('div', {}, [
@@ -111,7 +111,7 @@ function createColumns(): DataTableColumns<any> {
                 selectedRow.value = row
               }
             },
-            { default: () => 'Edit' }
+            { default: () => window['$t']('global.r_edit') }
           ),
           h(
             'span',
@@ -132,7 +132,7 @@ function createColumns(): DataTableColumns<any> {
                 deleteRow(row)
               }
             },
-            { default: () => 'Delete' }
+            { default: () => window['$t']('global.r_delete') }
           )
         ])
       }

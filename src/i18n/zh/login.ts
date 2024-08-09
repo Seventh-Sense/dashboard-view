@@ -1,7 +1,10 @@
 export default {
-  desc: "登录",
-  form_auto: "自动登录",
-  form_button: "登录",
-  login_success: "登录成功",
-  login_message: "请填写完整信息",
+  title_1: '欢迎登录',
+  title_2: '楼宇逻辑控制器',
+  user_placeholder: '请输入用户名',
+  password_placeholder: '请输入密码',
+  login_auto: "自动登录",
+  login_button: "登录",
+  about_us: "关于我们",
+  contact_us: "联系我们",
 }

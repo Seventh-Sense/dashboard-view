@@ -1,10 +1,10 @@
 <template>
   <div class="go-project-items">
     <n-tabs type="line" animated justify-content="space-evenly">
-      <n-tab-pane key="list" name="list" tab="List">
+      <n-tab-pane :name="$t('device.object_list')">
         <LinkObject/>
       </n-tab-pane>
-      <n-tab-pane key="configuration" name="configuration" tab="Configuration">
+      <n-tab-pane :name="$t('device.detail')">
         <ConfigCards/>
       </n-tab-pane>
     </n-tabs>

@@ -14,5 +14,20 @@ export default {
   object_list: 'Object List',
   object_name: 'Object Name',
   object_msg: 'Object',
+
+  //Modbus
+  config: 'Settings',
+  modbus_link: 'Link',
+  name: 'Name',
+  reg_attr: 'Register address',
+  value: 'Data Value',
+  connection: 'Connection',
+  serial_settings: 'Serial Settings',
+  baud: 'Baud',
+  data_bits: 'Data bits',
+  parity: 'Parity',
+  stop_bits: 'Stop bits',
+  mode: 'Mode',
+  project_name: 'Project Name',
 }
 

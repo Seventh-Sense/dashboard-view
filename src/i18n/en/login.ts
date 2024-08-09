@@ -1,7 +1,10 @@
 export default {
-  desc: "Login",
-  form_auto: "Sign in automatically",
-  form_button: "Login",
-  login_success: "Login success",
-  login_message: "Please complete the letter",
+  title_1: 'Welcome To Login',
+  title_2: 'Building Logic Controller',
+  user_placeholder: 'Please enter your username',
+  password_placeholder: 'Please enter password',
+  login_auto: "Auto Login",
+  login_button: "Login",
+  about_us: "About us",
+  contact_us: "Contact us",
 }

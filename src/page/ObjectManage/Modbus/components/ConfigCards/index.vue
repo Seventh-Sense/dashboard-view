@@ -9,7 +9,7 @@
       <LinkParams :data="data.modbus2" />
     </div>
     <div class="save-btn">
-      <n-button type="info" @click="save">保存</n-button>
+      <n-button type="info" @click="save">{{ $t('global.r_save') }}</n-button>
     </div>
   </n-card>
 </template>
