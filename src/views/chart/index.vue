@@ -84,10 +84,8 @@ onMounted(() => {
         nextTick(() => {
           updateComponent(JSONParse(res.content), false, true)
         })
-      } else {
-        window['$message'].error('加载失败')
-      }
-      console.log(res)
+      } 
+      //console.log(res)
     })
     .catch(err => {
       console.log(err)

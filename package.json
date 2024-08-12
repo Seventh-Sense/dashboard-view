@@ -6,12 +6,7 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "vue-tsc --noEmit && vite build --mode production",
-    "preview": "vite preview",
-    "new": "plop --plopfile ./plop/plopfile.js",
-    "postinstall": "husky install",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue src",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx,.vue src --fix"
+    "build": "npx vite build --mode production"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

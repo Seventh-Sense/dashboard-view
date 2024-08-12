@@ -259,7 +259,7 @@ export const readDemoData = async () => {
 
 export const readDeivceList = async () => {
   try {
-    const response = await get(`/allpoints`)
+    const response = await get(`/allpoints/`)
     
     return response
   } catch (error) {
@@ -269,7 +269,7 @@ export const readDeivceList = async () => {
 
 export const readDeivceData = async () => {
   try {
-    const response = await get(`/points`)
+    const response = await get(`/points/?offset=0&limit=100`)
     
     return response
   } catch (error) {
@@ -290,7 +290,7 @@ export const createModbusConfig = async (data: any) => {
 
 export const readModbusConfig = async () => {
   try {
-    const response = await get(`/modbus`)
+    const response = await get(`/modbus/?offset=0&limit=100`)
     
     return response
   } catch (error) {
@@ -310,7 +310,7 @@ export const writeModbusConfig = async (id: any, data: any) => {
 
 export const readPoints = async () => {
   try {
-    const response = await get(`/point`)
+    const response = await get(`/point/?offset=0&limit=100`)
     
     return response
   } catch (error) {
@@ -320,7 +320,7 @@ export const readPoints = async () => {
 
 export const writePoint = async (data: any) => {
   try {
-    const response = await post(`/point`, data)
+    const response = await post(`/point/`, data)
     
     return response
   } catch (error) {
@@ -351,7 +351,7 @@ export const deletePoint = async (id: any) => {
 //project
 export const readProjectList = async () => {
   try {
-    const response = await get(`/project`)
+    const response = await get(`/project/?offset=0&limit=100`)
     
     return response
   } catch (error) {
@@ -361,7 +361,7 @@ export const readProjectList = async () => {
 
 export const createProject = async (data: any) => {
   try {
-    const response = await post(`/project`, data)
+    const response = await post(`/project/`, data)
     
     return response
   } catch (error) {
