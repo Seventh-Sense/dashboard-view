@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #17171a;
+  background-color: #383477;
 }
 .first-loading-wrp > h1 {
   font-size: 128px;
@@ -16,6 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .dot {
   animation: antRotate 1.2s infinite linear;

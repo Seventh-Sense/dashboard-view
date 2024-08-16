@@ -10,5 +10,5 @@ export const DigitFrameConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.MORE,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'door.png'
+  image: 'value.png'
 }

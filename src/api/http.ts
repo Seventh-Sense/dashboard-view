@@ -271,6 +271,7 @@ export const readDeivceData = async () => {
   try {
     const response = await get(`/points/?offset=0&limit=100`)
     
+    
     return response
   } catch (error) {
     throw error

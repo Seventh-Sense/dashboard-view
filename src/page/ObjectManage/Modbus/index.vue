@@ -20,5 +20,6 @@ import { LinkObject } from './components/LinkObject'
 <style lang="scss" scoped>
 @include go(project-items) {
   padding: 12px 12px;
+
 }
 </style>

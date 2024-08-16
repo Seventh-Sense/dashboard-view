@@ -123,6 +123,7 @@ const save = () => {
 <style lang="scss" scoped>
 .container {
   height: calc(100vh - 56px - 32px - 12px - 12px - 41px - 12px);
+  overflow-y: auto;
 }
 
 .link-style {

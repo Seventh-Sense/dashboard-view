@@ -95,7 +95,15 @@ const sendHandle = async () => {
   html2canvas(range, {
     backgroundColor: null,
     allowTaint: true,
-    useCORS: true
+    useCORS: true,
+    // svg: {
+    //   // 处理SVG
+    //   xmlns: true,
+    //   renderer: (svg: any) => {
+    //     // 将SVG转换为PNG
+    //     return `data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svg)))}`
+    //   }
+    // }
   }).then((canvas: HTMLCanvasElement) => {
     updateProject(previewId, {
       name: storageInfo.editCanvasConfig.projectName,

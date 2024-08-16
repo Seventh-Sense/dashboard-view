@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list">
     <div class="add-btn">
       <n-button type="info" @click="add">{{ $t('global.r_add') }}</n-button>
     </div>
@@ -247,6 +247,11 @@ const sortLists = (list: any[]) => {
 </script>
 
 <style lang="scss" scoped>
+
+.list {
+  height: calc(100vh - 56px - 32px - 12px - 12px - 41px - 12px);
+  overflow-y: auto;
+}
 .modal-footer {
   width: 100%;
   display: flex;
