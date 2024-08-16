@@ -18,7 +18,7 @@
             height="180"
             preview-disabled
             :src="
-              cardData.image === '' ? requireUrl('project/moke-20211219181327.png') : cardData.image
+              cardData.image === '' ? requireUrl('project/empty.png') : cardData.image
             "
             :alt="cardData.title"
             :fallback-src="requireErrorImg()"
