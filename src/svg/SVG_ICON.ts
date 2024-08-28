@@ -24,6 +24,10 @@ import sun_TL from './icons/_sun_TL.svg?url'
 import XPlay from './icons/XPlay.svg?url'
 import lubanx from './icons/lubanx_dark.svg?url'
 import logo from './icons/logo.svg?url'
+import graphic_s from './icons/_graphic_s.svg?url'
+import modbus_s from './icons/_modbus_s.svg?url'
+import graphic_df from './icons/_graphic_df.svg?url'
+import modbus_df from './icons/_modbus_df.svg?url'
 
 export default {
     card_icons: {
@@ -53,5 +57,9 @@ export default {
         XPlay: XPlay,
         lubanx: lubanx,
         logo: logo,
+        graphic_s: graphic_s,
+        modbus_s: modbus_s,
+        graphic_df: graphic_df,
+        modbus_df: modbus_df,
     }
 }

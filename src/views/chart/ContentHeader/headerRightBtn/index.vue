@@ -29,7 +29,7 @@ import {
 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { syncData } from '../../ContentEdit/components/EditTools/hooks/useSyncUpdate.hook'
 import { icon } from '@/plugins'
@@ -38,7 +38,8 @@ import { useDataListInit } from '@/views/project/items/components/ProjectItemsLi
 import { updateProject } from '@/api/http'
 import html2canvas from 'html2canvas'
 
-const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon } = icon.ionicons5
+const router = useRouter()
+const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, LogOutOutlineIcon } = icon.ionicons5
 const chartEditStore = useChartEditStore()
 
 const routerParamsInfo = useRoute()
@@ -89,7 +90,7 @@ const sendHandle = async () => {
   //存储在本地浏览器中
   //saveLocalStorage(previewId, storageInfo)
 
-  console.log(storageInfo)
+  //console.log(storageInfo)
 
   const range = document.querySelector('.go-edit-range') as HTMLElement
   html2canvas(range, {
@@ -143,6 +144,10 @@ const saveLocalStorage = (id: any, storageInfo: any) => {
   console.log(data)
   setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, data)
 }
+;2
+const exitHandle = () => {
+  router.back()
+}
 
 const btnList = [
   {
@@ -163,6 +168,12 @@ const btnList = [
     title: t('dashboard.save'),
     icon: renderIcon(SendIcon),
     event: sendHandle
+  },
+  {
+    select: true,
+    title: '退出',
+    icon: renderIcon(LogOutOutlineIcon),
+    event: exitHandle
   }
 ]
 

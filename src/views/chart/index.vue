@@ -39,13 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import { getLocalStorage, JSONParse, loadAsyncComponent } from '@/utils'
 import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { useChartHistoryStore } from '@/store/modules/chartHistoryStore/chartHistoryStore'
-import { onMounted } from 'vue'
 import { useSync } from '@/views/chart/hooks/useSync.hook'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { RequestBodyEnum, RequestHttpEnum, RequestHttpIntervalEnum } from '@/enums/httpEnum'
@@ -84,8 +83,7 @@ onMounted(() => {
         nextTick(() => {
           updateComponent(JSONParse(res.content), false, true)
         })
-      } 
-      //console.log(res)
+      }
     })
     .catch(err => {
       console.log(err)
@@ -102,6 +100,12 @@ onMounted(() => {
   //     }
   //   })
   // }
+})
+
+onUnmounted(() => {
+  nextTick(() => {
+    chartEditStore.setInitCanves()
+  })
 })
 </script>
 

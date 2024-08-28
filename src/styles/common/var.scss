@@ -66,11 +66,21 @@ $--color-dark-bg-4: #313132;
 $--color-dark-bg-4-shallow: darken($--color-dark-bg-4, $--dark-shalow);
 $--color-dark-bg-5: #373739;
 $--color-dark-bg-5-shallow: darken($--color-dark-bg-5, $--dark-shalow);
+$--color-dark-bg-new-1: #383477FF;
+$--color-dark-bg-new-2: #19162AFF;
+$--color-dark-top: rgba(0,0,0,0.13);
+$--color-dark-side: rgba(0, 0, 0, 0.6);
+$--color-dark-font: rgba(255, 255, 255, 0.93);
+$--color-dark-modal-title: rgba(255, 255, 255, 0.60);
+$--color-dark-menu-title-select: radial-gradient(farthest-side at 50% 100%, #00CED1 0%, #6666FF 100%);
+$--color-dark-card: rgba(255, 255, 255, 0.2);
+$--color-dark-card-image: rgba(255, 255, 255, 0.07);
+$--color-dark-card-font: rgba(255, 255, 255, 0.60);
 
 // 最大宽度
 $--max-width: 1920px;
 // 顶部距离
-$--header-height: 56px;
+$--header-height: 80px;
 // 底部距离
 $--footer-height: 50px;
 // 模糊
@@ -85,3 +95,7 @@ $--filter-color-login-light-shallow: rgba(240, 240, 240, 0.3);
 $--border-radius-base: 8px;
 // 阴影
 $--border-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+
+//card 标题高度
+$--card-top-height: 72px;

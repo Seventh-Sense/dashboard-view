@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="SP" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="linear-gradient" x1="16.56" y1="2.15" x2="5.75" y2="20.88" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a597ff"/>
+      <stop offset="1" stop-color="#66f"/>
+    </linearGradient>
+    <clipPath id="clippath">
+      <path d="M16.4,19.6H4.1c-1.16,0-2.1-.94-2.1-2.1V6.5c0-1.16.94-2.1,2.1-2.1h15.8c1.16,0,2.1.94,2.1,2.1v7.5c0,.16-.06.31-.18.42l-5,5c-.11.11-.27.18-.42.18Z" style="fill: none;"/>
+    </clipPath>
+    <filter id="X_Shadow_3" x="-200%" y="-200%" width="400%" height="400%">
+      <feDropShadow dx="-0.75" dy="0.75" flood-color="black" flood-opacity="0.3" stdDeviation="0.75"/>
+    </filter>
+  </defs>
+  <path d="M16.4,19.6H4.1c-1.16,0-2.1-.94-2.1-2.1V6.5c0-1.16.94-2.1,2.1-2.1h15.8c1.16,0,2.1.94,2.1,2.1v7.5c0,.16-.06.31-.18.42l-5,5c-.11.11-.27.18-.42.18Z" style="fill: url(#linear-gradient);"/>
+  <g style="clip-path: url(#clippath);">
+    <g style="filter: url(#X_Shadow_3);">
+      <path d="M12,9.4h-4c-.33,0-.6.27-.6.6v4c0,.33.27.6.6.6h4c.33,0,.6-.27.6-.6v-4c0-.33-.27-.6-.6-.6ZM11.4,13.4h-2.8v-2.8h2.8v2.8Z" style="fill: #fff;"/>
+      <path d="M10,7.6c.33,0,.6-.27.6-.6v-2.6h-1.2v2.6c0,.33.27.6.6.6Z" style="fill: #fff;"/>
+      <path d="M10,16.4c-.33,0-.6.27-.6.6v2.6h1.2v-2.6c0-.33-.27-.6-.6-.6Z" style="fill: #fff;"/>
+      <path d="M5,11.4h-3v1.2h3c.33,0,.6-.27.6-.6s-.27-.6-.6-.6Z" style="fill: #fff;"/>
+    </g>
+  </g>
+  <g>
+    <path d="M12,9.4h-4c-.33,0-.6.27-.6.6v4c0,.33.27.6.6.6h4c.33,0,.6-.27.6-.6v-4c0-.33-.27-.6-.6-.6ZM11.4,13.4h-2.8v-2.8h2.8v2.8Z" style="fill: #fff;"/>
+    <path d="M10,7.6c.33,0,.6-.27.6-.6v-2.6h-1.2v2.6c0,.33.27.6.6.6Z" style="fill: #fff;"/>
+    <path d="M10,16.4c-.33,0-.6.27-.6.6v2.6h1.2v-2.6c0-.33-.27-.6-.6-.6Z" style="fill: #fff;"/>
+    <path d="M5,11.4h-3v1.2h3c.33,0,.6-.27.6-.6s-.27-.6-.6-.6Z" style="fill: #fff;"/>
+  </g>
+</svg>

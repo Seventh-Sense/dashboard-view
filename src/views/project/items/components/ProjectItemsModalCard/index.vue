@@ -23,7 +23,7 @@
         <div class="list-content-img">
           <img
             :src="
-              cardData.image === '' ? requireUrl('project/moke-20211219181327.png') : cardData.image
+              cardData.image === '' ? requireUrl('project/empty.png') : cardData.image
             "
             :alt="cardData?.title"
           />

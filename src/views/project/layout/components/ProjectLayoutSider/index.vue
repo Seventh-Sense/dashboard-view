@@ -1,9 +1,7 @@
 <template>
   <n-layout-sider
     class="go-project-sider"
-    bordered
     collapse-mode="width"
-    show-trigger="bar"
     :collapsed="collapsed"
     :native-scrollbar="false"
     :collapsed-width="getAsideCollapsedWidth"
@@ -12,20 +10,36 @@
     @expand="collapsed = false"
   >
     <div class="go-project-sider-flex">
-      <aside>
+      <div class="go-project-sider-flex-top"></div>
+      <div
+        :class="
+          collapsed
+            ? 'go-project-sider-flex-content collapsed-width'
+            : 'go-project-sider-flex-content uncollapsed-width'
+        "
+      >
         <n-space vertical class="go-project-sider-top">
+          <img
+            width="48"
+            height="48"
+            :src="SVG_ICON.card_icons.logo"
+            @click="onCollapse"
+            style="cursor: pointer"
+          />
+          <img v-if="!collapsed" :src="SVG_ICON.card_icons.XPlay" height="48" width="100" />
           <!-- <project-layout-create :collapsed="collapsed"></project-layout-create> -->
           <!-- <img src="~@/assets/images/tips/loadingSvg.svg" height="32" width="200" /> -->
-          <img width="100" height="50" :src="SVG_ICON.card_icons.XPlay"/>
         </n-space>
         <n-menu
           :value="menuValue"
           :options="menuOptions"
           :collapsed-width="getAsideCollapsedWidth"
-          :collapsed-icon-size="22"
+          :collapsed-icon-size="24"
+          :icon-size="32"
+          :root-indent="16"
           :default-expanded-keys="defaultExpandedKeys"
         ></n-menu>
-      </aside>
+      </div>
     </div>
   </n-layout-sider>
 </template>
@@ -62,6 +76,10 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', watchWidth)
 })
+
+const onCollapse = () => {
+  collapsed.value = !collapsed.value
+}
 </script>
 
 <style lang="scss" scoped>
@@ -74,14 +92,30 @@ $siderHeight: 100vh;
       display: flex;
       flex-flow: row !important;
       align-items: center;
-      height: 50px;
-      padding-left: 16px;
+      height: 64px;
+      padding-left: 8px;
     }
     &-flex {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: $siderHeight;
+      position: relative;
+
+      &-top {
+        height: $--header-height;
+        @include fetch-bg-color('top-background');
+      }
+
+      &-content {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        border-radius: 18px;
+        @include fetch-bg-color('side-background');
+        backdrop-filter: blur(50px);
+        height: calc(100vh - 32px);
+      }
     }
   }
   &-layout-sider {
@@ -91,5 +125,22 @@ $siderHeight: 100vh;
     top: $--header-height;
     margin-top: 1px;
   }
+
+  .collapsed-width {
+    width: 64px;
+  }
+
+  .uncollapsed-width {
+    width: 240px;
+  }
 }
+
+:deep(.n-menu-item-content--selected)::before {
+  background-image: #{$--color-dark-menu-title-select};
+}
+
+:deep(.n-menu-item-content) {
+  padding-left: 16px !important;
+}
+
 </style>

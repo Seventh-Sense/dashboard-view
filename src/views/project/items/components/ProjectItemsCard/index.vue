@@ -1,72 +1,50 @@
 <template>
   <div v-if="cardData" class="go-items-list-card">
-    <n-card hoverable size="small">
-      <div class="list-content">
-        <!-- 顶部按钮 -->
-        <div class="list-content-top">
-          <mac-os-control-btn
-            class="top-btn"
-            :hidden="['remove']"
-            @close="deleteHanlde"
-            @resize="resizeHandle"
-          ></mac-os-control-btn>
-        </div>
-        <!-- 中间 -->
-        <div class="list-content-img" @click="resizeHandle">
-          <n-image
-            object-fit="contain"
-            height="180"
-            preview-disabled
-            :src="
-              cardData.image === '' ? requireUrl('project/empty.png') : cardData.image
-            "
-            :alt="cardData.title"
-            :fallback-src="requireErrorImg()"
-          ></n-image>
-        </div>
-      </div>
-      <template #action>
-        <div class="go-flex-items-center list-footer" justify="space-between">
-          <n-text class="go-ellipsis-1" :title="cardData.title">
-            {{ cardData.title || '' }}
-          </n-text>
-          <!-- 工具 -->
-          <div class="go-flex-items-center list-footer-ri">
-            <n-space>
-              <template v-for="item in fnBtnList" :key="item.key">
-                <template v-if="item.key === 'select'">
-                  <n-dropdown
-                    trigger="hover"
-                    placement="bottom"
-                    :options="selectOptions"
-                    :show-arrow="true"
-                    @select="handleSelect"
-                  >
-                    <n-button size="small">
-                      <template #icon>
-                        <component :is="item.icon"></component>
-                      </template>
-                    </n-button>
-                  </n-dropdown>
-                </template>
-
-                <n-tooltip v-else placement="bottom" trigger="hover">
-                  <template #trigger>
-                    <n-button size="small" @click="handleSelect(item.key)">
-                      <template #icon>
-                        <component :is="item.icon"></component>
-                      </template>
-                    </n-button>
-                  </template>
-                  <component :is="item.label"></component>
-                </n-tooltip>
-              </template>
-            </n-space>
+    <div class="list-content">
+      <div class="list-content-title">
+        <n-space align="center">
+          <div class="list-content-title-avatar"></div>
+          <div class="list-content-title-top">
+            <span style="color: rgba(255, 255, 255, 1);font-size: 14px;line-height: 20px;">
+              {{cardData.title}}
+            </span>
+            <span style="color: rgba(255, 255, 255, 0.60);font-size: 12px;line-height: 17px;">
+              admin
+            </span>
           </div>
-          <!-- end -->
-        </div>
-      </template>
-    </n-card>
+          
+        </n-space>
+      </div>
+      <div class="list-content-desc">this is a project</div>
+    </div>
+
+    <n-space justify="space-between" align="center" class="list-footer">
+      <span class="list-footer-title">2024/4/23 11:23:23</span>
+
+      <n-space size="large">
+        <n-tooltip v-for="item in selectOptions" placement="bottom" trigger="hover">
+          <template #trigger>
+            <component
+              :is="item.icon"
+              class="list-footer-icon"
+              @click="handleSelect(item.key)"
+            ></component>
+          </template>
+          <component :is="item.label"></component>
+        </n-tooltip>
+      </n-space>
+      <!-- <n-dropdown
+          trigger="hover"
+          placement="bottom"
+          :options="selectOptions"
+          :show-arrow="true"
+          @select="handleSelect"
+        >
+          <n-icon size="20" :depth="1">
+            <EllipsisVerticalIcon />
+          </n-icon>
+        </n-dropdown> -->
+    </n-space>
   </div>
 </template>
 
@@ -77,8 +55,9 @@ import { icon } from '@/plugins'
 import { MacOsControlBtn } from '@/components/Tips/MacOsControlBtn'
 import { Chartype } from '../../index.d'
 import { log } from 'console'
+
 const {
-  EllipsisHorizontalCircleSharpIcon,
+  EllipsisVerticalIcon,
   CopyIcon,
   TrashIcon,
   PencilIcon,
@@ -99,25 +78,12 @@ const requireUrl = (name: string) => {
   return new URL(`../../../../../assets/images/${name}`, import.meta.url).href
 }
 
-const fnBtnList = reactive([
+const selectOptions = ref([
   {
     label: renderLang('global.r_edit'),
     key: 'edit',
     icon: renderIcon(HammerIcon)
   },
-  // {
-  //   lable: renderLang('global.r_more'),
-  //   key: 'select',
-  //   icon: renderIcon(EllipsisHorizontalCircleSharpIcon)
-  // },
-  {
-    label: renderLang('global.r_delete'),
-    key: 'delete',
-    icon: renderIcon(TrashIcon)
-  }
-])
-
-const selectOptions = ref([
   {
     label: renderLang('global.r_preview'),
     key: 'preview',
@@ -167,45 +133,65 @@ const previewHandle = () => {
 
 <style lang="scss" scoped>
 $contentHeight: 180px;
+$cardHeight: 200px;
+$cardContentHeight: 160px;
+$cardTopHeight: 52px;
+
 @include go('items-list-card') {
   position: relative;
   border-radius: $--border-radius-base;
-  border: 1px solid rgba(0, 0, 0, 0);
-  @extend .go-transition;
-  &:hover {
-    @include hover-border-color('hover-border-color');
-  }
+  border: 0;
+  background: $--color-dark-card;
+  height: $cardHeight;
+
   .list-content {
-    margin-top: 20px;
-    margin-bottom: 5px;
     cursor: pointer;
     border-radius: $--border-radius-base;
-    @include background-image('background-point');
-    @extend .go-point-bg;
-    &-top {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      height: 22px;
-    }
-    &-img {
-      height: $contentHeight;
-      @extend .go-flex-center;
-      @extend .go-border-radius;
-      @include deep() {
-        img {
-          @extend .go-border-radius;
-        }
+    height: $cardContentHeight;
+    background: $--color-dark-card-image;
+
+    &-title {
+      padding: 0 10px;
+      height: $cardTopHeight;
+      display: flex;
+      align-items: center;
+
+      &-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient( 227deg, #6666FF 0%, #00CED1 100%);
       }
+
+      &-top {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+      }
+    }
+
+    &-desc {
+      height: $cardContentHeight - $cardTopHeight;
+      padding: 17px 6px;
     }
   }
   .list-footer {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    line-height: 30px;
-    &-ri {
-      justify-content: flex-end;
-      min-width: 180px;
+    height: $cardHeight - $cardContentHeight;
+    padding: 0 16px;
+
+    &-title {
+      font-size: 14px;
+      font-weight: 400;
+      font-style: normal;
+      color: $--color-dark-card-font;
+    }
+
+    &-icon {
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
     }
   }
 }

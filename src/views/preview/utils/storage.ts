@@ -36,8 +36,29 @@ export const getSessionStorageInfo = () => {
 export const getLocalStorageInfo = () => {
   const filedata = JSONParse(JSONStringify(dataJson))
 
-  console.log(filedata)
+  //console.log(filedata)
   chartEditStore.editCanvasConfig = filedata.editCanvasConfig
   chartEditStore.requestGlobalConfig = filedata.requestGlobalConfig
   chartEditStore.componentList = filedata.componentList
+}
+
+//预览 读取后端数据
+export const getPreviewInfo = () => {
+  const urlHash = document.location.hash
+  const toPathArray = urlHash.split('/')
+  const id = toPathArray && toPathArray[toPathArray.length - 1]
+
+  readProject(id)
+    .then((res: any) => {
+      if (res && res.content !== '') {
+        let data = JSONParse(res.content)
+        console.log(data)
+        chartEditStore.editCanvasConfig = data.editCanvasConfig
+        chartEditStore.requestGlobalConfig = data.requestGlobalConfig
+        chartEditStore.componentList = data.componentList
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }

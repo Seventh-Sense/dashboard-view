@@ -3,13 +3,8 @@
     <!-- 创建的图标 -->
     <n-tooltip  placement="right" trigger="hover">
       <template #trigger>
-        <n-button ghost type="primary" size="small">
-          <template #icon>
-            <n-icon>
-              <DuplicateOutlineIcon v-show="designStore.getDarkTheme"></DuplicateOutlineIcon>
-              <DuplicateIcon v-show="!designStore.getDarkTheme"></DuplicateIcon>
-            </n-icon>
-          </template>
+        <n-button >
+          {{ $t('global.r_add') }}
         </n-button>
       </template>
       <span>

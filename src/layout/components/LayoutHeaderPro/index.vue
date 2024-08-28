@@ -1,5 +1,5 @@
 <template>
-  <layout-header>
+  <layout-header class="top-header">
     <template #left>
       <slot name="left"></slot>
     </template>
@@ -29,3 +29,10 @@ const isChart = computed(() => {
   return route.name === ChartEnum.CHART_HOME_NAME
 })
 </script>
+
+<style lang="scss" scoped>
+.top-header {
+  @include fetch-bg-color('top-background');
+  border: 0;
+}
+</style>

@@ -25,7 +25,7 @@ export const useSettingStore = defineStore({
       return this.asideAllCollapsed
     },
     getAsideCollapsedWidth(): number {
-      return this.asideAllCollapsed ? 0 : asideCollapsedWidth
+      return this.asideAllCollapsed ? 80 : asideCollapsedWidth
     },
     getChartMoveDistance(): number {
       return this.chartMoveDistance

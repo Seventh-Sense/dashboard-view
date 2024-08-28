@@ -68,7 +68,10 @@ import {
   EyeOffOutline as EyeOffOutlineIcon,
   Albums as AlbumsIcon,
   Analytics as AnalyticsIcon,
-  AirplaneOutline as AirPlaneOutlineIcon
+  AirplaneOutline as AirPlaneOutlineIcon,
+  SettingsOutline as SettingsOutlineIcon,
+  CloseOutline as CloseOutlineIcon,
+  EllipsisVertical as EllipsisVerticalIcon,
 } from '@vicons/ionicons5'
 
 import {
@@ -101,7 +104,9 @@ import {
   Carbon3DSoftware as Carbon3DSoftwareIcon,
   Filter as FilterIcon,
   FilterEdit as FilterEditIcon,
-  Laptop as LaptopIcon
+  Laptop as LaptopIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -244,7 +249,10 @@ const ionicons5 = {
   // 分析
   AnalyticsIcon,
   // 飞机
-  AirPlaneOutlineIcon
+  AirPlaneOutlineIcon,
+  SettingsOutlineIcon,
+  CloseOutlineIcon,
+  EllipsisVerticalIcon,
 }
 
 const carbon = {
@@ -297,7 +305,9 @@ const carbon = {
   FilterIcon,
   FilterEditIcon,
   // 图层
-  LaptopIcon
+  LaptopIcon,
+  DeleteIcon,
+  EditIcon
 }
 
 // https://www.xicons.org/#/ 还有很多

@@ -3,7 +3,7 @@
     <div class="list-pagination">
       <project-layout-create :collapsed="true"></project-layout-create>
     </div>
-    <n-grid :x-gap="20" :y-gap="20" cols="2 s:2 m:3 l:4 xl:4 xxl:4" responsive="screen">
+    <n-grid :x-gap="20" :y-gap="20" cols="2 s:2 m:3 l:4 xl:5 xxl:5" responsive="screen">
       <n-grid-item v-for="(item, index) in list" :key="item.id">
         <project-items-card
           :cardData="item"
@@ -83,18 +83,19 @@ $contentHeight: 250px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: calc(100vh - #{$--header-height} * 2 - 2px);
-  margin-bottom: 36px;
+  min-height: calc(100vh - #{$--header-height} - 32px);
+  border-radius: 18px;
+  padding: 0 16px;
+  background-color: #{$--color-dark-side};
   .list-content {
     position: relative;
     height: $contentHeight;
   }
   .list-pagination {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    height: 32px;
-    margin-bottom: 10px;
+    height: 72px;
   }
 }
 </style>

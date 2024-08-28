@@ -23,16 +23,17 @@ export const useModalDataInit = () => {
   // 编辑
   const editHandle = (cardData: Chartype) => {
     if (!cardData) return
-    const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'href')
-
-    routerTurnByPath(path, [cardData.id], undefined, true)
+    const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'fullPath')
+    
+    routerTurnByPath(path, [cardData.id], undefined, false)
   }
 
   // 预览
   const previewHandle = (cardData: Chartype) => {
-    // if (!cardData) return
-    // const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'href')
-    // routerTurnByPath(path, [cardData.id], undefined, true)
+    if (!cardData) return
+    const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'fullPath')
+
+    routerTurnByPath(path, [cardData.id], undefined, false)
   }
 
   return {

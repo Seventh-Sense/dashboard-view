@@ -281,7 +281,7 @@ export const readDeivceData = async () => {
 //modbus
 export const createModbusConfig = async (data: any) => {
   try {
-    const response = await post(`/modbus`, data)
+    const response = await post(`/modbus/`, data)
     
     return response
   } catch (error) {

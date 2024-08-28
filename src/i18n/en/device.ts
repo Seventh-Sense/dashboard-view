@@ -29,5 +29,8 @@ export default {
   stop_bits: 'Stop bits',
   mode: 'Mode',
   project_name: 'Project Name',
+
+  //
+  desc: 'Description',
 }
 

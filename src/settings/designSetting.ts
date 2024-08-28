@@ -35,7 +35,7 @@ export const chartInitConfig = {
 export const dialogIconSize = '20'
 
 // 侧边栏宽度
-export const asideWidth = '270'
+export const asideWidth = '256'
 
 // 侧边栏折叠后的宽度，支持全部折叠会覆盖为 0
 export const asideCollapsedWidth = 60

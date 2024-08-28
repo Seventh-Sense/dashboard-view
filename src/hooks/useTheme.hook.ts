@@ -28,6 +28,7 @@ export const useThemeOverridesHook = () => {
           ...commonObj.common
         }
       }
+
       // 暗色主题
       const dartObject = {
         common: {
@@ -35,7 +36,41 @@ export const useThemeOverridesHook = () => {
         },
         LoadingBar: {
           colorLoading: getAppTheme.value
-        }
+        },
+        DataTable: {
+          tdColor: 'rgba(0, 0, 0, 1)',
+          tdColorHover: 'rgba(0, 0, 0, 1)',
+          tdTextColor: 'rgba(255, 255, 255, 0.93)',
+          thTextColor: 'rgba(255, 255, 255, 0.60)',
+        },
+        Button: {
+          color: '#6666ffff',
+          colorHover: '#6666ffff',
+          colorPressed: '#6666ffff',
+          colorFocus: '#6666ffff',
+          textColor: '#ffffffff',
+          textColorHover: '#ffffffff',
+          textColorPressed: '#ffffffff',
+          textColorFocus: '#ffffffff',
+        },
+        Modal: {
+          color: 'rgba(0, 0, 0, 1)',
+          textColor: 'rgba(255, 255, 255, 0.93)',
+        },
+        Menu: {
+          itemColorHover: 'rgba(0, 0, 0, 0.6)',
+          itemColorActive: 'rgba(0, 0, 0, 0.6)',
+          itemColorActiveHover: 'rgba(0, 0, 0, 0.6)',
+          itemColorActiveCollapsed: 'rgba(0, 0, 0, 0.6)',
+          fontSize: '16px',
+          borderRadius: '8px',
+          itemHeight: '44px',
+          itemTextColor: 'rgba(255, 255, 255, 0.93)',
+          itemTextColorHover: 'rgba(255, 255, 255, 0.93)',
+          itemTextColorActive: 'rgba(255, 255, 255, 0.93)',
+          itemTextColorActiveHover: 'rgba(255, 255, 255, 0.93)',
+          
+        },
       }
       return designStore.getDarkTheme ? dartObject : lightObject
     }

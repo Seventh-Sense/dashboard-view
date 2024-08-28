@@ -36,6 +36,14 @@ export const getUUID = (randomLength = 10) => {
 export const renderIcon = (icon: any, set = {}) => {
   return () => h(NIcon, set, { default: () => h(icon) })
 }
+export const renderImage = (src: any, alt: any, width: any, height: any) => {
+  return () => h('img', {
+    src: src,
+    alt: alt,
+    width: width,
+    height: height,
+  });
+}
 /**
  * * render 语言
  *  @param lang 语言标识
