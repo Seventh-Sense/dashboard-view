@@ -42,4 +42,13 @@ export default {
   point: 'Point',
   point_bind_placeholder: 'Please select a point position',
   modbus_bind: 'Modbus Setting',
+
+
+  //left side
+  charts: 'Charts',
+  tables: 'Tables',
+  informations: 'Infos',
+  photos: 'Photos',
+  icons: 'Icons',
+  decorates: 'Decorate',
 }

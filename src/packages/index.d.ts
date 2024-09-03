@@ -199,12 +199,12 @@ export enum PackagesCategoryEnum {
 
 // 包分类名称
 export enum PackagesCategoryName {
-  CHARTS = '图表',
-  TABLES = '列表',
-  INFORMATIONS = '信息',
-  PHOTOS = '图片',
-  ICONS = '图标',
-  DECORATES = '小组件'
+  CHARTS = () => window['$t']('dashboard.charts'),
+  TABLES = () => window['$t']('dashboard.tables'),
+  INFORMATIONS = () => window['$t']('dashboard.informations'),
+  PHOTOS = () => window['$t']('dashboard.photos'),
+  ICONS = () => window['$t']('dashboard.icons'),
+  DECORATES = () => window['$t']('dashboard.decorates')
 }
 
 // 获取组件

@@ -37,6 +37,7 @@ import { cloneDeep } from 'lodash'
 import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
 import { updateProject } from '@/api/http'
 import html2canvas from 'html2canvas'
+import { PageEnum } from '@/enums/pageEnum'
 
 const router = useRouter()
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, LogOutOutlineIcon } = icon.ionicons5
@@ -149,7 +150,7 @@ const exitHandle = () => {
   //router.back()
 
   router.push({
-    path: '/project/items'
+    path: PageEnum.BASE_HOME_ITEMS
   })
 }
 

@@ -40,4 +40,13 @@ export default {
   point: '点位',
   point_bind_placeholder: '请选择点位',
   modbus_bind: 'Modbus 配置',
+
+
+  //left side
+  charts: '图表',
+  tables: '列表',
+  informations: '信息',
+  photos: '图片',
+  icons: '图标',
+  decorates: '小组件',
 }

@@ -50,8 +50,8 @@ import { setOption } from '@/packages/public'
 import { readDeivceData, readPoints, readProject } from '@/api/http'
 
 // const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
-//await getSessionStorageInfo()
-await getPreviewInfo()
+await getSessionStorageInfo()
+//await getPreviewInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
