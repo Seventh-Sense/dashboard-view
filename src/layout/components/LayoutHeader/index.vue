@@ -44,7 +44,7 @@ const isProject = computed(() => {
 
 //
 const isChart = computed(() => {
-  console.log(route.name, route.name === ChartEnum.CHART_HOME_NAME)
+  //console.log(route.name, route.name === ChartEnum.CHART_HOME_NAME)
   return route.name === ChartEnum.CHART_HOME_NAME
 })
 </script>

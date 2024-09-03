@@ -5,6 +5,7 @@ export default {
   new_project: 'New Project',
   preview: 'Preview',
   save: 'Save',
+  exit: 'Exit',
   chart_component: 'Chart Component',
   layer_control: 'Layer control',
   detail_setting: 'Detail Setting',

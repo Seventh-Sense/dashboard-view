@@ -5,23 +5,22 @@
         <n-space align="center">
           <div class="list-content-title-avatar"></div>
           <div class="list-content-title-top">
-            <span style="color: rgba(255, 255, 255, 1);font-size: 14px;line-height: 20px;">
-              {{cardData.title}}
+            <span style="color: rgba(255, 255, 255, 1); font-size: 14px; line-height: 20px">
+              {{ cardData.title }}
             </span>
-            <span style="color: rgba(255, 255, 255, 0.60);font-size: 12px;line-height: 17px;">
+            <span style="color: rgba(255, 255, 255, 0.6); font-size: 12px; line-height: 17px">
               admin
             </span>
           </div>
-          
         </n-space>
       </div>
-      <div class="list-content-desc">this is a project</div>
+      <div class="list-content-desc">This is a project</div>
     </div>
 
-    <n-space justify="space-between" align="center" class="list-footer">
+    <n-space justify="space-between" align="center" class="list-footer" :wrap="false">
       <span class="list-footer-title">2024/4/23 11:23:23</span>
 
-      <n-space size="large">
+      <n-space size="large" :wrap="false">
         <n-tooltip v-for="item in selectOptions" placement="bottom" trigger="hover">
           <template #trigger>
             <component
@@ -160,14 +159,13 @@ $cardTopHeight: 52px;
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background: linear-gradient( 227deg, #6666FF 0%, #00CED1 100%);
+        background: linear-gradient(227deg, #6666ff 0%, #00ced1 100%);
       }
 
       &-top {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        
       }
     }
 
@@ -179,12 +177,17 @@ $cardTopHeight: 52px;
   .list-footer {
     height: $cardHeight - $cardContentHeight;
     padding: 0 16px;
+    
 
     &-title {
+      width: 100%;
       font-size: 14px;
       font-weight: 400;
       font-style: normal;
       color: $--color-dark-card-font;
+      overflow: hidden; /* 确保超出容器的文本被隐藏 */
+      white-space: nowrap; /* 防止文本换行 */
+      text-overflow: ellipsis;
     }
 
     &-icon {

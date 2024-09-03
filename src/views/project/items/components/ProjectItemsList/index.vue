@@ -3,7 +3,7 @@
     <div class="list-pagination">
       <project-layout-create :collapsed="true"></project-layout-create>
     </div>
-    <n-grid :x-gap="20" :y-gap="20" cols="2 s:2 m:3 l:4 xl:5 xxl:5" responsive="screen">
+    <n-grid :x-gap="20" :y-gap="20" cols="2 s:2 m:3 l:3 xl:5 xxl:5" responsive="screen">
       <n-grid-item v-for="(item, index) in list" :key="item.id">
         <project-items-card
           :cardData="item"

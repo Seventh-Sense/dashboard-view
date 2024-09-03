@@ -96,7 +96,7 @@ const sendHandle = async () => {
   html2canvas(range, {
     backgroundColor: null,
     allowTaint: true,
-    useCORS: true,
+    useCORS: true
     // svg: {
     //   // 处理SVG
     //   xmlns: true,
@@ -144,9 +144,13 @@ const saveLocalStorage = (id: any, storageInfo: any) => {
   console.log(data)
   setLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST, data)
 }
-;2
+
 const exitHandle = () => {
-  router.back()
+  //router.back()
+
+  router.push({
+    path: '/project/items'
+  })
 }
 
 const btnList = [
@@ -171,7 +175,7 @@ const btnList = [
   },
   {
     select: true,
-    title: '退出',
+    title: t('dashboard.exit'),
     icon: renderIcon(LogOutOutlineIcon),
     event: exitHandle
   }

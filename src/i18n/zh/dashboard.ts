@@ -5,6 +5,7 @@ export default {
   new_project: '新项目',
   preview: '预览',
   save: '保存',
+  exit: '退出',
   chart_component: '图表组件',
   layer_control: '图层控制',
   detail_setting: '详情设置',

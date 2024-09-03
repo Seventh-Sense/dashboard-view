@@ -134,6 +134,8 @@ const showConfigModal = ref(false)
 const { SettingsOutlineIcon, CloseOutlineIcon } = icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
 
+const t = window['$t']
+
 const linkOptions = [
   {
     label: '/dev/ttyS3',
@@ -156,14 +158,14 @@ const selectedRow = ref<RowData>({
 function createColumns(): DataTableColumns<any> {
   return [
     {
-      title: window['$t']('device.modbus_link'),
+      title: () => t('device.modbus_link'),
       key: 'modbus_id',
       render(row) {
         return row.modbus_id === 1 ? '/dev/ttyS3' : '/dev/ttyS4'
       }
     },
     {
-      title: window['$t']('device.name'),
+      title: () => t('device.name'),
       key: 'name'
     },
     {
@@ -171,11 +173,11 @@ function createColumns(): DataTableColumns<any> {
       key: 'slaveid'
     },
     {
-      title: window['$t']('device.reg_attr'),
+      title: () => t('device.reg_attr'),
       key: 'addr'
     },
     {
-      title: window['$t']('device.value'),
+      title: () => t('device.value'),
       key: 'value'
     },
 
