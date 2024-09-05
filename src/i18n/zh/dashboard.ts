@@ -49,4 +49,18 @@ export default {
   photos: '图片',
   icons: '图标',
   decorates: '小组件',
+
+  all: '所有',
+  gauge: '表盘',
+  air: '空调',
+  more: '更多',
+  text: '文本',
+  input: '控件',
+
+  component: '组件',
+  single_row: '单列',
+  biserial: '双列',
+  search_component: '搜索组件',
+
+  history: '历史记录',
 }

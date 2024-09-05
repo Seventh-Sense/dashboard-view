@@ -105,7 +105,7 @@ const dataHandle = (newData: any) => {
   value.value = newData
   let range = maxValue.value - minValue.value
   process.value = (Math.abs(minValue.value - newData) * 100) / range
-  console.log(newData, process.value, range)
+  //console.log(newData, process.value, range)
 }
 
 function convertToNumberAndRound(str: any) {
@@ -132,7 +132,7 @@ watch(
   newData => {
     try {
       let num = convertToNumberAndRound(newData)
-      console.log(newData, num)
+      //console.log(newData, num)
       dataHandle(num)
     } catch (error) {
       console.log(error)

@@ -3,7 +3,7 @@
     <n-popover class="edit-history-popover" :show-arrow="false" size="small" trigger="click" placement="top-start">
       <template #trigger>
         <n-button class="mr-10" secondary size="small" :disabled="options.length === 0">
-          <span class="btn-text">历史记录</span>
+          <span class="btn-text">{{$t('dashboard.history')}}</span>
         </n-button>
       </template>
 
@@ -47,6 +47,8 @@ import {
   HistoryTargetTypeEnum,
   HistoryActionTypeEnum
 } from '@/store/modules/chartHistoryStore/chartHistoryStore.d'
+
+const t = window['$t']
 
 const {
   DesktopOutlineIcon,

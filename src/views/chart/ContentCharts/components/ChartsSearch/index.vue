@@ -13,7 +13,7 @@
           <n-input-group>
             <n-input
               size="small"
-              placeholder="搜索组件"
+              :placeholder="$t('dashboard.search_component')"
               v-model:value.trim="search"
               :loading="loading"
               @focus="focusHandle(true)"
@@ -37,7 +37,13 @@
               :title="item.title"
               @click="selectChartHandle(item)"
             >
-              <GoIconify v-if="item.icon" class="list-img" :icon="item.icon" color="#999" width="20" />
+              <GoIconify
+                v-if="item.icon"
+                class="list-img"
+                :icon="item.icon"
+                color="#999"
+                width="20"
+              />
               <chart-glob-image v-else class="list-item-img" :chartConfig="item" />
               <n-text class="list-item-fs" depth="2">{{ item.title }}</n-text>
             </div>
@@ -46,7 +52,11 @@
         </div>
       </n-popover>
     </div>
-    <n-button-group class="btn-group go-transition" :class="{ 'btn-group-focus': isFocus }" style="display: flex">
+    <n-button-group
+      class="btn-group go-transition"
+      :class="{ 'btn-group-focus': isFocus }"
+      style="display: flex"
+    >
       <n-button
         ghost
         size="small"
@@ -73,13 +83,18 @@ import { createComponent } from '@/packages'
 import { ConfigType, CreateComponentType } from '@/packages/index.d'
 import { themeColor } from '../../hooks/useLayout.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { ChartModeEnum, ChartLayoutStoreEnum } from '@/store/modules/chartLayoutStore/chartLayoutStore.d'
+import {
+  ChartModeEnum,
+  ChartLayoutStoreEnum
+} from '@/store/modules/chartLayoutStore/chartLayoutStore.d'
 import { useChartLayoutStore } from '@/store/modules/chartLayoutStore/chartLayoutStore'
 import { isString, addEventListener, removeEventListener } from '@/utils'
 import { fetchConfigComponent, fetchChartComponent } from '@/packages/index'
 import { componentInstall, loadingStart, loadingFinish, loadingError } from '@/utils'
 import { ChartGlobImage } from '@/components/Pages/ChartGlobImage'
 import { GoIconify } from '@/components/GoIconify'
+
+const t = window['$t']
 
 const props = defineProps({
   menuOptions: {
@@ -99,8 +114,8 @@ const searchRes = ref<ConfigType[]>([])
 const chartMode = ref<ChartModeEnum>(chartLayoutStore.getChartType)
 
 const chartModeList = [
-  { label: '单列', icon: AlbumsIcon, value: ChartModeEnum.SINGLE },
-  { label: '双列', icon: GridIcon, value: ChartModeEnum.DOUBLE }
+  { label: window['$t']('dashboard.single_row'), icon: AlbumsIcon, value: ChartModeEnum.SINGLE },
+  { label: window['$t']('dashboard.biserial'), icon: GridIcon, value: ChartModeEnum.DOUBLE }
 ]
 
 // 组件数组提取

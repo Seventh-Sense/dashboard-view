@@ -3,6 +3,7 @@ import { ChartEnum, PreviewEnum } from '@/enums/pageEnum'
 import {
   fetchPathByName,
   getLocalStorage,
+  getSessionStorage,
   JSONParse,
   routerTurnByPath,
   setSessionStorage
@@ -48,10 +49,10 @@ export const useModalDataInit = () => {
       .then((res: any) => {
         if (res && res.content !== '') {
           let data = JSONParse(res.content)
-          const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+          const sessionStorageInfo = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
           if (sessionStorageInfo?.length) {
             const repeateIndex = sessionStorageInfo.findIndex(
-              (e: { id: string }) => e.id === cardData.id
+              (e: { id: string }) => e.id === id
             )
 
             if (repeateIndex !== -1) {

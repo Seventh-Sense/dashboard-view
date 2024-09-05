@@ -51,4 +51,18 @@ export default {
   photos: 'Photos',
   icons: 'Icons',
   decorates: 'Decorate',
+
+  all: 'All',
+  gauge: 'Gauge',
+  air: 'Air',
+  more: 'More',
+  text: 'Texts',
+  input: 'Inputs',
+
+  component: 'Component',
+  single_row: 'Single Row',
+  biserial: 'Biserial',
+  search_component: 'Search',
+
+  history: 'History',
 }

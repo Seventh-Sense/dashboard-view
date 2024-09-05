@@ -5,7 +5,7 @@ export const ExitConfig: ConfigType = {
   key: 'Exit',
   chartKey: 'VExit',
   conKey: 'VCExit',
-  title: '全屏按钮',
+  title: '退出',
   category: ChatCategoryEnum.MORE,
   categoryName: ChatCategoryEnumName.MORE,
   package: PackagesCategoryEnum.DECORATES,
