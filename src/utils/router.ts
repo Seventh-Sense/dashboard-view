@@ -60,6 +60,7 @@ export const routerTurnByPath = (
   isReplace?: boolean,
   windowOpen?: boolean
 ) => {
+  //console.log(path, query, isReplace, windowOpen)
   let fullPath = ''
   if (query?.length) {
     fullPath = `${path}/${query.join('/')}`

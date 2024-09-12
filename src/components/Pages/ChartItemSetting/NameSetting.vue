@@ -1,10 +1,10 @@
 <template>
-  <setting-item-box name="名称" :alone="true">
+  <setting-item-box :name="t('dashboard.name')" :alone="true">
     <n-input
       type="text"
       maxlength="12"
       minlength="1"
-      placeholder="请输入图表名称"
+      :placeholder="t('dashboard.nameTip')"
       size="small"
       clearable
       show-count
@@ -26,7 +26,7 @@ const props = defineProps({
     required: true
   },
 })
-
+const t = window['$t']
 let valueCatch = ''
 
 const handleFocus = () => {

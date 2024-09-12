@@ -9,7 +9,7 @@
     <!-- <n-theme-editor> -->
       <go-app-provider>
         <I18n></I18n>
-        <router-view></router-view>
+        <router-view :key="routeKey"></router-view>
       </go-app-provider>
     <!-- </n-theme-editor> -->
   </n-config-provider>
@@ -21,6 +21,12 @@ import { GoAppProvider } from '@/components/GoAppProvider'
 import { I18n } from '@/components/I18n'
 import { useDarkThemeHook, useThemeOverridesHook, useCode, useLang } from '@/hooks'
 import { NThemeEditor } from 'naive-ui'
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+
+const route = useRoute();
+
+const routeKey = computed(() => route.path);
 // 暗黑主题
 const darkTheme = useDarkThemeHook()
 

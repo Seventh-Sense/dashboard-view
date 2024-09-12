@@ -12,7 +12,7 @@
       </template>
     </n-button>
   </n-space>
-  <setting-item-box name="位置">
+  <setting-item-box :name="t('dashboard.position')">
     <n-input-number
       v-model:value="chartAttr.y"
       :min="0"
@@ -20,7 +20,7 @@
       placeholder="px"
     >
       <template #prefix>
-        <n-text depth="3">上</n-text>
+        <n-text depth="3">{{t('dashboard.up') }}</n-text>
       </template>
     </n-input-number>
     <n-input-number
@@ -30,7 +30,7 @@
       placeholder="px"
     >
       <template #prefix>
-        <n-text depth="3">左</n-text>
+        <n-text depth="3">{{t('dashboard.left') }}</n-text>
       </template>
     </n-input-number>
   </setting-item-box>
@@ -44,6 +44,7 @@ import { renderIcon } from '@/utils'
 import { icon } from '@/plugins/index'
 import { EditCanvasConfigType } from '@/store/modules/chartEditStore/chartEditStore.d'
 
+const t = window['$t']
 const {
   AlignHorizontalLeftIcon,
   AlignVerticalCenterIcon,

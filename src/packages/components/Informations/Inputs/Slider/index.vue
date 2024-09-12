@@ -1,6 +1,24 @@
 <template>
   <div>
-    <n-slider v-model:value="option.dataset" :step="10" />
+    <n-slider v-model:value="option.dataset" :min="min" :max="max" :step="10" />
+    <div class="slider">
+      <span
+        :style="{
+          color: color,
+          fontSize: fontSize + 'px'
+        }"
+      >
+        {{ min }}
+      </span>
+      <span
+        :style="{
+          color: color,
+          fontSize: fontSize + 'px'
+        }"
+      >
+        {{ max }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -18,7 +36,7 @@ const props = defineProps({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { size, color } = toRefs(props.chartConfig.option)
+const { min, max, fontSize, color } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
   dataset: true
@@ -42,4 +60,9 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 </script>
 
 <style lang="scss" scoped>
+.slider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

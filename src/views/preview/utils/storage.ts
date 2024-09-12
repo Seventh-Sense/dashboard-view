@@ -18,7 +18,7 @@ export const getSessionStorageInfo = () => {
   const id = toPathArray && toPathArray[toPathArray.length - 1]
 
   const storageList: ChartEditStorageType[] = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST)
-
+ 
   if (storageList) {
     for (let i = 0; i < storageList.length; i++) {
       if (id.toString() === storageList[i]['id']) {
@@ -30,6 +30,8 @@ export const getSessionStorageInfo = () => {
       }
     }
   }
+
+  chartEditStore.setInitCanves();
 }
 
 //演示获取本地数据
@@ -52,7 +54,6 @@ export const getPreviewInfo = () => {
     .then((res: any) => {
       if (res && res.content !== '') {
         let data = JSONParse(res.content)
-        console.log(data)
         chartEditStore.editCanvasConfig = data.editCanvasConfig
         chartEditStore.requestGlobalConfig = data.requestGlobalConfig
         chartEditStore.componentList = data.componentList
@@ -61,4 +62,9 @@ export const getPreviewInfo = () => {
     .catch(err => {
       console.log(err)
     })
+}
+
+
+function getRandomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }

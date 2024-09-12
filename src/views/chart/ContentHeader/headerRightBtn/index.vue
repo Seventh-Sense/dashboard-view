@@ -23,6 +23,7 @@ import {
   fetchPathByName,
   routerTurnByPath,
   setSessionStorage,
+  getSessionStorage,
   getLocalStorage,
   setLocalStorage,
   JSONStringify
@@ -49,12 +50,13 @@ const t = window['$t']
 // 预览
 const previewHandle = () => {
   const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'href')
+  //const path = fetchPathByName(PreviewEnum.CHART_PREVIEW_NAME, 'fullPath')
   if (!path) return
   const { id } = routerParamsInfo.params
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
   const storageInfo = chartEditStore.getStorageInfo()
-  const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
+  const sessionStorageInfo = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
 
   if (sessionStorageInfo?.length) {
     const repeateIndex = sessionStorageInfo.findIndex((e: { id: string }) => e.id === previewId)

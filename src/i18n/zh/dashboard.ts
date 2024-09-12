@@ -40,6 +40,17 @@ export default {
   point: '点位',
   point_bind_placeholder: '请选择点位',
   modbus_bind: 'Modbus 配置',
+  size: '尺寸',
+  w: '宽度',
+  h: '高度',
+  position: '位置',
+  up: '上',
+  left: '左',
+  name: '名称',
+  nameTip: '请输入图表名称',
+  loadingTip: '拼命加载中...',
+  filter: '滤镜',
+  transform: '滤镜/变换',
 
 
   //left side
@@ -63,4 +74,8 @@ export default {
   search_component: '搜索组件',
 
   history: '历史记录',
+
+
+  //component
+  switch: '开关',
 }

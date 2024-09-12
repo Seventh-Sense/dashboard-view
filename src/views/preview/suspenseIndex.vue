@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { PreviewRenderList } from './components/PreviewRenderList'
 import { getFilterStyle, setTitle } from '@/utils'
 import {
@@ -47,11 +47,10 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { setOption } from '@/packages/public'
-import { readDeivceData, readPoints, readProject } from '@/api/http'
+import { readPoints } from '@/api/http'
 
-// const localStorageInfo: ChartEditStorageType = getSessionStorageInfo() as ChartEditStorageType
+
 await getSessionStorageInfo()
-//await getPreviewInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
@@ -79,10 +78,6 @@ const { show } = useComInstall(chartEditStore)
 
 // 开启键盘监听
 keyRecordHandle()
-
-function getRandomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
 
 const writeValue = (data: any) => {
   chartEditStore.componentList.map((com: any) => {
@@ -123,7 +118,7 @@ onUnmounted(() => {
   if (interval) {
     window.clearInterval(interval)
   }
-})
+}) 
 </script>
 
 <style lang="scss" scoped>

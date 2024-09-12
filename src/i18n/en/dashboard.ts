@@ -42,7 +42,17 @@ export default {
   point: 'Point',
   point_bind_placeholder: 'Please select a point position',
   modbus_bind: 'Modbus Setting',
-
+  size: 'Size',
+  w: 'W',
+  h: 'H',
+  position: 'Position',
+  up: 'U',
+  left: 'L',
+  name: 'Name',
+  nameTip: 'Please enter a chart name',
+  loadingTip: 'Loading...',
+  filter: 'Filter',
+  transform: 'Filter / Transform',
 
   //left side
   charts: 'Charts',
@@ -65,4 +75,7 @@ export default {
   search_component: 'Search',
 
   history: 'History',
+
+  //component
+  switch: 'Switch',
 }

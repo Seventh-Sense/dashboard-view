@@ -1,5 +1,5 @@
 <template>
-  <setting-item-box name="尺寸">
+  <setting-item-box :name="t('dashboard.size')">
     <n-input-number
       v-model:value="chartAttr.w"
       :min="0"
@@ -8,7 +8,7 @@
       placeholder="px"
     >
       <template #prefix>
-        <n-text depth="3">宽度</n-text>
+        <n-text depth="3">{{t('dashboard.w') }}</n-text>
       </template>
     </n-input-number>
     <n-input-number
@@ -19,7 +19,7 @@
       placeholder="px"
     >
       <template #prefix>
-        <n-text depth="3">高度</n-text>
+        <n-text depth="3">{{t('dashboard.h') }}</n-text>
       </template>
     </n-input-number>
   </setting-item-box>
@@ -29,6 +29,8 @@
 import { PropType } from 'vue'
 import { PickCreateComponentType } from '@/packages/index.d'
 import { SettingItemBox } from '@/components/Pages/ChartItemSetting'
+
+const t = window['$t']
 
 const props = defineProps({
   chartAttr: {

@@ -28,6 +28,7 @@ import graphic_s from './icons/_graphic_s.svg?url'
 import modbus_s from './icons/_modbus_s.svg?url'
 import graphic_df from './icons/_graphic_df.svg?url'
 import modbus_df from './icons/_modbus_df.svg?url'
+import loading from './icons/loading.svg?url'
 
 export default {
     card_icons: {
@@ -61,5 +62,6 @@ export default {
         modbus_s: modbus_s,
         graphic_df: graphic_df,
         modbus_df: modbus_df,
+        loading: loading,
     }
 }

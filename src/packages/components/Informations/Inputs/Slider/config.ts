@@ -10,6 +10,10 @@ export interface OptionType {
 
 export const option = {
     dataset: 40,
+    min: 0,
+    max: 100,
+    fontSize: 16,
+    color: '#FFFFFF87',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

@@ -4,7 +4,7 @@
     <n-tag type="warning"> 解散分组「 {{ isCanvas ? '滤镜' : '滤镜 / 变换' }} 」也将消失!</n-tag>
   </div>
 
-  <collapse-item :name="isCanvas ? '滤镜' : '滤镜 / 变换'">
+  <collapse-item :name="isCanvas ? t('dashboard.filter') : t('dashboard.transform')">
     <template #header>
       <n-switch v-model:value="chartStyles.filterShow" size="small"></n-switch>
     </template>
@@ -186,6 +186,7 @@ const props = defineProps({
     required: true
   }
 })
+const t = window['$t']
 
 const { HelpOutlineIcon } = icon.ionicons5
 

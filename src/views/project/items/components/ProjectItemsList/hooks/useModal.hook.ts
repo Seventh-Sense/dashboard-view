@@ -49,6 +49,7 @@ export const useModalDataInit = () => {
       .then((res: any) => {
         if (res && res.content !== '') {
           let data = JSONParse(res.content)
+
           const sessionStorageInfo = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
           if (sessionStorageInfo?.length) {
             const repeateIndex = sessionStorageInfo.findIndex(
@@ -57,6 +58,7 @@ export const useModalDataInit = () => {
 
             if (repeateIndex !== -1) {
               sessionStorageInfo.splice(repeateIndex, 1, { id: id, ...data })
+              setSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST, sessionStorageInfo)
             } else {
               sessionStorageInfo.push({
                 id: id,

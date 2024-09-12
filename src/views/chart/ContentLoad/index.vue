@@ -1,7 +1,7 @@
 <template>
   <n-modal :show="showModal" :close-on-esc="false" transform-origin="center">
     <div>
-      <span> 拼命加载中... </span>
+      <span> {{t('dashboard.loadingTip') }} </span>
       <n-progress type="line" :color="themeColor" :percentage="percentage" style="width: 300px" />
     </div>
   </n-modal>
@@ -16,7 +16,7 @@ const chartLayoutStore = useChartLayoutStore()
 const designStore = useDesignStore()
 const showModal = ref(false)
 const percentage = ref(0)
-
+const t = window['$t']
 // 颜色
 const themeColor = computed(() => {
   return designStore.getAppTheme
