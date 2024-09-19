@@ -22,8 +22,7 @@
           <n-select
             v-model:value="data.serial_port"
             placeholder="Select"
-            :options="serialOptions"
-            disabled
+            :options="options"
           />
         </n-form-item-gi>
         
@@ -66,6 +65,10 @@ import {
 defineProps({
   data: {
     type: Object,
+    required: true
+  },
+  options: {
+    type: Array,
     required: true
   }
 })

@@ -90,7 +90,7 @@ const writeValue = (data: any) => {
           value.modbus_id.toString() === bindInfo.deviceID &&
           value.id.toString() === bindInfo.objectID
         ) {
-          //console.log("com", value, bindInfo)
+          //console.log("com", com, value, bindInfo)
           com.option.dataset = value.value
         }
       })

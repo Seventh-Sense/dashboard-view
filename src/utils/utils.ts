@@ -371,3 +371,21 @@ export const JSONParse = (data: string) => {
 export const setTitle = (title?: string) => {
   title && (document.title = title)
 }
+
+
+/**
+ * * 获取数据类型
+ * @param title
+ */
+export function getType(value: any): string {
+  // 类型守卫
+  if (typeof value === 'string') {
+    return 'string';
+  } else if (typeof value === 'boolean') {
+    return 'boolean';
+  } else if (typeof value === 'number') {
+    return 'number';
+  } else {
+    return 'other';
+  }
+}

@@ -309,6 +309,26 @@ export const writeModbusConfig = async (id: any, data: any) => {
   }
 }
 
+export const delModbusConfig = async (id: any) => {
+  try {
+    const response = await del(`/modbus/` + id)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readComs = async () => {
+  try {
+    const response = await get(`/coms`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const readPoints = async () => {
   try {
     const response = await get(`/point/?offset=0&limit=100`)

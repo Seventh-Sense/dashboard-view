@@ -40,3 +40,9 @@ const hljsTheme = useCode()
 const { locale, dateLocale } = useLang()
 //测试提交
 </script>
+
+<style lang="scss" scoped>
+div[aria-hidden="true"] {
+		display: none !important
+}
+</style>

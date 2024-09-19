@@ -65,6 +65,8 @@ export default {
   gauge: '表盘',
   air: '空调',
   more: '更多',
+  line: '折线图',
+  device: '设备',
   text: '文本',
   input: '控件',
 
@@ -78,4 +80,7 @@ export default {
 
   //component
   switch: '开关',
+
+  //水式泵
+  pump_left: '水式泵',
 }

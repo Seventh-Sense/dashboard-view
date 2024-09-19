@@ -72,6 +72,7 @@ import {
   SettingsOutline as SettingsOutlineIcon,
   CloseOutline as CloseOutlineIcon,
   EllipsisVertical as EllipsisVerticalIcon,
+  Checkmark as CheckmarkIcon,
 } from '@vicons/ionicons5'
 
 import {
@@ -253,6 +254,7 @@ const ionicons5 = {
   SettingsOutlineIcon,
   CloseOutlineIcon,
   EllipsisVerticalIcon,
+  CheckmarkIcon,
 }
 
 const carbon = {

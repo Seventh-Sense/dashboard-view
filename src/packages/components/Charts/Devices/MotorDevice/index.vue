@@ -18,12 +18,13 @@
 
 <script setup lang="ts">
 import { PropType, shallowReactive, watch, toRefs, ref, onMounted } from 'vue'
-import { CreateComponentType } from '../../../../../packages/index.d'
-import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
-import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
-import CCW_01 from '../../../../../assets/device/fan/VerticalPumpLeftImpeller-CCW_01.png'
-import CCW_02 from '../../../../../assets/device/fan/VerticalPumpLeftImpeller-CCW_02.png'
-import CCW_03 from '../../../../../assets/device/fan/VerticalPumpLeftImpeller-CCW_03.png'
+import { CreateComponentType } from '@/packages/index.d'
+import { useChartDataFetch } from '@/hooks/useChartDataFetch.hook'
+import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
+import CCW_01 from '@/assets/device/fan/VerticalPumpLeftImpeller-CCW_01.png'
+import CCW_02 from '@/assets/device/fan/VerticalPumpLeftImpeller-CCW_02.png'
+import CCW_03 from '@/assets/device/fan/VerticalPumpLeftImpeller-CCW_03.png'
+import { getType } from '@/utils/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -38,30 +39,54 @@ const option = shallowReactive({
 })
 
 const currentImage = ref(CCW_01)
-let currenIndex = 0;
-const interval = ref(null)
+let currenIndex = 0
+let interval: any = null
 
 const images = [CCW_01, CCW_02, CCW_03]
 
-function circularIndex(array, index) {
+function circularIndex(array: any[], index: number) {
   const length = array.length
   return (index + 1) % length
 }
 
-onMounted(() => {
-  setInterval(() => {
+const processAnimation = () => {
+  if (interval) {
+    return
+  }
+
+  interval = setInterval(() => {
     currenIndex = circularIndex(images, currenIndex)
     currentImage.value = images[currenIndex]
 
-    //console.log(currentImage.value)
-  }, 100) 
-})
+  }, 100)
+}
+
+const clear = () => {
+  if (interval) {
+    clearInterval(interval)
+  }
+}
 
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    if (typeof newVal === 'boolean') {
-      option.dataset = newVal
+    let type = getType(newVal)
+    //console.log('MotorDevice value', type, newVal)
+    
+    if (type === 'string') {
+      let val = parseFloat(newVal)
+      if (val > 0) {
+        processAnimation()
+      } else {
+        clear()
+      }
+      //if (va)
+    } else if (type === 'boolean') {
+      if (newVal) {
+        processAnimation()
+      } else {
+        clear()
+      }
     }
   },
   {
@@ -69,6 +94,10 @@ watch(
     deep: true
   }
 )
+
+
+
+
 
 useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number) => {
   // @ts-ignore

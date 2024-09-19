@@ -29,6 +29,10 @@ import modbus_s from './icons/_modbus_s.svg?url'
 import graphic_df from './icons/_graphic_df.svg?url'
 import modbus_df from './icons/_modbus_df.svg?url'
 import loading from './icons/loading.svg?url'
+import add from './icons/add.svg?url'
+import delete_1 from './icons/delete.svg?url'
+import expand from './icons/expand.svg?url'
+import separator from './icons/separator.svg?url'
 
 export default {
     card_icons: {
@@ -63,5 +67,9 @@ export default {
         graphic_df: graphic_df,
         modbus_df: modbus_df,
         loading: loading,
+        add: add,
+        delete: delete_1,
+        expand: expand,
+        separator: separator,
     }
 }

@@ -59,6 +59,8 @@
               <n-input-number v-model:value="selectedRow.slaveid" clearable />
               <div class="project-modal-tip">{{ $t('device.reg_attr') }}:</div>
               <n-input-number v-model:value="selectedRow.addr" clearable />
+              <div class="project-modal-tip">寄存器数量:</div>
+              <n-input-number v-model:value="selectedRow.count" clearable />
               <div class="project-modal-tip">{{ $t('device.value') }}:</div>
               <n-input v-model:value="selectedRow.value" type="text" />
             </div>
@@ -69,7 +71,7 @@
             </template>
           </n-card>
         </n-modal>
-        <n-modal v-model:show="showConfigModal">
+        <n-modal v-model:show="showConfigModal" :mask-closable="false">
           <n-card
             :bordered="true"
             role="dialog"
@@ -80,20 +82,93 @@
           >
             <template #header>
               <n-space justify="space-between" align="center">
-                <span class="project-modal-title">设置Modbus</span>
-                <n-icon size="32" :depth="1" @click="onConfigClose" style="cursor: pointer">
-                  <CloseOutlineIcon />
+                <n-space :size="[1, 0]">
+                  <n-icon size="32" :depth="1" @click="onConfigClose" style="cursor: pointer">
+                    <ChevronBackOutlineIcon />
+                  </n-icon>
+                  <span class="project-modal-title">设置Modbus</span>
+                </n-space>
+
+                <n-icon
+                  v-if="!isConfigEdit"
+                  size="24"
+                  :depth="1"
+                  @click="onEdit"
+                  style="cursor: pointer"
+                >
+                  <EditIcon />
+                </n-icon>
+                <n-icon
+                  v-else
+                  size="24"
+                  :depth="1"
+                  @click="onEdit"
+                  style="background: rgba(102, 102, 255, 1); cursor: pointer"
+                >
+                  <EditIcon />
                 </n-icon>
               </n-space>
             </template>
-            <div class="project-modal-config-title">Modbus1</div>
-            <LinkParams :data="configData.modbus1" />
-            <div class="project-modal-config-title">Modbus2</div>
-            <LinkParams :data="configData.modbus2" />
+            <div style="height: 500px; overflow-y: auto">
+              <n-collapse>
+                <template #header-extra>
+                  <div
+                    style="
+                      width: 44px;
+                      height: 44px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    "
+                  >
+                    <img width="24" height="24" :src="SVG_ICON.card_icons.expand" />
+                  </div>
+                </template>
+                <template #arrow>
+                  <div></div>
+                </template>
+                <n-collapse-item v-for="config in configData" :name="config.name">
+                  <template #header>
+                    <img
+                      v-if="isConfigEdit"
+                      width="24"
+                      height="24"
+                      @click.stop="onDelete(config.id)"
+                      :src="SVG_ICON.card_icons.delete"
+                    />
+                    <img width="24" height="24" :src="SVG_ICON.card_icons.separator" />
+
+                    <n-space v-if="isConfigEdit" @click.stop align="center">
+                      <n-input
+                        v-model:value="config.name"
+                        type="text"
+                        size="small"
+                        style="width: 150px"
+                      />
+                      <n-icon size="20" :depth="1" @click="onCheck(config)" style="cursor: pointer">
+                        <CheckmarkIcon />
+                      </n-icon>
+                    </n-space>
+                    <span v-else>{{ config.name }}</span>
+                  </template>
+                  <LinkParams :data="config" :options="serialOptions" />
+                  <n-space justify="end">
+                    <n-button @click="onConfigSave(config)">{{ $t('global.r_ok') }}</n-button>
+                  </n-space>
+                </n-collapse-item>
+              </n-collapse>
+              <div class="project-modal-block" @click="onAdd">
+                <img width="24" height="24" :src="SVG_ICON.card_icons.add" />
+                <span style="margin-left: 8px; font-size: 14px; color: rgba(255, 255, 255, 0.93)">
+                  新增
+                </span>
+              </div>
+            </div>
+
             <template #footer>
-              <n-space justify="end">
+              <!-- <n-space justify="end">
                 <n-button @click="onConfigSave">{{ $t('global.r_ok') }}</n-button>
-              </n-space>
+              </n-space> -->
             </template>
           </n-card>
         </n-modal>
@@ -113,17 +188,21 @@ import {
   writePoint,
   createModbusConfig,
   readModbusConfig,
-  writeModbusConfig
+  writeModbusConfig,
+  delModbusConfig,
+  readComs
 } from '@/api/http'
 import { icon } from '@/plugins'
 import { LinkParams } from './components/LinkParams'
+import SVG_ICON from '@/svg/SVG_ICON'
 
 interface RowData {
   id: number
-  modbus_id: number
+  modbus_id: any
   name: string
   slaveid: number
   addr: number
+  count: number
   value: string
 }
 
@@ -131,27 +210,20 @@ const isEdit = ref(false)
 const data = ref<any[]>([])
 const showModal = ref(false)
 const showConfigModal = ref(false)
-const { SettingsOutlineIcon, CloseOutlineIcon } = icon.ionicons5
+const { SettingsOutlineIcon, CloseOutlineIcon, ChevronBackOutlineIcon, CheckmarkIcon } =
+  icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
 
 const t = window['$t']
 
-const linkOptions = [
-  {
-    label: '/dev/ttyS3',
-    value: 1
-  },
-  {
-    label: '/dev/ttyS4',
-    value: 2
-  }
-]
+const linkOptions = ref<any>([])
 const selectedRow = ref<RowData>({
   id: 0,
-  modbus_id: 1,
+  modbus_id: '',
   name: '',
   slaveid: 0,
   addr: 0,
+  count: 1,
   value: ''
 })
 
@@ -161,7 +233,15 @@ function createColumns(): DataTableColumns<any> {
       title: () => t('device.modbus_link'),
       key: 'modbus_id',
       render(row) {
-        return row.modbus_id === 1 ? '/dev/ttyS3' : '/dev/ttyS4'
+        let text = row.modbus_id
+
+        linkOptions.value.forEach((item: any) => {
+          if (row.modbus_id === item.value) {
+            text = item.label
+          }
+        })
+
+        return text
       }
     },
     {
@@ -175,6 +255,10 @@ function createColumns(): DataTableColumns<any> {
     {
       title: () => t('device.reg_attr'),
       key: 'addr'
+    },
+    {
+      title: '寄存器数量',
+      key: 'count'
     },
     {
       title: () => t('device.value'),
@@ -242,6 +326,8 @@ const columns = ref(createColumns())
 
 onMounted(() => {
   initData()
+
+  updateLinks()
 })
 
 const initData = () => {
@@ -327,86 +413,162 @@ const paramCheck = () => {
 const clear = () => {
   selectedRow.value = {
     id: 0,
-    modbus_id: 1,
+    modbus_id: '',
     name: '',
     slaveid: 0,
     addr: 0,
+    count: 1,
     value: ''
   }
 }
 
-//config
-const configData = reactive({
-  modbus1: {
-    id: '1',
-    connect_mode: 'Serial Port',
-    serial_port: '/dev/ttyS3',
-    baudrate: 9600,
-    data_bit: 8,
-    parity: 'Even',
-    stop_bit: 2,
-    mode: 'RTU'
-  },
-  modbus2: {
-    id: '2',
-    connect_mode: 'Serial Port',
-    serial_port: '/dev/ttyS4',
-    baudrate: 9600,
-    data_bit: 8,
-    parity: 'Even',
-    stop_bit: 2,
-    mode: 'RTU'
+const updateLinks = () => {
+  linkOptions.value = []
+  readModbusConfig()
+    .then((res: any) => {
+      if (res.length > 0) {
+        res.forEach((item: any) => {
+          let result = JSON.parse(item.settings)
+          linkOptions.value.push({
+            label: result.name,
+            value: item.id
+          })
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+watch(
+  () => showModal.value,
+  (newValue: boolean) => {
+    if (newValue) {
+      updateLinks()
+    }
   }
-})
+)
+
+//config
+const configData = ref<any>([])
+const isConfigEdit = ref(false)
+const serialOptions = ref([])
+
+const onAdd = () => {
+  if (!isConfigEdit.value) {
+    let id =
+      configData.value.length === 0 ? 1 : configData.value[configData.value.length - 1].id + 1
+
+    let data = {
+      name: 'Modbus' + id,
+      id: id,
+      connect_mode: 'Serial Port',
+      serial_port: '',
+      baudrate: 115200,
+      data_bit: 8,
+      parity: 'None',
+      stop_bit: 1,
+      mode: 'RTU'
+    }
+
+    createModbusConfig({
+      name: data.name,
+      settings: JSON.stringify(data)
+    })
+      .then((res: any) => {
+        console.log('create' + data.name + 'success')
+        configData.value.push(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  } else {
+    window['$message'].warning('请退出编辑模式!')
+  }
+}
+
+const onEdit = () => {
+  isConfigEdit.value = !isConfigEdit.value
+}
+const onDelete = (id: any) => {
+  delModbusConfig(id)
+    .then((res: any) => {
+      if (res.ok) {
+        configData.value = configData.value.filter((item: any) => item.id !== id)
+        window['$message'].success('数据删除成功!')
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 const onConfigOpen = () => {
   showConfigModal.value = true
 }
 const onConfigClose = () => {
-  showConfigModal.value = false
+  if (!isConfigEdit.value) {
+    showConfigModal.value = false
+  } else {
+    window['$message'].warning('请退出编辑模式!')
+  }
 }
 
-const onConfigSave = () => {
-  // save Modbus 1
-  writeModbusConfig(1, {
-    name: 'Modbus 1',
-    settings: JSON.stringify(configData.modbus1)
-  }).then(res => {
-    console.log('modification Modbus 1 success')
-  }).catch(err => {
-    console.log(err)
+const onConfigSave = (data: any) => {
+  // save Modbus
+  writeModbusConfig(data.id, {
+    name: data.name,
+    settings: JSON.stringify(data)
   })
+    .then(res => {
+      window['$message'].success('数据修改成功!')
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
-  writeModbusConfig(2, {
-    name: 'Modbus 2',
-    settings: JSON.stringify(configData.modbus2)
-  }).then(res => {
-    console.log('modification Modbus 2 success')
-    window['$message'].success('Data modification Success!')
-  }).catch(err => {
-    console.log(err)
+//修改名字
+const onCheck = (data: any) => {
+  writeModbusConfig(data.id, {
+    name: data.name,
+    settings: JSON.stringify(data)
   })
-
-  showConfigModal.value = false
+    .then(res => {
+      window['$message'].success('数据修改成功!')
+      updateLinks()
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 watch(
   () => showConfigModal.value,
   (newValue: boolean) => {
     if (newValue) {
+      configData.value = []
       readModbusConfig()
         .then((res: any) => {
-          let result = res.find((item: any) => item.name === 'Modbus 1')
-          if (result === undefined) {
-            initCreate('Modbus 1', configData.modbus1)
-          } else {
-            updateData('Modbus 1', result)
+          if (res.length > 0) {
+            res.forEach((item: any) => {
+              let result = JSON.parse(item.settings)
+              result.id = item.id
+              configData.value.push(result)
+            })
           }
+        })
+        .catch(err => {
+          console.log(err)
+        })
 
-          let result2 = res.find((item: any) => item.name === 'Modbus 2')
-          if (result2 === undefined) {
-            initCreate('Modbus 2', configData.modbus2)
-          } else {
-            updateData('Modbus 2', result2)
+      readComs()
+        .then((res: any) => {
+          if (res.status === 'OK') {
+            serialOptions.value = res.ports.map((v: any) => ({
+              label: v,
+              value: v
+            }))
           }
         })
         .catch(err => {
@@ -415,33 +577,6 @@ watch(
     }
   }
 )
-
-const initCreate = (name: string, data: Object) => {
-  createModbusConfig({
-    name: name,
-    settings: JSON.stringify(data)
-  })
-    .then((res: any) => {
-      console.log('create' + name + 'success')
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
-
-const updateData = (name: string, res: any) => {
-  let result = JSON.parse(res.settings)
-
-  if (name === 'Modbus 1') {
-    configData.modbus1 = result
-  }
-
-  if (name === 'Modbus 2') {
-    configData.modbus2 = result
-  }
-
-  console.log(data)
-}
 </script>
 
 <style lang="scss" scoped>
@@ -511,6 +646,19 @@ const updateData = (name: string, res: any) => {
       font-weight: bold;
       margin-bottom: 20px;
     }
+
+    &-block {
+      height: 44px;
+      width: calc(100% - 10px);
+      border-radius: 8px;
+      background-color: #201e2b;
+      backdrop-filter: blur(30px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin-top: 16px;
+    }
   }
 }
 
@@ -527,4 +675,17 @@ const updateData = (name: string, res: any) => {
 //   background-color: transparent;
 //   backdrop-filter: blur(30px);
 // }
+
+:deep(.n-collapse-item__header) {
+  height: 44px;
+  width: 100%;
+  background-color: #201e2b;
+  backdrop-filter: blur(30px);
+  border-radius: 8px;
+  padding: 0 !important;
+}
+
+:deep(.n-collapse) {
+  padding-right: 10px;
+}
 </style>

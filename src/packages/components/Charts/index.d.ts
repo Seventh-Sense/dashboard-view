@@ -1,3 +1,5 @@
+import i18n from '@/i18n/index'
+
 /* eslint-disable no-unused-vars */
 export enum ChatCategoryEnum {
   BAR = 'Bars',

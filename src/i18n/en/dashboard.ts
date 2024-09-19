@@ -66,6 +66,8 @@ export default {
   gauge: 'Gauge',
   air: 'Air',
   more: 'More',
+  line: 'Lines',
+  device: 'Devices',
   text: 'Texts',
   input: 'Inputs',
 
@@ -78,4 +80,8 @@ export default {
 
   //component
   switch: 'Switch',
+
+
+  //Water pump
+  pump_left: 'Water Pump',
 }
