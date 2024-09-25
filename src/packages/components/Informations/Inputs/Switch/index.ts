@@ -11,5 +11,5 @@ export const SwitchConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.INPUTS,
   package: PackagesCategoryEnum.INFORMATIONS,
   chartFrame: ChartFrameEnum.STATIC,
-  image: 'sliber.png'
+  image: 'switch.png'
 }

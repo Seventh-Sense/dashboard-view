@@ -25,52 +25,13 @@
           :bordered="false"
           :row-class-name="(rowData: object, index : number) => rowClassName(rowData, index)"
         />
-        <n-modal v-model:show="showModal">
-          <n-card
-            :bordered="true"
-            role="dialog"
-            aria-modal="true"
-            size="small"
-            :mask-closable="false"
-            style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px"
-          >
-            <template #header>
-              <n-space justify="space-between" align="center">
-                <span class="project-modal-title">
-                  {{ $t('device.config') }}
-                </span>
-                <n-icon size="32" :depth="1" @click="onNegativeClick" style="cursor: pointer">
-                  <CloseOutlineIcon />
-                </n-icon>
-              </n-space>
-            </template>
-            <div class="project-modal">
-              <div class="project-modal-tip" style="margin-top: 0">
-                {{ $t('device.modbus_link') }}:
-              </div>
-              <n-select
-                v-model:value="selectedRow.modbus_id"
-                placeholder="Select"
-                :options="linkOptions"
-              />
-              <div class="project-modal-tip">{{ $t('device.name') }}:</div>
-              <n-input v-model:value="selectedRow.name" type="text" />
-              <div class="project-modal-tip">Slave ID:</div>
-              <n-input-number v-model:value="selectedRow.slaveid" clearable />
-              <div class="project-modal-tip">{{ $t('device.reg_attr') }}:</div>
-              <n-input-number v-model:value="selectedRow.addr" clearable />
-              <div class="project-modal-tip">寄存器数量:</div>
-              <n-input-number v-model:value="selectedRow.count" clearable />
-              <div class="project-modal-tip">{{ $t('device.value') }}:</div>
-              <n-input v-model:value="selectedRow.value" type="text" />
-            </div>
-            <template #footer>
-              <n-space justify="end">
-                <n-button @click="onPositiveClick">{{ $t('global.r_ok') }}</n-button>
-              </n-space>
-            </template>
-          </n-card>
-        </n-modal>
+        <ModbusModal
+          v-model:showModal="showModal"
+          :data="selectedRow"
+          :options="linkOptions"
+          :isEdit="isEdit"
+        />
+
         <n-modal v-model:show="showConfigModal" :mask-closable="false">
           <n-card
             :bordered="true"
@@ -195,6 +156,7 @@ import {
 import { icon } from '@/plugins'
 import { LinkParams } from './components/LinkParams'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { ModbusModal } from './modal/ModbusModal'
 
 interface RowData {
   id: number
@@ -202,7 +164,11 @@ interface RowData {
   name: string
   slaveid: number
   addr: number
-  count: number
+  code_seq: string
+  gain: number
+  data_type: string
+  reg_type: string
+  unit: string
   value: string
 }
 
@@ -223,12 +189,36 @@ const selectedRow = ref<RowData>({
   name: '',
   slaveid: 0,
   addr: 0,
-  count: 1,
+  code_seq: 'AB',
+  gain: 0.1,
+  data_type: '16int',
+  reg_type: 'Input Registers',
+  unit: '',
   value: ''
 })
 
+const clear = () => {
+  selectedRow.value = {
+    id: 0,
+    modbus_id: '',
+    name: '',
+    slaveid: 0,
+    addr: 0,
+    code_seq: 'AB',
+    gain: 0.1,
+    data_type: '16int',
+    reg_type: 'Input Registers',
+    unit: '',
+    value: ''
+  }
+}
+
 function createColumns(): DataTableColumns<any> {
   return [
+    {
+      title: () => t('device.name'),
+      key: 'name'
+    },
     {
       title: () => t('device.modbus_link'),
       key: 'modbus_id',
@@ -245,10 +235,6 @@ function createColumns(): DataTableColumns<any> {
       }
     },
     {
-      title: () => t('device.name'),
-      key: 'name'
-    },
-    {
       title: 'Slave ID',
       key: 'slaveid'
     },
@@ -257,14 +243,13 @@ function createColumns(): DataTableColumns<any> {
       key: 'addr'
     },
     {
-      title: '寄存器数量',
-      key: 'count'
+      title: () => t('device.unit'),
+      key: 'unit'
     },
     {
       title: () => t('device.value'),
       key: 'value'
     },
-
     {
       title: '',
       key: 'actions',
@@ -344,6 +329,7 @@ const initData = () => {
 }
 
 const add = () => {
+  isEdit.value = false
   showModal.value = true
 }
 
@@ -359,67 +345,6 @@ const deleteRow = (row: any) => {
 
 const rowClassName = (row: object, index: number) => {
   return index % 2 === 0 ? 'td-odd' : 'td-even'
-}
-
-const onPositiveClick = () => {
-  if (paramCheck()) {
-    if (isEdit.value) {
-      updatePoint(selectedRow.value.id, selectedRow.value)
-        .then(res => {
-          window['$message'].success('Update Success!')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => {
-          clear()
-          showModal.value = false
-          isEdit.value = false
-        })
-    } else {
-      writePoint(selectedRow.value)
-        .then(res => {
-          data.value.push(res)
-          window['$message'].success('Create Success!')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => {
-          clear()
-          showModal.value = false
-        })
-    }
-  }
-}
-
-const onNegativeClick = () => {
-  clear()
-  showModal.value = false
-  isEdit.value = false
-}
-
-const paramCheck = () => {
-  let flag = true
-
-  if (selectedRow.value.name === '') {
-    flag = false
-    window['$message'].error('Object name is not filled in!')
-  }
-
-  return flag
-}
-
-const clear = () => {
-  selectedRow.value = {
-    id: 0,
-    modbus_id: '',
-    name: '',
-    slaveid: 0,
-    addr: 0,
-    count: 1,
-    value: ''
-  }
 }
 
 const updateLinks = () => {
@@ -446,6 +371,9 @@ watch(
   (newValue: boolean) => {
     if (newValue) {
       updateLinks()
+    } else {
+      clear()
+      initData()
     }
   }
 )

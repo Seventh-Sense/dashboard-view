@@ -1,6 +1,11 @@
 <template>
   <div class="go-switch">
-    <n-switch v-model:value="option.dataset" :size="size" :round="round" :disabled="disabled" />
+    <n-switch
+      v-model:value="option.dataset"
+      :size="size"
+      :round="round"
+      @update:value="handleChange"
+    />
   </div>
 </template>
 
@@ -21,6 +26,10 @@ const { size, round, disabled } = toRefs(props.chartConfig.option)
 const option = shallowReactive({
   dataset: true
 })
+
+const handleChange = (value: boolean) => {
+  console.log('asdasdasd', value)
+}
 
 watch(
   () => props.chartConfig.option.dataset,

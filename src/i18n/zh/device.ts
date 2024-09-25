@@ -16,10 +16,15 @@ export default {
   object_msg: '对象信息',
 
   //Modbus
-  config: '配置',
+  config: '新增数据',
   modbus_link: '链路',
   name: '名称',
   reg_attr: '寄存器地址',
+  data_type: '数据类型',
+  coding_seq: '编码序列',
+  coefficient: '系数',
+  reg_type: '寄存器类型',
+  unit: '单位',
   value: '值',
   connection: '连接',
   serial_settings: '串口设置',
