@@ -23,28 +23,47 @@
           <div class="modal-tip" style="margin-top: 0">{{ $t('device.name') }}:</div>
           <n-input v-model:value="data.name" type="text" />
 
-          <div class="modal-tip">Slave ID:</div>
-          <n-input-number v-model:value="data.slaveid" button-placement="both" />
+          <div class="modal-tip">{{ $t('device.slave_id') }}:</div>
+          <n-input-number
+            v-model:value="data.slaveid"
+            button-placement="both"
+            :show-button="false"
+          />
           <div class="modal-tip">{{ $t('device.reg_type') }}:</div>
           <n-select v-model:value="data.reg_type" placeholder="Select" :options="regTypeOptions" />
-          <div class="modal-tip">{{ $t('device.data_type') }}:</div>
-          <n-select v-model:value="data.data_type" placeholder="Select" :options="dataTypeOptions" />
-
-          <div class="modal-tip">{{ $t('device.unit') }}:</div>
-          <n-input v-model:value="data.unit" type="text" />
+          <div class="modal-tip">{{ $t('device.coefficient') }}:</div>
+          <n-input-number
+            v-model:value="data.gain"
+            button-placement="both"
+            :show-button="false"
+            :disabled="!disabled"
+          />
+          <div class="modal-tip">{{ $t('device.value') }}:</div>
+          <n-input v-model:value="data.value" type="text" />
         </n-gi>
         <n-gi>
           <div class="modal-tip" style="margin-top: 0">{{ $t('device.modbus_link') }}:</div>
           <n-select v-model:value="data.modbus_id" placeholder="Select" :options="options" />
           <div class="modal-tip">{{ $t('device.reg_attr') }}:</div>
-          <n-input-number v-model:value="data.addr" button-placement="both" />
-          <div class="modal-tip">{{ $t('device.coefficient') }}:</div>
-          <n-input-number v-model:value="data.gain" button-placement="both" />
-          <div class="modal-tip">{{ $t('device.coding_seq') }}:</div>
-          <n-select v-model:value="data.code_seq" placeholder="Select" :options="codingOptions" />
+          <n-input-number v-model:value="data.addr" button-placement="both" :show-button="false" />
+          <div class="modal-tip">{{ $t('device.data_type') }}:</div>
+          <n-select
+            v-model:value="data.data_type"
+            placeholder="Select"
+            :options="typeOptions"
+            :disabled="!disabled"
+          />
 
-          <div class="modal-tip">{{ $t('device.value') }}:</div>
-          <n-input v-model:value="data.value" type="text" />
+          <div class="modal-tip">{{ $t('device.coding_seq') }}:</div>
+          <n-select
+            v-model:value="data.code_seq"
+            placeholder="Select"
+            :options="codingOptions"
+            :disabled="!disabled"
+          />
+
+          <div class="modal-tip">{{ $t('device.unit') }}:</div>
+          <n-input v-model:value="data.unit" type="text" :disabled="!disabled" />
         </n-gi>
       </n-grid>
 
@@ -59,11 +78,14 @@
 
 <script setup lang="ts">
 import { icon } from '@/plugins'
-import { onMounted, ref } from 'vue'
-import { regTypeOptions, dataTypeOptions, codingOptions } from '../../utils/utils'
+import { onMounted, ref, watch } from 'vue'
+import { regTypeOptions, dataTypeOptions, codingOptions, byteOptions } from '../../utils/utils'
 import { updatePoint, writePoint } from '@/api/http'
 
 const { CloseOutlineIcon } = icon.ionicons5
+
+const typeOptions = ref<any[]>([])
+const disabled = ref(false)
 
 let emit = defineEmits(['update:showModal'])
 const props = defineProps({
@@ -126,6 +148,23 @@ const onPositiveClick = () => {
 const onNegativeClick = () => {
   emit('update:showModal', false)
 }
+
+watch(
+  () => props.data.reg_type,
+  newVal => {
+    console.log('adsa', newVal)
+    if (newVal === '0' || newVal === '1') {
+      typeOptions.value = byteOptions
+      props.data.data_type = 'bool'
+      disabled.value = false
+    } else {
+      typeOptions.value = dataTypeOptions
+      props.data.data_type = '16int'
+      disabled.value = true
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>

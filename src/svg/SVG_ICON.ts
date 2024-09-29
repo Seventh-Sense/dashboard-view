@@ -33,6 +33,10 @@ import add from './icons/add.svg?url'
 import delete_1 from './icons/delete.svg?url'
 import expand from './icons/expand.svg?url'
 import separator from './icons/separator.svg?url'
+import edit from './icons/edit.svg?url'
+import picture from './icons/picture.svg?url'
+import template from './icons/template.svg?url'
+import delete_one from './icons/delete_one.svg?url'
 
 export default {
     card_icons: {
@@ -71,5 +75,9 @@ export default {
         delete: delete_1,
         expand: expand,
         separator: separator,
+        edit: edit,
+        picture: picture,
+        template: template,
+        delete_one: delete_one,
     }
 }

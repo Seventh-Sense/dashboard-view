@@ -31,6 +31,8 @@
           :options="linkOptions"
           :isEdit="isEdit"
         />
+        <!-- <ConfigModal 
+        v-model:showModal="showConfigModal"/> -->
 
         <n-modal v-model:show="showConfigModal" :mask-closable="false">
           <n-card
@@ -125,12 +127,6 @@
                 </span>
               </div>
             </div>
-
-            <template #footer>
-              <!-- <n-space justify="end">
-                <n-button @click="onConfigSave">{{ $t('global.r_ok') }}</n-button>
-              </n-space> -->
-            </template>
           </n-card>
         </n-modal>
       </div>
@@ -139,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, h, onMounted, watch } from 'vue'
+import { ref, onUnmounted, h, onMounted, watch } from 'vue'
 import { NButton, NIcon } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
 import {
@@ -157,6 +153,7 @@ import { icon } from '@/plugins'
 import { LinkParams } from './components/LinkParams'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { ModbusModal } from './modal/ModbusModal'
+import { ConfigModal } from './modal/ConfigModal'
 
 interface RowData {
   id: number
@@ -176,7 +173,7 @@ const isEdit = ref(false)
 const data = ref<any[]>([])
 const showModal = ref(false)
 const showConfigModal = ref(false)
-const { SettingsOutlineIcon, CloseOutlineIcon, ChevronBackOutlineIcon, CheckmarkIcon } =
+const { SettingsOutlineIcon, ChevronBackOutlineIcon, CheckmarkIcon } =
   icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
 
@@ -187,12 +184,12 @@ const selectedRow = ref<RowData>({
   id: 0,
   modbus_id: '',
   name: '',
-  slaveid: 0,
+  slaveid: 1,
   addr: 0,
   code_seq: 'AB',
-  gain: 0.1,
+  gain: 1,
   data_type: '16int',
-  reg_type: 'Input Registers',
+  reg_type: '4',
   unit: '',
   value: ''
 })
@@ -202,12 +199,12 @@ const clear = () => {
     id: 0,
     modbus_id: '',
     name: '',
-    slaveid: 0,
+    slaveid: 1,
     addr: 0,
     code_seq: 'AB',
-    gain: 0.1,
+    gain: 1,
     data_type: '16int',
-    reg_type: 'Input Registers',
+    reg_type: '4',
     unit: '',
     value: ''
   }
@@ -235,20 +232,21 @@ function createColumns(): DataTableColumns<any> {
       }
     },
     {
-      title: 'Slave ID',
+      title: () => t('device.slave_id'),
       key: 'slaveid'
     },
     {
       title: () => t('device.reg_attr'),
       key: 'addr'
     },
-    {
-      title: () => t('device.unit'),
-      key: 'unit'
-    },
+    
     {
       title: () => t('device.value'),
       key: 'value'
+    },
+    {
+      title: () => t('device.unit'),
+      key: 'unit'
     },
     {
       title: '',
@@ -308,12 +306,21 @@ function createColumns(): DataTableColumns<any> {
   ]
 }
 const columns = ref(createColumns())
-
+let interval: number | null = null
 onMounted(() => {
   initData()
+  interval = window.setInterval(() => {
+    initData()
+  }, 3000)
 
   updateLinks()
 })
+
+onUnmounted(() => {
+  if (interval) {
+    window.clearInterval(interval)
+  }
+}) 
 
 const initData = () => {
   readPoints()
@@ -373,7 +380,7 @@ watch(
       updateLinks()
     } else {
       clear()
-      initData()
+      //initData()
     }
   }
 )

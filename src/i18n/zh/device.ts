@@ -22,6 +22,7 @@ export default {
   reg_attr: '寄存器地址',
   data_type: '数据类型',
   coding_seq: '编码序列',
+  slave_id: '设备ID',
   coefficient: '系数',
   reg_type: '寄存器类型',
   unit: '单位',

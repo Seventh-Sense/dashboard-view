@@ -22,6 +22,7 @@ export default {
   reg_attr: 'Register address',
   data_type: 'Data Type',
   coding_seq: 'Coding Sequence',
+  slave_id: 'Slave ID',
   coefficient: 'Gain',
   reg_type: 'Register Type',
   unit: 'Unit',

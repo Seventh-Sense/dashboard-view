@@ -1,24 +1,29 @@
-export const dataTypeOptions = ['16int', '16uint', '32int', '32uint'].map(v => ({
+export const dataTypeOptions = ['16int', '16uint', '32int', '32uint', '32float'].map(v => ({
+  label: v,
+  value: v
+}))
+
+export const byteOptions = ['bool'].map(v => ({
   label: v,
   value: v
 }))
 
 export const regTypeOptions = [
   {
-    label: 'Input Registers',
-    value: 'Input Registers'
-  },
-  {
-    label: 'Holding Registers',
-    value: 'Holding Registers'
+    label: 'Coils',
+    value: '0'
   },
   {
     label: 'Digital Input',
-    value: 'Digital Input'
+    value: '1'
   },
   {
-    label: 'Coils',
-    value: 'Coils'
+    label: 'Input Registers',
+    value: '3'
+  },
+  {
+    label: 'Holding Registers',
+    value: '4'
   }
 ]
 

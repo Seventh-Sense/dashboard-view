@@ -39,7 +39,7 @@
           <n-select v-model:value="data.stop_bit" placeholder="Select" :options="stopbitOptions" />
         </n-form-item-gi>
         <n-form-item-gi :span="12" :label="$t('device.mode')" label-align="left">
-          <n-radio-group v-model:value="data.mode" name="radiogroup1">
+          <n-radio-group v-model:value="data.mode" name="radiogroup1" disabled>
             <n-space>
               <n-radio value="RTU">RTU</n-radio>
               <n-radio value="ASCII">ASCII</n-radio>
@@ -55,7 +55,6 @@
 import { NFormItemGi } from 'naive-ui'
 import {
   connectionOptions,
-  serialOptions,
   baudOptions,
   databitOptions,
   parityOptions,
