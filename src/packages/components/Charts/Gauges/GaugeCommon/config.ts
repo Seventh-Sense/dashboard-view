@@ -6,6 +6,10 @@ import cloneDeep from 'lodash/cloneDeep'
 
 export const units = [
   {
+    label: 'None',
+    value: ''
+  },
+  {
     label: '℃',
     value: '℃'
   },
@@ -65,7 +69,7 @@ export const option = {
   // 轨道宽度
   strokeWidth: 9,
   // 单位
-  unit: '%',
+  unit: '',
   // 单位颜色
   unitColor: '#FFFFFF87',
   // 单位字体大小
@@ -81,6 +85,9 @@ export const option = {
   minTop: -33,
   maxTop: -33,
   linecap: "butt",
+  isWrite: false,
+  step: 0.5,
+  isScale: false,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

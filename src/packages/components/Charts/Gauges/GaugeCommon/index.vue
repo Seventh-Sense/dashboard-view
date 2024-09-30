@@ -14,21 +14,40 @@
       :strokeWidth="strokeWidth"
     >
       <template #format="percent">
-        <div
-          :style="{
-            fontWeight: 'bold',
-            color: dataColor,
-            marginBottom: '6px',
-            fontSize: dataSize + 'px'
-          }"
-        >
-          {{ value }}
+        <div class="flex-center">
+          <n-icon
+            v-if="isWrite"
+            :component="ChevronBackOutline"
+            :size="dataSize"
+            :depth="1"
+            @click="onClick('left', step)"
+            style="cursor: pointer"
+          />
+          <span
+            class="flex-center"
+            :style="{
+              fontWeight: 'bold',
+              color: dataColor,
+              marginBottom: '3px',
+              fontSize: dataSize + 'px'
+            }"
+          >
+            {{ value }}
+          </span>
+          <n-icon
+            v-if="isWrite"
+            :component="ChevronForwardOutline"
+            :size="dataSize"
+            :depth="1"
+            @click="onClick('right', step)"
+            style="cursor: pointer"
+          />
         </div>
         <div :style="{ color: unitColor, fontSize: unitSize + 'px' }">{{ unit }}</div>
       </template>
     </a-progress>
 
-    <div>
+    <div v-if="isScale">
       <span
         class="min"
         :style="{
@@ -61,6 +80,8 @@ import { useChartDataFetch } from '@/hooks'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import config, { option as configOption } from './config'
 import { toNumber } from '@/utils'
+import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
+import { updatePoint } from '@/api/http'
 
 const props = defineProps({
   chartConfig: {
@@ -94,7 +115,10 @@ const {
   maxLeft,
   minTop,
   maxTop,
-  linecap
+  linecap,
+  isWrite,
+  step,
+  isScale,
 } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
@@ -126,6 +150,25 @@ function convertToNumberAndRound(str: any) {
   return value
 }
 
+const onClick = (mode: string, step: number) => {
+  let params = props.chartConfig.request.bindParams
+
+  let data = mode === 'right' ? value.value + step : value.value - step
+
+  console.log('aaa', params)
+  if (params.objectID !== '') {
+    updatePoint(params.objectID, { value: data })
+      .then(res => {
+        console.log('updatePoint', res)
+        setTimeout(() => {
+          window['$message'].success('该组件编辑成功!')
+        }, 1500)
+      })
+      .catch(err => {})
+  } else {
+    window['$message'].warning('该组件未绑定对象!')
+  }
+}
 // 配置时
 watch(
   () => props.chartConfig.option.dataset,
@@ -154,7 +197,14 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newData: number) => {
 .min {
   float: left;
 }
+
 .max {
   float: right;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

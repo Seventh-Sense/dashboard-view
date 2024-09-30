@@ -30,6 +30,17 @@
         <n-input-number v-model:value="optionData.unitSize" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
+    <SettingItemBox name="编辑" :alone="false">
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.isWrite" size="small"></n-switch>
+          <n-text>开启<n-text :depth="3">可写模式</n-text></n-text>
+        </n-space>
+      </SettingItem>
+      <SettingItem name="步数">
+        <n-input-number v-model:value="optionData.step" size="small"></n-input-number>
+      </SettingItem>
+    </SettingItemBox>
     <SettingItemBox name="轨道">
       <SettingItem name="0% 进度条颜色">
         <n-color-picker
@@ -60,6 +71,14 @@
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox name="刻度">
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.isScale" size="small"></n-switch>
+        </n-space>
+      </SettingItem>
+      
+    </SettingItemBox>
+    <SettingItemBox v-if="optionData.isScale" name="">
       <SettingItem name="最小值">
         <n-input-number v-model:value="optionData.minValue" size="small"></n-input-number>
       </SettingItem>

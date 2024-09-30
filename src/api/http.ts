@@ -339,6 +339,16 @@ export const readPoints = async () => {
   }
 }
 
+export const readPointById = async (id: any) => {
+  try {
+    const response = await get(`/point/` + id)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const writePoint = async (data: any) => {
   try {
     const response = await post(`/point/`, data)
