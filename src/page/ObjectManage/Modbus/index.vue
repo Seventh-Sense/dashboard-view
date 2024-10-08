@@ -60,6 +60,7 @@ interface RowData {
   reg_type: string
   unit: string
   value: string
+  bacnet_type: string
 }
 
 const isEdit = ref(false)
@@ -83,7 +84,8 @@ const selectedRow = ref<RowData>({
   data_type: '16int',
   reg_type: '4',
   unit: '',
-  value: ''
+  value: '',
+  bacnet_type: 'None',
 })
 
 const clear = () => {
@@ -98,7 +100,8 @@ const clear = () => {
     data_type: '16int',
     reg_type: '4',
     unit: '',
-    value: ''
+    value: '',
+    bacnet_type: 'None',
   }
 }
 
@@ -138,7 +141,15 @@ function createColumns(): DataTableColumns<any> {
     },
     {
       title: () => t('device.unit'),
-      key: 'unit'
+      key: 'unit',
+      render(row) {
+        let text = row.unit
+
+        if (text === '') {
+          text = ' --'
+        }
+        return text
+      }
     },
     {
       title: '',

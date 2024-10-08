@@ -90,6 +90,8 @@ const props = defineProps({
   }
 })
 
+const flag = ref(false)
+
 const process = ref(90)
 const value = ref(35)
 
@@ -118,7 +120,7 @@ const {
   linecap,
   isWrite,
   step,
-  isScale,
+  isScale
 } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
@@ -132,7 +134,7 @@ const dataHandle = (newData: any) => {
   //console.log(newData, process.value, range)
 }
 
-function convertToNumberAndRound(str: any) {
+function tNumber(str: any) {
   let value = 0.0
 
   if (!str) {
@@ -153,18 +155,29 @@ function convertToNumberAndRound(str: any) {
 const onClick = (mode: string, step: number) => {
   let params = props.chartConfig.request.bindParams
 
-  let data = mode === 'right' ? value.value + step : value.value - step
+  let data =
+    mode === 'right'
+      ? tNumber(value.value) + tNumber(step)
+      : tNumber(value.value) - tNumber(step)
 
-  console.log('aaa', params)
   if (params.objectID !== '') {
+    flag.value = true
     updatePoint(params.objectID, { value: data })
-      .then(res => {
-        console.log('updatePoint', res)
-        setTimeout(() => {
+      .then((res: any) => {
+        //console.log('updatePoint', res)
+        if (res.value) {
+          dataHandle(res.value)
           window['$message'].success('该组件编辑成功!')
-        }, 1500)
+        } else {
+          window['$message'].error('该组件编辑失败!')
+        }
       })
-      .catch(err => {})
+      .catch(err => {
+        window['$message'].error('该组件编辑失败!')
+      })
+      .finally(() => {
+        flag.value = false
+      })
   } else {
     window['$message'].warning('该组件未绑定对象!')
   }
@@ -174,9 +187,11 @@ watch(
   () => props.chartConfig.option.dataset,
   newData => {
     try {
-      let num = convertToNumberAndRound(newData)
-      //console.log(newData, num)
-      dataHandle(num)
+      if (!flag.value) {
+        let num = toNumber(newData)
+        //console.log(newData, num)
+        dataHandle(num)
+      }
     } catch (error) {
       console.log(error)
     }

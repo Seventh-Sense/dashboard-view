@@ -40,6 +40,12 @@
           />
           <div class="modal-tip">{{ $t('device.value') }}:</div>
           <n-input v-model:value="data.value" type="text" />
+          <div class="modal-tip">Bacnet类型:</div>
+          <n-select
+            v-model:value="data.bacnet_type"
+            placeholder="Select"
+            :options="bacnetOptions"
+          />
         </n-gi>
         <n-gi>
           <div class="modal-tip" style="margin-top: 0">{{ $t('device.modbus_link') }}:</div>
@@ -61,7 +67,6 @@
             :options="codingOptions"
             :disabled="!disabled"
           />
-
           <div class="modal-tip">{{ $t('device.unit') }}:</div>
           <n-input v-model:value="data.unit" type="text" :disabled="!disabled" />
         </n-gi>
@@ -79,7 +84,7 @@
 <script setup lang="ts">
 import { icon } from '@/plugins'
 import { onMounted, ref, watch } from 'vue'
-import { regTypeOptions, dataTypeOptions, codingOptions, byteOptions } from '../../utils/utils'
+import { regTypeOptions, dataTypeOptions, codingOptions, byteOptions, bacnetOptions } from '../../utils/utils'
 import { updatePoint, writePoint } from '@/api/http'
 
 const { CloseOutlineIcon } = icon.ionicons5

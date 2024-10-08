@@ -92,7 +92,7 @@ export const option = {
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key: string = GaugeCommonConfig.key
-  public attr = { ...chartInitConfig, w: 150, h: 200, zIndex: 1 }
+  public attr = { ...chartInitConfig, w: 150, h: 150, zIndex: 1 }
   public chartConfig = cloneDeep(GaugeCommonConfig)
   // 图表配置项
   public option = cloneDeep(option)

@@ -111,7 +111,7 @@ onMounted(() => {
       .catch(err => {
         console.log(err)
       })
-  }, 3000)
+  }, 1500)
 })
 
 onUnmounted(() => {

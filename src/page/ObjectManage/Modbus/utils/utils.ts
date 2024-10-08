@@ -8,6 +8,11 @@ export const byteOptions = ['bool'].map(v => ({
   value: v
 }))
 
+export const bacnetOptions = ['None', 'AI', 'AO', 'AV', 'BI', 'BO', 'BV', 'MV'].map(v => ({
+  label: v,
+  value: v
+}))
+
 export const regTypeOptions = [
   {
     label: 'Coils',
