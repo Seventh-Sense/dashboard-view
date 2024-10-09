@@ -83,7 +83,7 @@ import { toNumber } from '@/utils'
 import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 import { updatePoint } from '@/api/http'
 import Decimal from 'decimal.js'
-import { debounce } from 'vue-debounce';
+import { debounce } from 'vue-debounce'
 
 const props = defineProps({
   chartConfig: {
@@ -95,7 +95,7 @@ const props = defineProps({
 const flag = ref(false)
 
 const process = ref(90)
-const value = ref(35)
+const value = ref<any>(35)
 
 const { w, h } = toRefs(props.chartConfig.attr)
 const {
@@ -122,7 +122,8 @@ const {
   linecap,
   isWrite,
   step,
-  isScale
+  isScale,
+  decimal
 } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
@@ -130,7 +131,7 @@ const option = shallowReactive({
 })
 
 const dataHandle = (newData: any) => {
-  value.value = newData
+  value.value = fixedByDecimal(newData)
   let range = maxValue.value - minValue.value
   process.value = (Math.abs(minValue.value - newData) * 100) / range
   //console.log(newData, process.value, range)
@@ -162,6 +163,14 @@ function subtraction(a: any, b: any) {
   return new Decimal(a).sub(new Decimal(b))
 }
 
+function fixedByDecimal(num: any) {
+  if (decimal.value === 0) {
+    return Number(num).toFixed()
+  } else {
+    return Number(num).toFixed(decimal.value).padEnd(4, '0')
+  }
+}
+
 const debouncedClick = (mode: string, step: number) => {
   console.log(mode, step)
   return debounce(() => onClick(mode, step), 300)
@@ -170,14 +179,12 @@ const debouncedClick = (mode: string, step: number) => {
 const onClick = (mode: string, step: number) => {
   let params = props.chartConfig.request.bindParams
 
-  console.log(value.value, step, addition(value.value, step))
   let data = mode === 'right' ? addition(value.value, step) : subtraction(value.value, step)
 
   if (params.objectID !== '') {
     flag.value = true
     updatePoint(params.objectID, { value: data })
       .then((res: any) => {
-        //console.log('updatePoint', res)
         if (res.value) {
           dataHandle(res.value)
           window['$message'].success('该组件编辑成功!')
@@ -186,7 +193,7 @@ const onClick = (mode: string, step: number) => {
         }
       })
       .catch(err => {
-        window['$message'].error('该组件编辑失败!')
+        console.log(err)
       })
       .finally(() => {
         flag.value = false

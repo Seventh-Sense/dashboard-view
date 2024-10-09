@@ -29,6 +29,9 @@
       <SettingItem name="单位字体大小">
         <n-input-number v-model:value="optionData.unitSize" size="small"></n-input-number>
       </SettingItem>
+      <SettingItem name="小数位">
+        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox name="编辑" :alone="false">
       <SettingItem>
@@ -140,7 +143,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
-import { option, units, caps } from './config'
+import { option, units, caps, decimals } from './config'
 
 const props = defineProps({
   optionData: {

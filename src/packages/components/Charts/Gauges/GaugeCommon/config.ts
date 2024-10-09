@@ -54,6 +54,25 @@ export const caps = [
   },
 ]
 
+export const decimals  = [
+  {
+    label: '0',
+    value: 0
+  },
+  {
+    label: '1',
+    value: 1
+  },
+  {
+    label: '2',
+    value: 2
+  },
+  {
+    label: '3',
+    value: 3
+  },
+]
+
 export const option = {
   dataset: 36,
   // data颜色
@@ -88,6 +107,7 @@ export const option = {
   isWrite: false,
   step: 0.5,
   isScale: false,
+  decimal: 0,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
