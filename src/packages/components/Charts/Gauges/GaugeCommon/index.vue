@@ -82,6 +82,8 @@ import config, { option as configOption } from './config'
 import { toNumber } from '@/utils'
 import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 import { updatePoint } from '@/api/http'
+import Decimal from 'decimal.js'
+import { debounce } from 'vue-debounce';
 
 const props = defineProps({
   chartConfig: {
@@ -152,13 +154,24 @@ function tNumber(str: any) {
   return value
 }
 
+function addition(a: any, b: any) {
+  return new Decimal(a).add(new Decimal(b))
+}
+
+function subtraction(a: any, b: any) {
+  return new Decimal(a).sub(new Decimal(b))
+}
+
+const debouncedClick = (mode: string, step: number) => {
+  console.log(mode, step)
+  return debounce(() => onClick(mode, step), 300)
+}
+
 const onClick = (mode: string, step: number) => {
   let params = props.chartConfig.request.bindParams
 
-  let data =
-    mode === 'right'
-      ? tNumber(value.value) + tNumber(step)
-      : tNumber(value.value) - tNumber(step)
+  console.log(value.value, step, addition(value.value, step))
+  let data = mode === 'right' ? addition(value.value, step) : subtraction(value.value, step)
 
   if (params.objectID !== '') {
     flag.value = true
@@ -188,7 +201,7 @@ watch(
   newData => {
     try {
       if (!flag.value) {
-        let num = toNumber(newData)
+        let num = tNumber(newData)
         //console.log(newData, num)
         dataHandle(num)
       }

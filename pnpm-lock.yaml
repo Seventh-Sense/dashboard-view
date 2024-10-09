@@ -47,6 +47,9 @@ importers:
       dayjs:
         specifier: ^1.11.7
         version: 1.11.7
+      decimal.js:
+        specifier: ^10.4.3
+        version: 10.4.3
       dom-helpers:
         specifier: ^5.2.1
         version: 5.2.1
@@ -101,6 +104,9 @@ importers:
       vue-cookies:
         specifier: ^1.8.4
         version: 1.8.4
+      vue-debounce:
+        specifier: ^5.0.1
+        version: 5.0.1(vue@3.2.37)
       vue-demi:
         specifier: ^0.13.1
         version: 0.13.1(vue@3.2.37)
@@ -196,7 +202,7 @@ importers:
         specifier: ^2.6.2
         version: 2.7.0
       sass:
-        specifier: ^1.49.11
+        specifier: ^1.32.13
         version: 1.52.3
       sass-loader:
         specifier: ^12.6.0
@@ -1594,6 +1600,9 @@ packages:
   decamelize@1.2.0:
     resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
+
+  decimal.js@10.4.3:
+    resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
 
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
@@ -3556,6 +3565,11 @@ packages:
   vue-cookies@1.8.4:
     resolution: {integrity: sha512-9zjvACKE4W0kEb8OQtXzpizKhf6zfFOG/Z1TEUjSJn4Z4rintuAHo8y/FpCUhTWHMmPe8E+Fko+/tiXVM+5jOw==}
 
+  vue-debounce@5.0.1:
+    resolution: {integrity: sha512-tJWEDhjHQ47MAUnr7EtZvClNQZJUlKlzd6TVxkSCzWXjeCH/rcKbCDzrd6FNEhvxDOBsTfJFbb9P4f5Xc26Iag==}
+    peerDependencies:
+      vue: '>= 3.0.0'
+
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
     engines: {node: '>=12'}
@@ -5326,6 +5340,8 @@ snapshots:
       map-obj: 1.0.1
 
   decamelize@1.2.0: {}
+
+  decimal.js@10.4.3: {}
 
   deep-is@0.1.4: {}
 
@@ -7401,6 +7417,10 @@ snapshots:
       vscode-typescript-languageservice: 0.28.10
 
   vue-cookies@1.8.4: {}
+
+  vue-debounce@5.0.1(vue@3.2.37):
+    dependencies:
+      vue: 3.2.37
 
   vue-demi@0.12.5(vue@3.2.37):
     dependencies:

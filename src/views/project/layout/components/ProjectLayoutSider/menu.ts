@@ -19,6 +19,20 @@ export const menuOptionsInit = () => {
   const t = window['$t']
 
   return reactive([
+    // {
+    //   label: () =>
+    //     h(
+    //       RouterLink,
+    //       {
+    //         to: {
+    //           name: PageEnum.BASE_LOCAL_MAN_NAME
+    //         }
+    //       },
+    //       { default: () => t('menu.local_object_manage') }
+    //     ),
+    //   key: PageEnum.BASE_LOCAL_MAN_NAME,
+    //   icon: renderImage(SVG_ICON.card_icons.modbus_df, '', 32, 32),
+    // },
     {
       label: () =>
         h(

@@ -1,5 +1,5 @@
 <template>
-  <n-modal v-model:show="showModal" :mask-closable="false">
+  <n-modal :show="showModal" :mask-closable="false">
     <n-card
       :bordered="true"
       role="dialog"
