@@ -20,7 +20,7 @@
             :component="ChevronBackOutline"
             :size="dataSize"
             :depth="1"
-            @click="onClick('left', step)"
+            @click="leftClick"
             style="cursor: pointer"
           />
           <span
@@ -39,7 +39,7 @@
             :component="ChevronForwardOutline"
             :size="dataSize"
             :depth="1"
-            @click="onClick('right', step)"
+            @click="rightClick"
             style="cursor: pointer"
           />
         </div>
@@ -83,7 +83,7 @@ import { toNumber } from '@/utils'
 import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 import { updatePoint } from '@/api/http'
 import Decimal from 'decimal.js'
-import { debounce } from 'vue-debounce'
+import throttle from 'lodash/throttle'
 
 const props = defineProps({
   chartConfig: {
@@ -171,10 +171,13 @@ function fixedByDecimal(num: any) {
   }
 }
 
-const debouncedClick = (mode: string, step: number) => {
-  console.log(mode, step)
-  return debounce(() => onClick(mode, step), 300)
-}
+const rightClick = throttle(() => {
+  onClick('right', step.value)
+}, 1500)
+
+const leftClick = throttle(() => {
+  onClick('left', step.value)
+}, 1500)
 
 const onClick = (mode: string, step: number) => {
   let params = props.chartConfig.request.bindParams

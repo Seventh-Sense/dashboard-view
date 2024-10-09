@@ -41,7 +41,6 @@
     "three": "^0.145.0",
     "vue": "^3.2.31",
     "vue-cookies": "^1.8.4",
-    "vue-debounce": "^5.0.1",
     "vue-demi": "^0.13.1",
     "vue-i18n": "9.2.2",
     "vue-router": "4.0.12",
