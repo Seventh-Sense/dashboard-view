@@ -23,7 +23,6 @@
           :columns="columns"
           :data="data"
           :bordered="false"
-          :row-class-name="(rowData: object, index : number) => rowClassName(rowData, index)"
         />
         <ModbusModal
           v-model:showModal="showModal"
@@ -43,10 +42,8 @@ import { NButton, NIcon } from 'naive-ui'
 import type { DataTableColumns } from 'naive-ui'
 import { deletePoint, readPoints, readModbusConfig } from '@/api/http'
 import { icon } from '@/plugins'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { ModbusModal } from './modal/ModbusModal'
 import { ConfigModal } from './modal/ConfigModal'
-import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 
 interface RowData {
   id: number
@@ -174,8 +171,8 @@ function createColumns(): DataTableColumns<any> {
                 },
                 onClick: () => {
                   isEdit.value = true
-                  showModal.value = true
                   selectedRow.value = row
+                  showModal.value = true
                 }
               },
               { default: () => h(EditIcon) }
@@ -210,13 +207,13 @@ function createColumns(): DataTableColumns<any> {
 }
 const columns = ref(createColumns())
 let interval: number | null = null
+
 onMounted(() => {
+  updateLinks()
   initData()
   interval = window.setInterval(() => {
     initData()
   }, 3000)
-
-  updateLinks()
 })
 
 onUnmounted(() => {
@@ -253,10 +250,6 @@ const deleteRow = (row: any) => {
     })
 }
 
-const rowClassName = (row: object, index: number) => {
-  return index % 2 === 0 ? 'td-odd' : 'td-even'
-}
-
 const updateLinks = () => {
   linkOptions.value = []
   readModbusConfig()
@@ -280,10 +273,21 @@ watch(
   () => showModal.value,
   (newValue: boolean) => {
     if (newValue) {
-      updateLinks()
+      //updateLinks()
     } else {
       clear()
       //initData()
+    }
+  }
+)
+
+watch(
+  () => showConfigModal.value,
+  (newValue: boolean) => {
+    if (newValue) {
+      //updateLinks()
+    } else {
+      updateLinks()
     }
   }
 )
@@ -363,17 +367,7 @@ const onConfigOpen = () => {
   }
 }
 
-// :deep(.td-odd td) {
-//   font-size: 14px;
-//   color: #{$--color-dark-font};
-//   background-color: #{$--color-dark-table-odd};
-//   backdrop-filter: blur(30px);
-// }
-
-// :deep(.td-even td) {
-//   font-size: 14px;
-//   color: #{$--color-dark-font};
-//   background-color: transparent;
-//   backdrop-filter: blur(30px);
-// }
+.s {
+  background-color: transparent;
+}
 </style>
