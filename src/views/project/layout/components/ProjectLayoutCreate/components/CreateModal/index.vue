@@ -34,15 +34,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, shallowRef, inject } from 'vue'
+import { ref, watch, inject } from 'vue'
 import { icon } from '@/plugins'
-import { PageEnum, ChartEnum } from '@/enums/pageEnum'
-import { fetchPathByName, routerTurnByPath, renderLang, getUUID } from '@/utils'
 import { createProject } from '@/api/http'
 
-const { FishIcon, CloseOutlineIcon } = icon.ionicons5
+const { CloseOutlineIcon } = icon.ionicons5
 const showRef = ref(false)
-
+const t = window['$t']
 const initTable: any = inject('initTable')
 const emit = defineEmits(['close'])
 
@@ -82,7 +80,7 @@ const paramCheck = () => {
 
   if (project_name.value === '') {
     flag = false
-    window['$message'].error('Project name is not filled in!')
+    window['$message'].error(t('msg.modbus_msg_1'))
   }
 
   return flag

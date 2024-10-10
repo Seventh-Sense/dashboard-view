@@ -4,6 +4,7 @@ import menu from './menu'
 import dashboard from './dashboard'
 import message from './message'
 import device from './device'
+import msg from './msg'
 
 const global = {
   doc_addr: 'Document',
@@ -42,5 +43,6 @@ export default {
   menu,
   dashboard,
   message,
-  device
+  device,
+  msg,
 }

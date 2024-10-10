@@ -91,6 +91,7 @@ const { CloseOutlineIcon } = icon.ionicons5
 
 const typeOptions = ref<any[]>([])
 const disabled = ref(false)
+const t = window['$t']
 
 let emit = defineEmits(['update:showModal'])
 const props = defineProps({
@@ -117,7 +118,7 @@ const paramCheck = () => {
 
   if (props.data.name === '') {
     flag = false
-    window['$message'].error('Object name is not filled in!')
+    window['$message'].error(t('msg.modbus_msg_1'))
   }
 
   return flag
@@ -127,7 +128,7 @@ const onPositiveClick = () => {
     if (props.isEdit) {
       updatePoint(props.data.id, props.data)
         .then(res => {
-          window['$message'].success('Update Success!')
+          window['$message'].success(t('msg.modbus_msg_3'))
         })
         .catch(err => {
           console.log(err)
@@ -138,7 +139,7 @@ const onPositiveClick = () => {
     } else {
       writePoint(props.data)
         .then(res => {
-          window['$message'].success('Create Success!')
+          window['$message'].success(t('msg.modbus_msg_2'))
         })
         .catch(err => {
           console.log(err)

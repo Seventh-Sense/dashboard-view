@@ -105,7 +105,7 @@ import { onMounted, ref } from 'vue'
 import { LinkParams } from '../../components/LinkParams'
 
 const { CloseOutlineIcon } = icon.ionicons5
-
+const t = window['$t']
 let emit = defineEmits(['update:showModal'])
 const props = defineProps({
   showModal: {
@@ -184,7 +184,7 @@ const onDelete = (id: any) => {
     .then((res: any) => {
       if (res.ok) {
         configData.value = configData.value.filter((item: any) => item.id !== id)
-        window['$message'].success('数据删除成功!')
+        window['$message'].success(t('msg.modbus_msg_4'))
       }
     })
     .catch(err => {
@@ -202,7 +202,7 @@ const onCheck = (data: any) => {
     settings: JSON.stringify(data)
   })
     .then(res => {
-      window['$message'].success('数据修改成功!')
+      window['$message'].success(t('msg.modbus_msg_5'))
     })
     .catch(err => {
       console.log(err)
@@ -218,7 +218,7 @@ const onConfigSave = (data: any) => {
     settings: JSON.stringify(data)
   })
     .then(res => {
-      window['$message'].success('数据修改成功!')
+      window['$message'].success(t('msg.modbus_msg_5'))
     })
     .catch(err => {
       console.log(err)

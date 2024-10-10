@@ -91,7 +91,7 @@ const props = defineProps({
     required: true
   }
 })
-
+const t = window['$t']
 const flag = ref(false)
 
 const process = ref(90)
@@ -190,9 +190,9 @@ const onClick = (mode: string, step: number) => {
       .then((res: any) => {
         if (res.value) {
           dataHandle(res.value)
-          window['$message'].success('该组件编辑成功!')
+          window['$message'].success(t('msg.gauge_msg_1'))
         } else {
-          window['$message'].error('该组件编辑失败!')
+          window['$message'].error(t('msg.gauge_msg_2'))
         }
       })
       .catch(err => {
@@ -202,7 +202,7 @@ const onClick = (mode: string, step: number) => {
         flag.value = false
       })
   } else {
-    window['$message'].warning('该组件未绑定对象!')
+    window['$message'].warning(t('msg.gauge_msg_3'))
   }
 }
 // 配置时

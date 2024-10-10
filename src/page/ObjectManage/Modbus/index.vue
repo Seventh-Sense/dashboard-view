@@ -228,7 +228,7 @@ const initData = () => {
       if (res.length !== 0) {
         data.value = res
       }
-      console.log(res)
+      //console.log(res)
     })
     .catch(err => {
       console.log(err)

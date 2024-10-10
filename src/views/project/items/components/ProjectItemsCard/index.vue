@@ -44,15 +44,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue'
-import { renderIcon, renderLang } from '@/utils'
-import { icon } from '@/plugins'
+import { PropType } from 'vue'
 
 import { Chartype } from '../../index.d'
 
 import SVG_ICON from '@/svg/SVG_ICON'
-
-const { TrashIcon, BrowsersOutlineIcon, HammerIcon } = icon.ionicons5
 
 const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
 
