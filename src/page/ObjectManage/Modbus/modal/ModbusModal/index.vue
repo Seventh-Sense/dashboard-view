@@ -121,6 +121,11 @@ const paramCheck = () => {
     window['$message'].error(t('msg.modbus_msg_1'))
   }
 
+  if (props.data.modbus_id === '') {
+    flag = false
+    window['$message'].error(t('msg.modbus_msg_6'))
+  }
+
   return flag
 }
 const onPositiveClick = () => {

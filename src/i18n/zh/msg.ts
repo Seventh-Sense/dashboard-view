@@ -5,6 +5,7 @@ export default {
     modbus_msg_3: '点位修改成功!',
     modbus_msg_4: '数据删除成功!',
     modbus_msg_5: '数据修改成功!',
+    modbus_msg_6: '请选择链路!',
 
     //gauge
     gauge_msg_1: '该组件编辑成功!',

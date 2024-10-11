@@ -1,6 +1,6 @@
 <template>
   <div class="project">
-    <div class="project-card">
+    <div ref="myDiv" class="project-card">
       <div class="project-card-top">
         <div class="project-card-top-title">{{ $t('device.object_list') }}</div>
         <div class="project-card-top-extra">
@@ -17,12 +17,15 @@
           </n-space>
         </div>
       </div>
-      <div class="project-card-content">
+      <div class="project-card-content" >
         <n-data-table
           size="small"
           :columns="columns"
           :data="data"
           :bordered="false"
+          :scroll-x="1800"
+          :style="{ height: `${height}px` }"
+          flex-height
         />
         <ModbusModal
           v-model:showModal="showModal"
@@ -66,6 +69,9 @@ const showModal = ref(false)
 const showConfigModal = ref(false)
 const { SettingsOutlineIcon } = icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
+
+const height = ref(500)
+const myDiv = ref<any>(null)
 
 const t = window['$t']
 
@@ -209,6 +215,10 @@ const columns = ref(createColumns())
 let interval: number | null = null
 
 onMounted(() => {
+  if (myDiv.value) {
+    height.value = myDiv.value.offsetHeight - 150
+  }
+  
   updateLinks()
   initData()
   interval = window.setInterval(() => {

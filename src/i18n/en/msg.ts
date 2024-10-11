@@ -5,6 +5,7 @@ export default {
     modbus_msg_3: 'Point position modified successfully!',
     modbus_msg_4: 'Data delete successfully!',
     modbus_msg_5: 'Data modified successfully!',
+    modbus_msg_6: 'Please select the Link!',
 
     //gauge
     gauge_msg_1: 'The component edited successfully!',
