@@ -1,32 +1,20 @@
 <template>
-  <n-dropdown
-    trigger="hover"
-    @select="handleSelect"
-    :show-arrow="true"
-    :options="options"
-  >
-    <n-button quaternary>
-      <n-icon size="20" :depth="1">
-        <language-icon></language-icon>
-      </n-icon>
-    </n-button>
-  </n-dropdown>
+  <n-button v-if="langStore.getLang === 'EN'" secondary circle @click="handleSelect(LangEnum.ZH)">
+    EN
+  </n-button>
+  <n-button v-else secondary circle @click="handleSelect(LangEnum.EN)">中</n-button>
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 import { useLangStore } from '@/store/modules/langStore/langStore'
-import { langList } from '@/i18n/index'
 import { LangEnum } from '@/enums/styleEnum'
-import { icon } from '@/plugins'
 
-const { LanguageIcon } = icon.ionicons5
-const { locale } = useI18n();
+const { locale } = useI18n()
 const langStore = useLangStore()
-const options = langList
 
 const handleSelect = (key: LangEnum) => {
-  locale.value = key;
+  locale.value = key
   langStore.changeLang(key)
 }
 </script>
