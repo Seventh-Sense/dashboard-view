@@ -1,17 +1,33 @@
 <template>
-  <div class="go-switch">
-    <n-switch
-      v-model:value="option.dataset"
-      :size="size"
-      :round="round"
-      @update:value="handleChange"
+  <svg
+    id="TL"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    style="cursor: pointer"
+    @click="onClick"
+  >
+    <path
+      d="M12,8.25c-.36,0-.65-.29-.65-.65V2.6c0-.36.29-.65.65-.65s.65.29.65.65v5c0,.36-.29.65-.65.65Z"
+      style="stroke-width: 0px"
+      :style="{
+        fill: option.dataset ? on : off
+      }"
     />
-  </div>
+    <path
+      d="M12,22.05c-5.54,0-10.05-4.51-10.05-10.05C1.95,7.69,4.7,3.86,8.79,2.48c.34-.12.71.07.82.41.11.34-.07.71-.41.82-3.56,1.2-5.96,4.53-5.96,8.29,0,4.82,3.92,8.75,8.75,8.75s8.75-3.93,8.75-8.75c0-3.76-2.39-7.09-5.96-8.29-.34-.11-.52-.48-.41-.82s.48-.52.82-.41c4.09,1.38,6.84,5.2,6.84,9.52,0,5.54-4.51,10.05-10.05,10.05Z"
+      style="stroke-width: 0px"
+      :style="{
+        fill: option.dataset ? on : off
+      }"
+    />
+  </svg>
 </template>
 
 <script setup lang="ts">
-import { PropType, toRefs, shallowReactive, watch } from 'vue'
-import { CreateComponentType } from '../../../../../packages/index.d'
+import { PropType, toRefs, shallowReactive, watch, ref } from 'vue'
+import { CreateComponentType } from '@/packages/index.d'
+import throttle from 'lodash/throttle'
+import { updatePoint } from '@/api/http'
 
 const props = defineProps({
   chartConfig: {
@@ -21,20 +37,74 @@ const props = defineProps({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { size, round, disabled } = toRefs(props.chartConfig.option)
+const { on, off } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
-  dataset: true
+  dataset: false
 })
+const flag = ref(false)
+const t = window['$t']
 
-const handleChange = (value: boolean) => {
-  console.log('asdasdasd', value)
+const onClick = throttle(() => {
+  click()
+}, 1500)
+
+const click = () => {
+  let params = props.chartConfig.request.bindParams
+
+  let data = option.dataset ? 0 : 1
+
+  if (params.objectID !== '') {
+    flag.value = true
+
+    updatePoint(params.objectID, { value: data })
+      .then((res: any) => {
+        if (res.value) {
+          option.dataset = tBoolean(res.value)
+          window['$message'].success(t('msg.gauge_msg_1'))
+        } else {
+          window['$message'].error(t('msg.gauge_msg_2'))
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        flag.value = false
+      })
+  } else {
+    window['$message'].warning(t('msg.gauge_msg_3'))
+  }
+}
+
+function tBoolean(str: any) {
+  let value = false
+
+  if (!str) {
+    return value
+  }
+
+  if (typeof str === 'string') {
+    value = str === '0' ? false : true
+  }
+
+  if (typeof str === 'number') {
+    value = str === 0 ? false : true
+  }
+
+  if (typeof str === 'boolean') {
+    value = str
+  }
+
+  return value
 }
 
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    option.dataset = newVal
+    if (!flag.value) {
+      option.dataset = tBoolean(newVal)
+    }
   },
   {
     immediate: true,

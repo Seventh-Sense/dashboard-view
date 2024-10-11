@@ -5,7 +5,7 @@ import { chartInitConfig } from '@/settings/designSetting'
 import cloneDeep from 'lodash/cloneDeep'
 
 export const option = {
-  dataset: false
+  dataset: true
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

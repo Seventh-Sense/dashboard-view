@@ -1,15 +1,10 @@
 <template>
   <CollapseItem name="属性" :expanded="true">
-    <SettingItemBox name="样式">
-      <setting-item name="尺寸">
-        <n-select v-model:value="optionData.size" :options="sizeOptions" size="small" />
-      </setting-item>
-      <setting-item name="形状">
-        <n-select v-model:value="optionData.round" :options="roundOptions" size="small" />
-      </setting-item>
+    <SettingItemBox name="Off 颜色">
+      <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.off"></n-color-picker>
     </SettingItemBox>
-    <SettingItemBox name="禁用">
-      <n-switch v-model:value="optionData.disabled"/>
+    <SettingItemBox name="On 颜色">
+      <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.on"></n-color-picker>
     </SettingItemBox>
   </CollapseItem>
 </template>
@@ -19,8 +14,8 @@ import {
   CollapseItem,
   SettingItemBox,
   SettingItem
-} from '../../../../../components/Pages/ChartItemSetting'
-import { option, sizeOptions, roundOptions } from './config'
+} from '@/components/Pages/ChartItemSetting'
+import { option } from './config'
 
 const props = defineProps({
   optionData: {

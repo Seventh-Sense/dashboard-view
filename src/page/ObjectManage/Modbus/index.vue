@@ -23,7 +23,6 @@
           :columns="columns"
           :data="data"
           :bordered="false"
-          :scroll-x="1800"
           :style="{ height: `${height}px` }"
           flex-height
         />
@@ -177,6 +176,7 @@ function createColumns(): DataTableColumns<any> {
                 },
                 onClick: () => {
                   isEdit.value = true
+                  console.log('aaa',row)
                   selectedRow.value = row
                   showModal.value = true
                 }

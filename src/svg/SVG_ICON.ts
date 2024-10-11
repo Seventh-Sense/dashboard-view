@@ -37,6 +37,7 @@ import edit from './icons/edit.svg?url'
 import picture from './icons/picture.svg?url'
 import template from './icons/template.svg?url'
 import delete_one from './icons/delete_one.svg?url'
+import shutdown from './icons/_shutdown_TL.svg?url'
 
 export default {
     card_icons: {
@@ -79,5 +80,6 @@ export default {
         picture: picture,
         template: template,
         delete_one: delete_one,
+        shutdown: shutdown
     }
 }

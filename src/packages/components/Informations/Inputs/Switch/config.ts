@@ -4,38 +4,10 @@ import { SwitchConfig } from './index'
 import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
-export const sizeOptions = [
-  {
-    label: 'Small',
-    value: 'small'
-  },
-  {
-    label: 'Medium',
-    value: 'medium'
-  },
-  {
-    label: 'Large',
-    value: 'large'
-  }
-]
-
-export const roundOptions = [
-  {
-    label: 'Round',
-    value: true
-  },
-  {
-    label: 'Square',
-    value: false
-  }
-]
-
 export const option = {
-  size: 'medium',
-  //是否为圆形按钮
-  round: true,
-  disabled: false,
-  dataset: true
+  off: '#000000',
+  on: '#6666FF',
+  dataset: false
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
