@@ -76,7 +76,9 @@
             </div>
             <div class="go-login-form-footer">
               <span>Adveco © 2024</span>
-              <span>{{ $t('login.about_us') }}</span>
+              <span @click="onVersionClick" style="cursor: pointer">
+                {{ $t('login.about_us') }}
+              </span>
               <span>{{ $t('login.contact_us') }}</span>
             </div>
           </div>
@@ -91,6 +93,7 @@
         </n-gi>
       </n-grid>
     </div>
+    <VersionModal v-model:showModal="showModal" />
   </div>
 </template>
 
@@ -101,6 +104,7 @@ import { icon } from '@/plugins'
 import { StorageEnum } from '@/enums/storageEnum'
 import { routerTurnByName, cryptoEncode, setLocalStorage } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { VersionModal } from './modal/VersionModal'
 
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 const t = window['$t']
@@ -109,6 +113,7 @@ const { PersonOutlineIcon, LockClosedOutlineIcon } = icon.ionicons5
 const formRef = ref()
 const loading = ref(false)
 const autoLogin = ref(true)
+const showModal = ref(false)
 
 const formInline = reactive({
   username: '',
@@ -157,6 +162,10 @@ const handleSubmit = (e: Event) => {
       }
     }
   })
+}
+
+const onVersionClick = () => {
+  showModal.value = true
 }
 </script>
 

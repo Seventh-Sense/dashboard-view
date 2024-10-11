@@ -1,5 +1,5 @@
 <template>
-  <CollapseItem name="仪表盘" :expanded="true">
+  <CollapseItem :name="$t('dashboard.gauge_info')" :expanded="true">
     <SettingItemBox name="内容">
       <SettingItem name="数值">
         <!-- 与 config.ts 里的 option 对应 -->
@@ -144,6 +144,8 @@
 import { PropType } from 'vue'
 import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
 import { option, units, caps, decimals } from './config'
+
+const t = window['$t']
 
 const props = defineProps({
   optionData: {

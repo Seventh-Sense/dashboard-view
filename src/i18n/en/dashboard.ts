@@ -84,4 +84,7 @@ export default {
 
   //Water pump
   pump_left: 'Water Pump',
+
+  //
+  gauge_info: 'Gauge',
 }

@@ -83,4 +83,7 @@ export default {
 
   //水式泵
   pump_left: '水式泵',
+
+  //gauge
+  gauge_info: '仪表盘',
 }
