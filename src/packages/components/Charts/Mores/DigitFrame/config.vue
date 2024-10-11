@@ -19,6 +19,9 @@
       <setting-item name="单位">
         <n-select v-model:value="optionData.unit" :options="units" size="small" />
       </setting-item>
+      <SettingItem name="小数位">
+        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+      </SettingItem>
     </SettingItemBox>
   </CollapseItem>
 </template>
@@ -30,7 +33,7 @@ import {
   SettingItemBox,
   SettingItem
 } from '../../../../../components/Pages/ChartItemSetting'
-import { option, units } from './config'
+import { option, units, decimals } from './config'
 
 const props = defineProps({
   optionData: {

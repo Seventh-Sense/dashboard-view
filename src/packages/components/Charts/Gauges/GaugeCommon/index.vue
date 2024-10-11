@@ -32,7 +32,7 @@
               fontSize: dataSize + 'px'
             }"
           >
-            {{ value }}
+            {{ fixedByDecimal(value) }}
           </span>
           <n-icon
             v-if="isWrite"
@@ -131,7 +131,7 @@ const option = shallowReactive({
 })
 
 const dataHandle = (newData: any) => {
-  value.value = fixedByDecimal(newData)
+  value.value = newData
   let range = maxValue.value - minValue.value
   process.value = (Math.abs(minValue.value - newData) * 100) / range
   //console.log(newData, process.value, range)
