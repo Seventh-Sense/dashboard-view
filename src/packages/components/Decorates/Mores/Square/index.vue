@@ -1,6 +1,15 @@
 <template>
   <svg :width="w" :height="h">
-    <rect x="0" :width="w" :height="h" :rx="radius" :ry="radius" :fill="backgroundColor" :fill-opacity="opacity" style="stroke-width: 0px" />
+    <rect
+      x="0"
+      :width="w"
+      :height="h"
+      :rx="radius"
+      :ry="radius"
+      :fill="backgroundColor"
+      :fill-opacity="opacity"
+      style="stroke-width: 0px"
+    />
   </svg>
 </template>
 
@@ -17,7 +26,6 @@ const props = defineProps({
 
 const { w, h } = toRefs(props.chartConfig.attr)
 const { radius, backgroundColor, opacity } = toRefs(props.chartConfig.option)
-
 </script>
 
 <style lang="scss" scoped>
@@ -26,5 +34,6 @@ svg {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  backdrop-filter: blur(50px);
 }
 </style>

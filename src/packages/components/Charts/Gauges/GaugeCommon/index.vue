@@ -167,7 +167,7 @@ function fixedByDecimal(num: any) {
   if (decimal.value === 0) {
     return Number(num).toFixed()
   } else {
-    return Number(num).toFixed(decimal.value).padEnd(4, '0')
+    return Number(num).toFixed(decimal.value)
   }
 }
 

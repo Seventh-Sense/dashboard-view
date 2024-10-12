@@ -37,7 +37,10 @@
       <SettingItem>
         <n-space>
           <n-switch v-model:value="optionData.isWrite" size="small"></n-switch>
-          <n-text>开启<n-text :depth="3">可写模式</n-text></n-text>
+          <n-text>
+            开启
+            <n-text :depth="3">可写模式</n-text>
+          </n-text>
         </n-space>
       </SettingItem>
       <SettingItem name="步数">
@@ -74,20 +77,19 @@
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox name="刻度">
-      <SettingItem>
-        <n-space>
-          <n-switch v-model:value="optionData.isScale" size="small"></n-switch>
-        </n-space>
-      </SettingItem>
-      
-    </SettingItemBox>
-    <SettingItemBox v-if="optionData.isScale" name="">
       <SettingItem name="最小值">
         <n-input-number v-model:value="optionData.minValue" size="small"></n-input-number>
       </SettingItem>
       <SettingItem name="最大值">
         <n-input-number v-model:value="optionData.maxValue" size="small"></n-input-number>
       </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox name="显示刻度">
+      <n-space>
+        <n-switch v-model:value="optionData.isScale" size="small"></n-switch>
+      </n-space>
+    </SettingItemBox>
+    <SettingItemBox v-if="optionData.isScale" name="">
       <SettingItem name="最小值颜色">
         <n-color-picker
           size="small"

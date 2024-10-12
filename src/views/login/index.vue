@@ -116,7 +116,7 @@ const autoLogin = ref(true)
 const showModal = ref(false)
 
 const formInline = reactive({
-  username: '',
+  username: 'admin',
   password: ''
 })
 

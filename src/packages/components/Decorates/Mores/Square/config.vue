@@ -26,7 +26,7 @@
           v-model:value="optionData.radius"
           size="small"
           :step="1"
-          :min="18"
+          :min="0"
           :max="36"
         ></n-input-number>
       </SettingItem>
