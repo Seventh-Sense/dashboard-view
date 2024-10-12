@@ -8,7 +8,11 @@ export default {
     modbus_msg_6: 'Please select the Link!',
 
     //gauge
-    gauge_msg_1: 'The component edited successfully!',
-    gauge_msg_2: 'The component edited failed!',
+    gauge_msg_1: 'The component modified successfully!',
+    gauge_msg_2: 'The component modified failed!',
     gauge_msg_3: 'The component has no binding object!',
+
+    //login
+    login_msg_1: 'Login successful!',
+    login_msg_2: 'Login failure!',
 }

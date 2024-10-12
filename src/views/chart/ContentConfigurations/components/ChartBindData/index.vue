@@ -32,19 +32,27 @@ const value = computed(() => {
 const options: any = ref([])
 
 const handleUpdateValue = (value: string, option: CascaderOption) => {
-  let array = value.split('-')
-  targetData.value.request.bindParams = {
-    deviceID: array[1],
-    deviceName: array[0],
-    objectID: array[2],
-    objectName: option.label
+  //mconsole.log(value, option)
+  if (value === null) {
+    targetData.value.request.bindParams = {
+      deviceID: "",
+      deviceName: "",
+      objectID: "",
+      objectName: ""
+    }
+  } else {
+    let array = value.split('-')
+    targetData.value.request.bindParams = {
+      deviceID: array[1],
+      deviceName: array[0],
+      objectID: array[2],
+      objectName: option.label
+    }
   }
-  //console.log(targetData.value)
 }
 
 onMounted(() => {
-  console.log(targetData.value)
-
+  //console.log(targetData.value)
   readDeivceList()
     .then(data => {
       if (data !== undefined) {
