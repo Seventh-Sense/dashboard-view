@@ -67,11 +67,11 @@ const options = ref([
     type: 'divider',
     key: 'd1'
   },
-  {
-    label: renderLang('global.sys_set'),
-    key: 'sysSet',
-    icon: renderIcon(SettingsSharpIcon)
-  },
+  // {
+  //   label: renderLang('global.sys_set'),
+  //   key: 'sysSet',
+  //   icon: renderIcon(SettingsSharpIcon)
+  // },
   {
     label: renderLang('global.contact'),
     key: 'contact',
