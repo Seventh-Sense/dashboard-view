@@ -20,7 +20,7 @@
         <span style="color: rgba(255, 255, 255, 1); font-size: 14px">
           {{ cardData.title }}
         </span>
-        <span class="list-footer-title">2024/4/23 11:23:23</span>
+        <span class="list-footer-title">{{ formatTime(cardData.time) }}</span>
       </div>
 
       <n-space size="large" justify="end" align="center" :wrap="false">
@@ -55,7 +55,14 @@ const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
 const props = defineProps({
   cardData: Object as PropType<Chartype>
 })
-
+const formatTime = (data: string) => {
+  //2024-08-19T00:56:22.141127
+  let localZone = new Date().getTimezoneOffset() / -60
+  
+  let localTime = new Date(data).getTime()
+  
+  return new Date(localTime).toLocaleString()
+}
 // 删除处理
 const deleteHanlde = () => {
   emit('delete', props.cardData)

@@ -4,6 +4,7 @@ export type Chartype = {
   label: string // 标签
   release: boolean // 0未发布 | 1已发布
   image?: any
+  time?: any
 }
 
 export type ChartList = Chartype[]

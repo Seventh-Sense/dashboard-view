@@ -8,7 +8,14 @@ export const useDataListInit = () => {
   const list = ref<ChartList>([])
 
   const addProject = (data: any) => {
-     list.value.push({ id: data.id, title: data.name, release: true, label: data.name, image: data.cover })  
+    list.value.push({
+      id: data.id,
+      title: data.name,
+      release: true,
+      label: data.name,
+      image: data.cover,
+      time: data.time
+    })
   }
 
   // 添加
@@ -37,7 +44,7 @@ export const useDataListInit = () => {
   }
 
   const deleteAll = () => {
-    list.value= []
+    list.value = []
   }
 
   return {
