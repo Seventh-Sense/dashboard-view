@@ -10,6 +10,7 @@ import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
 import { option as configOption } from './config'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -26,9 +27,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newData => {
     //console.log('led',  typeof newData, newData)
-    if (typeof newData === 'boolean') {
-      option.dataset = newData
-    }
+    option.dataset = parseData(newData, 'boolean')
   },
   {
     immediate: true

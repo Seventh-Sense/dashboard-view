@@ -5,12 +5,13 @@ import throttle from 'lodash/throttle'
 import Image_404 from '../assets/images/exception/image-404.png'
 import html2canvas from 'html2canvas'
 import { downloadByA } from './file'
-import { toString } from './type'
+import { isUndefined, toString } from './type'
 import cloneDeep from 'lodash/cloneDeep'
 import { WinKeyboard } from '@/enums/editPageEnum'
 import { RequestHttpIntervalEnum, RequestParamsObjType } from '@/enums/httpEnum'
 import { CreateComponentType, CreateComponentGroupType } from '@/packages/index.d'
 import { excludeParseEventKeyList, excludeParseEventValueList } from '@/enums/eventEnum'
+import { isNull } from 'lodash'
 
 /**
  * * 判断是否是开发环境
@@ -25,7 +26,9 @@ export const isDev = () => {
  * @param { Number } randomLength
  */
 export const getUUID = (randomLength = 10) => {
-  return 'id_' + Number(Math.random().toString().substring(2, randomLength) + Date.now()).toString(36)
+  return (
+    'id_' + Number(Math.random().toString().substring(2, randomLength) + Date.now()).toString(36)
+  )
 }
 
 /**
@@ -37,12 +40,13 @@ export const renderIcon = (icon: any, set = {}) => {
   return () => h(NIcon, set, { default: () => h(icon) })
 }
 export const renderImage = (src: any, alt: any, width: any, height: any) => {
-  return () => h('img', {
-    src: src,
-    alt: alt,
-    width: width,
-    height: height,
-  });
+  return () =>
+    h('img', {
+      src: src,
+      alt: alt,
+      width: width,
+      height: height
+    })
 }
 /**
  * * render 语言
@@ -236,7 +240,7 @@ export const newFunctionHandle = (
   } catch (error) {
     // 失败回调
     errorCallBack && errorCallBack(error)
-    return '函数执行错误'  
+    return '函数执行错误'
   }
 }
 
@@ -372,7 +376,6 @@ export const setTitle = (title?: string) => {
   title && (document.title = title)
 }
 
-
 /**
  * * 获取数据类型
  * @param title
@@ -380,12 +383,97 @@ export const setTitle = (title?: string) => {
 export function getType(value: any): string {
   // 类型守卫
   if (typeof value === 'string') {
-    return 'string';
+    return 'string'
   } else if (typeof value === 'boolean') {
-    return 'boolean';
+    return 'boolean'
   } else if (typeof value === 'number') {
-    return 'number';
+    return 'number'
   } else {
-    return 'other';
+    return 'other'
   }
+}
+
+export function parseData(data: any, accept_type: string): any {
+  if (isNull(data) || isUndefined(data)) {
+    return 'null'
+  }
+
+  let value: any = ''
+  let type = getType(data)
+
+  switch (accept_type) {
+    case 'number':
+      value = parseNumber(data, type)
+      break
+    case 'string':
+      value = parseString(data, type)
+      break
+    case 'boolean':
+      value = parseBool(data, type)
+      break
+    default:
+      break
+  }
+
+  return value
+}
+
+export function parseNumber(data: any, type: string) {
+  let value = 0
+
+  switch (type) {
+    case 'number':
+      value = data
+      break
+    case 'string':
+      value = parseFloat(data)
+      break
+    case 'boolean':
+      value = data ? 1 : 0
+      break
+    default:
+      break
+  }
+
+  return value
+}
+
+export function parseString(data: any, type: string) {
+  let value = ''
+
+  switch (type) {
+    case 'number':
+      value = data.toString()
+      break
+    case 'string':
+      value = data
+      break
+    case 'boolean':
+      value = String(data)
+      break
+    default:
+      break
+  }
+
+  return value
+}
+
+export function parseBool(data: any, type: string) {
+  let value = data
+
+  switch (type) {
+    case 'number':
+      value = data > 0 ? true : false
+      break
+    case 'string':
+      value = data === '0' ? false : true
+      break
+    case 'boolean':
+      value = data
+      break
+    default:
+      break
+  }
+
+  return value
 }

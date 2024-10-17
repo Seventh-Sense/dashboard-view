@@ -15,6 +15,7 @@ import { PropType, toRefs, shallowReactive, watch } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { useChartDataFetch } from '@/hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
+import { parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -40,7 +41,7 @@ function fixedByDecimal(num: any) {
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    option.dataset = newVal
+    option.dataset = parseData(newVal, 'number')
   },
   {
     immediate: true,

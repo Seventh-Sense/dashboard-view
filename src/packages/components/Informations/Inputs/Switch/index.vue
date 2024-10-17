@@ -28,6 +28,7 @@ import { PropType, toRefs, shallowReactive, watch, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import throttle from 'lodash/throttle'
 import { updatePoint } from '@/api/http'
+import { parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -60,7 +61,7 @@ const click = () => {
     updatePoint(params.objectID, { value: data })
       .then((res: any) => {
         if (res.value) {
-          option.dataset = tBoolean(res.value)
+          option.dataset = parseData(res.value, 'boolean')
           window['$message'].success(t('msg.gauge_msg_1'))
         } else {
           window['$message'].error(t('msg.gauge_msg_2'))
@@ -77,33 +78,11 @@ const click = () => {
   }
 }
 
-function tBoolean(str: any) {
-  let value = false
-
-  if (!str) {
-    return value
-  }
-
-  if (typeof str === 'string') {
-    value = str === '0' ? false : true
-  }
-
-  if (typeof str === 'number') {
-    value = str === 0 ? false : true
-  }
-
-  if (typeof str === 'boolean') {
-    value = str
-  }
-
-  return value
-}
-
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      option.dataset = tBoolean(newVal)
+      option.dataset = parseData(newVal, 'boolean')
     }
   },
   {

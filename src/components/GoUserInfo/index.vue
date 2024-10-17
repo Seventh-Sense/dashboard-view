@@ -52,7 +52,7 @@ const renderUserInfo = () => {
         style: 'margin-right: 12px;',
         src: Person
       }),
-      h('div', null, [h('div', null, [h(NText, { depth: 2 }, { default: () => 'Admin' })])])
+      h('div', null, [h('div', null, [h(NText, { depth: 2 }, { default: () => 'admin' })])])
     ]
   )
 }

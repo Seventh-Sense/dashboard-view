@@ -79,7 +79,7 @@ import { PropType, toRefs, watch, shallowReactive, ref } from 'vue'
 import { useChartDataFetch } from '@/hooks'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import config, { option as configOption } from './config'
-import { toNumber } from '@/utils'
+import { parseData, toNumber } from '@/utils'
 import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 import { updatePoint } from '@/api/http'
 import Decimal from 'decimal.js'
@@ -211,7 +211,7 @@ watch(
   newData => {
     try {
       if (!flag.value) {
-        let num = tNumber(newData)
+        let num = parseData(newData, 'number')
         //console.log(newData, num)
         dataHandle(num)
       }

@@ -10,6 +10,7 @@
         :options="options"
         @update:value="handleUpdateValue"
         :clearable="true"
+        placement="bottom-end"
       />
     </setting-item-box>
   </div>

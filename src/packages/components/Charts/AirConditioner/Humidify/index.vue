@@ -9,6 +9,7 @@ import { CreateComponentType } from '../../../../../packages/index.d'
 import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
 import SVG_ICON from '../../../../../svg/SVG_ICON'
+import { parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -24,25 +25,7 @@ const option = shallowReactive({
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    if (typeof newVal === 'boolean') {
-      option.dataset = newVal
-    } else if (typeof newVal === 'number') {
-      if (newVal > 0) {
-        option.dataset = true
-      } else {
-        option.dataset = false
-      }
-    } else if (typeof newVal === 'string') {
-      console.log(newVal, typeof newVal)
-      let value = parseFloat(newVal)
-      if (value > 0) {
-        console.log(true)
-        option.dataset = true
-      } else {
-        console.log(false)
-        option.dataset = false
-      }
-    }
+    option.dataset = parseData(newVal, 'boolean')
   },
   {
     immediate: true,

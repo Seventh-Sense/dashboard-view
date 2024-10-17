@@ -24,7 +24,7 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 import CCW_01 from '@/assets/device/fan/VerticalPumpLeftImpeller-CCW_01.png'
 import CCW_02 from '@/assets/device/fan/VerticalPumpLeftImpeller-CCW_02.png'
 import CCW_03 from '@/assets/device/fan/VerticalPumpLeftImpeller-CCW_03.png'
-import { getType } from '@/utils/utils'
+import { getType, parseData } from '@/utils/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -57,7 +57,6 @@ const processAnimation = () => {
   interval = setInterval(() => {
     currenIndex = circularIndex(images, currenIndex)
     currentImage.value = images[currenIndex]
-
   }, 100)
 }
 
@@ -70,23 +69,12 @@ const clear = () => {
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    let type = getType(newVal)
-    //console.log('MotorDevice value', type, newVal)
-    
-    if (type === 'string') {
-      let val = parseFloat(newVal)
-      if (val > 0) {
-        processAnimation()
-      } else {
-        clear()
-      }
-      //if (va)
-    } else if (type === 'boolean') {
-      if (newVal) {
-        processAnimation()
-      } else {
-        clear()
-      }
+    let value = parseData(newVal, 'boolean')
+
+    if (value) {
+      processAnimation()
+    } else {
+      clear()
     }
   },
   {
@@ -94,10 +82,6 @@ watch(
     deep: true
   }
 )
-
-
-
-
 
 useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number) => {
   // @ts-ignore

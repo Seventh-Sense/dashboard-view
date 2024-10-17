@@ -5,7 +5,7 @@
         <div class="list-content-title-top">
           <div class="list-content-title-avatar"></div>
           <span style="color: rgba(255, 255, 255, 0.93); font-size: 12px; line-height: 17px">
-            Admin
+            admin
           </span>
         </div>
         <img width="24" height="24" :src="SVG_ICON.card_icons.template" @click="previewHandle()" />

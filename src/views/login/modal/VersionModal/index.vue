@@ -51,7 +51,7 @@ const onClose = () => {
 
 <style lang="scss" scoped>
 .modal {
-  width: 580px;
+  width: 480px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(50px);
   border-radius: 18px;
@@ -65,7 +65,7 @@ const onClose = () => {
   }
 
   &-content {
-    height: 470px;
+    height: 270px;
     display: flex;
     flex-direction: column;
     align-items: center;
