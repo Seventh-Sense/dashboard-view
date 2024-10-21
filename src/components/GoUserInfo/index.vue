@@ -72,15 +72,15 @@ const options = ref([
   //   key: 'sysSet',
   //   icon: renderIcon(SettingsSharpIcon)
   // },
-  {
-    label: renderLang('global.contact'),
-    key: 'contact',
-    icon: renderIcon(ChatboxEllipsesIcon)
-  },
-  {
-    type: 'divider',
-    key: 'd3'
-  },
+  // {
+  //   label: renderLang('global.contact'),
+  //   key: 'contact',
+  //   icon: renderIcon(ChatboxEllipsesIcon)
+  // },
+  // {
+  //   type: 'divider',
+  //   key: 'd3'
+  // },
   {
     label: renderLang('global.logout'),
     key: 'logout',

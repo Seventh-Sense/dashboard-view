@@ -84,6 +84,18 @@ export default {
 
   //Water pump
   pump_left: 'Water Pump',
+  dry_title: 'Dry',
+  fan2_title: 'Fan',
+  humidify_title: 'Humidify',
+  snow_title: 'Snow',
+  sun_title: 'Sun',
+  gradient_dial: 'Gradient Dial',
+  numerical: 'Number',
+  door: 'Door',
+  humanSensor: 'Human Sensor',
+  led: 'Led',
+  motor: 'Motor',
+  waterSensor: 'Water Sensor',
 
   //
   gauge_info: 'Gauge',

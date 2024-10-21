@@ -83,6 +83,18 @@ export default {
 
   //水式泵
   pump_left: '水式泵',
+  dry_title: '干燥',
+  fan2_title: '风扇',
+  humidify_title: '湿度',
+  snow_title: '制冷',
+  sun_title: '制热',
+  gradient_dial: '渐变色表盘',
+  numerical: '数值',
+  door: '门',
+  humanSensor: '人在传感器',
+  led: '灯',
+  motor: '电机',
+  waterSensor: '水浸传感器',
 
   //gauge
   gauge_info: '仪表盘',

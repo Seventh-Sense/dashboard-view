@@ -20,11 +20,11 @@
       </template>
       <div class="modal-content">
         <img width="120" height="120" :src="SVG_ICON.card_icons.logo" />
-        <div class="modal-content-title">XControl by LUBANX</div>
+        <div class="modal-content-title">XPlay by LUBANX</div>
         <div class="modal-content-tip">Version 123.456.7.8</div>
       </div>
       <template #footer>
-        <div class="modal-content-foot">XControl © 2024 Adveco Technology Co., Ltd. All rights reserved.</div>
+        <div class="modal-content-foot">XPlay © 2024 Adveco Technology Co., Ltd. All rights reserved.</div>
       </template>
     </n-card>
   </n-modal>
