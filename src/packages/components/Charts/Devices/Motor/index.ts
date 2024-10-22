@@ -2,14 +2,14 @@ import { ConfigType, PackagesCategoryEnum, ChartFrameEnum } from '@/packages/ind
 import { ChatCategoryEnum, ChatCategoryEnumName } from '../../index.d'
 import i18n from '@/i18n/index'
 
-export const MotorDeviceConfig: ConfigType = {
-  key: 'MotorDevice',
-  chartKey: 'VMotorDevice',
-  conKey: 'VCMotorDevice',
-  title: i18n.global.t('dashboard.pump_left'),
+export const MotorConfig: ConfigType = {
+  key: 'Motor',
+  chartKey: 'VMotor',
+  conKey: 'VCMotor',
+  title: i18n.global.t('dashboard.motor'),
   category: ChatCategoryEnum.Device,
   categoryName: i18n.global.t('dashboard.device'),
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'pumpleft.png'
+  image: 'machine_breviary.png'
 }

@@ -10,6 +10,6 @@ export const Fan2Config: ConfigType = {
   category: ChatCategoryEnum.Air,
   categoryName: ChatCategoryEnumName.Air,
   package: PackagesCategoryEnum.CHARTS,
-  chartFrame: ChartFrameEnum.ECHARTS,
+  chartFrame: ChartFrameEnum.COMMON,
   image: 'fan2.png'
 }

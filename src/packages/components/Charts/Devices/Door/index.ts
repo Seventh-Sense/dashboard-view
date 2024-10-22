@@ -7,8 +7,8 @@ export const DoorConfig: ConfigType = {
   chartKey: 'VDoor',
   conKey: 'VCDoor',
   title: i18n.global.t('dashboard.door'),
-  category: ChatCategoryEnum.MORE,
-  categoryName: ChatCategoryEnumName.MORE,
+  category: ChatCategoryEnum.Device,
+  categoryName: i18n.global.t('dashboard.device'),
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
   image: 'door.png'

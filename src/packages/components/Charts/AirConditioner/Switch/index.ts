@@ -2,14 +2,14 @@ import { ConfigType, PackagesCategoryEnum, ChartFrameEnum } from '@/packages/ind
 import { ChatCategoryEnum, ChatCategoryEnumName } from '../../index.d'
 import i18n from '@/i18n/index'
 
-export const LedConfig: ConfigType = {
-  key: 'Led',
-  chartKey: 'VLed',
-  conKey: 'VCLed',
-  title: i18n.global.t('dashboard.led'),
-  category: ChatCategoryEnum.MORE,
-  categoryName: ChatCategoryEnumName.MORE,
+export const SwitchConfig: ConfigType = {
+  key: 'Switch',
+  chartKey: 'VSwitch',
+  conKey: 'VCSwitch',
+  title: i18n.global.t('dashboard.switch'),
+  category: ChatCategoryEnum.Air,
+  categoryName: ChatCategoryEnumName.Air,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'led_breviary.png'
+  image: 'switch.png'
 }

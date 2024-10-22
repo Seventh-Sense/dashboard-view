@@ -3,6 +3,7 @@ import { GaugeCommonConfig } from './index'
 import { CreateComponentType } from '@/packages/index.d'
 import { chartInitConfig } from '@/settings/designSetting'
 import cloneDeep from 'lodash/cloneDeep'
+import i18n from '@/i18n/index'
 
 export const units = [
   {
@@ -41,15 +42,11 @@ export const units = [
 
 export const caps = [
   {
-    label: 'butt',
-    value: 'butt'
-  },
-  {
-    label: 'round',
+    label: i18n.global.t('dashboard.round'),
     value: 'round'
   },
   {
-    label: 'square',
+    label: i18n.global.t('dashboard.square'),
     value: 'square'
   },
 ]
@@ -103,7 +100,7 @@ export const option = {
   maxLeft: 5,
   minTop: -33,
   maxTop: -33,
-  linecap: "butt",
+  linecap: "round",
   isWrite: false,
   step: 0.5,
   isScale: false,

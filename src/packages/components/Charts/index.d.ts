@@ -10,7 +10,7 @@ export enum ChatCategoryEnum {
   MORE = 'Mores',
   Gauge = 'Gauges',
   Device = 'Devices',
-  Air = 'AirConditioner',
+  Air = 'Images',
 }
 
 export enum ChatCategoryEnumName {
@@ -23,5 +23,5 @@ export enum ChatCategoryEnumName {
   MORE = '更多',
   Gauge = '表盘',
   Device = '设备',
-  Air = '空调',
+  Air = '控件',
 }

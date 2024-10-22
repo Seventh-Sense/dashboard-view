@@ -7,8 +7,8 @@ export const WaterSensorConfig: ConfigType = {
   chartKey: 'VWaterSensor',
   conKey: 'VCWaterSensor',
   title: i18n.global.t('dashboard.waterSensor'),
-  category: ChatCategoryEnum.MORE,
-  categoryName: ChatCategoryEnumName.MORE,
+  category: ChatCategoryEnum.Device,
+  categoryName: i18n.global.t('dashboard.device'),
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
   image: 'watersensor.png'

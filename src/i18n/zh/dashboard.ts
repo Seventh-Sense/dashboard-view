@@ -98,4 +98,7 @@ export default {
 
   //gauge
   gauge_info: '仪表盘',
+
+  square: '方形',
+  round: '圆形',
 }

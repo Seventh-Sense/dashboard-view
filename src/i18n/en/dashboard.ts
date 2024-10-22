@@ -99,4 +99,7 @@ export default {
 
   //
   gauge_info: 'Gauge',
+
+  square: 'Square',
+  round: 'Round',
 }

@@ -7,8 +7,8 @@ export const HumanSensorConfig: ConfigType = {
   chartKey: 'VHumanSensor',
   conKey: 'VCHumanSensor',
   title: i18n.global.t('dashboard.humanSensor'),
-  category: ChatCategoryEnum.MORE,
-  categoryName: ChatCategoryEnumName.MORE,
+  category: ChatCategoryEnum.Device,
+  categoryName: i18n.global.t('dashboard.device'),
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
   image: 'humansensor.png'
