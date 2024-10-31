@@ -10,7 +10,7 @@ export enum ChatCategoryEnum {
   MORE = 'Mores',
   Gauge = 'Gauges',
   Device = 'Devices',
-  Air = 'Images',
+  Air = 'AirConditioner',
 }
 
 export enum ChatCategoryEnumName {
