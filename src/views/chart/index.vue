@@ -81,7 +81,7 @@ onMounted(() => {
     .then((res: any) => {
       if (res && res.content !== '') {
         nextTick(() => {
-          updateComponent(JSONParse(res.content), false, true)
+          updateComponent(JSONParse(res.content), true, true)
         })
       }
     })
