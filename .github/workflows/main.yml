@@ -20,9 +20,8 @@ jobs:
         node-version: '20.10.0'
 
     - name: Install Dependencies
-      run: |
-         cd frontend
-         npm install
+      run: npm install
+         
 
     - name: Build Project
       run: npm run build
