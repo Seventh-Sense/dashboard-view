@@ -20,8 +20,8 @@ jobs:
         node-version: '20.10.0'
 
     - name: Install Dependencies
-      run: npm install
+      run: pnpm install
          
 
     - name: Build Project
-      run: npm run build
+      run: pnpm run build
