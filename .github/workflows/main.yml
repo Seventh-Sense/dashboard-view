@@ -18,6 +18,10 @@ jobs:
       with:
         node-version: '20.10.0'
 
+    - name: Extract Tag Name
+      id: extract_tag
+      run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
     - name: Install Dependencies
       run: npm install && export NODE_OPTIONS=--max_old_space_size=4096 &&npm run build
 
@@ -27,6 +31,5 @@ jobs:
         name: windows-executable
         path: dist.zip
         
-    - name: Publish to npm
-      run: npm publish
+  
          
