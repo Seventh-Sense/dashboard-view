@@ -17,13 +17,6 @@ jobs:
       with:
         node-version: '20.10.0'
 
-    - name: Increase Node.js heap memory limit
-      env:
-        NODE_OPTIONS: --max-old-space-size=4096
-
     - name: Install Dependencies
-      run: npm install
+      run: npm install && export NODE_OPTIONS=--max_old_space_size=4096 &&npm run build
          
-
-    - name: Build Project
-      run: npm run build
