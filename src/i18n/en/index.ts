@@ -33,7 +33,8 @@ const global = {
   r_ok: 'Ok',
   r_cancel: 'Cancel',
   r_save: 'Save',
-  r_create: 'Create'
+  r_create: 'Create',
+  r_search: 'Search',
 }
 
 export default {

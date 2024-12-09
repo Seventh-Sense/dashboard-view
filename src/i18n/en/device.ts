@@ -38,5 +38,8 @@ export default {
 
   //
   desc: 'Description',
+
+  //bacnet
+  point_list: 'Points List',
 }
 

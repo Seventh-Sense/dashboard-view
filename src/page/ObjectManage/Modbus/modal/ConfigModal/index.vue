@@ -38,16 +38,16 @@
             <template #header>
               <n-space align="center" justify="start">
                 <img width="24" height="24" :src="SVG_ICON.card_icons.separator" />
-                <n-space v-if="!isRename" align="center" justify="start">
+                <n-space v-if="!config.renamed" align="center" justify="start">
                   <span>{{ config.name }}</span>
                   <img
                     width="24"
                     height="24"
                     :src="SVG_ICON.card_icons.edit"
-                    @click.stop="onRename"
+                    @click.stop="onRename(config)"
                   />
                 </n-space>
-                <n-space v-if="isRename" align="center" justify="start">
+                <n-space v-if="config.renamed" align="center" justify="start">
                   <n-input
                     v-model:value="config.name"
                     type="text"
@@ -126,6 +126,7 @@ onMounted(() => {
         res.forEach((item: any) => {
           let result = JSON.parse(item.settings)
           result.id = item.id
+          result.renamed = false
           configData.value.push(result)
         })
       }
@@ -153,6 +154,7 @@ const onAdd = () => {
 
   let data = {
     name: 'Modbus' + id,
+    renamed: false,
     id: id,
     connect_mode: 'Serial Port',
     serial_port: '',
@@ -192,8 +194,8 @@ const onDelete = (id: any) => {
     })
 }
 
-const onRename = () => {
-  isRename.value = true
+const onRename = (data: any) => {
+  data.renamed = true
 }
 //修改名字
 const onCheck = (data: any) => {
@@ -207,7 +209,7 @@ const onCheck = (data: any) => {
     .catch(err => {
       console.log(err)
     }).finally(() => {
-      isRename.value = false
+      data.renamed = false
     })
 }
 

@@ -39,4 +39,8 @@ export default {
 
   //
   desc: '描述',
+
+
+  //bacnet
+  point_list: '设备点位列表',
 }

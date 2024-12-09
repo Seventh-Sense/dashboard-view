@@ -34,6 +34,7 @@ const global = {
   r_cancel: '取消',
   r_save: '保存',
   r_create: '创建',
+  r_search: '搜索',
 }
 
 export default {

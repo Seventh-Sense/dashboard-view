@@ -6,12 +6,18 @@
     :date-locale="dateLocale"
     :theme-overrides="overridesTheme"
   >
-    <!-- <n-theme-editor> -->
+    <a-config-provider
+      :theme="{
+        algorithm: theme.darkAlgorithm
+      }"
+    >
+      <!-- <n-theme-editor> -->
       <go-app-provider>
         <I18n></I18n>
         <router-view :key="routeKey"></router-view>
       </go-app-provider>
-    <!-- </n-theme-editor> -->
+      <!-- </n-theme-editor> -->
+    </a-config-provider>
   </n-config-provider>
 </template>
 
@@ -21,12 +27,13 @@ import { GoAppProvider } from '@/components/GoAppProvider'
 import { I18n } from '@/components/I18n'
 import { useDarkThemeHook, useThemeOverridesHook, useCode, useLang } from '@/hooks'
 import { NThemeEditor } from 'naive-ui'
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { theme } from 'ant-design-vue'
 
-const route = useRoute();
+const route = useRoute()
 
-const routeKey = computed(() => route.path);
+const routeKey = computed(() => route.path)
 // 暗黑主题
 const darkTheme = useDarkThemeHook()
 
@@ -42,7 +49,7 @@ const { locale, dateLocale } = useLang()
 </script>
 
 <style lang="scss" scoped>
-div[aria-hidden="true"] {
-		display: none !important
+div[aria-hidden='true'] {
+  display: none !important;
 }
 </style>

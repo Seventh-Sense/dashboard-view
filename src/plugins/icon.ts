@@ -108,6 +108,7 @@ import {
   Laptop as LaptopIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
+  ChevronLeft as ChevronLeftIcon,
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -309,7 +310,8 @@ const carbon = {
   // 图层
   LaptopIcon,
   DeleteIcon,
-  EditIcon
+  EditIcon,
+  ChevronLeftIcon,
 }
 
 // https://www.xicons.org/#/ 还有很多

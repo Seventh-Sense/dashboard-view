@@ -38,6 +38,12 @@ import picture from './icons/picture.svg?url'
 import template from './icons/template.svg?url'
 import delete_one from './icons/delete_one.svg?url'
 import shutdown from './icons/_shutdown_TL.svg?url'
+import Bacnet_nomal from './icons/Bacnet-nomal.svg?url'
+import Bacnet_line from './icons/Bacnet-line.svg?url'
+import file from './icons/file.svg?url'
+import deviceC from './icons/deviceC.svg?url'
+import deviceA from './icons/deviceA.svg?url'
+import deviceB from './icons/deviceB.svg?url'
 
 export default {
     card_icons: {
@@ -80,6 +86,12 @@ export default {
         picture: picture,
         template: template,
         delete_one: delete_one,
-        shutdown: shutdown
+        shutdown: shutdown,
+        Bacnet_nomal: Bacnet_nomal,
+        Bacnet_line: Bacnet_line,
+        file: file,
+        deviceC: deviceC,
+        deviceA: deviceA,
+        deviceB: deviceB
     }
 }
