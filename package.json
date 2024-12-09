@@ -6,7 +6,7 @@
   },
   "scripts": {
     "dev": "vite --host",
-    "build": "npx vite build --mode production --max_old_space_size"
+    "build": "npx vite build --mode production"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
