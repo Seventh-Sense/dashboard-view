@@ -2,7 +2,8 @@ name: Build Vue App
 
 on:
   push:
-    branches: [ main ]
+    tags:
+      - '*'
 
 jobs:
   build:
