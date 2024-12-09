@@ -16,7 +16,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.10.0'
-        memory: '7GB'
+
+    - name: Increase Node.js heap memory limit
+      env:
+        NODE_OPTIONS: --max-old-space-size=4096
 
     - name: Install Dependencies
       run: npm install
