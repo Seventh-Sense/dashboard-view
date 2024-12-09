@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      
     - name: Checkout Code
       uses: actions/checkout@v4
 
@@ -17,10 +21,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.10.0'
-
-    - name: Extract Tag Name
-      id: extract_tag
-      run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
     - name: Install Dependencies
       run: npm install && export NODE_OPTIONS=--max_old_space_size=4096 &&npm run build
@@ -30,6 +30,16 @@ jobs:
       with:
         name: windows-executable
         path: dist.zip
+        
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        release_name: ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false
         
   
          
