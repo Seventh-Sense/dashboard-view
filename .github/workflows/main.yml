@@ -35,8 +35,8 @@ jobs:
       uses: actions/upload-release-asset@v1.0.2
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: dist/*
-        asset_name: "dist-${{ github.event.release.tag_name }}.zip"
-        extract_asset_download_url: true
+        asset_path: ./dist.zip
+        asset_name: dist.zip
+        asset_content_type: application/zip
   
          
