@@ -6,11 +6,12 @@ import viteCompression from 'vite-plugin-compression'
 import { viteMockServe } from 'vite-plugin-mock'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import svgLoader from 'vite-svg-loader'
-
+import zipPack, { Options as ZipPickOptions } from "vite-plugin-zip-pack";
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
 }
+
 
 export default defineConfig({
   base: '/',
@@ -72,6 +73,11 @@ export default defineConfig({
       threshold: 10240,
       algorithm: 'gzip',
       ext: '.gz'
+    }),
+    zipPack({
+      inDir: `dist`,
+      outDir: "./",
+      outFileName: `dist.zip`
     })
   ],
   build: {
