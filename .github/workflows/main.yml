@@ -31,15 +31,10 @@ jobs:
         name: windows-executable
         path: dist.zip
         
-    - name: Create Release
-      uses: actions/create-release@v1
+    - name: npm publish
+      run: npm publish
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.get_version.outputs.VERSION }}
-        release_name: ${{ steps.get_version.outputs.VERSION }}
-        draft: false
-        prerelease: false
+        CI: true
         
   
          
