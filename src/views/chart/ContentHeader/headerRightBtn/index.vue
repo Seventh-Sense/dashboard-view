@@ -3,7 +3,6 @@
     <n-button
       v-for="item in comBtnList"
       :key="item.title"
-      :type="item.type"
       ghost
       @click="item.event"
     >
@@ -164,12 +163,12 @@ const btnList = [
     icon: renderIcon(AnalyticsIcon),
     event: syncData
   },
-  {
-    select: true,
-    title: t('dashboard.preview'),
-    icon: renderIcon(BrowsersOutlineIcon),
-    event: previewHandle
-  },
+  // {
+  //   select: true,
+  //   title: t('dashboard.preview'),
+  //   icon: renderIcon(BrowsersOutlineIcon),
+  //   event: previewHandle
+  // },
   {
     select: true,
     title: t('dashboard.save'),

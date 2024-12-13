@@ -4,10 +4,10 @@
       <thead>
         <tr>
           <th>功能</th>
-          <th>Win 快捷键</th>
+          <!-- <th>Win 快捷键</th> -->
           <th>
             <n-space justify="space-between">
-              <span> Mac 快捷键 </span>
+              <span> 快捷键 </span>
               <n-icon size="20" class="go-cursor-pointer" @click="closeHandle">
                 <close-icon></close-icon>
               </n-icon>
@@ -19,11 +19,11 @@
         <tr v-for="(item, index) in shortcutKeyOptions" :key="index">
           <td>{{ item.label }}</td>
           <td>{{ item.win }}</td>
-          <td v-if="item.macSource">{{ item.mac }}</td>
+          <!-- <td v-if="item.macSource">{{ item.mac }}</td>
           <td v-else>
             <n-gradient-text :size="22">{{ item.mac.substr(0, 1) }}</n-gradient-text>
             + {{ item.mac.substr(3) }}
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </n-table>
@@ -73,15 +73,15 @@ const shortcutKeyOptions = [
     mac: `${MacKeyboard.CTRL.toUpperCase()} + ${MacKeyboard.SHIFT.toUpperCase()} + L `
   },
   {
-    label: '展示',
+    label: '隐藏',
     win: `${WinKeyboard.CTRL.toUpperCase()} + H `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + H `
   },
-  {
-    label: '隐藏',
-    win: `${WinKeyboard.CTRL.toUpperCase()} + ${WinKeyboard.SHIFT.toUpperCase()} + H `,
-    mac: `${MacKeyboard.CTRL.toUpperCase()} + ${MacKeyboard.SHIFT.toUpperCase()} + H `
-  },
+  // {
+  //   label: '展示',
+  //   win: `${WinKeyboard.CTRL.toUpperCase()} + ${WinKeyboard.SHIFT.toUpperCase()} + H `,
+  //   mac: `${MacKeyboard.CTRL.toUpperCase()} + ${MacKeyboard.SHIFT.toUpperCase()} + H `
+  // },
   {
     label: '删除',
     win: 'Delete'.toUpperCase(),

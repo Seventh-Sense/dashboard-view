@@ -3,9 +3,9 @@ import { ImageConfig } from '@/packages/components/Informations/Mores/Image/inde
 import { ChatCategoryEnum, ChatCategoryEnumName } from '../index.d'
 
 // 远程共享库（调接口获取图像列表）
-const imageList = [
-  { imageName: 'carousel1', imageUrl: 'https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg' },
-  { imageName: 'carousel2', imageUrl: 'https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg' }
+const imageList: any[] = [
+  // { imageName: 'carousel1', imageUrl: 'https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg' },
+  // { imageName: 'carousel2', imageUrl: 'https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg' }
 ]
 
 const photoConfigList = imageList.map(i => ({
