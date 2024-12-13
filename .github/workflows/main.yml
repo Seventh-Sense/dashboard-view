@@ -26,6 +26,11 @@ jobs:
     - name: Install Dependencies
       run: npm install && export NODE_OPTIONS=--max_old_space_size=4096 &&npm run build
 
+    - name: 创建serverless模版zip文件
+      run: |
+        zip -r ./dist.zip ./dist
+      
+
     - name: Upload Windows Executable
       uses: actions/upload-artifact@v4
       with:
