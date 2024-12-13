@@ -143,7 +143,7 @@ const keyRecordHandle = () => {
 
 // 初始化监听事件
 export const useAddKeyboard = () => {
-  const throttleTime = 50
+  const throttleTime = 500
   const switchHandle = (keyboardValue: typeof winKeyboardValue, e: string) => {
     switch (e) {
       // ct+↑
@@ -167,7 +167,7 @@ export const useAddKeyboard = () => {
       case keyboardValue.delete:
         keymaster(e, debounce(() => { chartEditStore.removeComponentList(); return false }, throttleTime))
         break;
-      // 复制 ct+v
+      // 复制 ct+c
       case keyboardValue.copy:
         keymaster(e, debounce(() => { chartEditStore.setCopy(); return false }, throttleTime))
         break;
