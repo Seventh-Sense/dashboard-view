@@ -59,7 +59,7 @@ export const menuOptionsInit = () => {
           { default: () => t('menu.DashBoard') }
         ),
       key: PageEnum.BASE_HOME_ITEMS_NAME,
-      icon: renderImage(SVG_ICON.card_icons.graphic_df, '', 32, 32)
+      icon: renderImage(SVG_ICON.card_icons.Visualize_sp, '', 32, 32)
     },
   ])
 }

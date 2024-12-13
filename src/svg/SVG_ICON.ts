@@ -44,6 +44,7 @@ import file from './icons/file.svg?url'
 import deviceC from './icons/deviceC.svg?url'
 import deviceA from './icons/deviceA.svg?url'
 import deviceB from './icons/deviceB.svg?url'
+import Visualize_sp from './icons/Visualize-sp.svg?url'
 
 export default {
     card_icons: {
@@ -92,6 +93,7 @@ export default {
         file: file,
         deviceC: deviceC,
         deviceA: deviceA,
-        deviceB: deviceB
+        deviceB: deviceB,
+        Visualize_sp: Visualize_sp
     }
 }
