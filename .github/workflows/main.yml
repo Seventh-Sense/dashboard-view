@@ -28,7 +28,8 @@ jobs:
 
     - name: Write version file
       run: |
-        touch version.ts && echo 'Version="1.0.0"' > version.ts
+        touch version.txt
+        echo 'Version="1.0.0"' > version.txt
 
     - name: Create zip file
       run: |
