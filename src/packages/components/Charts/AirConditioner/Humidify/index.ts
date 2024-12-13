@@ -6,7 +6,7 @@ export const HumidifyConfig: ConfigType = {
   key: 'Humidify',
   chartKey: 'VHumidify',
   conKey: 'VCHumidify',
-  title: i18n.global.t('dashboard.pump_left'),
+  title: i18n.global.t('dashboard.humidify_title'),
   category: ChatCategoryEnum.Air,
   categoryName: ChatCategoryEnumName.Air,
   package: PackagesCategoryEnum.CHARTS,
