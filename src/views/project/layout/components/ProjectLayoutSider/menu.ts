@@ -19,20 +19,20 @@ export const menuOptionsInit = () => {
   const t = window['$t']
 
   return reactive([
-    {
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: {
-              name: PageEnum.BASE_LOCAL_MAN_NAME
-            }
-          },
-          { default: () => 'Bacnet' }
-        ),
-      key: PageEnum.BASE_LOCAL_MAN_NAME,
-      icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
-    },
+    // {
+    //   label: () =>
+    //     h(
+    //       RouterLink,
+    //       {
+    //         to: {
+    //           name: PageEnum.BASE_LOCAL_MAN_NAME
+    //         }
+    //       },
+    //       { default: () => 'Bacnet' }
+    //     ),
+    //   key: PageEnum.BASE_LOCAL_MAN_NAME,
+    //   icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
+    // },
     {
       label: () =>
         h(
