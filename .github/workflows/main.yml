@@ -25,12 +25,9 @@ jobs:
 
     - name: Install Dependencies
       run: npm install && export NODE_OPTIONS=--max_old_space_size=4096 &&npm run build
-
-    - name: Create a directory
-      run: sudo mkdir -p ./example_directory
       
     - name: Write version file
-      run: sudo echo "Hello, GitHub Actions!" > ./example_directory/hello.txt
+      run: sudo echo "Hello, GitHub Actions!" > ./hello.txt
 
     - name: Create zip file
       run: |
