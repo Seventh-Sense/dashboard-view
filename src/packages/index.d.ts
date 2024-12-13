@@ -219,6 +219,6 @@ export type PackagesType = {
   [PackagesCategoryEnum.INFORMATIONS]: ConfigType[]
   //[PackagesCategoryEnum.TABLES]: ConfigType[]
   [PackagesCategoryEnum.PHOTOS]: ConfigType[]
-  [PackagesCategoryEnum.ICONS]: ConfigType[]
+  // [PackagesCategoryEnum.ICONS]: ConfigType[]
   [PackagesCategoryEnum.DECORATES]: ConfigType[]
 }

@@ -19,20 +19,25 @@
         </n-space>
       </template>
       <div class="modal-content">
-        <img width="120" height="120" :src="SVG_ICON.card_icons.logo" />
+        <img width="80" height="80" :src="SVG_ICON.card_icons.logo" />
         <div class="modal-content-title">XPlay by LUBANX</div>
-        <div class="modal-content-tip">Version 123.456.7.8</div>
+        <div class="modal-content-tip">版本: {{ version }}</div>
+        <div class="modal-content-b">UI {{ ui }}</div>
       </div>
       <template #footer>
-        <div class="modal-content-foot">XPlay © 2024 Adveco Technology Co., Ltd. All rights reserved.</div>
+        <div class="modal-content-foot">
+          XPlay © 2024 Adveco Technology Co., Ltd. All rights reserved.
+        </div>
       </template>
     </n-card>
   </n-modal>
 </template>
 
 <script setup lang="ts">
+import { getVersion } from '@/api/http'
 import { icon } from '@/plugins'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { onMounted, ref } from 'vue'
 
 const { CloseOutlineIcon } = icon.ionicons5
 
@@ -44,6 +49,26 @@ const props = defineProps({
   }
 })
 
+const version = ref('')
+const ui = ref('1.0.0')
+
+onMounted(() => {
+  getVersion()
+    .then((res: any) => {
+      console.log('Version:', res.version)
+      if (res.version) {
+        version.value = res.version
+      }
+
+      if (res.ui) {
+        ui.value = res.ui
+      }
+    })
+    .catch((e: any) => {
+      console.error('Get version error:', e)
+    })
+})
+
 const onClose = () => {
   emit('update:showModal', false)
 }
@@ -51,7 +76,7 @@ const onClose = () => {
 
 <style lang="scss" scoped>
 .modal {
-  width: 480px;
+  width: 512px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(50px);
   border-radius: 18px;
@@ -72,21 +97,33 @@ const onClose = () => {
     padding-top: 24px;
 
     &-title {
-      font-size: 24px;
+      font-size: 14px;
+      line-height: 20px;
       color: rgba(255, 255, 255, 0.93);
       font-weight: 400;
     }
 
     &-tip {
-      font-size: 24px;
+      font-size: 14px;
+      line-height: 20px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
+    }
+
+    &-b {
+      font-size: 12px;
+      line-height: 16px;
       color: rgba(255, 255, 255, 0.6);
       font-weight: 400;
     }
 
     &-foot {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.60);
-        font-weight: 400;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 400;
     }
   }
 }

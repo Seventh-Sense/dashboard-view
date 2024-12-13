@@ -74,11 +74,11 @@ export default defineConfig({
       algorithm: 'gzip',
       ext: '.gz'
     }),
-    zipPack({
-      inDir: `dist`,
-      outDir: "./",
-      outFileName: `dist.zip`
-    })
+    // zipPack({
+    //   inDir: `dist`,
+    //   outDir: "./",
+    //   outFileName: `dist.zip`
+    // })
   ],
   build: {
     target: 'es2020',

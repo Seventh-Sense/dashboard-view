@@ -16,7 +16,8 @@
   <!-- 系统设置 model -->
   <go-system-set v-model:modelShow="modelShow"></go-system-set>
   <!-- 关于软件 model -->
-  <go-system-info v-model:modelShow="modelShowInfo"></go-system-info>
+  <!-- <go-system-info v-model:modelShow="modelShowInfo"></go-system-info> -->
+  <VersionModal v-model:showModal="modelShowInfo" />
 </template>
 
 <script lang="ts" setup>
@@ -29,6 +30,7 @@ import { GoSystemInfo } from '@/components/GoSystemInfo/index'
 import Person from './person.png'
 
 import { icon } from '@/plugins'
+import { VersionModal } from '@/views/login/modal/VersionModal'
 const { ChatboxEllipsesIcon, PersonIcon, LogOutOutlineIcon, SettingsSharpIcon } = icon.ionicons5
 
 const t = window['$t']
@@ -72,15 +74,15 @@ const options = ref([
   //   key: 'sysSet',
   //   icon: renderIcon(SettingsSharpIcon)
   // },
-  // {
-  //   label: renderLang('global.contact'),
-  //   key: 'contact',
-  //   icon: renderIcon(ChatboxEllipsesIcon)
-  // },
-  // {
-  //   type: 'divider',
-  //   key: 'd3'
-  // },
+  {
+    label: renderLang('global.contact'),
+    key: 'contact',
+    icon: renderIcon(ChatboxEllipsesIcon)
+  },
+  {
+    type: 'divider',
+    key: 'd3'
+  },
   {
     label: renderLang('global.logout'),
     key: 'logout',
