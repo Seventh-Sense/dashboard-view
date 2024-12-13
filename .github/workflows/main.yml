@@ -27,7 +27,7 @@ jobs:
       run: npm install && export NODE_OPTIONS=--max_old_space_size=4096 &&npm run build
       
     - name: Write version file
-      run: sudo echo "Hello, GitHub Actions!" > ./hello.txt
+      run: sudo echo 'Version="1.0.0"' > ./dist/version.txt
 
     - name: Create zip file
       run: |
