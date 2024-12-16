@@ -56,8 +56,7 @@
                 <span class="func-keyNameWord">{{ eventName }}(e, components, echarts, node_modules)&nbsp;&nbsp;{</span>
               </p>
               <!-- 编辑主体 -->
-              <monaco-editor v-model:modelValue="advancedEvents[eventName]" height="480px" language="javascript" />
-              <!-- 函数结束 -->
+              
               <p class="go-pl-3 func-keyNameWord">}</p>
             </n-tab-pane>
           </n-tabs>
@@ -159,7 +158,6 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch, toRefs, toRaw } from 'vue'
-import { MonacoEditor } from '@/components/Pages/MonacoEditor'
 import { useTargetData } from '../../../hooks/useTargetData.hook'
 import { templateList } from './importTemplate'
 import { npmPkgs } from '@/hooks'

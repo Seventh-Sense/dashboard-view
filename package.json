@@ -33,6 +33,7 @@
     "html2canvas": "^1.4.1",
     "iconify-icon": "^1.0.8",
     "keymaster": "^1.6.2",
+    "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",
     "monaco-editor": "^0.33.0",
     "nanoid": "^5.0.7",

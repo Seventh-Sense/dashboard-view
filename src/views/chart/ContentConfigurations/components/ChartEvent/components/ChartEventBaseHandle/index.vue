@@ -55,7 +55,7 @@
                 <span class="func-keyNameWord">{{ eventName }}(mouseEvent,components)&nbsp;&nbsp;{</span>
               </p>
               <!-- 编辑主体 -->
-              <monaco-editor v-model:modelValue="baseEvent[eventName]" height="480px" language="javascript" />
+              
               <!-- 函数结束 -->
               <p class="go-pl-3 func-keyNameWord">}</p>
             </n-tab-pane>
@@ -125,7 +125,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, toRefs, toRaw } from 'vue'
-import { MonacoEditor } from '@/components/Pages/MonacoEditor'
+
 import { useTargetData } from '../../../hooks/useTargetData.hook'
 import { BaseEvent } from '@/enums/eventEnum'
 import { icon } from '@/plugins'
