@@ -31,7 +31,7 @@ jobs:
         echo "The tag is $GITHUB_REF_NAME"
       
     - name: Write version file
-      run: sudo echo "Xplay ui:$GITHUB_REF_NAME" > ./dist/version.txt
+      run: sudo echo "xplayui:$GITHUB_REF_NAME" > ./dist/version.txt
 
     - name: Create zip file
       run: |
