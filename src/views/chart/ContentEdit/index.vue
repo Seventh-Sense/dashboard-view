@@ -8,14 +8,17 @@
     :depth="1"
     :xScroll="true"
     :disabledScroll="true"
-    @mousedown="mousedownHandleUnStop"
-    @drop="dragHandle"
-    @dragover="dragoverHandle"
-    @dragenter="dragoverHandle"
   >
     <edit-rule>
       <!-- 画布主体 -->
-      <div id="go-chart-edit-content" @contextmenu="handleContextMenu">
+      <div
+        id="go-chart-edit-content"
+        @contextmenu="handleContextMenu"
+        @mousedown="mousedownHandleUnStop"
+        @drop="dragHandle"
+        @dragover="dragoverHandle"
+        @dragenter="dragoverHandle"
+      >
         <!-- 展示 -->
         <edit-range>
           <!-- 滤镜预览 -->
@@ -87,14 +90,25 @@ import { onMounted, computed, provide } from 'vue'
 import { chartColors } from '@/settings/chartThemes/index'
 import { MenuEnum } from '@/enums/editPageEnum'
 import { CreateComponentType, CreateComponentGroupType } from '@/packages/index.d'
-import { animationsClass, getFilterStyle, getTransformStyle, getBlendModeStyle, colorCustomMerge } from '@/utils'
+import {
+  animationsClass,
+  getFilterStyle,
+  getTransformStyle,
+  getBlendModeStyle,
+  colorCustomMerge
+} from '@/utils'
 import { useContextMenu } from '@/views/chart/hooks/useContextMenu.hook'
 import { MenuOptionsItemType } from '@/views/chart/hooks/useContextMenu.hook.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { SCALE_KEY } from '@/views/preview/hooks/useScale.hook'
 import { useLayout } from './hooks/useLayout.hook'
 import { useAddKeyboard } from '../hooks/useKeyboard.hook'
-import { dragHandle, dragoverHandle, mousedownHandleUnStop, useMouseHandle } from './hooks/useDrag.hook'
+import {
+  dragHandle,
+  dragoverHandle,
+  mousedownHandleUnStop,
+  useMouseHandle
+} from './hooks/useDrag.hook'
 import { useComponentStyle, useSizeStyle } from './hooks/useStyle.hook'
 
 import { ContentBox } from '../ContentBox/index'
@@ -149,7 +163,9 @@ const themeSetting = computed(() => {
 
 // 配置项
 const themeColor = computed(() => {
-  const colorCustomMergeData = colorCustomMerge(chartEditStore.getEditCanvasConfig.chartCustomThemeColorInfo)
+  const colorCustomMergeData = colorCustomMerge(
+    chartEditStore.getEditCanvasConfig.chartCustomThemeColorInfo
+  )
   return colorCustomMergeData[chartEditStore.getEditCanvasConfig.chartThemeColor]
 })
 
