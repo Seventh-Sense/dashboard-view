@@ -35,7 +35,7 @@ jobs:
 
     - name: Create zip file
       run: |
-        zip -r "./dist_$GITHUB_REF_NAME.zip" ./dist
+        zip -r ./dist.zip ./dist
       
 
     - name: Upload Windows Executable
