@@ -1,4 +1,5 @@
 <template>
+  <!-- 图层控制 -->
   <content-box
     class="go-content-layers"
     :class="{ scoped: !chartLayoutStore.getLayers }"
@@ -63,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import Draggable from 'vuedraggable'
 import cloneDeep from 'lodash/cloneDeep'
 import { ContentBox } from '../ContentBox/index'
@@ -113,7 +114,8 @@ watch(
   () => reverseList.value,
   newValue => {
     layerList.value = newValue
-  }
+  },
+  {immediate: true}
 )
 
 // 右键事件
