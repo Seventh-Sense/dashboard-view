@@ -37,7 +37,7 @@
 import { getVersion } from '@/api/http'
 import { icon } from '@/plugins'
 import SVG_ICON from '@/svg/SVG_ICON'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const { CloseOutlineIcon } = icon.ionicons5
 
@@ -50,28 +50,36 @@ const props = defineProps({
 })
 
 const version = ref('')
-const ui = ref('1.0.0')
+const ui = ref('')
 
-onMounted(() => {
-  getVersion()
-    .then((res: any) => {
-      console.log('Version:', res.version)
-      if (res.version) {
-        version.value = res.version
-      }
-
-      if (res.ui) {
-        ui.value = res.ui
-      }
-    })
-    .catch((e: any) => {
-      console.error('Get version error:', e)
-    })
-})
+onMounted(() => {})
 
 const onClose = () => {
   emit('update:showModal', false)
 }
+
+watch(
+  () => props.showModal,
+  newVal => {
+    if (newVal) {
+      getVersion()
+        .then((res: any) => {
+          console.log('Version:', res.Version)
+          if (res.Version) {
+            version.value = res.Version
+          }
+
+          if (res.info) {
+            ui.value = res.info.xplayui
+          }
+        })
+        .catch((e: any) => {
+          console.error('Get version error:', e)
+        })
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
