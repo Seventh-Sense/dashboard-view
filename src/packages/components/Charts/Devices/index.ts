@@ -11,5 +11,5 @@ export default [
   LedConfig,
   MotorConfig,
   WaterSensorConfig,
-  MotorDeviceConfig
+
 ]
