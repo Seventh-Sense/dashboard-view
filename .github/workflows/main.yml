@@ -26,7 +26,7 @@ jobs:
     - name: Install pnpm
       run: npm install -g pnpm
 
-    - name: Install Dependencies && build
+    - name: Install Dependencies && run build
       run: pnpm install && export NODE_OPTIONS=--max_old_space_size=4096 && pnpm run build
 
     - name: Print tag
