@@ -31,8 +31,8 @@
           <!-- <img src="~@/assets/images/tips/loadingSvg.svg" height="32" width="200" /> -->
         </n-space>
         <n-menu
-          :value="menuValue"
-          :options="menuOptions"
+        v-model:value="menuValue"
+          :options="menuOptionsInit(menuValue)"
           :collapsed-width="getAsideCollapsedWidth"
           :collapsed-icon-size="24"
           :icon-size="32"
@@ -58,7 +58,7 @@ const { getAsideCollapsedWidth } = toRefs(useSettingStore())
 const route = useRoute()
 const menuValue = computed(() => route.name)
 
-const menuOptions = menuOptionsInit()
+//const menuOptions = menuOptionsInit()
 
 const defaultExpandedKeys = expandedKeys()
 

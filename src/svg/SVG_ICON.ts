@@ -25,9 +25,9 @@ import XPlay from './icons/XPlay.svg?url'
 import lubanx from './icons/lubanx_dark.svg?url'
 import logo from './icons/logo.svg?url'
 import graphic_s from './icons/_graphic_s.svg?url'
-import modbus_s from './icons/_modbus_s.svg?url'
+import modbus_sp from './icons/modbus-sp.svg?url'
 import graphic_df from './icons/_graphic_df.svg?url'
-import modbus_df from './icons/_modbus_df.svg?url'
+import modbus_df from './icons/modbus-tf.svg?url'
 import loading from './icons/loading.svg?url'
 import add from './icons/add.svg?url'
 import delete_1 from './icons/delete.svg?url'
@@ -44,7 +44,8 @@ import file from './icons/file.svg?url'
 import deviceC from './icons/deviceC.svg?url'
 import deviceA from './icons/deviceA.svg?url'
 import deviceB from './icons/deviceB.svg?url'
-import Visualize_sp from './icons/Visualize-sp.svg?url'
+import Visualize_sp from './icons/Visualization-sp.svg?url'
+import Visualize_df from './icons/Visualization-df.svg?url'
 
 export default {
     card_icons: {
@@ -75,7 +76,7 @@ export default {
         lubanx: lubanx,
         logo: logo,
         graphic_s: graphic_s,
-        modbus_s: modbus_s,
+        modbus_sp: modbus_sp,
         graphic_df: graphic_df,
         modbus_df: modbus_df,
         loading: loading,
@@ -94,6 +95,7 @@ export default {
         deviceC: deviceC,
         deviceA: deviceA,
         deviceB: deviceB,
-        Visualize_sp: Visualize_sp
+        Visualize_sp: Visualize_sp,
+        Visualize_df: Visualize_df
     }
 }

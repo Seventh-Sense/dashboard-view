@@ -12,10 +12,9 @@ export const renderMenuLabel = (option: MenuOption | MenuGroupOption) => {
   return option.label
 }
 
-
 export const expandedKeys = () => ['all-project']
 
-export const menuOptionsInit = () => {
+export const menuOptionsInit = (key: any) => {
   const t = window['$t']
 
   return reactive([
@@ -45,7 +44,14 @@ export const menuOptionsInit = () => {
           { default: () => t('menu.modbus_manage') }
         ),
       key: PageEnum.BASE_MODBUS_MAN_NAME,
-      icon: renderImage(SVG_ICON.card_icons.modbus_s, '', 32, 32),
+      icon: renderImage(
+        key === PageEnum.BASE_MODBUS_MAN_NAME
+          ? SVG_ICON.card_icons.modbus_df
+          : SVG_ICON.card_icons.modbus_sp,
+        '',
+        32,
+        32
+      )
     },
     {
       label: () =>
@@ -59,7 +65,14 @@ export const menuOptionsInit = () => {
           { default: () => t('menu.DashBoard') }
         ),
       key: PageEnum.BASE_HOME_ITEMS_NAME,
-      icon: renderImage(SVG_ICON.card_icons.Visualize_sp, '', 32, 32)
-    },
+      icon: renderImage(
+        key === PageEnum.BASE_HOME_ITEMS_NAME
+          ? SVG_ICON.card_icons.Visualize_df
+          : SVG_ICON.card_icons.Visualize_sp,
+        '',
+        32,
+        32
+      )
+    }
   ])
 }

@@ -1,0 +1,19 @@
+<svg id="Visualization" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="linear-gradient" x1="1.038" y1="0.503" x2="-0.006" y2="0.498" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#62c2e8"/>
+      <stop offset="1" stop-color="#346baa"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.985" y1="0.496" x2="-0.014" y2="0.51" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#f4f4ab"/>
+      <stop offset="1" stop-color="#64b064"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.993" y1="0.517" x2="0.018" y2="0.483" xlink:href="#linear-gradient"/>
+  </defs>
+  <rect id="矩形_18980" data-name="矩形 18980" width="24" height="24" fill="none"/>
+  <g id="SP" transform="translate(1.9 2.95)">
+    <rect id="矩形_18979" data-name="矩形 18979" width="20" height="14.2" rx="2.1" fill="url(#linear-gradient)"/>
+    <path id="路径_4434" data-name="路径 4434" d="M16.25,9.7a.576.576,0,0,1-.42-.18L14.05,7.74,12.27,9.52a.617.617,0,0,1-.42.18.815.815,0,0,1-.51-.18L7.76,5.94,4.18,9.52a.61.61,0,0,1-.85,0,.6.6,0,0,1,0-.85l4-4a.61.61,0,0,1,.85,0L11.8,8.29l1.83-1.83a.61.61,0,0,1,.85,0l2.21,2.21a.61.61,0,0,1,0,.85.592.592,0,0,1-.42.18Z" fill="url(#linear-gradient-2)"/>
+    <path id="路径_4435" data-name="路径 4435" d="M15.88,18H4.12a.606.606,0,0,1,0-1.2H15.87a.606.606,0,0,1,0,1.2Z" fill="url(#linear-gradient-3)"/>
+  </g>
+</svg>
