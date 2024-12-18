@@ -14,7 +14,7 @@ export const renderMenuLabel = (option: MenuOption | MenuGroupOption) => {
 
 export const expandedKeys = () => ['all-project']
 
-export const menuOptionsInit = (key: any) => {
+export const menuOptionsInit = (selectedKey: any) => {
   const t = window['$t']
 
   return reactive([
@@ -45,7 +45,7 @@ export const menuOptionsInit = (key: any) => {
         ),
       key: PageEnum.BASE_MODBUS_MAN_NAME,
       icon: renderImage(
-        key === PageEnum.BASE_MODBUS_MAN_NAME
+        selectedKey === PageEnum.BASE_MODBUS_MAN_NAME
           ? SVG_ICON.card_icons.modbus_df
           : SVG_ICON.card_icons.modbus_sp,
         '',
@@ -66,7 +66,7 @@ export const menuOptionsInit = (key: any) => {
         ),
       key: PageEnum.BASE_HOME_ITEMS_NAME,
       icon: renderImage(
-        key === PageEnum.BASE_HOME_ITEMS_NAME
+        selectedKey === PageEnum.BASE_HOME_ITEMS_NAME
           ? SVG_ICON.card_icons.Visualize_df
           : SVG_ICON.card_icons.Visualize_sp,
         '',

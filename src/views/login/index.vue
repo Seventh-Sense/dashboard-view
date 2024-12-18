@@ -79,9 +79,9 @@
               <span @click="onVersionClick" style="cursor: pointer">
                 {{ $t('login.about_us') }}
               </span>
-              <span @click="onContactClick" style="cursor: pointer">
+              <!-- <span @click="onContactClick" style="cursor: pointer">
                 {{ $t('login.contact_us') }}
-              </span>
+              </span> -->
             </div>
           </div>
         </n-gi>

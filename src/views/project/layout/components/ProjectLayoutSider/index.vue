@@ -31,7 +31,7 @@
           <!-- <img src="~@/assets/images/tips/loadingSvg.svg" height="32" width="200" /> -->
         </n-space>
         <n-menu
-        v-model:value="menuValue"
+          v-model:value="menuValue"
           :options="menuOptionsInit(menuValue)"
           :collapsed-width="getAsideCollapsedWidth"
           :collapsed-icon-size="24"
@@ -142,5 +142,4 @@ $siderHeight: 100vh;
 :deep(.n-menu-item-content) {
   padding-left: 16px !important;
 }
-
 </style>
