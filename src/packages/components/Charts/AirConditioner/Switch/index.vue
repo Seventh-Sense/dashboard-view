@@ -53,7 +53,7 @@ const onClick = throttle(() => {
 const click = () => {
   let params = props.chartConfig.request.bindParams
 
-  let data = option.dataset ? 0 : 1
+  let data = option.dataset ? '0' : '1'
 
   if (params.objectID !== '') {
     flag.value = true

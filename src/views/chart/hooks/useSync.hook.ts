@@ -110,8 +110,11 @@ export const useSync = () => {
     // 列表组件注册
     projectData.componentList.forEach(async (e: CreateComponentType | CreateComponentGroupType) => {
       const intComponent = (target: CreateComponentType) => {
-        if (!window['$vue'].component(target.chartConfig.chartKey)) {
+         if (!window['$vue'].component(target.chartConfig.chartKey)) {
           window['$vue'].component(target.chartConfig.chartKey, fetchChartComponent(target.chartConfig))
+          window['$vue'].component(target.chartConfig.conKey, fetchConfigComponent(target.chartConfig))
+        } else {
+          //console.log('intComponent', target.chartConfig.chartKey)
           window['$vue'].component(target.chartConfig.conKey, fetchConfigComponent(target.chartConfig))
         }
       }
