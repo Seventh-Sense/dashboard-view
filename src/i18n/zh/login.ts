@@ -1,6 +1,6 @@
 export default {
   title_1: '欢迎登录',
-  title_2: '楼宇逻辑控制器',
+  title_2: '楼宇智能一体机',
   user_placeholder: '请输入用户名',
   password_placeholder: '请输入密码',
   login_auto: "自动登录",

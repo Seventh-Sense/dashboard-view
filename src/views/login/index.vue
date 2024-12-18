@@ -79,7 +79,7 @@
               <span @click="onVersionClick" style="cursor: pointer">
                 {{ $t('login.about_us') }}
               </span>
-              <span>{{ $t('login.contact_us') }}</span>
+              <a href="https://www.adveco.cn/ContactUs.html" style="color: white;">{{ $t('login.contact_us') }}</a>
             </div>
           </div>
         </n-gi>
