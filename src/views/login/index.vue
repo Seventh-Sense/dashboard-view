@@ -79,7 +79,9 @@
               <span @click="onVersionClick" style="cursor: pointer">
                 {{ $t('login.about_us') }}
               </span>
-              <a href="https://www.adveco.cn/ContactUs.html" style="color: white;">{{ $t('login.contact_us') }}</a>
+              <span @click="onContactClick" style="cursor: pointer">
+                {{ $t('login.contact_us') }}
+              </span>
             </div>
           </div>
         </n-gi>
@@ -94,6 +96,7 @@
       </n-grid>
     </div>
     <VersionModal v-model:showModal="showModal" />
+    <ContactModal v-model:showModal="showCModal" />
   </div>
 </template>
 
@@ -105,6 +108,7 @@ import { StorageEnum } from '@/enums/storageEnum'
 import { routerTurnByName, cryptoEncode, setLocalStorage } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { VersionModal } from './modal/VersionModal'
+import { ContactModal } from './modal/ContactModal'
 
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 const t = window['$t']
@@ -114,6 +118,7 @@ const formRef = ref()
 const loading = ref(false)
 const autoLogin = ref(true)
 const showModal = ref(false)
+const showCModal = ref(false)
 
 const formInline = reactive({
   username: 'admin',
@@ -166,6 +171,10 @@ const handleSubmit = (e: Event) => {
 
 const onVersionClick = () => {
   showModal.value = true
+}
+
+const onContactClick = () => {
+  showCModal.value = true
 }
 </script>
 
