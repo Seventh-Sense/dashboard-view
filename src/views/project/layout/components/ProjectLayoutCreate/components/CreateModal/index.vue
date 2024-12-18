@@ -21,8 +21,8 @@
       <div class="card-box-con">
         <div class="card-box-title">{{ $t('device.project_name') }}:</div>
         <n-input v-model:value="project_name" type="text" />
-        <div class="card-box-title">{{ $t('device.desc') }}:</div>
-        <n-input v-model:value="decs" type="textarea" />
+        <!-- <div class="card-box-title">{{ $t('device.desc') }}:</div>
+        <n-input v-model:value="decs" type="textarea" /> -->
       </div>
       <template #footer>
         <n-space justify="end">
