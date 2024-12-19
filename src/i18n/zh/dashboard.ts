@@ -101,4 +101,10 @@ export default {
 
   square: '方形',
   round: '圆形',
+
+  fit_fill: 'fill',
+  fit_contain: 'contain',
+  fit_cover: 'cover',
+  fit_scaledown: 'scale-down',
+  fit_none: 'none',
 }

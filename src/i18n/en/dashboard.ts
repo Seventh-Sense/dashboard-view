@@ -102,4 +102,10 @@ export default {
 
   square: 'Square',
   round: 'Round',
+
+  fit_fill: 'fill',
+  fit_contain: 'contain',
+  fit_cover: 'cover',
+  fit_scaledown: 'scale-down',
+  fit_none: 'none',
 }
