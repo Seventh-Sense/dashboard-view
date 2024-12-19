@@ -1,6 +1,9 @@
 import { getUUID } from '@/utils'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { ChartEditStoreEnum, ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
+import {
+  ChartEditStoreEnum,
+  ChartEditStorage
+} from '@/store/modules/chartEditStore/chartEditStore.d'
 import { useChartHistoryStore } from '@/store/modules/chartHistoryStore/chartHistoryStore'
 import { useChartLayoutStore } from '@/store/modules/chartLayoutStore/chartLayoutStore'
 import { ChartLayoutStoreEnum } from '@/store/modules/chartLayoutStore/chartLayoutStore.d'
@@ -96,7 +99,11 @@ export const useSync = () => {
    * @param isReplace 是否替换数据
    * @returns
    */
-  const updateComponent = async (projectData: ChartEditStorage, isReplace = false, changeId = false) => {
+  const updateComponent = async (
+    projectData: ChartEditStorage,
+    isReplace = false,
+    changeId = false
+  ) => {
     if (isReplace) {
       // 清除列表
       chartEditStore.componentList = []
@@ -110,17 +117,23 @@ export const useSync = () => {
     // 列表组件注册
     projectData.componentList.forEach(async (e: CreateComponentType | CreateComponentGroupType) => {
       const intComponent = (target: CreateComponentType) => {
-         if (!window['$vue'].component(target.chartConfig.chartKey)) {
-          window['$vue'].component(target.chartConfig.chartKey, fetchChartComponent(target.chartConfig))
-          window['$vue'].component(target.chartConfig.conKey, fetchConfigComponent(target.chartConfig))
-        } else {
+        if (!window['$vue'].component(target.chartConfig.chartKey)) {
+          window['$vue'].component(
+            target.chartConfig.chartKey,
+            fetchChartComponent(target.chartConfig)
+          )
+        }
+        if (!window['$vue'].component(target.chartConfig.conKey)) {
           //console.log('intComponent', target.chartConfig.chartKey)
-          window['$vue'].component(target.chartConfig.conKey, fetchConfigComponent(target.chartConfig))
+          window['$vue'].component(
+            target.chartConfig.conKey,
+            fetchConfigComponent(target.chartConfig)
+          )
         }
       }
 
       if (e.isGroup) {
-        (e as CreateComponentGroupType).groupList.forEach(groupItem => {
+        ;(e as CreateComponentGroupType).groupList.forEach(groupItem => {
           intComponent(groupItem)
         })
       } else {
@@ -136,7 +149,8 @@ export const useSync = () => {
       // 补充 class 上的方法
       let newComponent: CreateComponentType = await createComponent(_componentInstance.chartConfig)
       if (_componentInstance.chartConfig.redirectComponent) {
-        _componentInstance.chartConfig.dataset && (newComponent.option.dataset = _componentInstance.chartConfig.dataset)
+        _componentInstance.chartConfig.dataset &&
+          (newComponent.option.dataset = _componentInstance.chartConfig.dataset)
         newComponent.chartConfig.title = _componentInstance.chartConfig.title
         newComponent.chartConfig.chartFrame = _componentInstance.chartConfig.chartFrame
       }
@@ -154,7 +168,11 @@ export const useSync = () => {
             true
           )
         } else {
-          chartEditStore.addComponentList(componentMerge(newComponent, _componentInstance), false, true)
+          chartEditStore.addComponentList(
+            componentMerge(newComponent, _componentInstance),
+            false,
+            true
+          )
         }
       }
     }
@@ -199,7 +217,10 @@ export const useSync = () => {
             chartHistoryStore.clearForwardStack()
           }
         }
-      } else if (key === ChartEditStoreEnum.EDIT_CANVAS_CONFIG || key === ChartEditStoreEnum.REQUEST_GLOBAL_CONFIG) {
+      } else if (
+        key === ChartEditStoreEnum.EDIT_CANVAS_CONFIG ||
+        key === ChartEditStoreEnum.REQUEST_GLOBAL_CONFIG
+      ) {
         componentMerge(chartEditStore[key], projectData[key], true)
       }
     }
