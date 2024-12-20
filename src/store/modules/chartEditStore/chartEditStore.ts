@@ -662,9 +662,12 @@ export const useChartEditStore = defineStore({
             if (isCut) {
               this.setTargetSelectChart(e.id)
               this.removeComponentList(undefined, true)
-            }
+            } 
           })
-          if (isCut) this.setRecordChart(undefined)
+          if (isCut) {
+            this.setRecordChart(undefined)
+          }
+          console.log('粘贴成功!')
         }
         loadingFinish()
       } catch (value) {
