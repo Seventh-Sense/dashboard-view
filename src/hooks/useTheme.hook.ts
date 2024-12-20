@@ -44,10 +44,10 @@ export const useThemeOverridesHook = () => {
         thTextColor: 'rgba(255, 255, 255, 0.60)'
       },
       Button: {
-        color: '#6666ffff',
-        colorHover: '#6666ffff',
-        colorPressed: '#6666ffff',
-        colorFocus: '#6666ffff',
+        color: 'rgba(120, 58, 254, 1)',
+        colorHover: 'rgba(120, 58, 254, 1)',
+        colorPressed: 'rgba(120, 58, 254, 1)',
+        colorFocus: 'rgba(120, 58, 254, 1)',
         textColor: '#ffffffff',
         textColorHover: '#ffffffff',
         textColorPressed: '#ffffffff',

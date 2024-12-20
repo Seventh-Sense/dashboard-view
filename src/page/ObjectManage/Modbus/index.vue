@@ -331,6 +331,7 @@ const onConfigOpen = () => {
         color: #ffffffed;
         font-style: normal;
         text-transform: none;
+        font-family: Source Han Sans SC, Source Han Sans SC;
       }
 
       &-extra {

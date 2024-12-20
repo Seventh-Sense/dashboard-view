@@ -29,8 +29,6 @@ const newPondItemInterval = (
 
   clearInterval(fetchInterval)
 
-  console.log('asd', requestDataPondItem.value.dataPondRequestConfig)
-
   // 请求
   const fetchFn = async () => {
     try {

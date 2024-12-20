@@ -87,7 +87,6 @@ const bindDataDisplay = (data: any) => {
   let flag = false
 
   isShow.value = false
-  console.log('aasda', data)
   let classType = data.chartConfig.package
   
   if (classType === 'Charts') {

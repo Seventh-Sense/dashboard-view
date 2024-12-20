@@ -163,7 +163,6 @@ const onNegativeClick = () => {
 watch(
   () => props.data.reg_type,
   newVal => {
-    console.log('adsa', newVal)
     if (newVal === '0' || newVal === '1') {
       typeOptions.value = byteOptions
       props.data.data_type = 'bool'
