@@ -38,6 +38,7 @@ import { useDataListInit } from '@/views/project/items/components/ProjectItemsLi
 import { updateProject } from '@/api/http'
 import html2canvas from 'html2canvas'
 import { PageEnum } from '@/enums/pageEnum'
+import { useRemoveKeyboard } from '../../hooks/useKeyboard.hook'
 
 const router = useRouter()
 const { BrowsersOutlineIcon, SendIcon, AnalyticsIcon, LogOutOutlineIcon } = icon.ionicons5
@@ -149,6 +150,7 @@ const saveLocalStorage = (id: any, storageInfo: any) => {
 
 const exitHandle = () => {
   //router.back()
+  useRemoveKeyboard()
 
   router.push({
     path: PageEnum.BASE_HOME_ITEMS

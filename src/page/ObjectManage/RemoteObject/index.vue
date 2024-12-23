@@ -1,193 +1,163 @@
 <template>
-  <div class="remote-container">
-    
-    <div class="remote-operate">
-      <n-card :title="$t('device.device_list')">
-      <div>
-        <n-space>
-          <span>{{ $t('device.link_type') }}</span>
-          <n-select
-            v-model:value="selectParam.link_type"
-            :options="linkOptions"
-            size="small"
-            style="width: 200px"
-          />
-        </n-space>
+  <div class="project">
+    <div class="project-card">
+      <div class="project-card-top">
+        <div class="project-card-top-title">{{ $t('device.object_list') }}</div>
       </div>
-      <div class="remote-operate-btn">
-        <n-space>
-          <n-button type="tertiary">{{ $t('device.reset') }}</n-button>
-          <n-button type="success">{{ $t('device.search') }}</n-button>
-        </n-space>
-      </div>
-    </n-card>
-    </div>
-    <div class="remote-list">
-      <n-card :title="$t('device.device_list')">
-        <n-data-table :columns="columns" :data="data" :pagination="false" :bordered="false" />
-      </n-card>
-      <div>
-        <!-- 抽屉 -->
-        <n-drawer
-          v-model:show="active"
-          :default-width="1200"
-          :placement="placement"
-          :mask-closable="false"
-          :resizable="true"
-        >
-          <n-drawer-content>
-            <template #header>
-              <n-space>
-                <n-icon size="24" :depth="1" style="cursor: pointer;" @click="onDrawerClose">
-                  <ArrowBackIcon />
-                </n-icon>
-                <span style="line-height: 24px;">{{ $t('device.device_info') }}</span>
-              </n-space>
-            </template>
-            <ObjectDisplay />
-          </n-drawer-content>
-        </n-drawer>
+      <div class="project-card-content">
+        <n-data-table
+          size="small"
+          :columns="columns"
+          :data="data"
+          :bordered="false"
+          :style="{ height: `${height}px` }"
+          flex-height
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, h, reactive, provide } from 'vue'
-import type { DataTableColumns, DrawerPlacement } from 'naive-ui'
-import { NButton, useMessage } from 'naive-ui'
-import { linkOptions } from '../../untils/options'
-import { ObjectDisplay } from '@/page/ObjectManage/RemoteObject/components/ObjectDisplay'
+import { ref, h } from 'vue'
 import { icon } from '@/plugins'
-import { DeviceList } from '@/page/untils/type'
+import { NButton, NIcon } from 'naive-ui'
+import type { DataTableColumns } from 'naive-ui'
 
-const { ArrowBackIcon } = icon.ionicons5
-const message = useMessage()
 const t = window['$t']
 
-//点击的设备行
-const selectRow = ref({});
+const { DeleteIcon, EditIcon } = icon.carbon
 
-provide('deviceInfo', selectRow)
+const data = ref<any[]>([])
+const height = ref(500)
 
-//filter
-const selectParam = reactive({
-  link_type: '1'
-})
-
-// drawer
-const active = ref(false)
-const placement = ref<DrawerPlacement>('right')
-
-const activate = (place: DrawerPlacement) => {
-  active.value = true
-  placement.value = place
-}
-
-const onDrawerClose = () => {
-  active.value = false
-  selectRow.value = {}
-}
-
-const createColumns = ({
-  play
-}: {
-  play: (row: DeviceList) => void
-}): DataTableColumns<DeviceList> => {
+function createColumns(): DataTableColumns<any> {
   return [
     {
-      title: () => t('device.no'),
-      key: 'no'
+      title: () => t('device.name'),
+      key: 'name'
     },
     {
-      title: () => t('device.device_name'),
-      key: 'device_name'
+      title: () => t('device.modbus_link'),
+      key: 'modbus_id',
     },
     {
-      title: () => t('device.link_type'),
-      key: 'link_type'
+      title: () => t('device.slave_id'),
+      key: 'slaveid'
     },
     {
-      title: () => t('device.status'),
-      key: 'status'
+      title: () => t('device.reg_attr'),
+      key: 'addr'
+    },
+
+    {
+      title: () => t('device.value'),
+      key: 'value'
     },
     {
-      title: () => t('device.operations'),
+      title: () => t('device.unit'),
+      key: 'unit',
+      render(row) {
+        let text = row.unit
+
+        if (text === '') {
+          text = ' --'
+        }
+        return text
+      }
+    },
+    {
+      title: '',
       key: 'actions',
       render(row) {
         return h(
-          NButton,
+          'div',
           {
-            strong: true,
-            quaternary: true,
-            size: 'small',
-            onClick: () => play(row)
+            style: {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
           },
-          { default: () => t('device.detail') }
+          [
+            h(
+              NIcon,
+              {
+                size: '20',
+                style: {
+                  cursor: 'pointer'
+                },
+                onClick: () => {
+                  // isEdit.value = true
+                  // selectedRow.value = row
+                  // showModal.value = true
+                }
+              },
+              { default: () => h(EditIcon) }
+            ),
+            h(
+              'span',
+              {
+                style: {
+                  marginRight: '20px'
+                }
+              },
+              ''
+            ),
+            h(
+              NIcon,
+              {
+                size: '20',
+                style: {
+                  cursor: 'pointer'
+                },
+                onClick: () => {
+                  //deleteRow(row)
+                }
+              },
+              { default: () => h(DeleteIcon) }
+            )
+          ]
         )
-      },
-      width: 100,
-      fixed: 'right'
+      }
     }
   ]
 }
 
-const columns = createColumns({
-  play(row: DeviceList) {
-    //message.info(`Play ${row.title}`)
-    activate('right')
-    selectRow.value = row
-  }
-})
-
-const data: DeviceList[] = [
-  {
-    no: 3,
-    device_name: 'Wonderwall',
-    link_type: '4:188888888888888888888888888888888',
-    status: '1999999999999999999999999999'
-  },
-  { no: 4, device_name: "Don't Look Back in Anger", link_type: '4:48', status: '1' },
-  { no: 12, device_name: 'Champagne Supernova', link_type: '7:27', status: '1' }
-]
+const columns = ref(createColumns())
 </script>
 
 <style lang="scss" scoped>
-.remote-container {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 56px - 32px - 12px - 12px);
+.project {
+  height: calc(100vh - #{$--header-height});
+  padding: 16px;
 
-  .remote-operate {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 200px;
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+  &-card {
+    background-color: #{$--color-dark-side};
+    border-radius: 18px;
+    backdrop-filter: blur(50px);
+    height: 100%;
 
-    .remote-operate-btn {
-      height: 40px;
-      padding: 4px 12px;
+    &-top {
+      height: #{$--card-top-height};
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
+      padding: 0 16px;
+
+      &-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffffed;
+        font-style: normal;
+        text-transform: none;
+        font-family: Source Han Sans SC, Source Han Sans SC;
+      }
+    }
+
+    &-content {
+      padding: 0 16px;
     }
   }
-
-  .remote-list {
-    margin-top: 12px;
-    flex-grow: 1;
-    height: 100%;
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-
-  }
-}
-
-
-::v-deep(.n-drawer-body-content-wrapper) {
-  padding: 0 24px !important;
 }
 </style>

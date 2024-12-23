@@ -667,7 +667,8 @@ export const useChartEditStore = defineStore({
           if (isCut) {
             this.setRecordChart(undefined)
           }
-          console.log('粘贴成功!')
+          //console.log('粘贴成功!')
+          //window['$message'].success('粘贴图表成功！')
         }
         loadingFinish()
       } catch (value) {
