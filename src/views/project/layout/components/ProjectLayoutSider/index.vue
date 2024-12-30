@@ -38,6 +38,7 @@
           :icon-size="32"
           :root-indent="16"
           :default-expanded-keys="defaultExpandedKeys"
+          :on-update:value="onSelcet"
         ></n-menu>
       </div>
     </div>
@@ -51,7 +52,10 @@ import { useRoute } from 'vue-router'
 import { useSettingStore } from '@/store/modules/settingStore/settingStore'
 import { menuOptionsInit, expandedKeys } from './menu'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { MenuOption } from 'naive-ui'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const collapsed = ref<boolean>(false)
 const { getAsideCollapsedWidth } = toRefs(useSettingStore())
 
@@ -79,6 +83,13 @@ onUnmounted(() => {
 
 const onCollapse = () => {
   collapsed.value = !collapsed.value
+}
+
+const onSelcet = (key: string, item: MenuOption) => {
+  //console.log(key, item)
+  router.push({
+    name: key
+  })
 }
 </script>
 

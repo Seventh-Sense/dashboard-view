@@ -47,16 +47,7 @@ export const menuOptionsInit = (selectedKey: any) => {
     //   icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
     // },
     {
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: {
-              name: PageEnum.BASE_MODBUS_MAN_NAME
-            }
-          },
-          { default: () => t('menu.modbus_manage') }
-        ),
+      label: () => t('menu.modbus_manage'),
       key: PageEnum.BASE_MODBUS_MAN_NAME,
       icon: renderImage(
         selectedKey === PageEnum.BASE_MODBUS_MAN_NAME
@@ -68,16 +59,7 @@ export const menuOptionsInit = (selectedKey: any) => {
       )
     },
     {
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: {
-              name: PageEnum.BASE_HOME_ITEMS_NAME
-            }
-          },
-          { default: () => t('menu.DashBoard') }
-        ),
+      label: () => t('menu.DashBoard'),
       key: PageEnum.BASE_HOME_ITEMS_NAME,
       icon: renderImage(
         selectedKey === PageEnum.BASE_HOME_ITEMS_NAME
