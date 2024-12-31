@@ -1,21 +1,22 @@
 <template>
-  <div
-    class="digit-style"
-    :style="{
-      color: color,
-      fontSize: size + 'px'
-    }"
-  >
-    {{ fixedByDecimal(option.dataset) }} {{ unit }}
+  <div class="online-style">
+    <div
+      class="circle"
+      :style="{
+        backgroundColor: option.dataset ? onlineColor : offlineColor,
+        width: size + 'px',
+        height: size + 'px'
+      }"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { PropType, toRefs, shallowReactive, watch } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
+import { parseData } from '@/utils'
 import { useChartDataFetch } from '@/hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -24,24 +25,16 @@ const props = defineProps({
   }
 })
 
-const { size, color, unit, decimal } = toRefs(props.chartConfig.option)
+const { onlineColor, offlineColor, size } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
-  dataset: 40
+  dataset: false
 })
-
-function fixedByDecimal(num: any) {
-  if (decimal.value === 0) {
-    return Number(num).toFixed()
-  } else {
-    return Number(num).toFixed(decimal.value)
-  }
-}
 
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    option.dataset = parseData(newVal, 'number')
+    option.dataset = parseData(newVal, 'boolean')
   },
   {
     immediate: true,
@@ -56,7 +49,11 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 </script>
 
 <style lang="scss" scoped>
-.digit-style {
+.circle {
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+.online-style {
   display: flex;
   justify-content: center;
   align-items: center;

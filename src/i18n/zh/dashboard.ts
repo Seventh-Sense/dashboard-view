@@ -95,6 +95,7 @@ export default {
   led: '灯',
   motor: '电机',
   waterSensor: '水浸传感器',
+  online_status: '在线状态',
 
   //gauge
   gauge_info: '仪表盘',

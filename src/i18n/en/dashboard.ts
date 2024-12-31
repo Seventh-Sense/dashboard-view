@@ -96,6 +96,7 @@ export default {
   led: 'Led',
   motor: 'Motor',
   waterSensor: 'Water Sensor',
+  online_status: 'Online Status',
 
   //
   gauge_info: 'Gauge',

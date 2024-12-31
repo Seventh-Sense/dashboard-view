@@ -49,7 +49,6 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 import { setOption } from '@/packages/public'
 import { readPoints } from '@/api/http'
 
-
 await getSessionStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
@@ -91,7 +90,11 @@ const writeValue = (data: any) => {
           value.id.toString() === bindInfo.objectID
         ) {
           //console.log("com", com, value, bindInfo)
-          com.option.dataset = value.value
+          if (com.key === 'Online') {
+            com.option.dataset = value.status
+          } else {
+            com.option.dataset = value.value
+          }
         }
       })
   })
@@ -118,7 +121,7 @@ onUnmounted(() => {
   if (interval) {
     window.clearInterval(interval)
   }
-}) 
+})
 </script>
 
 <style lang="scss" scoped>
