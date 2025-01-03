@@ -43,4 +43,10 @@ export default {
 
   //bacnet
   point_list: '设备点位列表',
+
+  type: '类型',
+  polling: '轮询',
+  address: '地址',
+  enabled: '使能',
+  add_device: '新增设备',
 }

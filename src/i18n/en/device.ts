@@ -41,5 +41,12 @@ export default {
 
   //bacnet
   point_list: 'Points List',
+
+
+  type: 'Type',
+  polling: 'Polling',
+  address: 'Address',
+  enabled: 'Enabled',
+  add_device: 'New Device',
 }
 
