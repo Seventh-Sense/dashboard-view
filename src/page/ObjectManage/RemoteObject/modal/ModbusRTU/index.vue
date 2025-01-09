@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="content-porperty">{{ $t('device.connection') }}</div>
-    <n-select v-model:value="data.connectionOption" :options="connectionOptions" disabled="true"/>
+    <n-select v-model:value="data.connectionOption" :options="connectionOptions" disabled/>
     <div class="content-porperty">{{ $t('device.serial_settings') }}</div>
     <n-select v-model:value="data.stop_bit" :options="stopbitOptions" />
     <n-grid x-gap="24" :cols="2">

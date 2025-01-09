@@ -48,6 +48,10 @@ import deviceB from './icons/deviceB.svg?url'
 import Visualize_sp from './icons/Visualization-sp.svg?url'
 import Visualize_df from './icons/Visualization-df.svg?url'
 import dismiss from './icons/dismiss.svg?url'
+import list from './icons/list.svg?url'
+import import_ from './icons/import.svg?url'
+import export_ from './icons/export.svg?url'
+import restart from './icons/restart.svg?url'
 
 export default {
     card_icons: {
@@ -101,5 +105,9 @@ export default {
         Visualize_df: Visualize_df,
         dismiss: dismiss,
         delete_red: delete_red,
+        list: list,
+        import_: import_,
+        export_: export_,
+        restart: restart,
     }
 }

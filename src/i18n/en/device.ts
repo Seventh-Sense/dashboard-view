@@ -48,5 +48,8 @@ export default {
   address: 'Address',
   enabled: 'Enabled',
   add_device: 'New Device',
+  import_devices: 'Import',
+  export_devices: 'Export',
+  refresh: 'Refresh',
 }
 

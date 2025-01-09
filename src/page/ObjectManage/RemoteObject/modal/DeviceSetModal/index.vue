@@ -47,7 +47,7 @@ import {
   BACnetData,
   TypeOptions,
   isBACnet,
-  isModbusRTU
+  isModbusRTU,
 } from '../../utils/utils'
 import { loadAsyncComponent } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
@@ -55,6 +55,14 @@ import SVG_ICON from '@/svg/SVG_ICON'
 const props = defineProps({
   isShowModal: {
     type: Boolean,
+    required: true
+  },
+  isEdit: {
+    type: Boolean,
+    required: true
+  },
+  deviceData: {
+    type: Object,
     required: true
   }
 })
@@ -107,6 +115,21 @@ watch(
       }
     } else {
       content.value = null
+    }
+  }
+)
+
+watch(
+  () => props.isShowModal,
+  newValue => {
+    if (newValue && props.isEdit) {
+      data.value = {
+        id: props.deviceData.id,
+        name: props.deviceData.name,
+        type: props.deviceData.type,
+        enabled: true,
+        property: null
+      }
     }
   }
 )

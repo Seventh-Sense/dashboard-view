@@ -10,13 +10,12 @@ export interface deviceDataType {
 }
 
 export interface tagDataType {
+  id: string
   name: string
   address: string
   device: string
   type: string
   value: string
-  timestamp: string
-  description: string
 }
 
 export interface DataType {
@@ -116,7 +115,7 @@ export const BACnetData = {
   interface: '127.0.0.1',
   port: '47808',
   broadcast: '127.0.0.255',
-  adpuTimeout: '6000'
+  adpuTimeout: 6000
 }
 
 export const connectionOptions = ['Serial Port'].map(v => ({
@@ -145,3 +144,14 @@ export const stopbitOptions = [1, 2].map(v => ({
   label: v,
   value: v
 }))
+
+export function isEmptyObject(obj: object): obj is {} {
+  return Object.keys(obj).length === 0
+}
+
+export const makeUpOptions = (data: []) => {
+  return data.map(v => ({
+    label: v,
+    value: v
+  }))
+}

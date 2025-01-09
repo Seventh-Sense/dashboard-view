@@ -3,11 +3,19 @@
     <div v-if="!isToggle" class="project-card">
       <div class="project-card-top">
         <div class="project-card-top-title">{{ $t('device.device_list') }}</div>
-        <div>
+        <n-space justify="end" align="center">
+          <n-dropdown
+            trigger="hover"
+            :options="options"
+            placement="bottom-end"
+            @select="handleSelect"
+          >
+            <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
+          </n-dropdown>
           <n-button class="project-card-top-extra-button" @click="onAdd">
             {{ $t('global.r_add') }}
           </n-button>
-        </div>
+        </n-space>
       </div>
       <div class="project-card-content" :style="{ height: height + 'px' }">
         <a-table
@@ -48,7 +56,7 @@
           </template>
         </a-table>
       </div>
-      <DeviceSetModal v-model:isShowModal="isShowModal" />
+      <DeviceSetModal v-model:isShowModal="isShowModal" :isEdit="isEdit" :deviceData="deviceData" />
     </div>
     <div v-else class="project-card">
       <ObjectList @goback="goback" />
@@ -63,25 +71,20 @@ import { deviceDataType } from './utils/utils'
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { renderImage, routerTurnByName } from '@/utils'
+import { PageEnum } from '@/enums/pageEnum'
 
 const t = window['$t']
 
 const isToggle = ref(false)
 const isShowModal = ref(false)
 
-const deviceData = ref([])
+const isEdit = ref(false)
 
-const data = ref<deviceDataType[]>([
-  {
-    id: '',
-    name: 'string',
-    type: 'string',
-    polling: 'string',
-    address: 'string',
-    status: 'string',
-    enabled: 'true'
-  }
-])
+const deviceData = ref({})
+
+const data = ref<deviceDataType[]>([])
+
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72)
 
 const columns = [
@@ -123,20 +126,24 @@ const initData = () => {
       address: '192.168.1.1',
       status: 'Connected',
       enabled: 'true'
-    });
+    })
   }
 }
 
 const goback = () => {
   isToggle.value = false
-  deviceData.value = []
+  deviceData.value = {}
 }
 
 const onAdd = () => {
+  deviceData.value = {}
+  isEdit.value = false
   isShowModal.value = true
 }
 
 const onEdit = (row: any) => {
+  deviceData.value = row
+  isEdit.value = true
   isShowModal.value = true
 }
 
@@ -145,10 +152,29 @@ const deleteRow = (row: any) => {
 }
 
 const onEnter = (row: any) => {
+  deviceData.value = row
   isToggle.value = true
 }
 
-//update table
+//menu
+const options: any[] = [
+  {
+    label: () => t('device.import_devices'),
+    key: '1',
+    icon: renderImage(SVG_ICON.card_icons.import_, '', 24, 24)
+  },
+  {
+    label: () => t('device.export_devices'),
+    key: '2',
+    icon: renderImage(SVG_ICON.card_icons.export_, '', 24, 24)
+  },
+  {
+    label: () => t('device.refresh'),
+    key: '3',
+    icon: renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
+  }
+]
+const handleSelect = () => {}
 </script>
 
 <style lang="scss" scoped>
