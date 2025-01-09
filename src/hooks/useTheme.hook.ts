@@ -41,7 +41,13 @@ export const useThemeOverridesHook = () => {
         tdColor: 'rgb(25, 22, 42, 1)',
         tdColorHover: 'rgb(25, 22, 42, 1)',
         tdTextColor: 'rgba(255, 255, 255, 0.93)',
-        thTextColor: 'rgba(255, 255, 255, 0.60)'
+      },
+      Dropdown: {
+        color: 'rgba(0, 0, 0, 0.53)',
+        borderRadius: '6px',
+        optionHeightMedium: '48px',
+        padding: '0 0',
+        optionSuffixWidthMedium: '60px',
       },
       Button: {
         color: 'rgba(120, 58, 254, 1)',
@@ -51,7 +57,10 @@ export const useThemeOverridesHook = () => {
         textColor: '#ffffffff',
         textColorHover: '#ffffffff',
         textColorPressed: '#ffffffff',
-        textColorFocus: '#ffffffff'
+        textColorFocus: '#ffffffff',
+        border: 0,
+        borderHover: 0,
+        borderFocus: 0,
       },
       Modal: {
         color: 'rgba(0, 0, 0, 1)',
@@ -69,7 +78,14 @@ export const useThemeOverridesHook = () => {
         itemTextColorHover: 'rgba(255, 255, 255, 0.93)',
         itemTextColorActive: 'rgba(255, 255, 255, 0.93)',
         itemTextColorActiveHover: 'rgba(255, 255, 255, 0.93)'
-      }
+      },
+      Input: {
+        border: 0,
+        borderHover: 0,
+        borderFocus: 0,
+        boxShadowFocus: 0,
+        paddingMedium: '0',
+      },
     }
     return designStore.getDarkTheme ? dartObject : lightObject
   })

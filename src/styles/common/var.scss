@@ -69,7 +69,7 @@ $--color-dark-bg-5-shallow: darken($--color-dark-bg-5, $--dark-shalow);
 $--color-dark-bg-new-1: #383477FF;
 $--color-dark-bg-new-2: #19162AFF;
 $--color-dark-top: rgba(0,0,0,0.13);
-$--color-dark-side: rgba(0, 0, 0, 0.6);
+$--color-dark-side: rgba(0, 0, 0, 0.53);
 $--color-dark-font: rgba(255, 255, 255, 0.93);
 $--color-dark-modal-title: rgba(255, 255, 255, 0.60);
 $--color-dark-menu-title-select: radial-gradient(farthest-side at 50% 100%, rgba(138, 23, 249, 1) 0%, rgba(70, 38, 143, 1) 100%);
@@ -77,6 +77,11 @@ $--color-dark-card: rgba(255, 255, 255, 0.2);
 $--color-dark-card-image: rgba(255, 255, 255, 0.07);
 $--color-dark-card-font: rgba(158, 157, 163, 1);
 $--color-dark-b-card: rgba(34, 32, 49, 1);
+$--color-dark-modal-content: rgba(0, 0, 0, 0.53);
+$--color-dark-border: rgba(255, 255, 255, 0.13);
+$--color-dark-button1: rgba(120, 58, 254, 1);
+$--color-dark-button2: rgba(255, 255, 255, 0.07);
+$--color-dark-button2-border: rgba(255, 255, 255, 0.13);
 
 // 最大宽度
 $--max-width: 1920px;

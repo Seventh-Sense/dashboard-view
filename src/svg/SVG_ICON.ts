@@ -37,6 +37,7 @@ import edit from './icons/edit.svg?url'
 import picture from './icons/picture.svg?url'
 import template from './icons/template.svg?url'
 import delete_one from './icons/delete_one.svg?url'
+import delete_red from './icons/delete_red.svg?url'
 import shutdown from './icons/_shutdown_TL.svg?url'
 import Bacnet_nomal from './icons/Bacnet-nomal.svg?url'
 import Bacnet_line from './icons/Bacnet-line.svg?url'
@@ -46,6 +47,11 @@ import deviceA from './icons/deviceA.svg?url'
 import deviceB from './icons/deviceB.svg?url'
 import Visualize_sp from './icons/Visualization-sp.svg?url'
 import Visualize_df from './icons/Visualization-df.svg?url'
+import dismiss from './icons/dismiss.svg?url'
+import list from './icons/list.svg?url'
+import import_ from './icons/import.svg?url'
+import export_ from './icons/export.svg?url'
+import restart from './icons/restart.svg?url'
 
 export default {
     card_icons: {
@@ -96,6 +102,12 @@ export default {
         deviceA: deviceA,
         deviceB: deviceB,
         Visualize_sp: Visualize_sp,
-        Visualize_df: Visualize_df
+        Visualize_df: Visualize_df,
+        dismiss: dismiss,
+        delete_red: delete_red,
+        list: list,
+        import_: import_,
+        export_: export_,
+        restart: restart,
     }
 }

@@ -73,6 +73,8 @@ import {
   CloseOutline as CloseOutlineIcon,
   EllipsisVertical as EllipsisVerticalIcon,
   Checkmark as CheckmarkIcon,
+  ArrowBackOutline as ArrowBackOutlineIcon,
+  AddCircle as AddCircleIcon,
 } from '@vicons/ionicons5'
 
 import {
@@ -109,6 +111,7 @@ import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   ChevronLeft as ChevronLeftIcon,
+  AddFilled as AddFilledIcon,
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -256,6 +259,8 @@ const ionicons5 = {
   CloseOutlineIcon,
   EllipsisVerticalIcon,
   CheckmarkIcon,
+  ArrowBackOutlineIcon,
+  AddCircleIcon,
 }
 
 const carbon = {
@@ -312,6 +317,7 @@ const carbon = {
   DeleteIcon,
   EditIcon,
   ChevronLeftIcon,
+  AddFilledIcon,
 }
 
 // https://www.xicons.org/#/ 还有很多

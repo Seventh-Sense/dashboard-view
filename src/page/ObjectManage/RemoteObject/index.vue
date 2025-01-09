@@ -1,130 +1,180 @@
 <template>
   <div class="project">
-    <div class="project-card">
+    <div v-if="!isToggle" class="project-card">
       <div class="project-card-top">
-        <div class="project-card-top-title">{{ $t('device.object_list') }}</div>
+        <div class="project-card-top-title">{{ $t('device.device_list') }}</div>
+        <n-space justify="end" align="center">
+          <n-dropdown
+            trigger="hover"
+            :options="options"
+            placement="bottom-end"
+            @select="handleSelect"
+          >
+            <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
+          </n-dropdown>
+          <n-button class="project-card-top-extra-button" @click="onAdd">
+            {{ $t('global.r_add') }}
+          </n-button>
+        </n-space>
       </div>
-      <div class="project-card-content">
-        <n-data-table
-          size="small"
+      <div class="project-card-content" :style="{ height: height + 'px' }">
+        <a-table
+          class="ant-table-striped"
+          size="middle"
           :columns="columns"
-          :data="data"
-          :bordered="false"
-          :style="{ height: `${height}px` }"
-          flex-height
-        />
+          :data-source="data"
+          :scroll="{ y: height - 44 }"
+          :pagination="false"
+          :row-class-name="(_record: any, index: any) => (index % 2 === 1 ? 'table-striped1' : 'table-striped2')"
+        >
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.dataIndex === 'link'">
+              <img
+                width="24"
+                height="24"
+                :src="SVG_ICON.card_icons.file"
+                @click="onEnter(record)"
+                style="cursor: pointer"
+              />
+            </template>
+            <template v-else-if="column.dataIndex === 'actions'">
+              <img
+                width="24"
+                height="24"
+                :src="SVG_ICON.card_icons.edit"
+                style="cursor: pointer; margin-right: 40px"
+                @click="onEdit(record)"
+              />
+              <img
+                width="24"
+                height="24"
+                :src="SVG_ICON.card_icons.delete_red"
+                style="cursor: pointer"
+                @click="deleteRow(record)"
+              />
+            </template>
+          </template>
+        </a-table>
       </div>
+      <DeviceSetModal v-model:isShowModal="isShowModal" :isEdit="isEdit" :deviceData="deviceData" />
+    </div>
+    <div v-else class="project-card">
+      <ObjectList @goback="goback" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, h } from 'vue'
-import { icon } from '@/plugins'
-import { NButton, NIcon } from 'naive-ui'
-import type { DataTableColumns } from 'naive-ui'
+import { ref, onMounted } from 'vue'
+import { NButton } from 'naive-ui'
+import { deviceDataType } from './utils/utils'
+import { ObjectList } from './components/ObjectList'
+import { DeviceSetModal } from './modal/DeviceSetModal'
+import SVG_ICON from '@/svg/SVG_ICON'
+import { renderImage, routerTurnByName } from '@/utils'
+import { PageEnum } from '@/enums/pageEnum'
 
 const t = window['$t']
 
-const { DeleteIcon, EditIcon } = icon.carbon
+const isToggle = ref(false)
+const isShowModal = ref(false)
 
-const data = ref<any[]>([])
-const height = ref(500)
+const isEdit = ref(false)
 
-function createColumns(): DataTableColumns<any> {
-  return [
-    {
-      title: () => t('device.name'),
-      key: 'name'
-    },
-    {
-      title: () => t('device.modbus_link'),
-      key: 'modbus_id',
-    },
-    {
-      title: () => t('device.slave_id'),
-      key: 'slaveid'
-    },
-    {
-      title: () => t('device.reg_attr'),
-      key: 'addr'
-    },
+const deviceData = ref({})
 
-    {
-      title: () => t('device.value'),
-      key: 'value'
-    },
-    {
-      title: () => t('device.unit'),
-      key: 'unit',
-      render(row) {
-        let text = row.unit
+const data = ref<deviceDataType[]>([])
 
-        if (text === '') {
-          text = ' --'
-        }
-        return text
-      }
-    },
-    {
-      title: '',
-      key: 'actions',
-      render(row) {
-        return h(
-          'div',
-          {
-            style: {
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }
-          },
-          [
-            h(
-              NIcon,
-              {
-                size: '20',
-                style: {
-                  cursor: 'pointer'
-                },
-                onClick: () => {
-                  // isEdit.value = true
-                  // selectedRow.value = row
-                  // showModal.value = true
-                }
-              },
-              { default: () => h(EditIcon) }
-            ),
-            h(
-              'span',
-              {
-                style: {
-                  marginRight: '20px'
-                }
-              },
-              ''
-            ),
-            h(
-              NIcon,
-              {
-                size: '20',
-                style: {
-                  cursor: 'pointer'
-                },
-                onClick: () => {
-                  //deleteRow(row)
-                }
-              },
-              { default: () => h(DeleteIcon) }
-            )
-          ]
-        )
-      }
-    }
-  ]
+const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72)
+
+const columns = [
+  { title: '', dataIndex: 'link', width: 50 },
+  { title: () => t('device.name'), dataIndex: 'name' },
+  { title: () => t('device.type'), dataIndex: 'type' },
+  { title: () => t('device.polling'), dataIndex: 'polling' },
+  { title: () => t('device.address'), dataIndex: 'address' },
+  { title: () => t('device.status'), dataIndex: 'status' },
+  { title: () => t('device.enabled'), dataIndex: 'enabled' },
+  { title: '', dataIndex: 'actions', width: 120 }
+]
+
+onMounted(() => {
+  console.log(height.value)
+  initData()
+})
+/*
+{
+    "name": "Modbus1",
+    "renamed": false,
+    "id": 1,
+    "connect_mode": "Serial Port",
+    "serial_port": "COM7",
+    "baudrate": 115200,
+    "data_bit": 8,
+    "parity": "None",
+    "stop_bit": 1,
+    "mode": "RTU"
+}
+*/
+const initData = () => {
+  for (let index = 0; index < 100; index++) {
+    data.value.push({
+      id: index.toString(),
+      name: `Device ${index + 1}`,
+      type: 'ModbusRTU',
+      polling: '1s',
+      address: '192.168.1.1',
+      status: 'Connected',
+      enabled: 'true'
+    })
+  }
 }
 
-const columns = ref(createColumns())
+const goback = () => {
+  isToggle.value = false
+  deviceData.value = {}
+}
+
+const onAdd = () => {
+  deviceData.value = {}
+  isEdit.value = false
+  isShowModal.value = true
+}
+
+const onEdit = (row: any) => {
+  deviceData.value = row
+  isEdit.value = true
+  isShowModal.value = true
+}
+
+const deleteRow = (row: any) => {
+  data.value = data.value.filter((item: any) => item.id !== row.id)
+}
+
+const onEnter = (row: any) => {
+  deviceData.value = row
+  isToggle.value = true
+}
+
+//menu
+const options: any[] = [
+  {
+    label: () => t('device.import_devices'),
+    key: '1',
+    icon: renderImage(SVG_ICON.card_icons.import_, '', 24, 24)
+  },
+  {
+    label: () => t('device.export_devices'),
+    key: '2',
+    icon: renderImage(SVG_ICON.card_icons.export_, '', 24, 24)
+  },
+  {
+    label: () => t('device.refresh'),
+    key: '3',
+    icon: renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
+  }
+]
+const handleSelect = () => {}
 </script>
 
 <style lang="scss" scoped>
@@ -153,11 +203,74 @@ const columns = ref(createColumns())
         text-transform: none;
         font-family: Source Han Sans SC, Source Han Sans SC;
       }
+
+      &-extra {
+        &-button {
+          width: 64px;
+          height: 32px;
+          border-radius: 2px;
+          font-size: 14px;
+        }
+      }
     }
 
     &-content {
       padding: 0 16px;
     }
   }
+}
+
+:deep(.ant-table) {
+  background: transparent !important;
+}
+
+:deep(.ant-table-thead) tr th {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+:deep(.ant-table-tbody) tr td {
+  border: 0 !important;
+}
+
+:deep(.ant-table-row):hover {
+  background: transparent !important;
+}
+
+:deep(.ant-table-row):hover td {
+  background: transparent !important;
+}
+
+:deep(.ant-table-cell-row-hover) {
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+:deep(.ant-table-cell) {
+  height: 44px !important;
+  padding: 0 8px !important;
+}
+
+.ant-table-striped :deep(.table-striped1) td {
+  background-color: transparent !important;
+}
+
+.ant-table-striped :deep(.table-striped1):hover td {
+  background-color: transparent !important;
+}
+
+.ant-table-striped :deep(.table-striped2) td {
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+.ant-table-striped :deep(.table-striped2):hover td {
+  background: rgba(255, 255, 255, 0.07) !important;
+}
+
+.ant-table-striped :deep(.table-striped2) td:first-child {
+  border-radius: 8px 0 0 8px !important;
+}
+
+.ant-table-striped :deep(.table-striped2) td:last-child {
+  border-radius: 0 8px 8px 0 !important;
 }
 </style>
