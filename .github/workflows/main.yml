@@ -58,5 +58,10 @@ jobs:
         draft: false
         prerelease: false
         files: dist.zip
+
+    - name: List Tags
+      run: |
+        git fetch --tags
+        git tag -l
   
          
