@@ -57,6 +57,7 @@ def main():
     # 这里为了示例，我们手动指定
     last_two_elements = get_latest_two_tags()
     
+    print(last_two_elements)
     # 获取提交信息
     commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
     
