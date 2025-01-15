@@ -73,7 +73,7 @@ def main():
         file.write(release_notes)
     else:
       with open("release_notes.md", "w") as file:
-        file.write('none')
+        file.write(' '.join(last_two_elements))
 
 if __name__ == "__main__":
     main()
