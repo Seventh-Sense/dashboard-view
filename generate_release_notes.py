@@ -11,16 +11,18 @@ def get_commit_messages(since_tag, until_tag):
     """
     # 使用 git log 命令获取提交信息
     result = subprocess.run(
-        ['git', 'log', f'{since_tag}..{until_tag}', '--oneline', '--decorate', '--no-merges'],
+        ['git', 'log', f'{since_tag}..{until_tag}', '--oneline', '--decorate', '--no-merges', '--pretty=format:%s'],
         capture_output=True,
         text=True
     )
     
+    #print(result.stdout.splitlines())
     # 解析输出
     commit_messages = []
     for line in result.stdout.splitlines():
         commit_hash, commit_message = line.split(None, 1)  # 分割提交哈希和提交信息
-        commit_messages.append((commit_hash, commit_message.strip()))
+        #print(line.split(None, 1))
+        commit_messages.append(commit_message.strip())
     
     return commit_messages
 
@@ -32,20 +34,31 @@ def format_release_notes(commit_messages):
     :return: 格式化后的发布说明字符串
     """
     release_notes = "Release Notes:\n\n"
-    for commit_hash, commit_message in commit_messages:
+    #print(commit_messages)
+    for index, commit_message in enumerate(commit_messages):
         # 可以在这里添加更多的格式化逻辑，比如根据提交信息中的关键字分类
-        release_notes += f"- {commit_message} ({commit_hash})\n"
+        release_notes += f"{index + 1}: {commit_message}\n"
     
     return release_notes
+
+def get_latest_two_tags():
+    result = subprocess.run(
+        ['git', 'tag'],
+        capture_output=True,
+        text=True
+    )
+
+    last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
+    #print(last_two_elements)
+    return last_two_elements
 
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     # 这里为了示例，我们手动指定
-    last_tag = "v1.0.0"
-    current_tag = "v1.1.0"
+    last_two_elements = get_latest_two_tags()
     
     # 获取提交信息
-    commit_messages = get_commit_messages(last_tag, current_tag)
+    commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
     
     # 生成发布说明
     release_notes = format_release_notes(commit_messages)
