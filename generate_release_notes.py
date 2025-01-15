@@ -50,7 +50,7 @@ def get_latest_two_tags():
 
     last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
     #print(last_two_elements)
-    return last_two_elements
+    return result.stdout.splitlines()
 
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
@@ -58,7 +58,7 @@ def main():
     last_two_elements = get_latest_two_tags()
     
     # 获取提交信息
-    if len(last_two_elements) >= 2:
+    if len(last_two_elements) < 0:
 
       commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
     
