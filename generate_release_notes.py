@@ -71,6 +71,9 @@ def main():
       # 如果需要将发布说明写入文件，可以使用以下代码
       with open("release_notes.md", "w") as file:
         file.write(release_notes)
+    else:
+      with open("release_notes.md", "w") as file:
+        file.write('none')
 
 if __name__ == "__main__":
     main()
