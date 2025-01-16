@@ -43,16 +43,12 @@ def format_release_notes(commit_messages):
 
 def get_remote_tags():
    result = subprocess.run(
-        ['git', 'ls-remote', '--tags'],
+        ['git', 'tag'],
         capture_output=True,
         text=True
     )
-   last_four_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-4:len(result.stdout.splitlines())]
-   last_two_elements = []
-
-   for line in last_four_elements:
-      element = line.rpartition('/')[2]
-      last_two_elements.append(element)
+   last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
+   
    return last_two_elements
 
 def main():
@@ -60,9 +56,9 @@ def main():
     last_two_elements = get_remote_tags()
     #print('one', last_two_elements)
     # 获取提交信息
-    if len(last_two_elements) >= 4:
+    if len(last_two_elements) >= 2:
 
-      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[2])
+      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
     
       # 生成发布说明
       release_notes = format_release_notes(commit_messages)
