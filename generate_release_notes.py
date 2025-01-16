@@ -45,18 +45,15 @@ def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     result = subprocess.run(
         ['git', 'tag'],
-        stdout=subprocess.PIPE, 
-        stderr=subprocess.PIPE,
+        capture_output=True,
         text=True
     )
-
-    print(result.stdout.strip().split('\n'))
-    last_two_elements = result.stdout.strip().split('\n')
+    last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
     
     # 获取提交信息
     if len(last_two_elements) >= 2:
 
-      commit_messages = get_commit_messages(last_two_elements[len(last_two_elements) - 2], last_two_elements[len(last_two_elements) - 1])
+      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
     
       # 生成发布说明
       release_notes = format_release_notes(commit_messages)
