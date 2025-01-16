@@ -11,18 +11,18 @@ def get_commit_messages(since_tag, until_tag):
     """
     # 使用 git log 命令获取提交信息
     result = subprocess.run(
-        ['git', 'log', 'origin/main', '-n', '2','--oneline'],
+        ['git', 'log', f'{since_tag}..{until_tag}', '--oneline', '--decorate', '--no-merges', '--pretty=format:%s'],
         capture_output=True,
         text=True
     )
     
-    print('two', since_tag, until_tag, result.stdout)
+    #print('two', since_tag, until_tag, result.stdout)
     # 解析输出
     commit_messages = []
-    #for line in result.stdout.splitlines():
-        #commit_hash, commit_message = line.split(None, 1)  # 分割提交哈希和提交信息
+    for line in result.stdout.splitlines():
+        commit_hash, commit_message = line.split(None, 1)  # 分割提交哈希和提交信息
         #print(line.split(None, 1))
-        #commit_messages.append(commit_message.strip())
+        commit_messages.append(commit_message.strip())
     
     return commit_messages
 
@@ -58,24 +58,24 @@ def get_remote_tags():
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     last_two_elements = get_remote_tags()
-    print('one', last_two_elements)
+    #print('one', last_two_elements)
     # 获取提交信息
-    #if len(last_two_elements) >= 4:
+    if len(last_two_elements) >= 4:
 
-    commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[2])
+      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[2])
     
       # 生成发布说明
-    release_notes = format_release_notes(commit_messages)
+      release_notes = format_release_notes(commit_messages)
     
       # 将发布说明输出到文件或打印到控制台（这里打印到控制台）
       #print(release_notes)
     
       # 如果需要将发布说明写入文件，可以使用以下代码
-    with open("release_notes.md", "w") as file:
-      file.write(' '.join(commit_messages))
-    #else:
-      #with open("release_notes.md", "w") as file:
-        #file.write(' '.join(last_two_elements))
+      with open("release_notes.md", "w") as file:
+        file.write(release_notes)
+    else:
+      with open("release_notes.md", "w") as file:
+        file.write(' '.join(last_two_elements))
 
 if __name__ == "__main__":
     main()
