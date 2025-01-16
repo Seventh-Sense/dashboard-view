@@ -41,24 +41,17 @@ def format_release_notes(commit_messages):
     
     return release_notes
 
-def get_latest_two_tags():
+def main():
+    # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     result = subprocess.run(
         ['git', 'tag'],
         capture_output=True,
         text=True
     )
-
     last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
-    #print(last_two_elements)
-    return result.stdout.splitlines()
-
-def main():
-    # 假设你通过某种方式获取了上一个发布标签和当前发布标签
-    # 这里为了示例，我们手动指定
-    last_two_elements = get_latest_two_tags()
     
     # 获取提交信息
-    if len(last_two_elements) < 0:
+    if len(last_two_elements) >= 2:
 
       commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
     
