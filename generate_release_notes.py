@@ -11,18 +11,18 @@ def get_commit_messages(since_tag, until_tag):
     """
     # 使用 git log 命令获取提交信息
     result = subprocess.run(
-        ['git', 'log', f'{since_tag}..{until_tag}', '--oneline', '--decorate', '--no-merges', '--pretty=format:%s'],
+        ['git', 'log'],
         capture_output=True,
         text=True
     )
     
-    print('two', since_tag, until_tag, result.stdout.splitlines())
+    print('two', since_tag, until_tag, result.stdout)
     # 解析输出
     commit_messages = []
-    for line in result.stdout.splitlines():
-        commit_hash, commit_message = line.split(None, 1)  # 分割提交哈希和提交信息
+    #for line in result.stdout.splitlines():
+        #commit_hash, commit_message = line.split(None, 1)  # 分割提交哈希和提交信息
         #print(line.split(None, 1))
-        commit_messages.append(commit_message.strip())
+        #commit_messages.append(commit_message.strip())
     
     return commit_messages
 
