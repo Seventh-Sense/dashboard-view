@@ -11,7 +11,7 @@ def get_commit_messages(since_tag, until_tag):
     """
     # 使用 git log 命令获取提交信息
     result = subprocess.run(
-        ['git', 'log', 'origin/main', '--oneline'],
+        ['git', 'log', 'origin/main', '-n', '2','--oneline'],
         capture_output=True,
         text=True
     )
