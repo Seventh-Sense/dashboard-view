@@ -44,10 +44,12 @@ def format_release_notes(commit_messages):
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     result = subprocess.run(
-        ['git', 'tag'],
+        ['git', 'fetch', '--tags'],
         capture_output=True,
         text=True
     )
+
+    #print(result)
     last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
     
     # 获取提交信息
