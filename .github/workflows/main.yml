@@ -46,12 +46,6 @@ jobs:
       with:
         name: windows-executable
         path: dist.zip
-    
-    - name: Fetch Tags
-      run: git fetch --tags
-      
-    - name: List Tags
-      run: git tag
 
     - name: Generate release notes
       run: |
