@@ -58,7 +58,7 @@ def get_remote_tags():
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     last_two_elements = get_remote_tags()
-    print(len(last_two_elements))
+    #print(len(last_two_elements))
     # 获取提交信息
     #if len(last_two_elements) >= 4:
 
@@ -72,7 +72,7 @@ def main():
     
       # 如果需要将发布说明写入文件，可以使用以下代码
     with open("release_notes.md", "w") as file:
-      file.write(release_notes)
+      file.write(' '.join(commit_messages))
     #else:
       #with open("release_notes.md", "w") as file:
         #file.write(' '.join(last_two_elements))
