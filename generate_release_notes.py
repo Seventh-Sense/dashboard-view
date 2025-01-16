@@ -16,7 +16,7 @@ def get_commit_messages(since_tag, until_tag):
         text=True
     )
     
-    #print(result.stdout.splitlines())
+    print('two', since_tag, until_tag, result.stdout.splitlines())
     # 解析输出
     commit_messages = []
     for line in result.stdout.splitlines():
@@ -58,7 +58,7 @@ def get_remote_tags():
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     last_two_elements = get_remote_tags()
-    #print(len(last_two_elements))
+    print('one', last_two_elements)
     # 获取提交信息
     #if len(last_two_elements) >= 4:
 
