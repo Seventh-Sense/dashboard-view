@@ -41,19 +41,28 @@ def format_release_notes(commit_messages):
     
     return release_notes
 
-def main():
-    # 假设你通过某种方式获取了上一个发布标签和当前发布标签
-    result = subprocess.run(
-        ['git', 'ls-remote', '--tags', 'https://github.com/Seventh-Sense/dashboard-view.git'],
+def get_remote_tags():
+   result = subprocess.run(
+        ['git', 'ls-remote', '--tags'],
         capture_output=True,
         text=True
     )
-    last_two_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-2:len(result.stdout.splitlines())]
-    print(result.stdout.splitlines())
-    # 获取提交信息
-    if len(last_two_elements) >= 2:
+   last_four_elements = result.stdout.splitlines()[len(result.stdout.splitlines())-4:len(result.stdout.splitlines())]
+   last_two_elements = []
 
-      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[1])
+   for line in last_four_elements:
+      element = line.rpartition('/')[2]
+      last_two_elements.append(element)
+   return last_two_elements
+
+def main():
+    # 假设你通过某种方式获取了上一个发布标签和当前发布标签
+    last_two_elements = get_remote_tags()
+    print(last_two_elements)
+    # 获取提交信息
+    if len(last_two_elements) >= 4:
+
+      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[2])
     
       # 生成发布说明
       release_notes = format_release_notes(commit_messages)
@@ -63,10 +72,10 @@ def main():
     
       # 如果需要将发布说明写入文件，可以使用以下代码
       with open("release_notes.md", "w") as file:
-        file.write(' '.join(result.stdout.splitlines()))
+        file.write(release_notes)
     else:
       with open("release_notes.md", "w") as file:
-        file.write(' '.join(result.stdout.splitlines()))
+        file.write(' '.join(last_two_elements))
 
 if __name__ == "__main__":
     main()
