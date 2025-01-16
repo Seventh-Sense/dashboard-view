@@ -58,24 +58,24 @@ def get_remote_tags():
 def main():
     # 假设你通过某种方式获取了上一个发布标签和当前发布标签
     last_two_elements = get_remote_tags()
-    print(last_two_elements)
+    print(len(last_two_elements))
     # 获取提交信息
-    if len(last_two_elements) >= 4:
+    #if len(last_two_elements) >= 4:
 
-      commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[2])
+    commit_messages = get_commit_messages(last_two_elements[0], last_two_elements[2])
     
       # 生成发布说明
-      release_notes = format_release_notes(commit_messages)
+    release_notes = format_release_notes(commit_messages)
     
       # 将发布说明输出到文件或打印到控制台（这里打印到控制台）
       #print(release_notes)
     
       # 如果需要将发布说明写入文件，可以使用以下代码
-      with open("release_notes.md", "w") as file:
-        file.write(release_notes)
-    else:
-      with open("release_notes.md", "w") as file:
-        file.write(' '.join(last_two_elements))
+    with open("release_notes.md", "w") as file:
+      file.write(release_notes)
+    #else:
+      #with open("release_notes.md", "w") as file:
+        #file.write(' '.join(last_two_elements))
 
 if __name__ == "__main__":
     main()
