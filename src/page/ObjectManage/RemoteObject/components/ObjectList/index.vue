@@ -64,6 +64,7 @@
           </template>
         </template>
       </a-table>
+      <ObjectSetModal :isShowModal="isShowModal"/>
     </div>
   </div>
 </template>
@@ -74,11 +75,13 @@ import { ref, onMounted } from 'vue'
 import { tagDataType } from '../../utils/utils'
 import { NButton, NIcon } from 'naive-ui'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { ObjectSetModal } from '../../modal/ObjectSetModal'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 
 const emit = defineEmits(['goback'])
 const t = window['$t']
+const isShowModal = ref(false)
 
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72 - 90)
 
