@@ -55,13 +55,13 @@ importers:
         version: 5.2.1
       echarts-liquidfill:
         specifier: ^3.1.0
-        version: 3.1.0(echarts@5.3.3)
+        version: 3.1.0(echarts@5.6.0)
       echarts-stat:
         specifier: ^1.2.0
         version: 1.2.0
       echarts-wordcloud:
         specifier: ^2.0.0
-        version: 2.0.0(echarts@5.3.3)
+        version: 2.0.0(echarts@5.6.0)
       element-plus:
         specifier: ^2.5.6
         version: 2.5.6(vue@3.2.37)
@@ -132,6 +132,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^17.0.2
         version: 17.0.2
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: ^16.11.26
         version: 16.11.40
@@ -169,8 +172,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       echarts:
-        specifier: ^5.3.2
-        version: 5.3.3
+        specifier: ^5.6.0
+        version: 5.6.0
       eslint:
         specifier: ^8.12.0
         version: 8.17.0
@@ -233,7 +236,7 @@ importers:
         version: 5.1.0(vue@3.2.37)
       vue-echarts:
         specifier: ^6.0.2
-        version: 6.0.3(echarts@5.3.3)(vue@3.2.37)
+        version: 6.0.3(echarts@5.6.0)(vue@3.2.37)
       vue-tsc:
         specifier: ^0.28.10
         version: 0.28.10(typescript@4.6.3)
@@ -883,9 +886,6 @@ packages:
 
   '@types/lodash-es@4.17.12':
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
-
-  '@types/lodash-es@4.17.6':
-    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
 
   '@types/lodash@4.14.185':
     resolution: {integrity: sha512-evMDG1bC4rgQg4ku9tKpuMh5iBNEwNa3tf9zRHdP1qlv+1WUg44xat4IxCE14gIpZRGUUWAx2VhItCZc25NfMA==}
@@ -1711,8 +1711,8 @@ packages:
     peerDependencies:
       echarts: ^5.0.1
 
-  echarts@5.3.3:
-    resolution: {integrity: sha512-BRw2serInRwO5SIwRviZ6Xgm5Lb7irgz+sLiFMmy/HOaf4SQ+7oYqxKzRHAKp4xHQ05AuHw1xvoQWJjDQq/FGw==}
+  echarts@5.6.0:
+    resolution: {integrity: sha512-oTbVTsXfKuEhxftHqL5xprgLoc0k7uScAwtryCgWF6hPYFLRwOUHiFmHGCBKP5NPFNkDVopOieyUqYGH8Fa3kA==}
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -3784,8 +3784,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zrender@5.3.2:
-    resolution: {integrity: sha512-8IiYdfwHj2rx0UeIGZGGU4WEVSDEdeVCaIg/fomejg1Xu6OifAL1GVzIPHg2D+MyUkbNgPWji90t0a8IDk+39w==}
+  zrender@5.6.1:
+    resolution: {integrity: sha512-OFXkDJKcrlx5su2XbzJvj/34Q3m6PvyCZkVPHGYpcCJ52ek4U/ymZyfuV1nKE23AyBJ51E/6Yr0mhZ7xGTO4ag==}
 
 snapshots:
 
@@ -4521,10 +4521,6 @@ snapshots:
   '@types/lodash-es@4.17.12':
     dependencies:
       '@types/lodash': 4.17.7
-
-  '@types/lodash-es@4.17.6':
-    dependencies:
-      '@types/lodash': 4.14.185
 
   '@types/lodash@4.14.185': {}
 
@@ -5477,20 +5473,20 @@ snapshots:
     dependencies:
       is-obj: 2.0.0
 
-  echarts-liquidfill@3.1.0(echarts@5.3.3):
+  echarts-liquidfill@3.1.0(echarts@5.6.0):
     dependencies:
-      echarts: 5.3.3
+      echarts: 5.6.0
 
   echarts-stat@1.2.0: {}
 
-  echarts-wordcloud@2.0.0(echarts@5.3.3):
+  echarts-wordcloud@2.0.0(echarts@5.6.0):
     dependencies:
-      echarts: 5.3.3
+      echarts: 5.6.0
 
-  echarts@5.3.3:
+  echarts@5.6.0:
     dependencies:
       tslib: 2.3.0
-      zrender: 5.3.2
+      zrender: 5.6.1
 
   ee-first@1.1.1: {}
 
@@ -5503,14 +5499,14 @@ snapshots:
       '@floating-ui/dom': 1.6.3
       '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
       '@types/lodash': 4.14.185
-      '@types/lodash-es': 4.17.6
+      '@types/lodash-es': 4.17.12
       '@vueuse/core': 9.13.0(vue@3.2.37)
       async-validator: 4.2.5
       dayjs: 1.11.7
       escape-html: 1.0.3
       lodash: 4.17.21
       lodash-es: 4.17.21
-      lodash-unified: 1.0.3(@types/lodash-es@4.17.6)(lodash-es@4.17.21)(lodash@4.17.21)
+      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21)
       memoize-one: 6.0.0
       normalize-wheel-es: 1.2.0
       vue: 3.2.37
@@ -6355,9 +6351,9 @@ snapshots:
 
   lodash-es@4.17.21: {}
 
-  lodash-unified@1.0.3(@types/lodash-es@4.17.6)(lodash-es@4.17.21)(lodash@4.17.21):
+  lodash-unified@1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21):
     dependencies:
-      '@types/lodash-es': 4.17.6
+      '@types/lodash-es': 4.17.12
       lodash: 4.17.21
       lodash-es: 4.17.21
 
@@ -7502,9 +7498,9 @@ snapshots:
     dependencies:
       vue: 3.2.37
 
-  vue-echarts@6.0.3(echarts@5.3.3)(vue@3.2.37):
+  vue-echarts@6.0.3(echarts@5.6.0)(vue@3.2.37):
     dependencies:
-      echarts: 5.3.3
+      echarts: 5.6.0
       resize-detector: 0.3.0
       vue: 3.2.37
       vue-demi: 0.12.5(vue@3.2.37)
@@ -7686,6 +7682,6 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zrender@5.3.2:
+  zrender@5.6.1:
     dependencies:
       tslib: 2.3.0

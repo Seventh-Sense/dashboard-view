@@ -52,6 +52,15 @@ import list from './icons/list.svg?url'
 import import_ from './icons/import.svg?url'
 import export_ from './icons/export.svg?url'
 import restart from './icons/restart.svg?url'
+import show_fan2 from './icons/show_fan2.svg?url'
+import show_refresh from './icons/show_refresh.svg?url'
+import show_snow from './icons/show_snow.svg?url'
+import show_sun from './icons/show_sun.svg?url'
+import show_refresh_g from './icons/show_refresh_g.svg?url'
+import show_sun_g from './icons/show_sun_g.svg?url'
+import show_snow_g from './icons/show_snow_g.svg?url'
+import show_fan2_g from './icons/show_fan2_g.svg?url'
+
 
 export default {
     card_icons: {
@@ -109,5 +118,13 @@ export default {
         import_: import_,
         export_: export_,
         restart: restart,
+        show_fan2: show_fan2,
+        show_refresh: show_refresh,
+        show_snow: show_snow,
+        show_sun: show_sun,
+        show_refresh_g: show_refresh_g,
+        show_sun_g: show_sun_g,
+        show_snow_g: show_snow_g,
+        show_fan2_g: show_fan2_g
     }
 }

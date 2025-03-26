@@ -63,7 +63,12 @@ export enum PageEnum {
   // 错误
   ERROR_PAGE_NAME_403 = 'ErrorPage403',
   ERROR_PAGE_NAME_404 = 'ErrorPage404',
-  ERROR_PAGE_NAME_500 = 'ErrorPage500'
+  ERROR_PAGE_NAME_500 = 'ErrorPage500',
+
+
+  //display
+  BASE_DISPLAY = '/display',
+  BASE_DISPLAY_NAME = 'Display',
 }
 
 export const ErrorPageNameMap = new Map([

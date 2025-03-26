@@ -11,7 +11,6 @@ import type {
   RequestGlobalConfigType,
   RequestConfigType
 } from '@/store/modules/chartEditStore/chartEditStore.d'
-import { da } from 'element-plus/es/locale'
 
 export const get = (url: string, params?: object) => {
   return axiosInstance({
@@ -431,6 +430,28 @@ export const deleteProject = async (id: any) => {
 }
 
 export const getVersion = async () => {
+  try {
+    const response = await get(`/version`)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+
+//展会相关接口
+export const sendParams = async (data: any) => {
+  try {
+    const response = await post(`/project/`, data)
+    
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readChartData = async () => {
   try {
     const response = await get(`/version`)
     

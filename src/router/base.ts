@@ -14,6 +14,15 @@ export const LoginRoute: RouteRecordRaw = {
   },
 };
 
+export const DisplayRoute: RouteRecordRaw = {
+  path: '/display',
+  name: 'Display',
+  component: () => import('@/views/display/index.vue'),
+  meta: {
+    title: '展示',
+  },
+};
+
 export const HttpErrorPage: RouteRecordRaw[] = [
   {
     path: '/error/404',
