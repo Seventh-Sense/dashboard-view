@@ -1,7 +1,6 @@
 <template>
   <div class="card">
     <div class="card-title">能耗对比</div>
-
     <div ref="chartDom" class="card-chart"></div>
   </div>
 </template>
@@ -10,7 +9,11 @@
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import * as echarts from 'echarts/core'
 import type { ECharts } from 'echarts/core'
-import { ECOption, array2, array1, xa } from '../util/util'
+import { ECOption } from '../util/util'
+
+const props = defineProps({
+  data: Object
+})
 
 const chartDom = ref<HTMLElement>()
 let chartInstance: ECharts | null = null
@@ -20,11 +23,43 @@ const options = ref<ECOption>({
     data: ['常规性调节', '预测性调节'],
     top: 10,
     itemGap: 200,
-
+    itemWidth: 0,
+    itemHeight: 40,
     textStyle: {
-      color: 'rgba(255,255,255,0.53)'
+      rich: {
+        // 定义图标区块
+        icon: {
+          height: 4, // 色块高度
+          width: 24, // 色块宽度
+          align: 'center',
+          verticalAlign: 'bottom',
+          borderRadius: 2,
+          textBorderWidth: 0, // 清除文本描边
+          textBackgroundColor: 'transparent', // 透明文本背景
+          color: 'transparent', // 隐藏文本颜色
+          backgroundColor: '{c|}' // 声明参数占位符 {c}
+        },
+        // 定义文字区块
+        text: {
+          height: 20,
+          align: 'center',
+          verticalAlign: 'top',
+          fontSize: 12,
+          color: 'rgba(255,255,255,0.53)',
+          padding: [8, 0, 0, 0] // 文字上方留出间距
+        }
+      }
     },
-    icon: 'circle'
+
+    icon: 'none',
+    // 自定义富文本格式
+    formatter: function (name: any) {
+      const colorMap: any = {
+        常规性调节: '#6666FF',
+        预测性调节: '#00CED1'
+      }
+      return `{icon|${colorMap[name]}}\n{text|${name}}`
+    }
   },
   tooltip: {
     trigger: 'axis',
@@ -42,8 +77,7 @@ const options = ref<ECOption>({
   },
   xAxis: {
     show: true,
-    type: 'category',
-    data: xa,
+    type: 'time',
     splitLine: {
       show: false
     },
@@ -63,8 +97,7 @@ const options = ref<ECOption>({
   },
   yAxis: {
     type: 'value',
-    min: 20.0,
-    max: 30.0,
+   
     axisLine: {
       show: false
     },
@@ -82,39 +115,43 @@ const options = ref<ECOption>({
         type: 'dashed'
       }
     },
-    interval: 1.2
   },
   series: [
     {
       name: '常规性调节',
-      type: 'bar',
-      data: array1,
-      itemStyle: {
-        borderRadius: [8, 8, 0, 0],
+      type: 'line',
+      data: [],
+      smooth: true,
+      symbol: 'none',
+      lineStyle: {
+        color: '#6666FF',
+        width: 2
+      },
+      itemStyle: { color: '#6666FF' },
+      areaStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: 'rgba(102, 102, 255, 0.53)' },
-          { offset: 1, color: 'rgba(102, 102, 255, 0)' }
+          { offset: 0, color: '#6666FF' },
+          { offset: 1, color: 'rgba(0, 0, 0, 0)' }
         ])
       }
     },
     {
       name: '预测性调节',
-      type: 'bar',
-      data: array2,
-
-      itemStyle: {
-        borderRadius: [8, 8, 0, 0],
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: 'rgba(0, 206, 209, 0.53)' },
-          { offset: 1, color: 'rgba(102, 102, 255, 0)' }
-        ])
-      }
+      type: 'line',
+      data: [],
+      smooth: true,
+      symbol: 'none',
+      lineStyle: {
+        color: '#00CED1 ',
+        width: 2
+      },
+      itemStyle: { color: '#00CED1' }
     }
   ],
   grid: {
     top: 80,
     bottom: 30,
-    left: 50,
+    left: 70,
     right: 30
   },
   backgroundColor: '#181621'
@@ -136,6 +173,25 @@ const initChart = () => {
     chartInstance.setOption(options.value)
   }
 }
+
+// 响应式更新
+watch(
+  () => props.data,
+  newData => {
+    //console.log(newData)
+    chartInstance?.setOption({
+      series: [
+        {
+          data: newData!.regular_energy
+        },
+        {
+          data: newData!.ai_energy
+        }
+      ]
+    })
+  },
+  { deep: true }
+)
 
 // 窗口自适应
 const handleResize = () => chartInstance?.resize()

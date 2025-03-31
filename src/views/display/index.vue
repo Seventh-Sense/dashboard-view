@@ -18,10 +18,11 @@
 
       <n-grid x-gap="14" :cols="2">
         <n-gi class="page-container-card chart-height">
-          <TemperatureChart />
+          <TemperatureChart :data="TempData" />
+          <!-- <LineChart :data="TempData"/> -->
         </n-gi>
         <n-gi class="page-container-card chart-height">
-          <EnergyChart />
+          <EnergyChart :data="EnergyData" />
         </n-gi>
       </n-grid>
     </div>
@@ -29,17 +30,39 @@
 </template>
 
 <script setup lang="ts">
-import { provide, reactive } from 'vue'
+import { provide, reactive, ref } from 'vue'
 import { TemperatureChart } from './TemperatureChart/index'
 import { EnergyChart } from './EnergyChart/index'
-import { MY_FUNCTIONS_KEY, Presentation, PresentationData } from './util/util'
+import {
+  MY_FUNCTIONS_KEY,
+  ParseData,
+  Presentation,
+  PresentationData,
+  inputDataEncap,
+  dataEncap
+} from './util/util'
 import { TraditionSet } from './TraditionSet'
 import { AISet } from './AISet'
 import { OtherSet } from './OtherSet'
 import { cloneDeep } from 'lodash-es'
-import { sendParams } from '@/api/http'
+import { sendParams, readChartData } from '@/api/http'
+import { message } from 'ant-design-vue'
+import { LineChart } from './G2/LineChart'
 
 const PresentData = reactive<Presentation>(cloneDeep(PresentationData))
+
+const startTime = ref(0)
+
+let interval: number
+
+const TempData = ref({
+  regular_temp: [],
+  ai_temp: []
+})
+const EnergyData = ref({
+  regular_energy: [],
+  ai_energy: []
+})
 
 const modMode = (index: number) => {
   let tmp = PresentData.tradition.mode
@@ -67,11 +90,65 @@ const modPrefer = (index: number) => {
 }
 
 const submit = () => {
-  console.log(PresentData)
-  let data = {}
-  sendParams(data)
-    .then(res => {
-      console.log(res)
+  //console.log(PresentData)
+  window.clearInterval(interval)
+  startTime.value = new Date().getTime()
+
+  sendParams({
+    device_id: 'aidevice001',
+    params: {
+      cmd: 'stop'
+    }
+  })
+    .then((res: any) => {
+      if (res.status === 'OK') {
+        sendInitInfo()
+      }
+    })
+    .catch((e: any) => {
+      console.error('Init error:', e)
+    })
+}
+
+const sendInitInfo = () => {
+  sendParams({
+    device_id: 'aidevice001',
+    params: {
+      cmd: dataEncap(PresentData)
+    }
+  })
+    .then((res: any) => {
+      if (res.status === 'OK') {
+        message.success('开始模拟！')
+        //console.log('send Params success')
+        interval = window.setInterval(() => {
+          readData()
+        }, 3000)
+      }
+    })
+    .catch((e: any) => {
+      console.error('send Params error:', e)
+      message.success('模拟失败！')
+    })
+}
+
+const readData = () => {
+  readChartData(inputDataEncap(startTime.value))
+    .then((res: any) => {
+      //console.log(res)
+      if (res.status === 'OK') {
+        let result = ParseData(res.points)
+        console.log('readData:', result)
+        TempData.value = {
+          regular_temp: result.regular_temp,
+          ai_temp: result.ai_temp
+        }
+
+        EnergyData.value = {
+          regular_energy: result.regular_energy,
+          ai_energy: result.ai_energy
+        }
+      }
     })
     .catch((e: any) => {
       console.error('send Params error:', e)
@@ -83,6 +160,33 @@ const reset = () => {
   PresentData.tradition = cloneDeep(PresentationData.tradition)
   PresentData.ai = cloneDeep(PresentationData.ai)
   PresentData.other = cloneDeep(PresentationData.other)
+
+  window.clearInterval(interval)
+  //clear
+  TempData.value = {
+    regular_temp: [],
+    ai_temp: []
+  }
+
+  EnergyData.value = {
+    regular_energy: [],
+    ai_energy: []
+  }
+
+  sendParams({
+    device_id: 'aidevice001',
+    params: {
+      cmd: 'stop'
+    }
+  })
+    .then((res: any) => {
+      if (res.status === 'OK') {
+        message.success('模拟已停止！')
+      }
+    })
+    .catch((e: any) => {
+      console.error('Init error:', e)
+    })
 }
 
 provide(MY_FUNCTIONS_KEY, {

@@ -2,6 +2,7 @@ import type { ECharts, ComposeOption } from 'echarts/core'
 import type { BarSeriesOption, LineSeriesOption } from 'echarts/charts'
 import type { TitleComponentOption, GridComponentOption } from 'echarts/components'
 import { InjectionKey } from 'vue'
+import { number } from 'echarts'
 
 export type ECOption = ComposeOption<
   BarSeriesOption | LineSeriesOption | TitleComponentOption | GridComponentOption
@@ -10,7 +11,7 @@ export type ECOption = ComposeOption<
 export interface Presentation {
   tradition: Tradition
   ai: AI
-  other: object
+  other: Other
 }
 
 export interface Tradition {
@@ -32,7 +33,6 @@ export interface Other {
   irealTemp: number
 }
 
-
 export interface DataItem {
   name: string
   value: [string, number]
@@ -52,21 +52,113 @@ export const PresentationData = {
     fanSpeed: 3
   },
   ai: {
-    people: 3,
-    setTemp: 25.5,
-    area: 100,
-    preference: [1, 0, 0]
+    people: 2,
+    setTemp: 23,
+    area: 25,
+    preference: [0, 0, 1]
   },
   other: {
-    ominTemp: 25.5,
-    omaxTemp: 25.5,
+    ominTemp: 10,
+    omaxTemp: 20,
     irealTemp: 25.5
   }
 }
 
-//数据封装
-const dataEncap = (data: Presentation) => {
+const handlePrefer = (arr: Array<number>) => {
+  if (arr.length === 3) {
+    const [first, second, third] = arr
 
+    if (first === 1) return -1
+    if (second === 1) return 0
+    if (third === 1) return 1
+  }
+
+  return 1
+}
+
+//数据封装
+export const dataEncap = (data: Presentation) => {
+  return (
+    'start,' +
+    data.other.ominTemp +
+    ',' +
+    data.other.omaxTemp +
+    ',' +
+    data.ai.setTemp +
+    ',' +
+    data.ai.area +
+    ',' +
+    data.ai.people +
+    ',' +
+    handlePrefer(data.ai.preference)
+  )
+}
+
+export const inputDataEncap = (start_time: any) => {
+  let end_time = new Date().getTime()
+
+  return [
+    {
+      device_id: 'aidevice001',
+      metric_id: 'temperature',
+      start_time: start_time,
+      end_time: end_time
+    },
+    {
+      device_id: 'aidevice001',
+      metric_id: 'energy',
+      start_time: start_time,
+      end_time: end_time
+    }
+  ]
+}
+
+export const ParseData = (data: Array<any>) => {
+  let result: any = {
+    regular_temp: [],
+    ai_temp: [],
+    regular_energy: [],
+    ai_energy: []
+  }
+
+  const metrics = ['temperature', 'energy'] as const
+
+  data.forEach((item: any) => {
+    if (item.metric_id === 'temperature') {
+      item.points.forEach((point: any) => {
+        let timestamp = point.timestamp
+        let regular_temp = point.value.split(',')[0]
+        let ai_temp = point.value.split(',')[1]
+        result.regular_temp.push([ timestamp, parseFloat(regular_temp) ])
+        result.ai_temp.push([ timestamp, parseFloat(ai_temp) ])
+      })
+      
+    }
+
+    if (item.metric_id === 'energy') {
+      item.points.forEach((point: any) => {
+        let timestamp = point.timestamp
+        let regular_energy = point.value.split(',')[0]
+        let ai_energy = point.value.split(',')[1]
+        result.regular_energy.push([ timestamp, parseFloat(regular_energy) ])
+        result.ai_energy.push([ timestamp, parseFloat(ai_energy) ])
+      })
+    }
+
+    
+  })
+
+  return result
+}
+
+const translateArray = (arr: Array<any>) => {
+  let array: any = []
+
+  arr.forEach((item: any) => {
+    array.push([item.timestamp, item.value])
+  })
+
+  return array
 }
 
 export function generateNextDateTime(prevDateTime?: string): string {
@@ -149,7 +241,7 @@ export const y2 = [
 export const mergeArrays = (arr1: any, arr2: any) => {
   if (arr1.length !== arr2.length) throw new Error('数组长度不一致')
   return arr1.map((element: any, index: any) => {
-    return { name: element, value: [element, arr2[index]] }
+    return [element, arr2[index]]
   })
 }
 

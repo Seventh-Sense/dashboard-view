@@ -443,7 +443,7 @@ export const getVersion = async () => {
 //展会相关接口
 export const sendParams = async (data: any) => {
   try {
-    const response = await post(`/project/`, data)
+    const response = await post(`/device/request`, data)
     
     return response
   } catch (error) {
@@ -451,9 +451,9 @@ export const sendParams = async (data: any) => {
   }
 }
 
-export const readChartData = async () => {
+export const readChartData = async (data: any) => {
   try {
-    const response = await get(`/version`)
+    const response = await post(`/points`, data)
     
     return response
   } catch (error) {

@@ -14,6 +14,10 @@ import type { ECharts } from 'echarts/core'
 import { ECOption, newA, newB } from '../util/util'
 import { readChartData } from '@/api/http'
 
+const props = defineProps({
+  data: Object
+})
+
 const chartDom = ref<HTMLElement>()
 let chartInstance: ECharts | null = null
 
@@ -33,9 +37,9 @@ const options = ref<ECOption>({
           align: 'center',
           verticalAlign: 'bottom',
           borderRadius: 2,
-          textBorderWidth: 0,       // 清除文本描边
-          textBackgroundColor: 'transparent',  // 透明文本背景
-          color: 'transparent',     // 隐藏文本颜色
+          textBorderWidth: 0, // 清除文本描边
+          textBackgroundColor: 'transparent', // 透明文本背景
+          color: 'transparent', // 隐藏文本颜色
           backgroundColor: '{c|}' // 声明参数占位符 {c}
         },
         // 定义文字区块
@@ -57,7 +61,7 @@ const options = ref<ECOption>({
         常规性调节: '#6666FF',
         预测性调节: '#00CED1'
       }
-      return `{icon|${colorMap[name]}}\n{text|${name}}`;
+      return `{icon|${colorMap[name]}}\n{text|${name}}`
     }
   },
   tooltip: {
@@ -76,7 +80,7 @@ const options = ref<ECOption>({
   },
   xAxis: {
     show: true,
-    type: 'value',
+    type: 'time',
     splitLine: {
       show: false
     },
@@ -96,8 +100,8 @@ const options = ref<ECOption>({
   },
   yAxis: {
     type: 'value',
-    min: 20.0,
-    max: 26.0,
+    min: 21.0,
+    max: 25.0,
     axisLine: {
       show: false
     },
@@ -115,13 +119,12 @@ const options = ref<ECOption>({
         type: 'dashed'
       }
     },
-    interval: 1.2
   },
   series: [
     {
       name: '常规性调节',
       type: 'line',
-      data: newA,
+      data: [],
       smooth: true,
       symbol: 'none',
       lineStyle: {
@@ -139,14 +142,14 @@ const options = ref<ECOption>({
     {
       name: '预测性调节',
       type: 'line',
-      data: newB,
+      data: [],
       smooth: true,
       symbol: 'none',
       lineStyle: {
         color: '#00CED1 ',
         width: 2
       },
-      itemStyle: { color: '#00CED1' },
+      itemStyle: { color: '#00CED1' }
     }
   ],
   grid: {
@@ -172,37 +175,27 @@ const initChart = () => {
   if (chartDom.value) {
     chartInstance = echarts.init(chartDom.value, '#181621')
     chartInstance.setOption(options.value)
-
-    readChartData()
-      .then(res => {
-        console.log(res)
-      })
-      .catch(e => {
-        console.error('send Params error:', e)
-      })
   }
 }
 
 // 响应式更新
-// watch(
-//   () => props.dataC,
-//   newData => {
-//     console.log(newData)
-//     if (newData.length >= 2) {
-//       chartInstance?.setOption({
-//         series: [
-//           {
-//             data: newData
-//           },
-//           {
-//             data: props.dataA
-//           }
-//         ]
-//       })
-//     }
-//   },
-//   { deep: true }
-// )
+watch(
+  () => props.data,
+  newData => {
+    //console.log(newData)
+    chartInstance?.setOption({
+      series: [
+        {
+          data: newData!.regular_temp
+        },
+        {
+          data: newData!.ai_temp
+        }
+      ]
+    })
+  },
+  { deep: true }
+)
 
 // 窗口自适应
 const handleResize = () => chartInstance?.resize()

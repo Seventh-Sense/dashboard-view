@@ -11,6 +11,7 @@
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@amap/amap-jsapi-types": "^0.0.8",
+    "@antv/g2": "^5.2.12",
     "@iconify/json": "^2.2.158",
     "@types/color": "^3.0.3",
     "@types/crypto-js": "^4.1.1",
