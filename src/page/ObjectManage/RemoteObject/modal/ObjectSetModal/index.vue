@@ -35,23 +35,16 @@
         </n-grid>
       </div>
       <div>
-        <a-table
-          class="ant-table-striped"
-          size="middle"
-          rowKey="key"
-          :loading="loading"
+        <n-data-table
           :columns="columns"
-          :data-source="data"
-          :scroll="{ y: 550 }"
-          :row-selection="rowSelection"
-          :row-class-name="(_record: any, index: any) => (index % 2 === 1 ? 'table-striped1' : 'table-striped2')"
-        >
-          <template #bodyCell="{ column, record }">
-            <template v-if="column.dataIndex === 'type'">
-              {{ DEVICE_TYPE_MAP[record.type] }}
-            </template>
-          </template>
-        </a-table>
+          :bordered="false"
+          :data="data"
+          :max-height="550"
+          :loading="loading"
+          :row-key="(row: DataType) => row.key"
+          virtual-scroll
+          @update:checked-row-keys="handleCheck"
+        />
       </div>
 
       <template #footer>
@@ -74,7 +67,7 @@ import { cloneDeep } from 'lodash-es'
 import axiosTwo from '@/api/axiosTwo'
 import jsonList from '@/assets/data/Property.json'
 import { DEVICE_TYPE_MAP } from '../../utils/utils'
-import { width } from 'dom-helpers'
+import type { DataTableColumns, DataTableRowKey } from 'naive-ui'
 
 interface DataType {
   key: string
@@ -107,44 +100,64 @@ const loading = ref(false)
 
 const loadingButton = ref(false)
 
-const columns = [
-  { title: () => t('device.object_name'), dataIndex: 'name' },
-  { title: () => t('device.type'), dataIndex: 'type', align: 'center', width: 200 },
-  { title: () => t('device.id'), dataIndex: 'id', align: 'center', width: 100 }
+const columns: DataTableColumns<DataType> = [
+  {
+    type: 'selection',
+    disabled(row: DataType) {
+      return row.disabled === true
+    }
+  },
+  {
+    title: () => t('device.object_name'),
+    key: 'name'
+  },
+  {
+    title: () => t('device.type'),
+    key: 'type',
+    width: 200,
+    render(row, index) {
+      return DEVICE_TYPE_MAP[row.type]
+    }
+  },
+  {
+    title: () => t('device.id'),
+    key: 'id',
+    width: 100,
+    sorter: (row1, row2) => parseInt(row1.id) - parseInt(row2.id)
+  }
 ]
+
 const selectedObjKeys = ref<string[]>([])
 
-const selectedRowKeys = ref<DataType['key'][]>([])
+const checkedRowKeysRef = ref<DataTableRowKey[]>([])
 
-const rowSelection = computed(() => {
-  return {
-    selectedRowKeys: unref(selectedRowKeys),
-    onSelect: (record: DataType, selected: boolean) => {
-      // 处理单个选中和取消选中的逻辑
-      const newKeys = selected
-        ? [...selectedRowKeys.value, record.key]
-        : selectedRowKeys.value.filter(key => key !== record.key)
-      selectedRowKeys.value = newKeys
-    },
-    onSelectAll: (selected: boolean) => {
-      // 处理全选和全不选的逻辑
-      const newKeys = selected ? data.value.map(item => item.key) : []
-      selectedRowKeys.value = newKeys
-    },
-    getCheckboxProps: (record: DataType) => ({
-      disabled: record.disabled === true,
-      name: record.name
-    })
-  }
-})
+const handleCheck = (rowKeys: DataTableRowKey[]) => {
+  //console.log('checkedRowKeysRef', rowKeys)
+  checkedRowKeysRef.value = rowKeys
+}
 
 onMounted(() => {
   fetchData()
+  //init()
 })
+
+const init = () => {
+  loading.value = true
+  for (let i = 1; i < 3000; i++) {
+    data.value.push({
+      key: i.toString(),
+      name: '2',
+      type: 2,
+      id: i.toString(),
+      disabled: false
+    })
+  }
+  loading.value = false
+}
 
 onUnmounted(() => {
   selectedObjKeys.value = []
-  selectedRowKeys.value = []
+  checkedRowKeysRef.value = []
   data.value = []
 })
 
@@ -179,10 +192,10 @@ const convertToDataTypes = (selectedData: any[], resData: any[]): any[] => {
 
   selectedObjKeys.value = cloneDeep(newKeys)
 
-  const mergedKeysSet = new Set([...selectedRowKeys.value, ...newKeys])
+  const mergedKeysSet = new Set([...checkedRowKeysRef.value, ...newKeys])
   console.log('mergedKeysSet', mergedKeysSet)
 
-  selectedRowKeys.value = Array.from(mergedKeysSet)
+  checkedRowKeysRef.value = Array.from(mergedKeysSet)
 
   // 处理并返回结果数据
   return resData
@@ -271,16 +284,16 @@ const onClose = () => {
 }
 
 const onSubmit = async () => {
-  if (selectedRowKeys.value.length === 0) {
+  if (checkedRowKeysRef.value.length === 0) {
     return
   }
 
   loadingButton.value = true
   //console.log('selectedRowKeys', selectedRowKeys.value)
   //剔除已经选中过的点位
-  const list = selectedRowKeys.value
+  const list = checkedRowKeysRef.value
     .map(key => {
-      if (selectedObjKeys.value.includes(key)) return null // 跳过已选中的点位
+      if (selectedObjKeys.value.includes(String(key))) return null // 跳过已选中的点位
 
       const record = data.value.find(item => item.key === key)
       if (!record) return null
@@ -301,7 +314,7 @@ const onSubmit = async () => {
     })
     .filter(Boolean)
 
-  console.log('list', list)
+  //console.log('list', list)
 
   try {
     const res: any = await addSubscribePoint(list)
@@ -386,63 +399,5 @@ const onSubmit = async () => {
 
 ::v-deep(.n-input__input-el) {
   border-bottom: 1px solid #{$--color-dark-modal-title};
-}
-
-:deep(.ant-table) {
-  background: transparent !important;
-}
-
-:deep(.ant-table-thead) tr th {
-  background: transparent !important;
-  border: 0 !important;
-}
-
-:deep(.ant-table-tbody) tr td {
-  border: 0 !important;
-}
-
-:deep(.ant-table-row):hover {
-  background: transparent !important;
-}
-
-:deep(.ant-table-row):hover td {
-  background: transparent !important;
-}
-
-:deep(.ant-table-cell-row-hover) {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-:deep(.ant-table-cell) {
-  height: 44px !important;
-  padding: 0 8px !important;
-}
-
-:deep(.ant-table-placeholder :hover) {
-  background-color: transparent !important;
-}
-
-.ant-table-striped :deep(.table-striped1) td {
-  background-color: transparent !important;
-}
-
-.ant-table-striped :deep(.table-striped1):hover td {
-  background-color: transparent !important;
-}
-
-.ant-table-striped :deep(.table-striped2) td {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-.ant-table-striped :deep(.table-striped2):hover td {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-.ant-table-striped :deep(.table-striped2) td:first-child {
-  border-radius: 8px 0 0 8px !important;
-}
-
-.ant-table-striped :deep(.table-striped2) td:last-child {
-  border-radius: 0 8px 8px 0 !important;
 }
 </style>

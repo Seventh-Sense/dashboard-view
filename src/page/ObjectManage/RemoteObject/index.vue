@@ -195,7 +195,7 @@ const readDeviceData = async (row: DeviceTableData) => {
       function: 'read_property_multiple',
       parms: {
         address: row.address,
-        read_list: [row.device_id, jsonList['DEVICE']]
+        read_list: [row.device_id, jsonList['Device']]
       }
     })
 

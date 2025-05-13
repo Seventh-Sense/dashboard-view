@@ -104,7 +104,7 @@ import {
   deleteAllSubscribePoint
 } from '@/api/http'
 import { TypeEnum } from '../../utils/propertyMap'
-import { set } from 'lodash'
+import { cloneDeep, set } from 'lodash'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 
@@ -171,7 +171,8 @@ const initData = async () => {
     }))
 
     //console.log('props.deviceData', transformedData)
-    periodicReading(transformedData)
+    data.value = [...transformedData]
+    periodicReading()
   } catch (e) {
     console.error('Failed to fetch Points:', e)
   } finally {
@@ -179,23 +180,24 @@ const initData = async () => {
   }
 }
 
-const periodicReading = (dataSource: any) => {
+const periodicReading = () => {
   // 立即清除已有定时器
   clearInterval(interval)
 
   // 数据源为空时不创建新定时器
-  if (dataSource.length === 0) return
+  if (data.value.length === 0) return
 
-  periodicFunc(dataSource)
+  periodicFunc()
   //周期读取值
   interval = window.setInterval(async () => {
     if (!isShowModal.value && !isDisplay.value) {
-      periodicFunc(dataSource)
+      periodicFunc()
     }
   }, 3000)
 }
 
-const periodicFunc = async (dataSource: any) => {
+const periodicFunc = async () => {
+  let dataCopy = cloneDeep(data.value)
   try {
     const res: any = await readPointValue(props.deviceData.key)
 
@@ -208,7 +210,7 @@ const periodicFunc = async (dataSource: any) => {
     const pointsMap = new Map<string, any>(res.data.map((point: any) => [point.metric_id, point]))
 
     // 生成新的数据源（不可变更新）
-    const newData = dataSource.map((item: any) => {
+    const newData = dataCopy.map((item: any) => {
       const point = pointsMap.get(item.key)
 
       //console.log(pointsMap)
@@ -241,7 +243,7 @@ const periodicFunc = async (dataSource: any) => {
     })
 
     // 更新状态
-    data.value = newData
+    data.value = [...newData]
   } catch (e) {
     console.error('Failed to fetch Points:', e)
   }
@@ -267,7 +269,6 @@ const deleteRow = async (row: PointData) => {
       window['$message'].warning(t('device.msg_del_fail') + res.status)
       return
     }
-
     initData()
   } catch (e) {
     console.error('Failed to delete devices:', e)

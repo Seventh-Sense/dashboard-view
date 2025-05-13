@@ -1,5 +1,5 @@
 {
-  "DEVICE": [
+  "Device": [
     "objectIdentifier",
     "objectName",
     "objectType",
@@ -19,7 +19,7 @@
     "numberOfApduRetries",
     "databaseRevision"
   ],
-  "AI": [
+  "Analog Input": [
     "presentValue",
     "statusFlags",
     "eventState",
@@ -30,7 +30,7 @@
     "objectName",
     "description"
   ],
-  "AO": [
+  "Analog Output": [
     "presentValue",
     "statusFlags",
     "eventState",
@@ -43,7 +43,7 @@
     "objectName",
     "description"
   ],
-  "AV": [
+  "Analog Value": [
     "presentValue",
     "statusFlags",
     "eventState",
@@ -56,7 +56,7 @@
     "objectName",
     "description"
   ],
-  "BI": [
+  "Binary Input": [
     "presentValue",
     "statusFlags",
     "eventState",
@@ -69,7 +69,7 @@
     "inactiveText",
     "activeText"
   ],
-  "BO": [
+  "Binary Output": [
     "presentValue",
     "statusFlags",
     "eventState",
@@ -84,7 +84,7 @@
     "inactiveText",
     "activeText"
   ],
-  "BV": [
+  "Binary Value": [
     "presentValue",
     "statusFlags",
     "eventState",
@@ -97,7 +97,7 @@
     "inactiveText",
     "activeText"
   ],
-  "MV": [
+  "Multi-state Value": [
     "alarmValues",
     "presentValue",
     "statusFlags",
@@ -112,7 +112,7 @@
     "priorityArray"
   ],
   "Calendar": ["presentValue", "objectType", "objectIdentifier", "objectName", "description"],
-  "TrendLog": [
+  "Trend Log": [
     "enable",
     "stopWhenFull",
     "bufferSize",
