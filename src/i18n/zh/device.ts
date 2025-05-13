@@ -36,10 +36,19 @@ export default {
   mode: '模式',
   project_name: '项目名称',
 
-
   //
   desc: '描述',
 
+  //msg
+  msg_mod_success: '修改成功！',
+  enable_mod_fail: 'Enable 设置失败！',
+  enable_mod_success: 'Enable 设置成功！',
+  device_no_data: '当前没有添加设备！',
+  msg_del_fail: '删除失败！',
+  msg_read_fail: '读取数据失败！',
+  msg_search_fail: '当前没有可搜索设备！',
+  msg_add_device_fail: '添加设备失败！',
+  msg_add_device_success: '添加设备成功！',
 
   //bacnet
   point_list: '设备点位列表',
@@ -49,8 +58,39 @@ export default {
   address: '地址',
   enabled: '使能',
   add_device: '新增设备',
+  add_point: '新增对象',
   import_devices: '导入',
   export_devices: '导出',
   refresh: '刷新',
-  
+
+  vendor: '厂商',
+  id: '标识',
+  event_state: '事件状态',
+  out_of_service: '脱机',
+  present_value: '当前值',
+  status_flags: '状态标志',
+  priority_array: '优先级数组',
+  relinquish_default: '放弃默认',
+  current_command_priority: '当前命令优先级',
+  polarity: '极性',
+  alarm_values: '报警值',
+  number_of_states: '状态数',
+  state_text: '状态文本',
+  priority: '优先级',
+  inactive_text: '不活跃文本',
+  active_text: '活跃文本',
+  apdu_segment_timeout: 'APDU段超时',
+  apdu_timeout: 'APDU超时',
+  application_software_version: '应用软件版本',
+  database_revision: '数据库版本',
+  firmware_revision: '固件版本',
+  max_apdu_length_accepted: '允许的最大APDU长度',
+  model_name: '模型名称',
+  number_of_apdu_retries: 'APDU重试次数',
+  protocol_revision: '协议修订',
+  protocol_version: '协议版本',
+  segmentation_supported: '分割支持',
+  system_status: '系统状态',
+  vendor_identifier: '厂商ID',
+  vendor_name: '厂商名称',
 }

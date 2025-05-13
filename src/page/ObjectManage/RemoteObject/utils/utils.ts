@@ -1,12 +1,14 @@
-export interface deviceDataType {
-  id: string
-  name: string
-  type: string
-  polling?: string
-  address?: string
-  status?: string
-  enabled?: string
-  property?: null | any
+export interface DeviceTableData {
+  key: string
+  device_id: string
+  device_name?: string
+  device_type: string
+  polling: number
+  address: string
+  status: string
+  enabled: boolean
+  properties: any
+  tags?: any
 }
 
 export interface tagDataType {
@@ -18,10 +20,24 @@ export interface tagDataType {
   value: string
 }
 
+export interface PointData {
+  key?: string
+  metric_id: string
+  metric_type: number
+  metric_name: string
+  unit: string
+  value: any
+  description: string
+  properties: any
+  tags: string
+  device_id: string
+}
+
 export interface DataType {
   id: string
   name: string
   type: string
+  polling: number
   enabled: boolean
   property: null | any
 }
@@ -48,6 +64,29 @@ export interface BACnetType {
   broadcast: string
   adpuTimeout: number
 }
+
+export const DEVICE_TYPE_MAP: { [key: number]: string } = {
+  0: 'AI',
+  1: 'AO',
+  2: 'AV',
+  3: 'BI',
+  4: 'BO',
+  5: 'BV',
+  6: 'Calendar',
+  8: 'Device',
+  15: 'Notification',
+  17: 'Schedule',
+  19: 'MV',
+  20: 'TrendLog',
+  56: 'NetworkPort'
+}
+
+export const PRIMARY_ORDER = [
+  "object-name",
+  "object-type",
+  "object-identifier",
+  "description",
+] as const;
 
 export function isModbusRTU(x: any): x is ModbusRTUType {
   return (
@@ -155,3 +194,58 @@ export const makeUpOptions = (data: []) => {
     value: v
   }))
 }
+
+export const pollOptions = [
+  {
+    label: '200 ms',
+    value: 0.2
+  },
+  {
+    label: '350 ms',
+    value: 0.35
+  },
+  {
+    label: '500 ms',
+    value: 0.5
+  },
+  {
+    label: '700 ms',
+    value: 0.7
+  },
+  {
+    label: '1 sec',
+    value: 1
+  },
+  {
+    label: '1.5 sec',
+    value: 1.5
+  },
+  {
+    label: '2 sec',
+    value: 2
+  },
+  {
+    label: '3 sec',
+    value: 3
+  },
+  {
+    label: '4 sec',
+    value: 4
+  },
+  {
+    label: '5 sec',
+    value: 5
+  },
+  {
+    label: '10 sec',
+    value: 10
+  },
+  {
+    label: '30 sec',
+    value: 30
+  },
+  {
+    label: '1 min',
+    value: 60
+  }
+]

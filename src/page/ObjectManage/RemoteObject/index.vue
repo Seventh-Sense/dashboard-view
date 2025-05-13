@@ -21,6 +21,7 @@
         <a-table
           class="ant-table-striped"
           size="middle"
+          :loading="loading"
           :columns="columns"
           :data-source="data"
           :scroll="{ y: height - 44 }"
@@ -53,44 +54,60 @@
                 @click="deleteRow(record)"
               />
             </template>
+            <template v-else-if="column.dataIndex === 'enabled'">
+              <a-switch v-model:checked="record.enabled" @click="onChange(record)" />
+            </template>
           </template>
         </a-table>
       </div>
       <DeviceSetModal v-model:isShowModal="isShowModal" :isEdit="isEdit" :deviceData="deviceData" />
+      <PropertyDisplayModal
+        v-if="isDisplay"
+        v-model:isShowModal="isDisplay"
+        :displayData="displayData"
+        :deviceData="deviceData"
+      />
     </div>
     <div v-else class="project-card">
-      <ObjectList @goback="goback" />
+      <ObjectList :deviceData="deviceData" @goback="goback" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { NButton } from 'naive-ui'
-import { deviceDataType } from './utils/utils'
+import { DeviceTableData } from './utils/utils'
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
+import { PropertyDisplayModal } from './modal/PropertyDisplayModal'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { renderImage, routerTurnByName } from '@/utils'
 import { PageEnum } from '@/enums/pageEnum'
+import { setDeviceEnable, getDeviceList, deleteDevice, readIotPoints } from '@/api/http'
+import jsonList from '@/assets/data/Property.json'
+import { deviceTrans } from './utils/propertyMap'
 
 const t = window['$t']
 
 const isToggle = ref(false)
 const isShowModal = ref(false)
+const isDisplay = ref(false)
 
 const isEdit = ref(false)
 
 const deviceData = ref({})
+const displayData = ref({})
 
-const data = ref<deviceDataType[]>([])
+const data = ref<DeviceTableData[]>([])
+const loading = ref(false)
 
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72)
 
 const columns = [
   { title: '', dataIndex: 'link', width: 50 },
-  { title: () => t('device.name'), dataIndex: 'name' },
-  { title: () => t('device.type'), dataIndex: 'type' },
+  { title: () => t('device.name'), dataIndex: 'device_name' },
+  { title: () => t('device.type'), dataIndex: 'device_type' },
   { title: () => t('device.polling'), dataIndex: 'polling' },
   { title: () => t('device.address'), dataIndex: 'address' },
   { title: () => t('device.status'), dataIndex: 'status' },
@@ -99,34 +116,59 @@ const columns = [
 ]
 
 onMounted(() => {
-  console.log(height.value)
+  //console.log(height.value)
   initData()
 })
-/*
-{
-    "name": "Modbus1",
-    "renamed": false,
-    "id": 1,
-    "connect_mode": "Serial Port",
-    "serial_port": "COM7",
-    "baudrate": 115200,
-    "data_bit": 8,
-    "parity": "None",
-    "stop_bit": 1,
-    "mode": "RTU"
+
+const initData = async () => {
+  loading.value = true
+  try {
+    const res: any = await getDeviceList()
+    //console.log('API Response:', res)
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+
+    if (res.data.length === 0) {
+      console.warn('No devices found in the response data')
+      window['$message'].warning(t('device.device_no_data'))
+      return
+    }
+
+    data.value = res.data.map((item: any, index: number) => ({
+      key: item.id, // 保持 number 类型
+      device_id: item.uid || '',
+      device_name: item.name || '',
+      device_type: item.protocol || '',
+      polling: 0, // 确保数字类型
+      address: item.address || '',
+      status: item.status || '',
+      enabled: item.enabled, // 确保数字类型
+      properties: item.property || {},
+      tags: item.tags || []
+    }))
+  } catch (e) {
+    console.error('Failed to fetch devices:', e)
+  } finally {
+    loading.value = false
+  }
 }
-*/
-const initData = () => {
-  for (let index = 0; index < 100; index++) {
-    data.value.push({
-      id: index.toString(),
-      name: `Device ${index + 1}`,
-      type: 'ModbusRTU',
-      polling: '1s',
-      address: '192.168.1.1',
-      status: 'Connected',
-      enabled: 'true'
-    })
+
+const onChange = async (record: DeviceTableData) => {
+  //console.log(record.key, record.enabled)
+  try {
+    const res: any = await setDeviceEnable(record.key, record.enabled)
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(t('device.enable_mod_fail'))
+      return
+    }
+    window['$message'].success(t('device.enable_mod_success'))
+  } catch (e) {
+    console.error('onChange:', e)
   }
 }
 
@@ -141,17 +183,58 @@ const onAdd = () => {
   isShowModal.value = true
 }
 
-const onEdit = (row: any) => {
+const onEdit = (row: DeviceTableData) => {
   deviceData.value = row
-  isEdit.value = true
-  isShowModal.value = true
+  //读取设备属性
+  readDeviceData(row)
 }
 
-const deleteRow = (row: any) => {
-  data.value = data.value.filter((item: any) => item.id !== row.id)
+const readDeviceData = async (row: DeviceTableData) => {
+  try {
+    const res: any = await readIotPoints(row.key, {
+      function: 'read_property_multiple',
+      parms: {
+        address: row.address,
+        read_list: [row.device_id, jsonList['DEVICE']]
+      }
+    })
+
+    if (res.status !== 'OK' || res.data === null || res.data.length === 0) {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(t('device.msg_read_fail') + res.status)
+      return
+    }
+
+    //格式转换
+    displayData.value = {
+      properties: deviceTrans(res.data)
+    }
+    //console.log(displayData.value)
+  } catch (e) {
+    console.error('Failed to fetch Points:', e)
+  } finally {
+    loading.value = false
+    isDisplay.value = true
+  }
 }
 
-const onEnter = (row: any) => {
+const deleteRow = async (row: DeviceTableData) => {
+  try {
+    const res: any = await deleteDevice(row.key)
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(t('device.msg_del_fail') + res.status)
+      return
+    }
+
+    data.value = data.value.filter((item: DeviceTableData) => item.key !== row.key)
+  } catch (e) {
+    console.error('Failed to delete devices:', e)
+  }
+}
+
+const onEnter = (row: DeviceTableData) => {
   deviceData.value = row
   isToggle.value = true
 }
@@ -175,6 +258,9 @@ const options: any[] = [
   }
 ]
 const handleSelect = () => {}
+
+provide('deviceList', data)
+provide('refreshFunc', initData)
 </script>
 
 <style lang="scss" scoped>
@@ -249,7 +335,9 @@ const handleSelect = () => {}
   height: 44px !important;
   padding: 0 8px !important;
 }
-
+:deep(.ant-table-placeholder :hover) {
+  background-color: transparent !important;
+}
 .ant-table-striped :deep(.table-striped1) td {
   background-color: transparent !important;
 }

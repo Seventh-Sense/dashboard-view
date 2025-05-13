@@ -39,17 +39,58 @@ export default {
   //
   desc: 'Description',
 
+  //msg
+  msg_mod_success: 'The modification was successful!',
+  enable_mod_fail: 'Enable set failed!',
+  enable_mod_success: 'Enable set success!',
+  device_no_data: 'No device has been added currently!',
+  msg_del_fail: 'Deletion failed!',
+  msg_read_fail: 'Read Data failed!',
+  msg_search_fail: 'No device was found!',
+  msg_add_device_fail: 'Device addition failed!',
+  msg_add_device_success: 'Device added successfully!',
+
   //bacnet
   point_list: 'Points List',
-
 
   type: 'Type',
   polling: 'Polling',
   address: 'Address',
   enabled: 'Enabled',
   add_device: 'New Device',
+  add_point: 'New Object',
   import_devices: 'Import',
   export_devices: 'Export',
   refresh: 'Refresh',
-}
 
+  vendor: 'Vendor',
+  id: 'ID',
+  event_state: 'Event State',
+  out_of_service: 'Out of Service',
+  present_value: 'Present Value',
+  status_flags: 'Status Flags',
+  priority_array: 'Priority Array',
+  relinquish_default: 'Relinquish Default',
+  current_command_priority: 'Current Command Priority',
+  polarity: 'Polarity',
+  alarm_values: 'Alarm Values',
+  number_of_states: 'Number Of States',
+  state_text: 'State Text',
+  priority: 'Priority',
+  inactive_text: 'Inactive Text',
+  active_text: 'Active Text',
+  apdu_segment_timeout: 'APDU Segment Timeout',
+  apdu_timeout: 'APDU Timeout',
+  application_software_version: 'Application Software Version',
+  database_revision: 'Database Revision',
+  firmware_revision: 'Firmware Revision',
+  max_apdu_length_accepted: 'Max APDU Length Accepted',
+  model_name: 'Model Name',
+  number_of_apdu_retries: 'Number Of APDU Retries',
+  protocol_revision: 'Protocol Revision',
+  protocol_version: 'Protocol Version',
+  segmentation_supported: 'Segmentation Supported',
+  system_status: 'System Status',
+  vendor_identifier: 'Vendor ID',
+  vendor_name: 'Vendor Name'
+}

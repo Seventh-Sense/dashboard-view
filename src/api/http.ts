@@ -11,6 +11,7 @@ import type {
   RequestGlobalConfigType,
   RequestConfigType
 } from '@/store/modules/chartEditStore/chartEditStore.d'
+import axiosTwo from './axiosTwo'
 
 export const get = (url: string, params?: object) => {
   return axiosInstance({
@@ -20,8 +21,27 @@ export const get = (url: string, params?: object) => {
   })
 }
 
+export const get2 = (url: string, params?: object) => {
+  return axiosTwo({
+    url: url,
+    method: RequestHttpEnum.GET,
+    params: params
+  })
+}
+
 export const post = (url: string, data?: object | string, headersType?: string) => {
   return axiosInstance({
+    url: url,
+    method: RequestHttpEnum.POST,
+    data: data,
+    headers: {
+      'Content-Type': headersType || ContentTypeEnum.JSON
+    }
+  })
+}
+
+export const post2 = (url: string, data?: object | string, headersType?: string) => {
+  return axiosTwo({
     url: url,
     method: RequestHttpEnum.POST,
     data: data,
@@ -42,6 +62,17 @@ export const patch = (url: string, data?: object, headersType?: string) => {
   })
 }
 
+export const patch2 = (url: string, data?: object, headersType?: string) => {
+  return axiosTwo({
+    url: url,
+    method: RequestHttpEnum.PATCH,
+    data: data,
+    headers: {
+      'Content-Type': headersType || ContentTypeEnum.JSON
+    }
+  })
+}
+
 export const put = (url: string, data?: object, headersType?: ContentTypeEnum) => {
   return axiosInstance({
     url: url,
@@ -53,8 +84,27 @@ export const put = (url: string, data?: object, headersType?: ContentTypeEnum) =
   })
 }
 
+export const put2 = (url: string, data?: object, headersType?: ContentTypeEnum) => {
+  return axiosTwo({
+    url: url,
+    method: RequestHttpEnum.PUT,
+    data: data,
+    headers: {
+      'Content-Type': headersType || ContentTypeEnum.JSON
+    }
+  })
+}
+
 export const del = (url: string, params?: object) => {
   return axiosInstance({
+    url: url,
+    method: RequestHttpEnum.DELETE,
+    params
+  })
+}
+
+export const del2 = (url: string, params?: object) => {
+  return axiosTwo({
     url: url,
     method: RequestHttpEnum.DELETE,
     params
@@ -239,7 +289,7 @@ export const onLogin = async (user: any) => {
 
   try {
     const response = await post(`/login`, data, ContentTypeEnum.FORM_URLENCODED)
-    
+
     return response
   } catch (error) {
     throw error
@@ -249,7 +299,7 @@ export const onLogin = async (user: any) => {
 export const readDemoData = async () => {
   try {
     const response = await get(`/items`)
-    
+
     return response
   } catch (error) {
     throw error
@@ -259,7 +309,7 @@ export const readDemoData = async () => {
 export const readDeivceList = async () => {
   try {
     const response = await get(`/allpoints/`)
-    
+
     return response
   } catch (error) {
     throw error
@@ -269,8 +319,7 @@ export const readDeivceList = async () => {
 export const readDeivceData = async () => {
   try {
     const response = await get(`/points/?offset=0&limit=100`)
-    
-    
+
     return response
   } catch (error) {
     throw error
@@ -281,7 +330,7 @@ export const readDeivceData = async () => {
 export const createModbusConfig = async (data: any) => {
   try {
     const response = await post(`/modbus/`, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -291,7 +340,7 @@ export const createModbusConfig = async (data: any) => {
 export const readModbusConfig = async () => {
   try {
     const response = await get(`/modbus/?offset=0&limit=100`)
-    
+
     return response
   } catch (error) {
     throw error
@@ -301,7 +350,7 @@ export const readModbusConfig = async () => {
 export const writeModbusConfig = async (id: any, data: any) => {
   try {
     const response = await patch(`/modbus/` + id, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -311,7 +360,7 @@ export const writeModbusConfig = async (id: any, data: any) => {
 export const delModbusConfig = async (id: any) => {
   try {
     const response = await del(`/modbus/` + id)
-    
+
     return response
   } catch (error) {
     throw error
@@ -321,7 +370,7 @@ export const delModbusConfig = async (id: any) => {
 export const readComs = async () => {
   try {
     const response = await get(`/coms`)
-    
+
     return response
   } catch (error) {
     throw error
@@ -331,7 +380,7 @@ export const readComs = async () => {
 export const readPoints = async () => {
   try {
     const response = await get(`/point/?offset=0&limit=100`)
-    
+
     return response
   } catch (error) {
     throw error
@@ -341,7 +390,7 @@ export const readPoints = async () => {
 export const readPointById = async (id: any) => {
   try {
     const response = await get(`/point/` + id)
-    
+
     return response
   } catch (error) {
     throw error
@@ -351,7 +400,7 @@ export const readPointById = async (id: any) => {
 export const writePoint = async (data: any) => {
   try {
     const response = await post(`/point/`, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -361,7 +410,7 @@ export const writePoint = async (data: any) => {
 export const updatePoint = async (id: any, data: any) => {
   try {
     const response = await patch(`/point/` + id, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -371,7 +420,7 @@ export const updatePoint = async (id: any, data: any) => {
 export const deletePoint = async (id: any) => {
   try {
     const response = await del(`/point/` + id)
-    
+
     return response
   } catch (error) {
     throw error
@@ -382,7 +431,7 @@ export const deletePoint = async (id: any) => {
 export const readProjectList = async () => {
   try {
     const response = await get(`/project/?offset=0&limit=100`)
-    
+
     return response
   } catch (error) {
     throw error
@@ -392,7 +441,7 @@ export const readProjectList = async () => {
 export const createProject = async (data: any) => {
   try {
     const response = await post(`/project/`, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -402,7 +451,7 @@ export const createProject = async (data: any) => {
 export const readProject = async (id: any) => {
   try {
     const response = await get(`/project/` + id)
-    
+
     return response
   } catch (error) {
     throw error
@@ -412,7 +461,7 @@ export const readProject = async (id: any) => {
 export const updateProject = async (id: any, data: any) => {
   try {
     const response = await patch(`/project/` + id, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -422,7 +471,7 @@ export const updateProject = async (id: any, data: any) => {
 export const deleteProject = async (id: any) => {
   try {
     const response = await del(`/project/` + id)
-    
+
     return response
   } catch (error) {
     throw error
@@ -432,19 +481,18 @@ export const deleteProject = async (id: any) => {
 export const getVersion = async () => {
   try {
     const response = await get(`/version`)
-    
+
     return response
   } catch (error) {
     throw error
   }
 }
 
-
 //展会相关接口
 export const sendParams = async (data: any) => {
   try {
     const response = await post(`/device/request`, data)
-    
+
     return response
   } catch (error) {
     throw error
@@ -454,7 +502,109 @@ export const sendParams = async (data: any) => {
 export const readChartData = async (data: any) => {
   try {
     const response = await post(`/points`, data)
-    
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+//device manage
+export const getDeviceList = async () => {
+  try {
+    const response = await get2(`/devices`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const discoveryDevices = async () => {
+  try {
+    const response = await get2(`/bacnet/discovery`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const setDeviceEnable = async (deviceId: string, data: any) => {
+  try {
+    const response = await post2(`/enable?device_id=${deviceId}&enable=${data}`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deleteDevice = async (deviceId: any) => {
+  try {
+    const response = await del2(`/device/` + deviceId)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const addDevice = async (data: any) => {
+  try {
+    const response = await post2('/device', data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readSubscribePoints = async (deviceId: any) => {
+  try {
+    const response = await get2(`/metrics/` + deviceId)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readPointValue = async (deviceId: any) => {
+  try {
+    const response = await get2(`/points/latest?device_id=${deviceId}`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readIotPoints = async (deviceId: any, data: any) => {
+  try {
+    const response = await post2(`/request?device_id=${deviceId}`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const addSubscribePoint = async (data: any) => {
+  try {
+    const response = await post2(`/metrics`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+
+export const deleteSubscribePoint = async (deviceId: any) => {
+  try {
+    const response = await del2(`/metric/` + deviceId)
+
     return response
   } catch (error) {
     throw error

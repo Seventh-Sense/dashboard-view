@@ -18,11 +18,11 @@ export const menuOptionsInit = (selectedKey: any) => {
   const t = window['$t']
 
   return reactive([
-    // {
-    //   label: () => 'Bacnet',
-    //   key: PageEnum.BASE_REMOTE_MAN_NAME,
-    //   icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
-    // },
+    {
+      label: () => 'Bacnet',
+      key: PageEnum.BASE_REMOTE_MAN_NAME,
+      icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
+    },
     // {
     //   label: () =>
     //     h(

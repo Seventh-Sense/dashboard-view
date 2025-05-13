@@ -1,0 +1,130 @@
+{
+  "DEVICE": [
+    "objectIdentifier",
+    "objectName",
+    "objectType",
+    "systemStatus",
+    "vendorName",
+    "vendorIdentifier",
+    "modelName",
+    "firmwareRevision",
+    "applicationSoftwareVersion",
+    "description",
+    "protocolVersion",
+    "protocolRevision",
+    "maxApduLengthAccepted",
+    "segmentationSupported",
+    "apduSegmentTimeout",
+    "apduTimeout",
+    "numberOfApduRetries",
+    "databaseRevision"
+  ],
+  "AI": [
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "units",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description"
+  ],
+  "AO": [
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "units",
+    "priorityArray",
+    "relinquishDefault",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description"
+  ],
+  "AV": [
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "units",
+    "currentCommandPriority",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description"
+    
+  ],
+  "BI": [
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "polarity",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description",
+    "inactiveText",
+    "activeText"
+  ],
+  "BO": [
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "polarity",
+    "priorityArray",
+    "relinquishDefault",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description",
+    
+    "inactiveText",
+    "activeText"
+  ],
+  "BV": [
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description",
+    
+    "inactiveText",
+    "activeText"
+  ],
+  "MV": [
+    "alarmValues",
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "numberOfStates",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description",
+    "stateText"
+    
+  ],
+  "Calendar": ["presentValue", "objectType", "objectIdentifier", "objectName", "description"],
+  "TrendLog": [
+    "enable",
+    "stopWhenFull",
+    "bufferSize",
+    "recordCount",
+    "totalRecordCount",
+    "loggingType",
+    "statusFlags",
+    "eventState",
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "description"
+  ]
+}

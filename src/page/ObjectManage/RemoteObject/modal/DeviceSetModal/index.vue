@@ -23,12 +23,24 @@
         </n-space>
       </template>
 
-      <div class="modal-porperty" style="margin-top: 7px">{{ $t('device.name') }}</div>
-      <n-input v-model:value="data.name" type="text" />
+      <div v-if="data.type !== 'BACnet'">
+        <div class="modal-porperty" style="margin-top: 7px">{{ $t('device.name') }}</div>
+        <n-input v-model:value="data.name" type="text" />
+      </div>
 
-      <div class="modal-porperty">{{ $t('device.type') }}</div>
-      <n-select v-model:value="data.type" placeholder="Select" :options="TypeOptions" />
-      <component :is="content" :data="data.property"></component>
+      <n-grid x-gap="12" :cols="4">
+        <n-gi span="2">
+          <div class="modal-porperty">{{ $t('device.type') }}</div>
+          <n-select v-model:value="data.type" placeholder="Select" :options="TypeOptions" />
+        </n-gi>
+        <n-gi span="1">
+          <div class="modal-porperty">{{ $t('device.polling') }}</div>
+          <n-select v-model:value="data.polling" placeholder="Select" :options="pollOptions" disabled/>
+        </n-gi>
+        
+      </n-grid>
+
+      <component :is="content" :data="data"></component>
       <template #footer>
         <n-space justify="end">
           <div class="modal-button-close" @click="onClose">{{ $t('global.r_cancel') }}</div>
@@ -40,14 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, shallowRef } from 'vue'
+import { ref, watch, shallowRef, inject } from 'vue'
 import {
   DataType,
   ModbusRTUData,
   BACnetData,
   TypeOptions,
-  isBACnet,
-  isModbusRTU,
+  pollOptions,
+  isModbusRTU
 } from '../../utils/utils'
 import { loadAsyncComponent } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
@@ -67,6 +79,7 @@ const props = defineProps({
   }
 })
 let emit = defineEmits(['update:isShowModal'])
+const refreshFunc: any = inject('refreshFunc')
 
 const content = shallowRef(null)
 
@@ -76,14 +89,16 @@ const ModbusRTU = loadAsyncComponent(() => import('../ModbusRTU/index.vue'))
 const data = ref<DataType>({
   id: '',
   name: '',
-  type: '',
+  type: 'BACnet',
+  polling: 3,
   enabled: true,
   property: null
 })
 
 const onSubmit = () => {
-  console.log('data', data.value)
+  //console.log('data', data.value)
   onClear()
+  refreshFunc()
   emit('update:isShowModal', false)
 }
 
@@ -95,40 +110,50 @@ const onClose = () => {
 //clear
 const onClear = () => {
   content.value = null
-  data.value = { id: '', name: '', type: '', enabled: true, property: null }
+  data.value = { id: '', name: '', type: 'BACnet', polling: 3, enabled: true, property: null }
+}
+
+const insertContent = (type: string) => {
+  if (type === 'BACnet') {
+    content.value = BACnet
+
+    data.value.property = {}
+  } else if (type === 'ModbusRTU') {
+    content.value = ModbusRTU
+
+    if (data.value.property === null || isModbusRTU(data.value.property)) {
+      data.value.property = ModbusRTUData
+    }
+  } else {
+    content.value = null
+    data.value.property = {}
+  }
 }
 
 watch(
   () => data.value.type,
   newValue => {
-    if (newValue === 'BACnet') {
-      content.value = BACnet
-
-      if (data.value.property === null || !isBACnet(data.value.property)) {
-        data.value.property = BACnetData
-      }
-    } else if (newValue === 'ModbusRTU') {
-      content.value = ModbusRTU
-
-      if (data.value.property === null || isModbusRTU(data.value.property)) {
-        data.value.property = ModbusRTUData
-      }
-    } else {
-      content.value = null
-    }
-  }
+    insertContent(newValue)
+  },
+  { immediate: true }
 )
 
 watch(
   () => props.isShowModal,
   newValue => {
-    if (newValue && props.isEdit) {
-      data.value = {
-        id: props.deviceData.id,
-        name: props.deviceData.name,
-        type: props.deviceData.type,
-        enabled: true,
-        property: null
+    if (newValue) {
+      if (props.isEdit) {
+        insertContent(props.deviceData.type)
+        data.value = {
+          id: props.deviceData.id,
+          name: props.deviceData.name,
+          type: props.deviceData.type,
+          polling: 3,
+          enabled: true,
+          property: null
+        }
+      } else {
+        insertContent('BACnet')
       }
     }
   }
@@ -137,7 +162,7 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
-  width: 555px;
+  width: 40vw;
   background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
