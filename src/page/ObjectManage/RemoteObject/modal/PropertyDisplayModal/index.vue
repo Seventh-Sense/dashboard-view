@@ -24,67 +24,136 @@
       </template>
       <div class="modal-content">
         <div v-for="([key, val], index) in sortedEntries" :key="key" class="modal-content-item">
-          <span class="modal-content-porperty">{{ PROPERTY_TYPE_MAP(key) }}</span>
-          <div v-if="key === 'object-type'" class="modal-content-value">
-            {{ DEVICE_TYPE_MAP[val] }}
+          <div v-if="key === 'priority-array'" class="modal-content-collapse">
+            <n-collapse>
+              <n-collapse-item :title="t('device.priority_array')" name="1">
+                <div v-for="(value, key) in val" :key="key" class="modal-content-collapse-item">
+                  <span>{{ key }}</span>
+                  <span>{{ value }}</span>
+                </div>
+              </n-collapse-item>
+            </n-collapse>
           </div>
-          <div v-else-if="key === 'object-identifier'" class="modal-content-value">
-            {{ objIDTrans(val) }}
-          </div>
-          <div v-else-if="key === 'description'" class="modal-content-editstyle">
-            <div v-if="!editStates[key]" class="modal-content-editvalue">
-              <span>{{ val }}</span>
-              <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
-                <EditIcon />
-              </n-icon>
+          <div v-else>
+            <span class="modal-content-porperty">{{ PROPERTY_TYPE_MAP(key) }}</span>
+            <div v-if="key === 'object-type'" class="modal-content-value">
+              {{ DEVICE_TYPE_MAP[val] }}
             </div>
-            <div v-else class="modal-content-editvalue">
-              <n-input v-model:value="tempValues[key]" type="text" :style="{ width: '600px' }"/>
-              <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
-                <CheckmarkIcon />
-              </n-icon>
-              <n-icon size="20" class="go-cursor-pointer" @click="() => cancelEdit(key)">
-                <CloseIcon />
-              </n-icon>
+            <div v-else-if="key === 'object-identifier'" class="modal-content-value">
+              {{ objIDTrans(val) }}
             </div>
-          </div>
-          <div v-else-if="key === 'units'" class="modal-content-value">
-            {{ unitsTrans(val) }}
-          </div>
-          <div v-else-if="key === 'present-value'" class="modal-content-editstyle">
-            <div v-if="!editStates[key]" class="modal-content-editvalue">
-              <span>{{ presentValueTrans(val, type, BinaryOption, MVOption) }}</span>
-              <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
-                <EditIcon />
-              </n-icon>
+            <div v-else-if="key === 'description'" class="modal-content-editstyle">
+              <div v-if="!editStates[key]" class="modal-content-editvalue">
+                <span>{{ val }}</span>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                  <EditIcon />
+                </n-icon>
+              </div>
+              <div v-else class="modal-content-editvalue">
+                <n-input v-model:value="tempValues[key]" type="text" :style="{ width: '600px' }" />
+                <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
+                  <CheckmarkIcon />
+                </n-icon>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => cancelEdit(key)">
+                  <CloseIcon />
+                </n-icon>
+              </div>
             </div>
-            <div v-else class="modal-content-editvalue">
-              <n-select
-                v-if="type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO"
-                v-model:value="tempValues[key]"
-                :options="BinaryOption"
-                :style="{ width: '600px' }"
-              />
-              <n-select
-                v-else-if="type === TypeEnum.MV"
-                v-model:value="tempValues[key]"
-                :options="MVOption"
-                :style="{ width: '600px' }"
-              />
-              <n-input-number v-else v-model:value="tempValues[key]" style="width: 600px" />
-              <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
-                <CheckmarkIcon />
-              </n-icon>
-              <n-icon size="20" class="go-cursor-pointer" @click="() => cancelEdit(key)">
-                <CloseIcon />
-              </n-icon>
+            <div v-else-if="key === 'units'" class="modal-content-value">
+              {{ unitsTrans(val) }}
             </div>
-          </div>
-          <div v-else-if="key === 'out-of-service'" class="modal-content-value">
-            {{ val === 0 ? 'False' : 'True' }}
-          </div>
-          <div v-else class="modal-content-value">
-            {{ val }}
+            <div v-else-if="key === 'present-value'" class="modal-content-editstyle">
+              <div v-if="!editStates[key]" class="modal-content-editvalue">
+                <span>{{ presentValueTrans(val, type, BinaryOption, MVOption) }}</span>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                  <EditIcon />
+                </n-icon>
+              </div>
+              <div v-else class="modal-content-editvalue">
+                <n-select
+                  v-if="type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO"
+                  v-model:value="tempValues[key]"
+                  :options="BinaryOption"
+                  :style="{ width: '300px' }"
+                />
+                <n-select
+                  v-else-if="type === TypeEnum.MV"
+                  v-model:value="tempValues[key]"
+                  :options="MVOption"
+                  :style="{ width: '300px' }"
+                />
+                <n-input-number v-else v-model:value="tempValues[key]" style="width: 300px" />
+                <n-select
+                  :placeholder="t('device.priority')"
+                  v-model:value="priority"
+                  :options="PriorityOption"
+                  :style="{ width: '300px' }"
+                  :disabled="!isPriority(type)"
+                />
+                <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
+                  <CheckmarkIcon />
+                </n-icon>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => cancelEdit(key)">
+                  <CloseIcon />
+                </n-icon>
+              </div>
+            </div>
+            <div v-else-if="key === 'out-of-service'" class="modal-content-editstyle">
+              <div v-if="!editStates[key]" class="modal-content-editvalue">
+                <span>{{ val === 0 ? 'False' : 'True' }}</span>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                  <EditIcon />
+                </n-icon>
+              </div>
+              <div v-else class="modal-content-editvalue">
+                <n-select
+                  v-model:value="tempValues[key]"
+                  :options="BooleanOption"
+                  :style="{ width: '600px' }"
+                />
+                <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
+                  <CheckmarkIcon />
+                </n-icon>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => cancelEdit(key)">
+                  <CloseIcon />
+                </n-icon>
+              </div>
+            </div>
+            <div v-else-if="key === 'status-flags'" class="modal-content-value">
+              {{ val.join('') }}
+            </div>
+            <div v-else-if="key === 'relinquish-default'" class="modal-content-editstyle">
+              <div v-if="!editStates[key]" class="modal-content-editvalue">
+                <span>{{ presentValueTrans(val, type, BinaryOption, MVOption) }}</span>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                  <EditIcon />
+                </n-icon>
+              </div>
+              <div v-else class="modal-content-editvalue">
+                <n-select
+                  v-if="type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO"
+                  v-model:value="tempValues[key]"
+                  :options="BinaryOption"
+                  :style="{ width: '600px' }"
+                />
+                <n-select
+                  v-else-if="type === TypeEnum.MV"
+                  v-model:value="tempValues[key]"
+                  :options="MVOption"
+                  :style="{ width: '600px' }"
+                />
+                <n-input-number v-else v-model:value="tempValues[key]" style="width: 600px" />
+                <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
+                  <CheckmarkIcon />
+                </n-icon>
+                <n-icon size="20" class="go-cursor-pointer" @click="() => cancelEdit(key)">
+                  <CloseIcon />
+                </n-icon>
+              </div>
+            </div>
+            <div v-else class="modal-content-value">
+              {{ val }}
+            </div>
           </div>
         </div>
       </div>
@@ -106,7 +175,10 @@ import {
   objIDTrans,
   unitsTrans,
   TypeEnum,
-  presentValueTrans
+  presentValueTrans,
+  PriorityOption,
+  isPriority,
+  BooleanOption
 } from '../../utils/propertyMap'
 import { DEVICE_TYPE_MAP } from '../../utils/utils'
 import { icon } from '@/plugins'
@@ -136,6 +208,8 @@ const t = window['$t']
 interface EditState {
   [key: string]: boolean
 }
+
+const priority = ref(null)
 
 const defaultPriority = ['object-name', 'object-type', 'object-identifier', 'description']
 
@@ -203,16 +277,21 @@ const enterEditMode = (key: string) => {
 
 // 保存修改
 const handleSave = async (key: string) => {
+  let load = {
+    function: 'write_property',
+    parms: {
+      address: props.deviceData.address,
+      objid: obj.value['object-identifier'].join(','),
+      prop: key,
+      value: tempValues[key],
+      ...(isPriority(type.value) &&
+        key === 'present-value' &&
+        priority.value !== null && { priority: priority.value })
+    }
+  }
+
   try {
-    const res: any = await readIotPoints(props.deviceData.key, {
-      function: 'write_property',
-      parms: {
-        address: props.deviceData.address,
-        objid: obj.value['object-identifier'].join(','),
-        prop: key,
-        value: tempValues[key]
-      }
-    })
+    const res: any = await readIotPoints(props.deviceData.key, load)
 
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
@@ -301,6 +380,22 @@ const onSubmit = () => {
       align-items: center;
       height: 34px;
     }
+
+    &-collapse {
+      display: flex;
+      align-items: center;
+      min-height: 32px;
+
+      &-item {
+        height: 32px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 32px;
+      }
+    }
   }
 
   &-button-close {
@@ -321,5 +416,9 @@ const onSubmit = () => {
     border: 0;
     border-radius: 2px;
   }
+}
+
+::v-deep(.n-collapse-item__header-main) {
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 </style>

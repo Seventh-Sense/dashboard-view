@@ -400,4 +400,29 @@ const onSubmit = async () => {
 ::v-deep(.n-input__input-el) {
   border-bottom: 1px solid #{$--color-dark-modal-title};
 }
+
+::v-deep(.n-data-table-table) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-thead) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-th) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-tr:hover) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-td) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-checkbox--disabled .check-icon) {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
 </style>

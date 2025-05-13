@@ -32,6 +32,7 @@
   ],
   "Analog Output": [
     "presentValue",
+    "relinquishDefault",
     "statusFlags",
     "eventState",
     "outOfService",
@@ -45,12 +46,12 @@
   ],
   "Analog Value": [
     "presentValue",
+    "relinquishDefault",
     "statusFlags",
     "eventState",
     "outOfService",
     "units",
     "priorityArray",
-    "currentCommandPriority",
     "objectType",
     "objectIdentifier",
     "objectName",
@@ -71,6 +72,7 @@
   ],
   "Binary Output": [
     "presentValue",
+    "relinquishDefault",
     "statusFlags",
     "eventState",
     "outOfService",
@@ -86,6 +88,7 @@
   ],
   "Binary Value": [
     "presentValue",
+    "relinquishDefault",
     "statusFlags",
     "eventState",
     "outOfService",
@@ -100,6 +103,7 @@
   "Multi-state Value": [
     "alarmValues",
     "presentValue",
+    "relinquishDefault",
     "statusFlags",
     "eventState",
     "outOfService",
