@@ -5,10 +5,15 @@
         <n-icon size="20" class="top-icon" @click="onBack">
           <ChevronBackOutlineIcon />
         </n-icon>
-        <span class="top-title">{{ $t('device.object_list') }}</span>
+        <span class="top-title">{{ deviceData.device_name }}</span>
       </n-space>
-      <div class="content-button content-button-color1" @click="onDiscovery">
-        {{ $t('global.r_add') }}
+      <div style="display: flex; gap: 16px">
+        <div class="content-button content-button-color2" @click="onDeleteAll">
+          {{ $t('device.delete_all') }}
+        </div>
+        <div class="content-button content-button-color1" @click="onDiscovery">
+          {{ $t('global.r_add') }}
+        </div>
       </div>
     </n-space>
 
@@ -38,7 +43,7 @@
       </div> -->
       <a-table
         class="ant-table-striped"
-        size="large"
+        size="middle"
         :loading="loading"
         :columns="columns"
         :data-source="data"
@@ -86,13 +91,20 @@
 
 <script setup lang="ts">
 import { icon } from '@/plugins'
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, nextTick } from 'vue'
 import { DEVICE_TYPE_MAP, PointData, tagDataType } from '../../utils/utils'
 import { NButton, NIcon } from 'naive-ui'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { ObjectSetModal } from '../../modal/ObjectSetModal'
 import { PropertyDisplayModal } from '../../modal/PropertyDisplayModal'
-import { readSubscribePoints, readPointValue, deleteSubscribePoint } from '@/api/http'
+import {
+  readSubscribePoints,
+  readPointValue,
+  deleteSubscribePoint,
+  deleteAllSubscribePoint
+} from '@/api/http'
+import { TypeEnum } from '../../utils/propertyMap'
+import { set } from 'lodash'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 
@@ -108,7 +120,7 @@ const t = window['$t']
 const isShowModal = ref(false)
 const isDisplay = ref(false)
 
-const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72 - 90)
+const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 90)
 
 const selectDevice = ref('')
 const filterString = ref('')
@@ -205,12 +217,12 @@ const periodicFunc = async (dataSource: any) => {
       if (point) {
         let type = DEVICE_TYPE_MAP[item.metric_type]
 
-        if (type === 'BI' || type === 'BV' || type === 'BO') {
+        if (type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO) {
           value =
             point.value === 'inactive'
               ? point.property['inactive-text']
               : point.property['active-text']
-        } else if (type === 'MV') {
+        } else if (type === TypeEnum.MV) {
           let array = point.property['state-text']
           value = array[point.value - 1]
         } else {
@@ -257,6 +269,24 @@ const deleteRow = async (row: PointData) => {
     }
 
     initData()
+  } catch (e) {
+    console.error('Failed to delete devices:', e)
+  }
+}
+
+const onDeleteAll = async () => {
+  try {
+    const res: any = await deleteAllSubscribePoint(props.deviceData.key)
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(t('device.msg_del_fail') + res.status)
+      return
+    }
+
+    clearInterval(interval)
+    data.value = []
+    await nextTick()
   } catch (e) {
     console.error('Failed to delete devices:', e)
   }
@@ -319,7 +349,7 @@ provide('refreshObjTable', initData)
   }
 
   &-button {
-    width: 64px;
+    width: 72px;
     height: 32px;
     border-radius: 2px;
     font-size: 14px;

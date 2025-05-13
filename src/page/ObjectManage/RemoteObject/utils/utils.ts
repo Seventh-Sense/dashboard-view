@@ -1,3 +1,5 @@
+import { TypeEnum } from "./propertyMap"
+
 export interface DeviceTableData {
   key: string
   device_id: string
@@ -66,19 +68,19 @@ export interface BACnetType {
 }
 
 export const DEVICE_TYPE_MAP: { [key: number]: string } = {
-  0: 'AI',
-  1: 'AO',
-  2: 'AV',
-  3: 'BI',
-  4: 'BO',
-  5: 'BV',
-  6: 'Calendar',
-  8: 'Device',
-  15: 'Notification',
-  17: 'Schedule',
-  19: 'MV',
-  20: 'TrendLog',
-  56: 'NetworkPort'
+  0: TypeEnum.AI,
+  1: TypeEnum.AO,
+  2: TypeEnum.AV,
+  3: TypeEnum.BI,
+  4: TypeEnum.BO,
+  5: TypeEnum.BV,
+  6: TypeEnum.Calendar,
+  8: TypeEnum.Device,
+  15: TypeEnum.Notification,
+  17: TypeEnum.Schedule,
+  19: TypeEnum.MV,
+  20: TypeEnum.TrendLog,
+  56: TypeEnum.NetworkPort,
 }
 
 export const PRIMARY_ORDER = [

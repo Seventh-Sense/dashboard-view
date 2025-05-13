@@ -92,5 +92,6 @@ export default {
   segmentation_supported: 'Segmentation Supported',
   system_status: 'System Status',
   vendor_identifier: 'Vendor ID',
-  vendor_name: 'Vendor Name'
+  vendor_name: 'Vendor Name',
+  delete_all: 'Delete ALL',
 }

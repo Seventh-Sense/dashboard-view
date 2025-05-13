@@ -31,7 +31,7 @@
           <div v-else-if="key === 'object-identifier'" class="modal-content-value">
             {{ objIDTrans(val) }}
           </div>
-          <div v-else-if="key === 'description'">
+          <div v-else-if="key === 'description'" class="modal-content-editstyle">
             <div v-if="!editStates[key]" class="modal-content-editvalue">
               <span>{{ val }}</span>
               <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
@@ -39,7 +39,7 @@
               </n-icon>
             </div>
             <div v-else class="modal-content-editvalue">
-              <n-input v-model:value="tempValues[key]" type="text" />
+              <n-input v-model:value="tempValues[key]" type="text" :style="{ width: '600px' }"/>
               <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
                 <CheckmarkIcon />
               </n-icon>
@@ -51,7 +51,7 @@
           <div v-else-if="key === 'units'" class="modal-content-value">
             {{ unitsTrans(val) }}
           </div>
-          <div v-else-if="key === 'present-value'">
+          <div v-else-if="key === 'present-value'" class="modal-content-editstyle">
             <div v-if="!editStates[key]" class="modal-content-editvalue">
               <span>{{ presentValueTrans(val, type, BinaryOption, MVOption) }}</span>
               <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
@@ -60,16 +60,18 @@
             </div>
             <div v-else class="modal-content-editvalue">
               <n-select
-                v-if="type === 'BI' || type === 'BV' || type === 'BO'"
+                v-if="type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO"
                 v-model:value="tempValues[key]"
                 :options="BinaryOption"
+                :style="{ width: '600px' }"
               />
               <n-select
-                v-else-if="type === 'MV'"
+                v-else-if="type === TypeEnum.MV"
                 v-model:value="tempValues[key]"
                 :options="MVOption"
+                :style="{ width: '600px' }"
               />
-              <n-input-number v-else v-model:value="tempValues[key]" style="width: 622px" />
+              <n-input-number v-else v-model:value="tempValues[key]" style="width: 600px" />
               <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
                 <CheckmarkIcon />
               </n-icon>
@@ -77,6 +79,9 @@
                 <CloseIcon />
               </n-icon>
             </div>
+          </div>
+          <div v-else-if="key === 'out-of-service'" class="modal-content-value">
+            {{ val === 0 ? 'False' : 'True' }}
           </div>
           <div v-else class="modal-content-value">
             {{ val }}
@@ -100,6 +105,7 @@ import {
   PROPERTY_TYPE_MAP,
   objIDTrans,
   unitsTrans,
+  TypeEnum,
   presentValueTrans
 } from '../../utils/propertyMap'
 import { DEVICE_TYPE_MAP } from '../../utils/utils'
@@ -158,7 +164,7 @@ const MVOption = ref<any>([])
 onMounted(() => {
   initializeStates()
   console.log('aaa', props.displayData)
-  if (type.value === 'BI' || type.value === 'BV' || type.value === 'BO') {
+  if (type.value === TypeEnum.BI || type.value === TypeEnum.BV || type.value === TypeEnum.BO) {
     BinaryOption.value = [
       {
         label: obj.value['inactive-text'],
@@ -169,7 +175,7 @@ onMounted(() => {
         value: 1
       }
     ]
-  } else if (type.value === 'MV') {
+  } else if (type.value === TypeEnum.MV) {
     let array = obj.value['state-text']
     array.forEach((item: any, index: number) => {
       MVOption.value.push({
@@ -240,7 +246,7 @@ const onClose = () => {
 const onSubmit = () => {
   //刷新数据
   //refreshObjTable()
-  
+
   emit('update:isShowModal', false)
 }
 </script>
@@ -265,18 +271,23 @@ const onSubmit = () => {
     margin-top: 16px;
     overflow-y: auto;
 
+    &-editstyle {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
     &-item {
-      margin-bottom: 13px;
+      margin-bottom: 16px;
       padding-right: 16px;
     }
 
     &-porperty {
       font-weight: 400;
-      font-size: 12px;
+      font-size: 14px;
       color: rgba(255, 255, 255, 0.6);
       line-height: 17px;
       text-align: left;
       font-style: normal;
+      margin-bottom: 4px;
     }
 
     &-value {

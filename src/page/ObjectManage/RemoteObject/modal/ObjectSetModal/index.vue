@@ -57,7 +57,9 @@
       <template #footer>
         <n-space justify="end">
           <div class="modal-button-close" @click="onClose">{{ $t('global.r_cancel') }}</div>
-          <n-button class="modal-button-ok" @click="onSubmit">{{ $t('global.r_ok') }}</n-button>
+          <n-button class="modal-button-ok" :loading="loadingButton" @click="onSubmit">
+            {{ $t('global.r_ok') }}
+          </n-button>
         </n-space>
       </template>
     </n-card>
@@ -103,9 +105,11 @@ const t = window['$t']
 const data = ref<DataType[]>([])
 const loading = ref(false)
 
+const loadingButton = ref(false)
+
 const columns = [
   { title: () => t('device.object_name'), dataIndex: 'name' },
-  { title: () => t('device.type'), dataIndex: 'type', align: 'center', width: 100 },
+  { title: () => t('device.type'), dataIndex: 'type', align: 'center', width: 200 },
   { title: () => t('device.id'), dataIndex: 'id', align: 'center', width: 100 }
 ]
 const selectedObjKeys = ref<string[]>([])
@@ -271,6 +275,8 @@ const onSubmit = async () => {
     return
   }
 
+  loadingButton.value = true
+  //console.log('selectedRowKeys', selectedRowKeys.value)
   //剔除已经选中过的点位
   const list = selectedRowKeys.value
     .map(key => {
@@ -308,6 +314,7 @@ const onSubmit = async () => {
   } catch (e) {
     console.warn('handleSubmit', e)
   } finally {
+    loadingButton.value = false
     emit('update:isShowModal', false)
   }
 }
@@ -354,7 +361,7 @@ const onSubmit = async () => {
   }
 
   &-button-close {
-    width: 64px;
+    width: 72px;
     height: 32px;
     display: flex;
     justify-content: center;
@@ -366,7 +373,7 @@ const onSubmit = async () => {
   }
 
   &-button-ok {
-    width: 64px;
+    width: 72px;
     height: 32px;
     border: 0;
     border-radius: 2px;

@@ -58,6 +58,22 @@ export const PROPERTY_TYPE_MAP = (key: string) => {
   return PROPERTY_MAP[key] ? PROPERTY_MAP[key] : key
 }
 
+export enum TypeEnum {
+  AI = 'Analog Input',
+  AO = 'Analog Output',
+  AV = 'Analog Value',
+  BI = 'Binary Input',
+  BO = 'Binary Output',
+  BV = 'Binary Value',
+  MV = 'Multi-state Value',
+  Calendar = 'Calendar',
+  Device = 'Device',
+  Notification = 'Notification',
+  Schedule = 'Schedule',
+  TrendLog = 'Trend Log',
+  NetworkPort = 'Network Port'
+}
+
 enum ValueTypeEnum {
   NUMBER = 'number',
   STRING = 'string',
@@ -65,11 +81,11 @@ enum ValueTypeEnum {
 }
 
 export const judgeValueType = (type: string): ValueTypeEnum => {
-  if (type === 'AV' || type === 'AI' || type === 'AO') {
+  if (type === TypeEnum.AV || type === TypeEnum.AI || type === TypeEnum.AO) {
     return ValueTypeEnum.NUMBER
-  } else if (type === 'MV') {
+  } else if (type === TypeEnum.MV) {
     return ValueTypeEnum.STRING
-  } else if (type === 'BI' || type === 'BO' || type === 'BV') {
+  } else if (type === TypeEnum.BI || type === TypeEnum.BO || type === TypeEnum.BV) {
     return ValueTypeEnum.BOOLEAN
   }
   return ValueTypeEnum.STRING
@@ -106,9 +122,9 @@ export const presentValueTrans = (value: any, type: string, BinaryOption: any, M
 
   //console.log('presentValueTrans', value, type, BinaryOption, MVOption)
 
-  if (type === 'AI' || type === 'AV' || type === 'AO') {
+  if (type === TypeEnum.AI || type === TypeEnum.AV || type === TypeEnum.AO) {
     text = value
-  } else if (type === 'BI' || type === 'BV' || type === 'BO') {
+  } else if (type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO) {
     if (BinaryOption.length === 2) {
       BinaryOption.forEach((item: any) => {
         if (item.value === value) {
@@ -118,7 +134,7 @@ export const presentValueTrans = (value: any, type: string, BinaryOption: any, M
     } else {
       text = value
     }
-  } else if (type === 'MV') {
+  } else if (type === TypeEnum.MV) {
     if (MVOption.length > 0) {
       MVOption.forEach((item: any) => {
         if (item.value === value) {

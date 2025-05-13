@@ -601,9 +601,19 @@ export const addSubscribePoint = async (data: any) => {
 }
 
 
-export const deleteSubscribePoint = async (deviceId: any) => {
+export const deleteSubscribePoint = async (id: any) => {
   try {
-    const response = await del2(`/metric/` + deviceId)
+    const response = await del2(`/metric/` + id)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deleteAllSubscribePoint = async (id: any) => {
+  try {
+    const response = await del2(`/metrics/` + id)
 
     return response
   } catch (error) {
