@@ -1,21 +1,44 @@
 <template>
   <div class="content">
+    <div class="content-porperty">Slave ID</div>
+    <n-input-number v-model:value="data.property.slaveid" :min="1" :max="254" :disabled="isEdit" />
     <div class="content-porperty">{{ $t('device.connection') }}</div>
-    <n-select v-model:value="data.connectionOption" :options="connectionOptions" disabled/>
+    <n-select
+      v-model:value="data.property.connectionOption"
+      :options="connectionOptions"
+      disabled
+    />
     <div class="content-porperty">{{ $t('device.serial_settings') }}</div>
-    <n-select v-model:value="data.stop_bit" :options="stopbitOptions" />
+    <n-select v-model:value="data.property.port" :options="serialOptions" :disabled="isEdit" />
     <n-grid x-gap="24" :cols="2">
       <n-gi>
         <div class="content-porperty">{{ $t('device.baud') }}</div>
-        <n-select v-model:value="data.baudrate" :options="baudOptions" />
+        <n-select
+          v-model:value="data.property.baudrate"
+          :options="baudOptions"
+          :disabled="isEdit"
+        />
         <div class="content-porperty">{{ $t('device.stop_bits') }}</div>
-        <n-select v-model:value="data.stop_bit" :options="stopbitOptions" />
+        <n-select
+          v-model:value="data.property.stopbits"
+          :options="stopbitOptions"
+          :disabled="isEdit"
+        />
       </n-gi>
       <n-gi>
         <div class="content-porperty">{{ $t('device.data_bits') }}</div>
-        <n-select v-model:value="data.data_bit" placeholder="Select" :options="databitOptions" />
+        <n-select
+          v-model:value="data.property.bytesize"
+          placeholder="Select"
+          :options="databitOptions"
+          :disabled="isEdit"
+        />
         <div class="content-porperty">{{ $t('device.parity') }}</div>
-        <n-select v-model:value="data.parity" :options="parityOptions" />
+        <n-select
+          v-model:value="data.property.parity"
+          :options="parityOptions"
+          :disabled="isEdit"
+        />
       </n-gi>
     </n-grid>
   </div>
@@ -29,13 +52,53 @@ import {
   stopbitOptions,
   connectionOptions
 } from '../../utils/utils'
+import { watch, onMounted, ref } from 'vue'
+import { readSerialValue } from '@/api/http'
 
-defineProps({
+const t = window['$t']
+
+const props = defineProps({
+  isEdit: {
+    type: Boolean,
+    required: false
+  },
   data: {
     type: Object,
     required: true
   }
 })
+
+const serialOptions = ref([])
+
+onMounted(() => {
+  fetchSerialOptions()
+})
+
+const fetchSerialOptions = async () => {
+  try {
+    const res: any = await readSerialValue()
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+
+    serialOptions.value = res.data.map((v: any) => ({
+      label: v,
+      value: v
+    }))
+  } catch (error) {
+    console.error('Error fetching serial options:', error)
+  }
+}
+
+watch(
+  () => props.data,
+  newData => {
+    console.log('Data changed:', newData)
+  },
+  { deep: true, immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>

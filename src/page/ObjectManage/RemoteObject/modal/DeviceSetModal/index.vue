@@ -23,24 +23,33 @@
         </n-space>
       </template>
 
-      <div v-if="data.type !== 'BACnet'">
+      <div v-if="data.type !== DeviceTypeEnum.BACnet">
         <div class="modal-porperty" style="margin-top: 7px">{{ $t('device.name') }}</div>
-        <n-input v-model:value="data.name" type="text" />
+        <n-input v-model:value="data.name" type="text" :disabled="isEdit" />
       </div>
 
       <n-grid x-gap="12" :cols="4">
         <n-gi span="2">
           <div class="modal-porperty">{{ $t('device.type') }}</div>
-          <n-select v-model:value="data.type" placeholder="Select" :options="TypeOptions" />
+          <n-select
+            v-model:value="data.type"
+            placeholder="Select"
+            :options="TypeOptions"
+            :disabled="isEdit"
+          />
         </n-gi>
         <n-gi span="1">
           <div class="modal-porperty">{{ $t('device.polling') }}</div>
-          <n-select v-model:value="data.polling" placeholder="Select" :options="pollOptions" disabled/>
+          <n-select
+            v-model:value="data.polling"
+            placeholder="Select"
+            :options="pollOptions"
+            disabled
+          />
         </n-gi>
-        
       </n-grid>
 
-      <component :is="content" :data="data"></component>
+      <component :is="content" :isEdit="isEdit" :data="data"></component>
       <template #footer>
         <n-space justify="end">
           <div class="modal-button-close" @click="onClose">{{ $t('global.r_cancel') }}</div>
@@ -56,13 +65,14 @@ import { ref, watch, shallowRef, inject } from 'vue'
 import {
   DataType,
   ModbusRTUData,
-  BACnetData,
   TypeOptions,
   pollOptions,
-  isModbusRTU
+  isEmptyObject,
+  DeviceTypeEnum
 } from '../../utils/utils'
 import { loadAsyncComponent } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
+import { addDevice } from '@/api/http'
 
 const props = defineProps({
   isShowModal: {
@@ -88,18 +98,69 @@ const ModbusRTU = loadAsyncComponent(() => import('../ModbusRTU/index.vue'))
 
 const data = ref<DataType>({
   id: '',
-  name: '',
-  type: 'BACnet',
+  name: 'New Object',
+  type: DeviceTypeEnum.BACnet,
   polling: 3,
   enabled: true,
-  property: null
+  property: {}
 })
 
 const onSubmit = () => {
   //console.log('data', data.value)
+  if (data.value.type === DeviceTypeEnum.BACnet) {
+    handleBACnet()
+  } else if (data.value.type === DeviceTypeEnum.ModbusRTU) {
+    if (props.isEdit) {
+      //clear
+      handleBACnet()
+    } else {
+      handleModbusRtu(data.value)
+    }
+  }
+}
+
+const handleBACnet = () => {
   onClear()
   refreshFunc()
   emit('update:isShowModal', false)
+}
+
+const handleModbusRtu = async (load: DataType) => {
+  try {
+    const res: any = await addDevice({
+      uid: 'modbus' + ',' + load.property.slaveid,
+      name: load.name,
+      address: load.property.slaveid.toString(),
+      protocol: DeviceTypeEnum.ModbusRTU,
+      enabled: true,
+      status: '',
+      description: '',
+      property: {
+        slaveid: load.property.slaveid,
+        port: load.property.port,
+        baudrate: load.property.baudrate,
+        bytesize: load.property.bytesize,
+        stopbits: load.property.stopbits,
+        parity: load.property.parity,
+        connectionOption: load.property.connectionOption
+      },
+      tags: ''
+    })
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(res.status)
+      return
+    }
+
+    console.log('ModbusRtu info', res)
+  } catch (error) {
+    console.error('handle ModbusRtu:', error)
+  } finally {
+    onClear()
+    refreshFunc()
+    emit('update:isShowModal', false)
+  }
 }
 
 const onClose = () => {
@@ -111,18 +172,25 @@ const onClose = () => {
 //clear
 const onClear = () => {
   content.value = null
-  data.value = { id: '', name: '', type: 'BACnet', polling: 3, enabled: true, property: null }
+  data.value = {
+    id: '',
+    name: 'New Object',
+    type: DeviceTypeEnum.BACnet,
+    polling: 3,
+    enabled: true,
+    property: {}
+  }
 }
 
 const insertContent = (type: string) => {
-  if (type === 'BACnet') {
+  if (type === DeviceTypeEnum.BACnet) {
     content.value = BACnet
 
     data.value.property = {}
-  } else if (type === 'ModbusRTU') {
+  } else if (type === DeviceTypeEnum.ModbusRTU) {
     content.value = ModbusRTU
 
-    if (data.value.property === null || isModbusRTU(data.value.property)) {
+    if (isEmptyObject(data.value.property)) {
       data.value.property = ModbusRTUData
     }
   } else {
@@ -134,9 +202,9 @@ const insertContent = (type: string) => {
 watch(
   () => data.value.type,
   newValue => {
+    console.log('data.value.type', data.value.type)
     insertContent(newValue)
-  },
-  { immediate: true }
+  }
 )
 
 watch(
@@ -144,17 +212,18 @@ watch(
   newValue => {
     if (newValue) {
       if (props.isEdit) {
-        insertContent(props.deviceData.type)
+        insertContent(props.deviceData.device_type)
+
         data.value = {
-          id: props.deviceData.id,
-          name: props.deviceData.name,
-          type: props.deviceData.type,
+          id: '',
+          name: props.deviceData.device_name,
+          type: props.deviceData.device_type,
           polling: 3,
           enabled: true,
-          property: null
+          property: props.deviceData.properties
         }
       } else {
-        insertContent('BACnet')
+        insertContent(DeviceTypeEnum.BACnet)
       }
     }
   }
@@ -163,7 +232,7 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
-  width: 40vw;
+  width: 720px;
   background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;

@@ -71,7 +71,8 @@ export enum TypeEnum {
   Notification = 'Notification',
   Schedule = 'Schedule',
   TrendLog = 'Trend Log',
-  NetworkPort = 'Network Port'
+  NetworkPort = 'Network Port',
+  Accumulator = 'Accumulator'
 }
 
 enum ValueTypeEnum {

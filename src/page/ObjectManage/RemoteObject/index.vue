@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import { ref, onMounted, provide } from 'vue'
 import { NButton } from 'naive-ui'
-import { DeviceTableData } from './utils/utils'
+import { DeviceTableData, DeviceTypeEnum } from './utils/utils'
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
 import { PropertyDisplayModal } from './modal/PropertyDisplayModal'
@@ -185,8 +185,20 @@ const onAdd = () => {
 
 const onEdit = (row: DeviceTableData) => {
   deviceData.value = row
-  //读取设备属性
-  readDeviceData(row)
+
+  //console.log('onEdit', row)
+  switch (row.device_type) {
+    case DeviceTypeEnum.BACnet:
+      readDeviceData(row)
+      break
+    case DeviceTypeEnum.ModbusRTU:
+      deviceData.value = row
+      isEdit.value = true
+      isShowModal.value = true
+      break
+    default:
+      break
+  }
 }
 
 const readDeviceData = async (row: DeviceTableData) => {
@@ -199,9 +211,14 @@ const readDeviceData = async (row: DeviceTableData) => {
       }
     })
 
-    if (res.status !== 'OK' || res.data === null || res.data.length === 0) {
+    if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
-      window['$message'].warning(t('device.msg_read_fail') + res.status)
+      window['$message'].warning(t('device.msg_read_fail') + res.data)
+      return
+    }
+
+    if (res.data === null || res.data.length === 0) {
+      window['$message'].warning(t('device.msg_read_fail'))
       return
     }
 
@@ -209,12 +226,11 @@ const readDeviceData = async (row: DeviceTableData) => {
     displayData.value = {
       properties: deviceTrans(res.data)
     }
+
+    isDisplay.value = true
     //console.log(displayData.value)
   } catch (e) {
     console.error('Failed to fetch Points:', e)
-  } finally {
-    loading.value = false
-    isDisplay.value = true
   }
 }
 

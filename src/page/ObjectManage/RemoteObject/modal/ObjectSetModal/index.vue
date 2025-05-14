@@ -117,7 +117,6 @@ const filteredData = computed(() => {
 
   return data.value.filter(item => {
     return Object.values(item).some(value => {
-      console.log(value)
       return String(value).toLowerCase().includes(searchTerm)
     })
   })

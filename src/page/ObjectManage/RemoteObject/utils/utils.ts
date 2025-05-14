@@ -80,6 +80,7 @@ export const DEVICE_TYPE_MAP: { [key: number]: string } = {
   17: TypeEnum.Schedule,
   19: TypeEnum.MV,
   20: TypeEnum.TrendLog,
+  23: TypeEnum.Accumulator,
   56: TypeEnum.NetworkPort,
 }
 
@@ -125,31 +126,40 @@ export function isBACnet(x: any): x is BACnetType {
   )
 }
 
+export enum DeviceTypeEnum {
+  BACnet = 'bacnet',
+  ModbusRTU = 'ModbusRTU',
+}
+
 export const TypeOptions = [
   {
     label: 'BACnet',
-    value: 'BACnet'
+    value: DeviceTypeEnum.BACnet
   },
   {
     label: 'ModbusRTU',
-    value: 'ModbusRTU'
+    value: DeviceTypeEnum.ModbusRTU
   },
-  {
-    label: 'ModbusTCP',
-    value: 'ModbusTCP'
-  },
-  {
-    label: 'EthernetIP',
-    value: 'EthernetIP'
-  }
+  // {
+  //   label: 'ModbusTCP',
+  //   value: 'ModbusTCP'
+  // },
+  // {
+  //   label: 'EthernetIP',
+  //   value: 'EthernetIP'
+  // }
 ]
 
+
+
 export const ModbusRTUData = {
-  connectionOption: 'Serial Port',
-  baudrate: 115200,
-  data_bit: 8,
-  stop_bit: 1,
-  parity: 'None'
+  slaveid: 1,
+  connectionOption: 'SerialPort',
+  port: '',
+  baudrate: 9600,
+  bytesize: 8,
+  stopbits: 1,
+  parity: 'N'
 }
 
 export const BACnetData = {
@@ -159,7 +169,7 @@ export const BACnetData = {
   adpuTimeout: 6000
 }
 
-export const connectionOptions = ['Serial Port'].map(v => ({
+export const connectionOptions = ['SerialPort'].map(v => ({
   label: v,
   value: v
 }))
@@ -176,10 +186,20 @@ export const databitOptions = [7, 8].map(v => ({
   value: v
 }))
 
-export const parityOptions = ['None', 'Odd', 'Even'].map(v => ({
-  label: v,
-  value: v
-}))
+export const parityOptions = [
+  {
+    label: 'None',
+    value: 'N'
+  },
+  {
+    label: 'Odd',
+    value: 'O'
+  },
+  {
+    label: 'Even',
+    value: 'E'
+  }
+]
 
 export const stopbitOptions = [1, 2].map(v => ({
   label: v,

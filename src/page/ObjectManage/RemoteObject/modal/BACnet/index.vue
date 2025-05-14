@@ -34,9 +34,14 @@
 import { discoveryDevices, addDevice } from '@/api/http'
 import { ref, inject } from 'vue'
 import { icon } from '@/plugins'
+import { DeviceTypeEnum } from '../../utils/utils'
 
 const { DownloadOutlineIcon } = icon.ionicons5
 defineProps({
+  isEdit: {
+    type: Boolean,
+    required: false
+  },
   data: {
     type: Object,
     required: true
@@ -66,7 +71,7 @@ const columns = [
   { title: () => t('device.slave_id'), dataIndex: 'id' },
   { title: () => t('device.address'), dataIndex: 'address' },
   { title: () => t('device.vendor'), dataIndex: 'vendor_name' },
-  { title: '', dataIndex: 'actions', width: 120, align: 'center' }
+  { title: '', dataIndex: 'actions', width: 80, align: 'center' }
 ]
 
 const onDiscovery = async () => {
@@ -119,7 +124,7 @@ const onDownload = async (record: DataType) => {
       uid: record.id,
       name: record.object_name,
       address: record.address,
-      protocol: 'bacnet',
+      protocol: DeviceTypeEnum.BACnet,
       enabled: false,
       status: '',
       description: '',

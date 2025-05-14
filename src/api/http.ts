@@ -620,3 +620,13 @@ export const deleteAllSubscribePoint = async (id: any) => {
     throw error
   }
 }
+
+export const readSerialValue = async () => {
+  try {
+    const response = await get2(`/modbusrtu/ports`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
