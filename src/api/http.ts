@@ -630,3 +630,13 @@ export const readSerialValue = async () => {
     throw error
   }
 }
+
+export const createModbusPoint = async (data: any) => {
+  try {
+    const response = await post2(`/metric`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}

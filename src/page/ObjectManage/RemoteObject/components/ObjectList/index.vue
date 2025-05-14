@@ -41,38 +41,15 @@
           {{ $t('device.search') }}
         </div>
       </div> -->
-      <a-table
-        class="ant-table-striped"
-        size="middle"
-        :loading="loading"
+      <n-data-table
         :columns="columns"
-        :data-source="data"
-        :scroll="{ y: height - 44 }"
-        :pagination="false"
-        :row-class-name="(_record: any, index: any) => (index % 2 === 1 ? 'table-striped1' : 'table-striped2')"
-      >
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'metric_type'">
-            {{ DEVICE_TYPE_MAP[record.metric_type] }}
-          </template>
-          <template v-else-if="column.dataIndex === 'actions'">
-            <img
-              width="24"
-              height="24"
-              :src="SVG_ICON.card_icons.edit"
-              style="cursor: pointer; margin-right: 40px"
-              @click="onEdit(record)"
-            />
-            <img
-              width="24"
-              height="24"
-              :src="SVG_ICON.card_icons.delete_red"
-              style="cursor: pointer"
-              @click="deleteRow(record)"
-            />
-          </template>
-        </template>
-      </a-table>
+        :bordered="false"
+        :data="data"
+        :max-height="height - 44"
+        :loading="loading"
+        :row-key="(row: PointData) => row.key"
+        virtual-scroll
+      />
       <ObjectSetModal
         v-if="isShowModal"
         v-model:isShowModal="isShowModal"
@@ -85,17 +62,25 @@
         :displayData="displayData"
         :deviceData="deviceData"
       />
+      <ModbusPropertyModal
+        v-if="isModbus"
+        v-model:isShowModal="isModbus"
+        :isEdit="isModbusEdit"
+        :deviceData="deviceData"
+        :editData="displayData"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { icon } from '@/plugins'
-import { ref, onMounted, provide, nextTick } from 'vue'
-import { DEVICE_TYPE_MAP, PointData, tagDataType } from '../../utils/utils'
-import { NButton, NIcon } from 'naive-ui'
+import { ref, onMounted, provide, nextTick, h } from 'vue'
+import { DEVICE_TYPE_MAP, DeviceTypeEnum, PointData } from '../../utils/utils'
+import { NIcon } from 'naive-ui'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { ObjectSetModal } from '../../modal/ObjectSetModal'
+import { ModbusPropertyModal } from '../../modal/ModbusPropertyModal'
 import { PropertyDisplayModal } from '../../modal/PropertyDisplayModal'
 import {
   readSubscribePoints,
@@ -104,9 +89,13 @@ import {
   deleteAllSubscribePoint
 } from '@/api/http'
 import { TypeEnum } from '../../utils/propertyMap'
-import { cloneDeep, set } from 'lodash'
+import { cloneDeep } from 'lodash'
+import type { DataTableColumns } from 'naive-ui'
+import { renderIcon } from '@/utils'
+import { NButton } from 'naive-ui'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
+const { DeleteIcon, EditIcon } = icon.carbon
 
 const emit = defineEmits(['goback'])
 const props = defineProps({
@@ -119,6 +108,9 @@ const props = defineProps({
 const t = window['$t']
 const isShowModal = ref(false)
 const isDisplay = ref(false)
+const isModbus = ref(false)
+
+const isModbusEdit = ref(false)
 
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 90)
 
@@ -126,23 +118,41 @@ const selectDevice = ref('')
 const filterString = ref('')
 const data = ref<PointData[]>([])
 
-const displayData = ref<any>()
+const displayData = ref<any>({})
 
 const loading = ref(false)
 
 let interval: number
 
-const columns = [
-  { title: () => t('device.object_name'), dataIndex: 'metric_name' },
-  { title: () => t('device.type'), dataIndex: 'metric_type' },
-  { title: () => t('device.id'), dataIndex: 'metric_id' },
-  { title: () => t('device.value'), dataIndex: 'value' },
-  { title: () => t('device.desc'), dataIndex: 'description' },
-  { title: '', dataIndex: 'actions', width: 120 }
+const columns: DataTableColumns<PointData> = [
+  { title: () => t('device.object_name'), key: 'metric_name' },
+  {
+    title: () => t('device.id'),
+    key: 'metric_uid',
+    render(row, index) {
+      if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
+        return DEVICE_TYPE_MAP[row.metric_type] + ',' + row.metric_id
+      } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+        return row.metric_uid
+      }
+    }
+  },
+  { title: () => t('device.value'), key: 'value' },
+  { title: () => t('device.desc'), key: 'description' },
+  {
+    title: '',
+    key: 'actions',
+    width: 120,
+    render(row, index) {
+      return [
+        h(NIcon, { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onEdit(row) }, () => h(EditIcon)),
+        h(NIcon, { size: 24, style: 'cursor: pointer;', onClick: () => deleteRow(row) }, () => h(DeleteIcon))
+      ]
+    }
+  }
 ]
 
 onMounted(() => {
-  console.log('object list mounted')
   initData()
 })
 
@@ -159,6 +169,7 @@ const initData = async () => {
 
     const transformedData: PointData[] = res.data.map((item: any, index: number) => ({
       key: item.id,
+      metric_uid: item.uid,
       metric_id: item.uid.split(',')[1] || '',
       metric_type: parseInt(item.uid.split(',')[0]),
       metric_name: item.name || '',
@@ -193,7 +204,6 @@ const periodicReading = () => {
     if (!isShowModal.value && !isDisplay.value) {
       periodicFunc()
     }
-    
   }, 3000)
 }
 
@@ -252,28 +262,41 @@ const periodicFunc = async () => {
 }
 
 const onDiscovery = () => {
-  isShowModal.value = true
+  //console.log('device data', props.deviceData)
+  if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
+    isShowModal.value = true
+  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+    isModbus.value = true
+  }
 }
 
 const onReset = (row: PointData) => {}
 
 const onEdit = (row: PointData) => {
   displayData.value = row
-  isDisplay.value = true
+  if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
+    isDisplay.value = true
+  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+    isModbusEdit.value = true
+    isModbus.value = true
+  }
 }
 
 const deleteRow = async (row: PointData) => {
+  loading.value = true
   try {
     const res: any = await deleteSubscribePoint(row.key)
 
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
       window['$message'].warning(t('device.msg_del_fail') + res.status)
+      loading.value = false
       return
     }
     initData()
   } catch (e) {
     console.error('Failed to delete devices:', e)
+    loading.value = false
   }
 }
 
@@ -372,63 +395,6 @@ provide('refreshObjTable', initData)
   }
 }
 
-:deep(.ant-table) {
-  background: transparent !important;
-}
-
-:deep(.ant-table-thead) tr th {
-  background: transparent !important;
-  border: 0 !important;
-}
-
-:deep(.ant-table-tbody) tr td {
-  border: 0 !important;
-}
-
-:deep(.ant-table-row):hover {
-  background: transparent !important;
-}
-
-:deep(.ant-table-row):hover td {
-  background: transparent !important;
-}
-
-:deep(.ant-table-cell-row-hover) {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-:deep(.ant-table-cell) {
-  height: 44px !important;
-  padding: 0 8px !important;
-}
-
-:deep(.ant-table-placeholder :hover) {
-  background-color: transparent !important;
-}
-
-.ant-table-striped :deep(.table-striped1) td {
-  background-color: transparent !important;
-}
-
-.ant-table-striped :deep(.table-striped1):hover td {
-  background-color: transparent !important;
-}
-
-.ant-table-striped :deep(.table-striped2) td {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-.ant-table-striped :deep(.table-striped2):hover td {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-.ant-table-striped :deep(.table-striped2) td:first-child {
-  border-radius: 8px 0 0 8px !important;
-}
-
-.ant-table-striped :deep(.table-striped2) td:last-child {
-  border-radius: 0 8px 8px 0 !important;
-}
 ::v-deep(.n-input) {
   background: transparent;
 }
@@ -458,5 +424,25 @@ provide('refreshObjTable', initData)
 
 ::v-deep(.n-base-selection-label) {
   background: transparent;
+}
+
+::v-deep(.n-data-table-table) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-thead) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-th) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-tr:hover) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-td) {
+  background-color: transparent !important;
 }
 </style>

@@ -1,4 +1,4 @@
-import { TypeEnum } from "./propertyMap"
+import { TypeEnum } from './propertyMap'
 
 export interface DeviceTableData {
   key: string
@@ -24,6 +24,7 @@ export interface tagDataType {
 
 export interface PointData {
   key?: string
+  metric_uid: string
   metric_id: string
   metric_type: number
   metric_name: string
@@ -81,15 +82,15 @@ export const DEVICE_TYPE_MAP: { [key: number]: string } = {
   19: TypeEnum.MV,
   20: TypeEnum.TrendLog,
   23: TypeEnum.Accumulator,
-  56: TypeEnum.NetworkPort,
+  56: TypeEnum.NetworkPort
 }
 
 export const PRIMARY_ORDER = [
-  "object-name",
-  "object-type",
-  "object-identifier",
-  "description",
-] as const;
+  'object-name',
+  'object-type',
+  'object-identifier',
+  'description'
+] as const
 
 export function isModbusRTU(x: any): x is ModbusRTUType {
   return (
@@ -128,7 +129,7 @@ export function isBACnet(x: any): x is BACnetType {
 
 export enum DeviceTypeEnum {
   BACnet = 'bacnet',
-  ModbusRTU = 'ModbusRTU',
+  ModbusRTU = 'ModbusRTU'
 }
 
 export const TypeOptions = [
@@ -139,7 +140,7 @@ export const TypeOptions = [
   {
     label: 'ModbusRTU',
     value: DeviceTypeEnum.ModbusRTU
-  },
+  }
   // {
   //   label: 'ModbusTCP',
   //   value: 'ModbusTCP'
@@ -149,8 +150,6 @@ export const TypeOptions = [
   //   value: 'EthernetIP'
   // }
 ]
-
-
 
 export const ModbusRTUData = {
   slaveid: 1,
@@ -271,3 +270,60 @@ export const pollOptions = [
     value: 60
   }
 ]
+
+export const functionOptions = [
+  {
+    label: 'ReadCoils',
+    value: '01'
+  },
+  {
+    label: 'ReadDiscreteInput',
+    value: '02'
+  },
+  {
+    label: 'ReadHoldingRegister',
+    value: '03'
+  },
+  {
+    label: 'ReadInputRegister',
+    value: '04'
+  },
+  {
+    label: 'WriteCoils',
+    value: '05'
+  },
+  {
+    label: 'WriteRegister',
+    value: '06'
+  }
+]
+
+export const OrderOptions = [
+  {
+    label: 'Little-endian mode',
+    value: 0
+  },
+  {
+    label: 'Big-end mode',
+    value: 1
+  }
+]
+
+export const DatatypeOptions = [
+  'int8',
+  'int16',
+  'int32',
+  'int64',
+  'uint8',
+  'uint16',
+  'uint32',
+  'uint64',
+  'float16',
+  'float32',
+  'float64',
+  'str',
+  'string'
+].map(v => ({
+  label: v,
+  value: v
+}))
