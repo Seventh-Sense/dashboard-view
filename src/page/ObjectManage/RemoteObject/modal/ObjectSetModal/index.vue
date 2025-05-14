@@ -35,10 +35,18 @@
         </n-grid>
       </div>
       <div>
+        <div class="modal-filter">
+          <n-input
+            v-model:value="keyword"
+            :placeholder="t('device.search')"
+            clearable
+            style="width: 366px"
+          />
+        </div>
         <n-data-table
           :columns="columns"
           :bordered="false"
-          :data="data"
+          :data="filteredData"
           :max-height="550"
           :loading="loading"
           :row-key="(row: DataType) => row.key"
@@ -97,8 +105,23 @@ const refreshObjTable: any = inject('refreshObjTable')
 const t = window['$t']
 const data = ref<DataType[]>([])
 const loading = ref(false)
-
 const loadingButton = ref(false)
+
+// 搜索关键字
+const keyword = ref('')
+
+const filteredData = computed(() => {
+  if (keyword.value === '') return data.value
+
+  const searchTerm = keyword.value.toLowerCase()
+
+  return data.value.filter(item => {
+    return Object.values(item).some(value => {
+      console.log(value)
+      return String(value).toLowerCase().includes(searchTerm)
+    })
+  })
+})
 
 const columns: DataTableColumns<DataType> = [
   {
@@ -109,7 +132,8 @@ const columns: DataTableColumns<DataType> = [
   },
   {
     title: () => t('device.object_name'),
-    key: 'name'
+    key: 'name',
+    sorter: 'default'
   },
   {
     title: () => t('device.type'),
@@ -117,7 +141,8 @@ const columns: DataTableColumns<DataType> = [
     width: 200,
     render(row, index) {
       return DEVICE_TYPE_MAP[row.type]
-    }
+    },
+    sorter: 'default'
   },
   {
     title: () => t('device.id'),
@@ -179,6 +204,7 @@ const fetchData = async () => {
       //console.log(tmp)
       fetchProperties(tmp)
     } else {
+      window['$message'].warning(res.data)
       loading.value = false
     }
   } catch (e) {
@@ -331,6 +357,10 @@ const onSubmit = async () => {
     emit('update:isShowModal', false)
   }
 }
+
+const onSearch = () => {
+  console.log(typeof keyword.value, keyword.value)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -391,14 +421,32 @@ const onSubmit = async () => {
     border: 0;
     border-radius: 2px;
   }
+
+  &-filter {
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
 }
 
-::v-deep(.n-input-wrapper) {
-  background-color: #{$--color-dark-modal-content};
-}
+// ::v-deep(.n-input-wrapper) {
+//   background-color: #{$--color-dark-modal-content};
+// }
 
 ::v-deep(.n-input__input-el) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
+  padding-left: 8px;
+  //border-bottom: 1px solid #{$--color-dark-modal-title};
+}
+
+::v-deep(.n-input__placeholder) {
+  padding-left: 8px;
+}
+
+::v-deep(.n-base-clear) {
+  margin-right: 12px;
 }
 
 ::v-deep(.n-data-table-table) {

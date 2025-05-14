@@ -4,14 +4,14 @@
       <div class="project-card-top">
         <div class="project-card-top-title">{{ $t('device.device_list') }}</div>
         <n-space justify="end" align="center">
-          <n-dropdown
+          <!-- <n-dropdown
             trigger="hover"
             :options="options"
             placement="bottom-end"
             @select="handleSelect"
           >
             <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
-          </n-dropdown>
+          </n-dropdown> -->
           <n-button class="project-card-top-extra-button" @click="onAdd">
             {{ $t('global.r_add') }}
           </n-button>
@@ -142,7 +142,7 @@ const initData = async () => {
       device_id: item.uid || '',
       device_name: item.name || '',
       device_type: item.protocol || '',
-      polling: 0, // 确保数字类型
+      polling: 3, // 确保数字类型
       address: item.address || '',
       status: item.status || '',
       enabled: item.enabled, // 确保数字类型

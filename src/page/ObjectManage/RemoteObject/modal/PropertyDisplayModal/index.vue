@@ -159,8 +159,8 @@
       </div>
 
       <template #footer>
-        <n-space justify="end">
-          <n-button class="modal-button-ok" @click="onSubmit">{{ $t('global.r_ok') }}</n-button>
+        <n-space justify="end" style="height: 20px;">
+          <!-- <n-button class="modal-button-ok" @click="onSubmit">{{ $t('global.r_ok') }}</n-button> -->
         </n-space>
       </template>
     </n-card>
@@ -169,7 +169,7 @@
 
 <script setup lang="ts">
 import SVG_ICON from '@/svg/SVG_ICON'
-import { onMounted, computed, ref, reactive, inject } from 'vue'
+import { onMounted, computed, ref, reactive, inject, watch } from 'vue'
 import {
   PROPERTY_TYPE_MAP,
   objIDTrans,
@@ -237,7 +237,27 @@ const MVOption = ref<any>([])
 
 onMounted(() => {
   initializeStates()
-  console.log('aaa', props.displayData)
+  //console.log('aaa', props.displayData)
+})
+
+watch(
+  () => props.displayData,
+  newVal => {
+    if (newVal) {
+      console.log('aaa', props.displayData.properties)
+    }
+  },
+  { immediate: true, deep: true }
+)
+
+const initializeStates = () => {
+  sortedEntries.value.forEach(([key, val]) => {
+    if (!(key in editStates)) {
+      editStates[key] = false
+      tempValues[key] = val
+    }
+  })
+
   if (type.value === TypeEnum.BI || type.value === TypeEnum.BV || type.value === TypeEnum.BO) {
     BinaryOption.value = [
       {
@@ -258,15 +278,6 @@ onMounted(() => {
       })
     })
   }
-})
-
-const initializeStates = () => {
-  sortedEntries.value.forEach(([key, val]) => {
-    if (!(key in editStates)) {
-      editStates[key] = false
-      tempValues[key] = val
-    }
-  })
 }
 
 // 进入编辑模式
@@ -346,7 +357,7 @@ const onSubmit = () => {
   }
 
   &-content {
-    height: 400px;
+    height: 600px;
     margin-top: 16px;
     overflow-y: auto;
 

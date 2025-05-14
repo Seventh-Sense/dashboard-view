@@ -104,6 +104,7 @@ const onSubmit = () => {
 
 const onClose = () => {
   onClear()
+  refreshFunc()
   emit('update:isShowModal', false)
 }
 

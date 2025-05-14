@@ -193,6 +193,7 @@ const periodicReading = () => {
     if (!isShowModal.value && !isDisplay.value) {
       periodicFunc()
     }
+    
   }, 3000)
 }
 
@@ -213,6 +214,7 @@ const periodicFunc = async () => {
     const newData = dataCopy.map((item: any) => {
       const point = pointsMap.get(item.key)
 
+      //console.log('point', point.property['priority-array'])
       //console.log(pointsMap)
       let value = ''
       //value 翻译
