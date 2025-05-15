@@ -12,7 +12,7 @@ export const renderMenuLabel = (option: MenuOption | MenuGroupOption) => {
   return option.label
 }
 
-export const expandedKeys = () => ['all-project']
+export const expandedKeys = () => [PageEnum.BASE_REMOTE_MAN_NAME]
 
 export const menuOptionsInit = (selectedKey: any) => {
   const t = window['$t']
@@ -21,7 +21,14 @@ export const menuOptionsInit = (selectedKey: any) => {
     {
       label: () => 'Bacnet',
       key: PageEnum.BASE_REMOTE_MAN_NAME,
-      icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
+      icon: renderImage(
+        selectedKey === PageEnum.BASE_HOME_ITEMS_NAME
+          ? SVG_ICON.card_icons.modbus_sp
+          : SVG_ICON.card_icons.modbus_df,
+        '',
+        32,
+        32
+      )
     },
     // {
     //   label: () =>
@@ -37,18 +44,18 @@ export const menuOptionsInit = (selectedKey: any) => {
     //   key: PageEnum.BASE_LOCAL_MAN_NAME,
     //   icon: renderImage(SVG_ICON.card_icons.Bacnet_nomal, '', 32, 32),
     // },
-    {
-      label: () => t('menu.modbus_manage'),
-      key: PageEnum.BASE_MODBUS_MAN_NAME,
-      icon: renderImage(
-        selectedKey === PageEnum.BASE_MODBUS_MAN_NAME
-          ? SVG_ICON.card_icons.modbus_df
-          : SVG_ICON.card_icons.modbus_sp,
-        '',
-        32,
-        32
-      )
-    },
+    // {
+    //   label: () => t('menu.modbus_manage'),
+    //   key: PageEnum.BASE_MODBUS_MAN_NAME,
+    //   icon: renderImage(
+    //     selectedKey === PageEnum.BASE_MODBUS_MAN_NAME
+    //       ? SVG_ICON.card_icons.modbus_df
+    //       : SVG_ICON.card_icons.modbus_sp,
+    //     '',
+    //     32,
+    //     32
+    //   )
+    // },
     {
       label: () => t('menu.DashBoard'),
       key: PageEnum.BASE_HOME_ITEMS_NAME,

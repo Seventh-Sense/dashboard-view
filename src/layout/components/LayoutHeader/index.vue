@@ -18,7 +18,7 @@
       <div class="header-item right">
         <n-space>
           <slot name="ri-left"></slot>
-          <!-- <go-lang-select v-if="!isChart"></go-lang-select> -->
+          <go-lang-select v-if="!isChart"></go-lang-select>
           <!-- <theme-color-select v-if="!isChart"></theme-color-select> -->
           <!-- <go-theme-select v-if="!isChart"></go-theme-select> -->
           <slot name="ri-right"></slot>

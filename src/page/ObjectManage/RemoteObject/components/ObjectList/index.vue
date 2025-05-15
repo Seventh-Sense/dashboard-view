@@ -7,47 +7,35 @@
         </n-icon>
         <span class="top-title">{{ deviceData.device_name }}</span>
       </n-space>
-      <div style="display: flex; gap: 16px">
-        <div class="content-button content-button-color2" @click="onDeleteAll">
-          {{ $t('device.delete_all') }}
-        </div>
-        <div class="content-button content-button-color1" @click="onDiscovery">
-          {{ $t('global.r_add') }}
-        </div>
-      </div>
     </n-space>
 
     <div class="content">
-      <!-- <div class="content-filter">
-        <div>
-          <div class="content-title">设备</div>
-          <n-select
-            v-model:value="selectDevice"
-            placeholder="Select"
-            :options="data"
-            style="width: 200px"
-          />
+      <div class="content-filter">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <div>
+            <n-input v-model:value="keyword" type="text" clearable style="width: 366px" />
+          </div>
+          <!-- <div class="content-button content-button-color1" @click="onSearch">
+            {{ $t('device.search') }}
+          </div> -->
         </div>
-        <div>
-          <div class="content-title">过滤器</div>
-          <n-input v-model:value="filterString" type="text" style="width: 366px" />
+        <div style="display: flex; gap: 16px">
+          <div class="content-button content-button-color2" @click="onDeleteAll">
+            {{ $t('device.delete_all') }}
+          </div>
+          <div class="content-button content-button-color1" @click="onDiscovery">
+            {{ $t('global.r_add') }}
+          </div>
         </div>
-
-        <div class="content-button content-button-color2" @click="onReset">
-          {{ $t('device.reset') }}
-        </div>
-
-        <div class="content-button content-button-color1">
-          {{ $t('device.search') }}
-        </div>
-      </div> -->
+      </div>
       <n-data-table
         :columns="columns"
         :bordered="false"
-        :data="data"
+        :data="filteredData"
         :max-height="height - 44"
         :loading="loading"
         :row-key="(row: PointData) => row.key"
+        size="small"
         virtual-scroll
       />
       <ObjectSetModal
@@ -75,7 +63,7 @@
 
 <script setup lang="ts">
 import { icon } from '@/plugins'
-import { ref, onMounted, provide, nextTick, h } from 'vue'
+import { ref, onMounted, provide, nextTick, h, computed } from 'vue'
 import { DEVICE_TYPE_MAP, DeviceTypeEnum, PointData } from '../../utils/utils'
 import { NIcon } from 'naive-ui'
 import SVG_ICON from '@/svg/SVG_ICON'
@@ -112,7 +100,7 @@ const isModbus = ref(false)
 
 const isModbusEdit = ref(false)
 
-const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 90)
+const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 60 - 90)
 
 const selectDevice = ref('')
 const filterString = ref('')
@@ -129,6 +117,7 @@ const columns: DataTableColumns<PointData> = [
   {
     title: () => t('device.id'),
     key: 'metric_uid',
+    width: 240,
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
         return DEVICE_TYPE_MAP[row.metric_type] + ',' + row.metric_id
@@ -137,7 +126,7 @@ const columns: DataTableColumns<PointData> = [
       }
     }
   },
-  { title: () => t('device.value'), key: 'value' },
+  { title: () => t('device.value'), key: 'value', width: 200 },
   { title: () => t('device.desc'), key: 'description' },
   {
     title: '',
@@ -145,12 +134,37 @@ const columns: DataTableColumns<PointData> = [
     width: 120,
     render(row, index) {
       return [
-        h(NIcon, { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onEdit(row) }, () => h(EditIcon)),
-        h(NIcon, { size: 24, style: 'cursor: pointer;', onClick: () => deleteRow(row) }, () => h(DeleteIcon))
+        h(
+          NIcon,
+          { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onEdit(row) },
+          () => h(EditIcon)
+        ),
+        h(NIcon, { size: 24, style: 'cursor: pointer;', onClick: () => deleteRow(row) }, () =>
+          h(DeleteIcon)
+        )
       ]
     }
   }
 ]
+
+// 搜索关键字
+const keyword = ref('')
+
+const onSearch = () => {
+  console.log(typeof keyword.value, keyword.value)
+}
+
+const filteredData = computed(() => {
+  if (keyword.value === '') return data.value
+
+  const searchTerm = keyword.value.toLowerCase()
+
+  return data.value.filter(item => {
+    return Object.values(item).some(value => {
+      return String(value).toLowerCase().includes(searchTerm)
+    })
+  })
+})
 
 onMounted(() => {
   initData()
@@ -366,16 +380,16 @@ provide('refreshObjTable', initData)
 
   &-filter {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
     gap: 24px;
     margin-bottom: 12px;
     padding-left: 12px;
-    height: 60px;
+    height: 48px;
   }
 
   &-button {
-    width: 72px;
+    width: 88px;
     height: 32px;
     border-radius: 2px;
     font-size: 14px;
@@ -444,5 +458,25 @@ provide('refreshObjTable', initData)
 
 ::v-deep(.n-data-table-td) {
   background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-tbody .n-data-table-tr:nth-child(odd)) {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+::v-deep(.n-data-table-td) {
+  border: none !important;
+}
+
+::v-deep(.n-data-table-tbody .n-data-table-tr:nth-child(even)) {
+  background-color: transparent !important;
+}
+
+::v-deep(.n-data-table-tbody .n-data-table-tr:nth-child(odd)) td:first-child {
+  border-radius: 8px 0 0 8px !important;
+}
+
+::v-deep(.n-data-table-tbody .n-data-table-tr:nth-child(odd)) td:last-child {
+  border-radius: 0 8px 8px 0 !important;
 }
 </style>

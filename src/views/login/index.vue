@@ -161,7 +161,7 @@ const handleSubmit = (e: Event) => {
           )
         )
         window['$message'].success(t('msg.login_msg_1'))
-        routerTurnByName(PageEnum.BASE_HOME_NAME, true)
+        routerTurnByName(PageEnum.BASE_REMOTE_MAN_NAME, true)
       } else {
         window['$message'].error(t('msg.login_msg_2'))
       }

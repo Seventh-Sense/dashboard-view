@@ -50,7 +50,7 @@
       </n-grid>
 
       <component :is="content" :isEdit="isEdit" :data="data"></component>
-      <template #footer>
+      <template #footer v-if="data.type !== DeviceTypeEnum.BACnet">
         <n-space justify="end">
           <div class="modal-button-close" @click="onClose">{{ $t('global.r_cancel') }}</div>
           <n-button class="modal-button-ok" @click="onSubmit">{{ $t('global.r_ok') }}</n-button>

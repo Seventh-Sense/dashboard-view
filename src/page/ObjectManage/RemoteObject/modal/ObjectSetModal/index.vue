@@ -23,7 +23,7 @@
         </n-space>
       </template>
       <div class="modal-top">
-        <n-grid x-gap="36" :cols="2">
+        <n-grid x-gap="32" :cols="2">
           <n-gi span="1" class="modal-gi">
             <div class="modal-porperty">{{ $t('device.id') }}</div>
             <n-input v-model:value="deviceData.device_id" type="text" disabled />
@@ -38,7 +38,6 @@
         <div class="modal-filter">
           <n-input
             v-model:value="keyword"
-            :placeholder="t('device.search')"
             clearable
             style="width: 366px"
           />
@@ -379,14 +378,14 @@ const onSearch = () => {
 
   &-gi {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
   }
 
   &-top {
     height: 56px;
     margin-top: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
   }
@@ -399,7 +398,7 @@ const onSearch = () => {
     text-align: left;
     font-style: normal;
     margin-right: 36px;
-    width: 50px;
+    width: 64px;
   }
 
   &-button-close {
@@ -446,6 +445,10 @@ const onSearch = () => {
 
 ::v-deep(.n-base-clear) {
   margin-right: 12px;
+}
+
+::v-deep(.n-input--focus) {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 ::v-deep(.n-data-table-table) {

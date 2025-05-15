@@ -37,7 +37,6 @@
           :collapsed-icon-size="24"
           :icon-size="32"
           :root-indent="16"
-          :default-expanded-keys="defaultExpandedKeys"
           :on-update:value="onSelcet"
         ></n-menu>
       </div>
