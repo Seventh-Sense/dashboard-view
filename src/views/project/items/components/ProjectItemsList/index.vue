@@ -40,7 +40,7 @@ const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
 const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } = useModalDataInit()
 
 onMounted(() => {
-  //initTable()
+  initTable()
 })
 
 const initTable = () => {

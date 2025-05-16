@@ -20,8 +20,8 @@ export enum ChatCategoryEnumName {
   SCATTER = '散点图',
   MAP = '地图',
   COMBINATION = '组合图',
-  MORE = '更多',
-  Gauge = '表盘',
-  Device = '设备',
-  Air = '控件',
+  MORE = () => window['$t']('dashboard.more'),
+  Gauge = () => window['$t']('dashboard.gauge'),
+  Device = () => window['$t']('dashboard.device'),
+  Air = () => window['$t']('dashboard.input'),
 }

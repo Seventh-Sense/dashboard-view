@@ -23,6 +23,15 @@ export const DisplayRoute: RouteRecordRaw = {
   },
 };
 
+export const DeviceManageRoute: RouteRecordRaw = {
+  path: '/devicemanage',
+  name: PageEnum.BASE_DEVICE_MANAGE_NAME,
+  component: () => import('@/page/DeviceManage/index.vue'),
+  meta: {
+    title: '设备管理',
+  },
+};
+
 export const HttpErrorPage: RouteRecordRaw[] = [
   {
     path: '/error/404',

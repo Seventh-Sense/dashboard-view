@@ -28,11 +28,11 @@ export type ConfigType = {
   // 右侧设置面板组件 key
   conKey: string
   // 标题
-  title: string
+  title: any
   // 分类
   category: string
   // 分类名称
-  categoryName: string
+  categoryName: any
   // 所属包
   package: string
   // 归类

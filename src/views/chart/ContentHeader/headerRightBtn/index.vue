@@ -25,7 +25,8 @@ import {
   getSessionStorage,
   getLocalStorage,
   setLocalStorage,
-  JSONStringify
+  JSONStringify,
+  goHome
 } from '@/utils'
 import { PreviewEnum } from '@/enums/pageEnum'
 import { StorageEnum } from '@/enums/storageEnum'
@@ -116,7 +117,7 @@ const sendHandle = async () => {
     })
       .then(res => {
         if (res) {
-          window['$message'].success('保存成功')
+          window['$message'].success(t('message.save_success'))
         }
         console.log(res)
       })
@@ -149,11 +150,13 @@ const saveLocalStorage = (id: any, storageInfo: any) => {
 }
 
 const exitHandle = () => {
-  //router.back()
-  useRemoveKeyboard()
-
-  router.push({
-    path: PageEnum.BASE_HOME_ITEMS
+  goDialog({
+    message: t('project.msg_ack_save'),
+    isMaskClosable: true,
+    onPositiveCallback: () => {
+      goHome()
+      useRemoveKeyboard()
+    }
   })
 }
 

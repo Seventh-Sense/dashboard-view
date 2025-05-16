@@ -12,5 +12,12 @@ export default {
   // items 
   release: '已发布',
   unreleased: '未发布',
-  last_edit: '最后编辑'
+  last_edit: '最后编辑',
+
+
+  //
+  tip: '提示',
+  msg_is_delete: '是否删除此数据?',
+  msg_del_success: '删除成功!',
+  msg_ack_save: '请确认是否保存!',
 }

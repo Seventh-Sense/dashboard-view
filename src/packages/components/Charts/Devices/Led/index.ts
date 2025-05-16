@@ -8,7 +8,7 @@ export const LedConfig: ConfigType = {
   conKey: 'VCLed',
   title: i18n.global.t('dashboard.led'),
   category: ChatCategoryEnum.Device,
-  categoryName: i18n.global.t('dashboard.device'),
+  categoryName: ChatCategoryEnumName.Device,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
   image: 'led_breviary.png'

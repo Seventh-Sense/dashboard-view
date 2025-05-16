@@ -8,7 +8,7 @@ export const MotorDeviceConfig: ConfigType = {
   conKey: 'VCMotorDevice',
   title: i18n.global.t('dashboard.pump_left'),
   category: ChatCategoryEnum.Device,
-  categoryName: i18n.global.t('dashboard.device'),
+  categoryName: ChatCategoryEnumName.Device,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
   image: 'pumpleft.png'

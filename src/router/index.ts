@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import { DisplayRoute, RedirectRoute } from '@/router/base'
+import { DisplayRoute, RedirectRoute, DeviceManageRoute } from '@/router/base'
 import { createRouterGuards } from './router-guards'
 import { PageEnum } from '@/enums/pageEnum'
 import { HttpErrorPage, LoginRoute, ReloadRoute } from '@/router/base'
@@ -24,20 +24,11 @@ const RootRoute: Array<RouteRecordRaw> = [
       modules.previewRoutes,
       modules.editRoutes
     ]
-  },
-  {
-    path: '/display',
-    name: 'Display',
-    redirect: PageEnum.BASE_DISPLAY,
-    component: Layout,
-    meta: {
-      title: 'Display',
-    },
   }
 ]
 
 
-export const constantRouter: any[] = [LoginRoute, ...RootRoute, RedirectRoute, ReloadRoute, DisplayRoute];
+export const constantRouter: any[] = [LoginRoute, ...RootRoute, RedirectRoute, ReloadRoute, DisplayRoute, DeviceManageRoute];
 
 const router = createRouter({
   history: createWebHashHistory(''),

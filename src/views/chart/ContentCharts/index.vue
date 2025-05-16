@@ -46,9 +46,9 @@ const { getCharts, BarChartIcon, themeColor, selectOptions, selectValue, clickIt
 
 <style lang="scss" scoped>
 /* 整体宽度 */
-$width: 330px;
+$width: 390px;
 /* 列表的宽度 */
-$widthScoped: 65px;
+$widthScoped: 90px;
 /* 此高度与 ContentBox 组件关联 */
 $topHeight: 40px;
 

@@ -8,7 +8,7 @@ export const MotorConfig: ConfigType = {
   conKey: 'VCMotor',
   title: i18n.global.t('dashboard.motor'),
   category: ChatCategoryEnum.Device,
-  categoryName: i18n.global.t('dashboard.device'),
+  categoryName: ChatCategoryEnumName.Device,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
   image: 'machine_breviary.png'

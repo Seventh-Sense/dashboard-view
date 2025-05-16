@@ -6,6 +6,7 @@ import { deleteProject, readProjectList } from '@/api/http'
 // 数据初始化
 export const useDataListInit = () => {
   const list = ref<ChartList>([])
+  const t = window['$t']
 
   const addProject = (data: any) => {
     list.value.push({
@@ -33,7 +34,7 @@ export const useDataListInit = () => {
       promiseResCallback: (e: any) => {
         deleteProject(cardData.id)
           .then((res: any) => {
-            window.$message.success('删除成功')
+            window.$message.success(t('project.msg_del_success'))
             list.value.splice(index, 1)
           })
           .catch(err => {

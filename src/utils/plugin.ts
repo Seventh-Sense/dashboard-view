@@ -76,11 +76,13 @@ export const goDialog = (
     promiseRejCallback
   } = params
 
+  const t = window['$t']
+
   const typeObj = {
     // 自定义
     [DialogEnum.DELETE]: {
       fn: window['$dialog'].warning,
-      message: message || '是否删除此数据?'
+      message: message || t('project.msg_is_delete')
     },
     // 原有
     [DialogEnum.WARNING]: {
@@ -100,11 +102,11 @@ export const goDialog = (
   const dialog: DialogReactive = typeObj[type || DialogEnum.WARNING]['fn']({
     // 导入其余 NaiveUI 支持参数
     ...params,
-    title: title || '提示',
+    title: title || t('project.tip'),
     icon: renderIcon(InformationCircleIcon, { size: dialogIconSize }),
     content: typeObj[type || DialogEnum.WARNING]['message'],
-    positiveText: positiveText || '确定',
-    negativeText: closeNegativeText ? undefined : (negativeText || '取消'),
+    positiveText: positiveText || t('global.r_ok'),
+    negativeText: closeNegativeText ? undefined : (negativeText || t('global.r_cancel')),
     // 是否通过遮罩关闭
     maskClosable: isMaskClosable || maskClosable,
     onPositiveClick: async () => {

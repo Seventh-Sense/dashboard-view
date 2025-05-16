@@ -11,5 +11,11 @@ export default {
   // items 
   release: 'Release',
   unreleased: 'Unrelease',
-  last_edit: 'Last edit time'
+  last_edit: 'Last edit time',
+
+  //
+  tip: 'Tip',
+  msg_is_delete: 'Should this data be deleted?',
+  msg_del_success: 'Delete success!',
+  msg_ack_save: 'Please confirm has been saved!',
 }

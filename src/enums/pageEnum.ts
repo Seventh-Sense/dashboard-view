@@ -69,6 +69,10 @@ export enum PageEnum {
   //display
   BASE_DISPLAY = '/display',
   BASE_DISPLAY_NAME = 'Display',
+
+  //device manage
+  BASE_DEVICE_MANAGE = '/devicemanage',
+  BASE_DEVICE_MANAGE_NAME = 'DeviceManage',
 }
 
 export const ErrorPageNameMap = new Map([

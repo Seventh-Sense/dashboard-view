@@ -127,7 +127,7 @@ const clickItemHandle = (key: string) => {
 <style lang="scss" scoped>
 /* 此高度与 ContentBox 组件关联*/
 $topHeight: 40px;
-$menuWidth: 65px;
+$menuWidth: 100px;
 @include go('chart-common') {
   display: flex;
   height: calc(100vh - #{$--header-height} - #{$topHeight});
@@ -146,6 +146,7 @@ $menuWidth: 65px;
   @include deep() {
     .n-menu-item {
       height: 30px;
+      width: $menuWidth;
       &.n-menu-item--selected {
         &::before {
           background-color: rgba(0, 0, 0, 0);
