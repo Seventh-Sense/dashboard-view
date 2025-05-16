@@ -52,15 +52,11 @@
                     </template>
                   </n-input>
                 </n-form-item>
-                <!-- <n-form-item>
-                  <div class="flex justify-between">
-                    <div class="flex-initial">
-                      <n-checkbox v-model:checked="autoLogin">
-                        {{ $t('login.login_auto') }}
-                      </n-checkbox>
-                    </div>
+                <n-form-item>
+                  <div style="width: 100%;display: flex; justify-content: flex-end">
+                    <go-lang />
                   </div>
-                </n-form-item> -->
+                </n-form-item>
                 <n-form-item>
                   <n-button
                     type="primary"
@@ -109,6 +105,7 @@ import { routerTurnByName, cryptoEncode, setLocalStorage } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { VersionModal } from './modal/VersionModal'
 import { ContactModal } from './modal/ContactModal'
+import { GoLang } from '@/components/GoLang'
 
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 const t = window['$t']
@@ -233,7 +230,7 @@ $carousel-image-height: 60vh;
         flex-direction: column;
         justify-content: flex-start;
         margin: 0 160px;
-        width: 420px;
+        width: 440px;
 
         &-title {
           font-size: 40px;

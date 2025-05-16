@@ -7,4 +7,5 @@ export default {
   login_button: "登录",
   about_us: "关于我们",
   contact_us: "联系我们",
+  version: '版本',
 }

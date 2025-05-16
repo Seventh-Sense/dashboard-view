@@ -21,7 +21,7 @@
       <div class="modal-content">
         <img width="80" height="80" :src="SVG_ICON.card_icons.logo" />
         <div class="modal-content-title">XPlay by LUBANX</div>
-        <div class="modal-content-tip">版本: {{ version }}</div>
+        <div class="modal-content-tip">{{$t('login.version')}}: {{ version }}</div>
         <div class="modal-content-b">UI: {{ ui }}</div>
       </div>
       <template #footer>

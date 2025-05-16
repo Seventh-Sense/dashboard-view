@@ -79,8 +79,6 @@ import {
 import { TypeEnum } from '../../utils/propertyMap'
 import { cloneDeep } from 'lodash'
 import type { DataTableColumns } from 'naive-ui'
-import { renderIcon } from '@/utils'
-import { NButton } from 'naive-ui'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
@@ -127,7 +125,7 @@ const columns: DataTableColumns<PointData> = [
     }
   },
   { title: () => t('device.value'), key: 'value', width: 200 },
-  { title: () => t('device.desc'), key: 'description' },
+  { title: () => t('device.desc'), key: 'description', width: 300 },
   {
     title: '',
     key: 'actions',

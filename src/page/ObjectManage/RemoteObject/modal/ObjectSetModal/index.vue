@@ -46,7 +46,7 @@
           :columns="columns"
           :bordered="false"
           :data="filteredData"
-          :max-height="550"
+          :max-height="450"
           :loading="loading"
           :row-key="(row: DataType) => row.key"
           virtual-scroll

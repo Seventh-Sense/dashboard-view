@@ -7,4 +7,5 @@ export default {
   login_button: "Login",
   about_us: "About us",
   contact_us: "Contact us",
+  version: 'Version',
 }
