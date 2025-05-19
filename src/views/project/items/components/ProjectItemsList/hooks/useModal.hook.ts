@@ -47,8 +47,8 @@ export const useModalDataInit = () => {
     //读取数据并写入sessionStorageInfo
     readProject(cardData.id)
       .then((res: any) => {
-        if (res && res.content !== '') {
-          let data = JSONParse(res.content)
+        if (res.status === 'OK' && res.data.content !== '') {
+          let data = JSONParse(res.data.content)
 
           const sessionStorageInfo = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
           if (sessionStorageInfo?.length) {

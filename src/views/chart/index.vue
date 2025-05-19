@@ -79,9 +79,10 @@ onMounted(() => {
 
   readProject(previewId)
     .then((res: any) => {
-      if (res && res.content !== '') {
+      //console.log('readProject', res.data)
+      if (res.status === 'OK' && res.data.content !== '') {
         nextTick(() => {
-          updateComponent(JSONParse(res.content), true, true)
+          updateComponent(JSONParse(res.data.content), true, true)
         })
       }
     })

@@ -90,7 +90,7 @@ const props = defineProps({
 })
 let emit = defineEmits(['update:isShowModal'])
 const refreshFunc: any = inject('refreshFunc')
-
+const t = window['$t']
 const content = shallowRef(null)
 
 const BACnet = loadAsyncComponent(() => import('../BACnet/index.vue'))
@@ -114,6 +114,11 @@ const onSubmit = () => {
       //clear
       handleBACnet()
     } else {
+      //参数校验
+      if (data.value.name === '' || data.value.property.port === '') {
+        window['$message'].error(t('device.msg_enter_params'))
+        return
+      }
       handleModbusRtu(data.value)
     }
   }

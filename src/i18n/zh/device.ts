@@ -52,6 +52,7 @@ export default {
   msg_search_fail: '当前没有可搜索设备！',
   msg_add_device_fail: '添加设备失败！',
   msg_add_device_success: '添加设备成功！',
+  msg_enter_params: '请输入参数！',
 
   //bacnet
   point_list: '设备点位列表',

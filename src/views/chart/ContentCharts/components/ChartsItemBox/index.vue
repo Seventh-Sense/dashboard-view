@@ -17,13 +17,26 @@
         @click="clickHandle(item)"
       >
         <div class="list-header">
-          <mac-os-control-btn class="list-header-control-btn" :mini="true" :disabled="true"></mac-os-control-btn>
+          <mac-os-control-btn
+            class="list-header-control-btn"
+            :mini="true"
+            :disabled="true"
+          ></mac-os-control-btn>
           <n-text class="list-header-text" depth="3">
-            <n-ellipsis>{{ item.title }}</n-ellipsis>
+            <n-ellipsis>
+              {{ typeof item.title === 'function' ? item.title() : item.title }}
+            </n-ellipsis>
           </n-text>
         </div>
         <div class="list-center go-flex-center go-transition" draggable="true">
-          <GoIconify v-if="item.icon" class="list-img" :icon="item.icon" color="#999" width="48" style="height: auto" />
+          <GoIconify
+            v-if="item.icon"
+            class="list-img"
+            :icon="item.icon"
+            color="#999"
+            width="48"
+            style="height: auto"
+          />
           <chart-glob-image v-else class="list-img" :chartConfig="item" />
         </div>
         <div class="list-bottom">
@@ -34,7 +47,11 @@
         <!-- 遮罩 -->
         <div v-if="item.disabled" class="list-model"></div>
         <!-- 工具栏 -->
-        <div v-if="isShowTools(item)" class="list-tools go-transition" @click="deleteHandle(item, index)">
+        <div
+          v-if="isShowTools(item)"
+          class="list-tools go-transition"
+          @click="deleteHandle(item, index)"
+        >
           <n-button text type="default" color="#ffffff">
             <template #icon>
               <n-icon>
@@ -58,7 +75,14 @@ import { EditCanvasTypeEnum } from '@/store/modules/chartEditStore/chartEditStor
 import { ChartModeEnum } from '@/store/modules/chartLayoutStore/chartLayoutStore.d'
 import { useChartLayoutStore } from '@/store/modules/chartLayoutStore/chartLayoutStore'
 import { usePackagesStore } from '@/store/modules/packagesStore/packagesStore'
-import { componentInstall, loadingStart, loadingFinish, loadingError, JSONStringify, goDialog } from '@/utils'
+import {
+  componentInstall,
+  loadingStart,
+  loadingFinish,
+  loadingError,
+  JSONStringify,
+  goDialog
+} from '@/utils'
 import { DragKeyEnum } from '@/enums/editPageEnum'
 import { createComponent } from '@/packages'
 import { ConfigType, CreateComponentType, PackagesCategoryEnum } from '@/packages/index.d'
@@ -85,7 +109,11 @@ const contentChartsItemBoxRef = ref()
 
 // 判断工具栏展示
 const isShowTools = (item: ConfigType) => {
-  return !item.disabled && item.package === PackagesCategoryEnum.PHOTOS && item.category === ChatCategoryEnum.PRIVATE
+  return (
+    !item.disabled &&
+    item.package === PackagesCategoryEnum.PHOTOS &&
+    item.category === ChatCategoryEnum.PRIVATE
+  )
 }
 
 // 组件展示状态

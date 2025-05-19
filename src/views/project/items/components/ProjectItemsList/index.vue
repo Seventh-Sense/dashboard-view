@@ -37,27 +37,31 @@ import { setLocalStorage } from '@/utils'
 
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
 const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
-const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } = useModalDataInit()
+const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } =
+  useModalDataInit()
 
 onMounted(() => {
   initTable()
 })
 
-const initTable = () => {
-  deleteAll()
+const initTable = async () => {
+  try {
+    deleteAll()
 
-  readProjectList()
-    .then((res: any) => {
-      if (res && res.length > 0) {
-        res.forEach((item: any) => {
-          addProject(item)
-        })
-        storageInfo(res)
-      }
+    const res: any = await readProjectList()
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+
+    res.data.forEach((item: any) => {
+      addProject(item)
     })
-    .catch(err => {
-      console.log(err)
-    })
+    storageInfo(res.data)
+  } catch (e) {
+    console.error('onChange:', e)
+  }
 }
 
 //保存项目信息
@@ -71,7 +75,7 @@ const storageInfo = (res: any[]) => {
     })
   })
 
-  setLocalStorage('ProjectInfo', array);
+  setLocalStorage('ProjectInfo', array)
 }
 
 provide('initTable', initTable)

@@ -1,11 +1,6 @@
 <template>
   <n-space class="go-mt-0" :wrap="false">
-    <n-button
-      v-for="item in comBtnList"
-      :key="item.title"
-      ghost
-      @click="item.event"
-    >
+    <n-button v-for="item in comBtnList" :key="item.title" ghost @click="item.event">
       <template #icon>
         <component :is="item.icon"></component>
       </template>
@@ -119,7 +114,7 @@ const sendHandle = async () => {
         if (res) {
           window['$message'].success(t('message.save_success'))
         }
-        console.log(res)
+        //console.log(res)
       })
       .catch(err => {
         console.log(err)

@@ -68,6 +68,7 @@ export default {
   more: 'More',
   line: 'Lines',
   device: 'Devices',
+  devices: 'Device',
   text: 'Texts',
   input: 'Controls',
 

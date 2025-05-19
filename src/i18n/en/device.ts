@@ -52,6 +52,7 @@ export default {
   msg_search_fail: 'No device was found!',
   msg_add_device_fail: 'Device addition failed!',
   msg_add_device_success: 'Device added successfully!',
+  msg_enter_params: 'Please enter the parameters!',
 
   //bacnet
   point_list: 'Points List',

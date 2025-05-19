@@ -46,8 +46,7 @@ import { useStore } from './hooks/useStore.hook'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { setOption } from '@/packages/public'
-import { readPoints } from '@/api/http'
+import { readPoints, readPointValue } from '@/api/http'
 
 await getSessionStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
@@ -101,20 +100,21 @@ const writeValue = (data: any) => {
 }
 
 onMounted(() => {
-  //console.log(chartEditStore.componentList)
-  interval = window.setInterval(() => {
-    readPoints()
-      .then(data => {
-        if (data) {
-          writeValue(data)
-        } else {
-          console.log('no data!')
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, 1500)
+  console.log(chartEditStore.componentList)
+  let load = getAllDataIdsSafe(chartEditStore.componentList)
+  // interval = window.setInterval(() => {
+  //   readPoints()
+  //     .then(data => {
+  //       if (data) {
+  //         writeValue(data)
+  //       } else {
+  //         console.log('no data!')
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }, 1500)
 })
 
 onUnmounted(() => {
@@ -122,6 +122,14 @@ onUnmounted(() => {
     window.clearInterval(interval)
   }
 })
+
+//获取所有需要读取数据的点位
+const getAllDataIdsSafe = (points: any[]): string[] => {
+  return [...new Set(points
+    .map(com => com.request?.bindParams?.objectID)
+    .filter(Boolean) // 过滤 null/undefined/空字符串
+  )];
+};
 </script>
 
 <style lang="scss" scoped>

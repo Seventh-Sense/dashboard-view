@@ -50,8 +50,8 @@ const inputInstRef = ref(null)
 const fetchProjectInfoById = () => {
   const id = fetchRouteParamsLocation()
 
-  if (id.length) {
-    return id[0]
+  if (id !== "") {
+    return id
   }
   return ''
 }
@@ -68,6 +68,7 @@ const comTitle = computed(() => {
   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
   title.value = title.value.replace(/\s/g, '')
   const id = title.value.length ? title.value : t('dashboard.new_project')
+  
   const newTitle = getProjectNameByID(id)
 
   setTitle(t('dashboard.workspace') + '-' + newTitle)

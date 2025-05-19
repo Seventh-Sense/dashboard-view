@@ -55,23 +55,27 @@ watch(props, newValue => {
   showRef.value = newValue.show
 })
 
-const onPositiveClick = () => {
+const onPositiveClick = async () => {
   if (paramCheck()) {
-    createProject({
-      name: project_name.value,
-      cover: '',
-      content: ''
-    })
-      .then((res: any) => {
-        //通知页面刷新
-        initTable()
+    try {
+      const res: any = await createProject({
+        name: project_name.value,
+        cover: '',
+        content: '',
+        description: ''
       })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        emit('close', false)
-      })
+
+      if (res.status !== 'OK') {
+        console.warn('Non-OK response status:', res.status)
+        return
+      }
+
+      initTable()
+    } catch (e) {
+      console.error('onChange:', e)
+    } finally {
+      emit('close', false)
+    }
   }
 }
 
@@ -122,7 +126,6 @@ $cardWidth: 570px;
       width: 100%;
     }
     &-con {
-      
       width: 100%;
     }
     &-title {

@@ -25,3 +25,9 @@ export enum ChatCategoryEnumName {
   Device = () => window['$t']('dashboard.device'),
   Air = () => window['$t']('dashboard.input'),
 }
+
+export const PROPERTY_TYPE_MAP = () => {
+  const t = window['$t']
+
+  return t('device.object_name')
+}

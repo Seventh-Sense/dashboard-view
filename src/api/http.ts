@@ -430,7 +430,7 @@ export const deletePoint = async (id: any) => {
 //project
 export const readProjectList = async () => {
   try {
-    const response = await get(`/project/?offset=0&limit=100`)
+    const response = await get2(`/projects`)
 
     return response
   } catch (error) {
@@ -440,7 +440,7 @@ export const readProjectList = async () => {
 
 export const createProject = async (data: any) => {
   try {
-    const response = await post(`/project/`, data)
+    const response = await post2(`/project`, data)
 
     return response
   } catch (error) {
@@ -450,7 +450,7 @@ export const createProject = async (data: any) => {
 
 export const readProject = async (id: any) => {
   try {
-    const response = await get(`/project/` + id)
+    const response = await get2(`/project/` + id)
 
     return response
   } catch (error) {
@@ -460,7 +460,7 @@ export const readProject = async (id: any) => {
 
 export const updateProject = async (id: any, data: any) => {
   try {
-    const response = await patch(`/project/` + id, data)
+    const response = await patch2(`/project/` + id, data)
 
     return response
   } catch (error) {
@@ -470,7 +470,7 @@ export const updateProject = async (id: any, data: any) => {
 
 export const deleteProject = async (id: any) => {
   try {
-    const response = await del(`/project/` + id)
+    const response = await del2(`/project/` + id)
 
     return response
   } catch (error) {

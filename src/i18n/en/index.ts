@@ -14,7 +14,7 @@ const global = {
   // header
   doc: 'Document',
   help: 'Help',
-  contact: 'About Software',
+  contact: 'About',
   logout: 'Logout',
   // system setting
   sys_set: 'System Setting',

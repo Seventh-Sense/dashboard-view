@@ -52,8 +52,8 @@ export const getPreviewInfo = () => {
 
   readProject(id)
     .then((res: any) => {
-      if (res && res.content !== '') {
-        let data = JSONParse(res.content)
+      if (res.status === 'OK' && res.data.content !== '') {
+        let data = JSONParse(res.data.content)
         chartEditStore.editCanvasConfig = data.editCanvasConfig
         chartEditStore.requestGlobalConfig = data.requestGlobalConfig
         chartEditStore.componentList = data.componentList

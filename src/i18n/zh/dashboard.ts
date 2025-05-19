@@ -67,6 +67,7 @@ export default {
   more: '更多',
   line: '折线图',
   device: '设备',
+  devices: '设备',
   text: '文本',
   input: '控件',
 

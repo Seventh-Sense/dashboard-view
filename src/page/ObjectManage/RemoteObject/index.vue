@@ -133,7 +133,7 @@ const initData = async () => {
 
     if (res.data.length === 0) {
       console.warn('No devices found in the response data')
-      window['$message'].warning(t('device.device_no_data'))
+      //window['$message'].warning(t('device.device_no_data'))
       return
     }
 
