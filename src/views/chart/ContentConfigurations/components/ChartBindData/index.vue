@@ -33,7 +33,7 @@ import { onMounted, ref, computed, watch } from 'vue'
 import { useTargetData } from '../hooks/useTargetData.hook'
 import { CascaderOption } from 'naive-ui'
 import { SettingItemBox } from '@/components/Pages/ChartItemSetting'
-import { getDeviceList, readDeivceList, readSubscribePoints } from '@/api/http'
+import { getDeviceList, readSubscribePoints } from '@/api/http'
 
 const { targetData } = useTargetData()
 
@@ -62,28 +62,7 @@ const bindValue = (value: any) => {
   }
 }
 
-const handleUpdateValue = (value: string, option: CascaderOption) => {
-  //mconsole.log(value, option)
-  if (value === null) {
-    targetData.value.request.bindParams = {
-      deviceID: '',
-      deviceName: '',
-      objectID: '',
-      objectName: ''
-    }
-  } else {
-    let array = value.split('-')
-    targetData.value.request.bindParams = {
-      deviceID: array[1],
-      deviceName: array[0],
-      objectID: array[2],
-      objectName: option.label
-    }
-  }
-}
-
 onMounted(() => {
-  
   readDevices()
 })
 

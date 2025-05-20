@@ -14,7 +14,7 @@
           </n-icon>
         </n-button>
       </template>
-      <span>快捷键</span>
+      <span>{{t('dashboard.shortcut_key')}}</span>
     </n-tooltip>
   </div>
 </template>
@@ -26,6 +26,8 @@ import ShortcutKeyModal from './ShortcutKeyModal.vue'
 
 const { DicomOverlayIcon } = icon.carbon
 const modelShow = ref<boolean>(false)
+
+const t = window['$t']
 </script>
 
 <style lang="scss" scoped>

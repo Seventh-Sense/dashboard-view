@@ -15,4 +15,6 @@ export default {
     //login
     login_msg_1: '登录成功!',
     login_msg_2: '登录失败!',
+
+    please_input_chart: '请输入至少一个字符!',
 }

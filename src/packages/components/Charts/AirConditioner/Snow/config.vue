@@ -1,6 +1,6 @@
 <template>
-    <CollapseItem :name="`效果`" :expanded="true">
-      <SettingItemBox name="数据">
+    <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+      <SettingItemBox :name="t('dashboard.value')">
         <SettingItem name="">
           <n-switch v-model:value="config.dataset" size="small" />
         </SettingItem>
@@ -19,7 +19,7 @@
       required: true
     }
   })
-  
+  const t = window['$t']
   const config = computed(() => {
     return props.optionData
   })

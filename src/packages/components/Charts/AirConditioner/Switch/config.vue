@@ -1,9 +1,9 @@
 <template>
-  <CollapseItem name="属性" :expanded="true">
-    <SettingItemBox name="Off 颜色">
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.off_color')">
       <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.off"></n-color-picker>
     </SettingItemBox>
-    <SettingItemBox name="On 颜色">
+    <SettingItemBox :name="t('dashboard.on_color')">
       <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.on"></n-color-picker>
     </SettingItemBox>
   </CollapseItem>
@@ -23,4 +23,6 @@ const props = defineProps({
     required: true
   }
 })
+
+const t = window['$t']
 </script>

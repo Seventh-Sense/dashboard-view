@@ -53,6 +53,10 @@ const handleSelect = (key: LangEnum, option: any) => {
   value.value = key
   locale.value = key
   langStore.changeLang(key)
+
+  setTimeout(() => {
+    window.location.reload()
+  }, 500)
 }
 </script>
 

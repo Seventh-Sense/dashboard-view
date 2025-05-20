@@ -1,9 +1,15 @@
 <template>
   <div class="go-flex-items-center">
-    <n-popover class="edit-history-popover" :show-arrow="false" size="small" trigger="click" placement="top-start">
+    <n-popover
+      class="edit-history-popover"
+      :show-arrow="false"
+      size="small"
+      trigger="click"
+      placement="top-start"
+    >
       <template #trigger>
         <n-button class="mr-10" secondary size="small" :disabled="options.length === 0">
-          <span class="btn-text">{{$t('dashboard.history')}}</span>
+          <span class="btn-text">{{ $t('dashboard.history') }}</span>
         </n-button>
       </template>
 
@@ -29,7 +35,7 @@
           <help-outline-icon></help-outline-icon>
         </n-icon>
       </template>
-      <span>最多只保留{{ editHistoryMax }}条记录</span>
+      <span>{{ t('dashboard.at_most') }}{{ editHistoryMax }}{{ t('dashboard.num_record') }}</span>
     </n-tooltip>
   </div>
 </template>
@@ -114,10 +120,15 @@ const labelHandle = (e: HistoryItemType) => {
   // 画布编辑
   if (e.targetType === HistoryTargetTypeEnum.CANVAS) {
     return historyActionTypeName[HistoryTargetTypeEnum.CANVAS]
-  } else if (e.actionType === HistoryActionTypeEnum.GROUP || e.actionType === HistoryActionTypeEnum.UN_GROUP) {
+  } else if (
+    e.actionType === HistoryActionTypeEnum.GROUP ||
+    e.actionType === HistoryActionTypeEnum.UN_GROUP
+  ) {
     return `${historyActionTypeName[e.actionType]}`
   } else if (e.historyData.length) {
-    return `${historyActionTypeName[e.actionType]} - ${(e.historyData[0] as CreateComponentType).chartConfig.title}`
+    return `${historyActionTypeName[e.actionType]} - ${
+      (e.historyData[0] as CreateComponentType).chartConfig.title
+    }`
   }
 }
 

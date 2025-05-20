@@ -1,6 +1,6 @@
 <template>
-  <CollapseItem name="背景" :expanded="true">
-    <SettingItemBox name="颜色">
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.color')">
       <SettingItem>
         <n-color-picker
           v-model:value="optionData.backgroundColor"
@@ -9,7 +9,7 @@
         ></n-color-picker>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox name="模糊">
+    <SettingItemBox :name="t('dashboard.fuzzy')">
       <SettingItem>
         <n-input-number
           v-model:value="optionData.opacity"
@@ -20,7 +20,7 @@
         ></n-input-number>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox name="圆角">
+    <SettingItemBox :name="t('dashboard.radius')">
       <SettingItem>
         <n-input-number
           v-model:value="optionData.radius"
@@ -49,6 +49,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const t = window['$t']
 </script>
 
 <style lang="scss" scoped>

@@ -10,7 +10,7 @@ export const LoginRoute: RouteRecordRaw = {
   name: 'Login',
   component: () => import('@/views/login/index.vue'),
   meta: {
-    title: '登录',
+    title: 'XPlay',
   },
 };
 
@@ -19,7 +19,7 @@ export const DisplayRoute: RouteRecordRaw = {
   name: 'Display',
   component: () => import('@/views/display/index.vue'),
   meta: {
-    title: '展示',
+    title: 'XPlay',
   },
 };
 
@@ -28,7 +28,7 @@ export const DeviceManageRoute: RouteRecordRaw = {
   name: PageEnum.BASE_DEVICE_MANAGE_NAME,
   component: () => import('@/page/DeviceManage/index.vue'),
   meta: {
-    title: '设备管理',
+    title: 'XPlay',
   },
 };
 

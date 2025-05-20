@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
+import i18n from '@/i18n/index'
 
 // 引入路径
 const importPath = {
@@ -20,7 +21,7 @@ const projectRoutes: RouteRecordRaw = {
   component: importPath['PageEnum.BASE_HOME_NAME'],
   redirect: PageEnum.BASE_HOME_ITEMS,
   meta: {
-    title: '项目',
+    title: 'XPlay',
     isRoot: true
   },
   children: [
@@ -29,7 +30,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_LOCAL_NAME,
       component: importPath['PageEnum.BASE_LOCAL_NAME'],
       meta: {
-        title: 'Local'
+        title: 'XPlay'
       }
     },
     {
@@ -37,7 +38,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_LOCAL_MAN_NAME,
       component: importPath['PageEnum.BASE_LOCAL_MAN_NAME'],
       meta: {
-        title: 'Local'
+        title: 'XPlay'
       }
     },
     {
@@ -45,7 +46,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_REMOTE_MAN_NAME,
       component: importPath['PageEnum.BASE_REMOTE_MAN_NAME'],
       meta: {
-        title: 'Remote'
+        title: 'XPlay'
       }
     },
     {
@@ -53,7 +54,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_MODBUS_MAN_NAME,
       component: importPath['PageEnum.BASE_MODBUS_MAN_NAME'],
       meta: {
-        title: 'Modbus'
+        title: 'XPlay'
       }
     },
     {
@@ -61,7 +62,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_HOME_ITEMS_NAME,
       component: importPath['PageEnum.BASE_HOME_ITEMS_NAME'],
       meta: {
-        title: '我的项目'
+        title: 'XPlay'
       }
     },
     {
@@ -69,7 +70,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_HOME_TEMPLATE_NAME,
       component: importPath['PageEnum.BASE_HOME_TEMPLATE_NAME'],
       meta: {
-        title: '我的模板'
+        title: 'XPlay'
       }
     },
     {
@@ -77,7 +78,7 @@ const projectRoutes: RouteRecordRaw = {
       name: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
       component: importPath['PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME'],
       meta: {
-        title: '模板市场'
+        title: 'XPlay'
       }
     }
   ]

@@ -26,7 +26,7 @@ export const FontWeightObject = {
 export const option = {
   link: '',
   linkHead: 'http://',
-  dataset: '我是文本',
+  dataset: 'Text',
   fontSize: 56,
   fontColor: '#ffffff',
   paddingX: 10,

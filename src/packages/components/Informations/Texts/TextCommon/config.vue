@@ -1,6 +1,6 @@
 <template>
-  <collapse-item name="信息" :expanded="true">
-    <setting-item-box name="文字" :alone="true">
+  <collapse-item :name="t('dashboard.effect')" :expanded="true">
+    <setting-item-box :name="t('dashboard.texts')" :alone="true">
       <setting-item>
         <n-input v-model:value="optionData.dataset" type="textarea" size="small"></n-input>
       </setting-item>
@@ -21,60 +21,60 @@
     </setting-item-box> -->
   </collapse-item>
 
-  <collapse-item name="样式" :expanded="true">
-    <setting-item-box name="文字">
-      <setting-item name="颜色">
+  <collapse-item :name="t('dashboard.style')" :expanded="true">
+    <setting-item-box :name="t('dashboard.texts')">
+      <setting-item :name="t('dashboard.color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.fontColor"></n-color-picker>
       </setting-item>
-      <setting-item name="字体大小">
+      <setting-item :name="t('dashboard.font_size')">
         <n-input-number v-model:value="optionData.fontSize" size="small" placeholder="字体大小"></n-input-number>
       </setting-item>
-      <setting-item name="字体粗细">
+      <setting-item :name="t('dashboard.font_thickness')">
         <n-select v-model:value="optionData.fontWeight" size="small" :options="fontWeightOptions" />
       </setting-item>
-      <setting-item name="X轴内边距">
+      <setting-item :name="t('dashboard.x_inner_margin')">
         <n-input-number v-model:value="optionData.paddingX" size="small" placeholder="输入内边距"></n-input-number>
       </setting-item>
-      <setting-item name="Y轴内边距">
+      <setting-item :name="t('dashboard.y_inner_margin')">
         <n-input-number v-model:value="optionData.paddingY" size="small" placeholder="输入内边距"></n-input-number>
       </setting-item>
 
-      <setting-item name="水平对齐">
+      <setting-item :name="t('dashboard.horizontal_alignment')">
         <n-select v-model:value="optionData.textAlign" size="small" :options="textAlignOptions" />
       </setting-item>
-      <setting-item name="文本方向">
+      <setting-item :name="t('dashboard.text_direction')">
         <n-select v-model:value="optionData.writingMode" size="small" :options="verticalOptions" />
       </setting-item>
 
-      <setting-item name="字间距">
+      <setting-item :name="t('dashboard.word_spacing')">
         <n-input-number v-model:value="optionData.letterSpacing" size="small" placeholder="输入字间距"></n-input-number>
       </setting-item>
     </setting-item-box>
 
-    <setting-item-box name="边框">
-      <setting-item name="宽度">
+    <setting-item-box :name="t('dashboard.border')">
+      <setting-item :name="t('dashboard.width')">
         <n-input-number
           v-model:value="optionData.borderWidth"
           size="small"
           :min="0"
-          placeholder="宽度"
+          :placeholder="t('dashboard.width')"
         ></n-input-number>
       </setting-item>
-      <setting-item name="颜色">
+      <setting-item :name="t('dashboard.color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.borderColor"></n-color-picker>
       </setting-item>
-      <setting-item name="圆角">
+      <setting-item :name="t('dashboard.radius')">
         <n-input-number
           v-model:value="optionData.borderRadius"
           size="small"
           :min="0"
-          placeholder="圆角"
+          :placeholder="t('dashboard.radius')"
         ></n-input-number>
       </setting-item>
     </setting-item-box>
 
-    <setting-item-box name="背景" :alone="true">
-      <setting-item name="背景颜色">
+    <setting-item-box :name="t('dashboard.background')" :alone="true">
+      <setting-item :name="t('dashboard.background_color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.backgroundColor"></n-color-picker>
       </setting-item>
     </setting-item-box>
@@ -92,29 +92,31 @@ const props = defineProps({
   }
 })
 
+const t = window['$t']
+
 const textAlignOptions = [
-  { label: '左对齐', value: 'start' },
-  { label: '居中', value: 'center' },
-  { label: '右对齐', value: 'end' }
+  { label: t('dashboard.left_alignment'), value: 'start' },
+  { label: t('dashboard.center'), value: 'center' },
+  { label: t('dashboard.right_alignment'), value: 'end' }
 ]
 
 const verticalOptions = [
   {
-    label: WritingModeEnum.HORIZONTAL,
+    label: t('dashboard.level'),
     value: WritingModeObject[WritingModeEnum.HORIZONTAL]
   },
   {
-    label: WritingModeEnum.VERTICAL,
+    label: t('dashboard.vertical'),
     value: WritingModeObject[WritingModeEnum.VERTICAL]
   }
 ]
 const fontWeightOptions = [
   {
-    label: FontWeightEnum.NORMAL,
+    label: t('dashboard.normal'),
     value: FontWeightObject[FontWeightEnum.NORMAL]
   },
   {
-    label: FontWeightEnum.BOLD,
+    label: t('dashboard.bold'),
     value: FontWeightObject[FontWeightEnum.BOLD]
   }
 ]

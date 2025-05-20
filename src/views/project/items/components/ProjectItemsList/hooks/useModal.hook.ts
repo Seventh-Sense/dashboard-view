@@ -33,7 +33,7 @@ export const useModalDataInit = () => {
   const editHandle = (cardData: Chartype) => {
     if (!cardData) return
     const path = fetchPathByName(ChartEnum.CHART_HOME_NAME, 'fullPath')
-
+    
     routerTurnByPath(path, [cardData.id], undefined, false)
   }
 

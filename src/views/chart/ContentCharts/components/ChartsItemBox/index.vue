@@ -58,7 +58,7 @@
                 <TrashIcon />
               </n-icon>
             </template>
-            <span>删除</span>
+            <span>{{ t('global.r_delete')}}</span>
           </n-button>
         </div>
       </div>
@@ -95,6 +95,7 @@ import omit from 'lodash/omit'
 
 const chartEditStore = useChartEditStore()
 const { TrashIcon } = icon.ionicons5
+const t = window['$t']
 
 const emit = defineEmits(['deletePhoto'])
 const props = defineProps({
@@ -171,7 +172,7 @@ const clickHandle = (item: ConfigType) => {
 
 const deleteHandle = (item: ConfigType, index: number) => {
   goDialog({
-    message: '是否删除此图片？',
+    message: window['$t']('dashboard.is_delete_pictrue'),
     transformOrigin: 'center',
     onPositiveCallback: () => {
       const packagesStore = usePackagesStore()

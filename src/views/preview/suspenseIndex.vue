@@ -46,12 +46,14 @@ import { useStore } from './hooks/useStore.hook'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { readPoints, readPointValue } from '@/api/http'
+import { readPointsDataById } from '@/api/http'
+
+const t = window['$t']
 
 await getSessionStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
-setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
+setTitle(`${t('global.r_preview')}-${chartEditStore.editCanvasConfig.projectName}`)
 
 const previewRefStyle = computed(() => {
   return {
@@ -78,43 +80,22 @@ const { show } = useComInstall(chartEditStore)
 keyRecordHandle()
 
 const writeValue = (data: any) => {
-  chartEditStore.componentList.map((com: any) => {
-    //console.log("com", com)
-    let bindInfo = com.request.bindParams
+  chartEditStore.componentList.map((component: any) => {
+    const { deviceID, objectID } = component.request.bindParams
 
-    data.length > 0 &&
-      data.map((value: any) => {
-        if (
-          value.modbus_id.toString() === bindInfo.deviceID &&
-          value.id.toString() === bindInfo.objectID
-        ) {
-          //console.log("com", com, value, bindInfo)
-          if (com.key === 'Online') {
-            com.option.dataset = value.status
-          } else {
-            com.option.dataset = value.value
-          }
-        }
-      })
+    const matchedData = data.find((item: any) => item.metric_id === objectID)
+
+    if (!matchedData) return
+
+    //console.log(matchedData.property?.['present-value'])
+    component.option.dataset =
+      component.key === 'Online' ? matchedData.status : matchedData.property?.['present-value']
   })
 }
 
 onMounted(() => {
-  console.log(chartEditStore.componentList)
-  let load = getAllDataIdsSafe(chartEditStore.componentList)
-  // interval = window.setInterval(() => {
-  //   readPoints()
-  //     .then(data => {
-  //       if (data) {
-  //         writeValue(data)
-  //       } else {
-  //         console.log('no data!')
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }, 1500)
+  console.log('chartEditStore', chartEditStore.editCanvasConfig)
+  readPointValue(chartEditStore.componentList)
 })
 
 onUnmounted(() => {
@@ -123,13 +104,31 @@ onUnmounted(() => {
   }
 })
 
+const readPointValue = (dataList: any[]) => {
+  let load = getAllDataIdsSafe(dataList)
+  interval = window.setInterval(() => {
+    readPointsDataById(load)
+      .then((res: any) => {
+        if (res.status === 'OK') {
+          writeValue(res.data)
+        } else {
+          console.log('no data!')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, 1500)
+}
+
 //获取所有需要读取数据的点位
 const getAllDataIdsSafe = (points: any[]): string[] => {
-  return [...new Set(points
-    .map(com => com.request?.bindParams?.objectID)
-    .filter(Boolean) // 过滤 null/undefined/空字符串
-  )];
-};
+  return [
+    ...new Set(
+      points.map(com => com.request?.bindParams?.objectID).filter(Boolean) // 过滤 null/undefined/空字符串
+    )
+  ]
+}
 </script>
 
 <style lang="scss" scoped>

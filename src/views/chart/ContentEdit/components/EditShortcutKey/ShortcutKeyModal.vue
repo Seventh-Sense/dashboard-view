@@ -3,11 +3,11 @@
     <n-table class="model-content" :bordered="false" :single-line="false">
       <thead>
         <tr>
-          <th>功能</th>
+          <th>{{t('dashboard.function')}}</th>
           <!-- <th>Win 快捷键</th> -->
           <th>
             <n-space justify="space-between">
-              <span> 快捷键 </span>
+              <span> {{t('dashboard.shortcut_key')}} </span>
               <n-icon size="20" class="go-cursor-pointer" @click="closeHandle">
                 <close-icon></close-icon>
               </n-icon>
@@ -39,7 +39,7 @@ const { CloseIcon } = icon.ionicons5
 const modelShowRef = ref(false)
 
 const emit = defineEmits(['update:modelShow'])
-
+const t = window['$t']
 const props = defineProps({
   modelShow: Boolean
 })
@@ -52,28 +52,28 @@ watch(() => props.modelShow, (newValue) => {
 // 快捷键
 const shortcutKeyOptions = [
   {
-    label: '拖拽画布',
+    label: t('dashboard.drag_canvas'),
     win: `${WinKeyboard.SPACE.toUpperCase()} + 🖱️ `,
     mac: `${MacKeyboard.SPACE.toUpperCase()} + 🖱️ `,
     macSource: true
   },
   {
-    label: '向 上/右/下/左 移动',
-    win: `${WinKeyboard.CTRL.toUpperCase()} + ↑ 或 → 或 ↓ 或 ←`,
+    label: t('dashboard.move_all'),
+    win: `${WinKeyboard.CTRL.toUpperCase()} + ↑ / → / ↓ / ←`,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + ↑ `
   },
   {
-    label: '锁定',
+    label: t('dashboard.lock_'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + L `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + L `
   },
   {
-    label: '解锁',
+    label: t('dashboard.unlock_'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + ${WinKeyboard.SHIFT.toUpperCase()}+ L `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + ${MacKeyboard.SHIFT.toUpperCase()} + L `
   },
   {
-    label: '隐藏',
+    label: t('dashboard.hide'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + H `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + H `
   },
@@ -83,47 +83,47 @@ const shortcutKeyOptions = [
   //   mac: `${MacKeyboard.CTRL.toUpperCase()} + ${MacKeyboard.SHIFT.toUpperCase()} + H `
   // },
   {
-    label: '删除',
+    label: t('dashboard.del'),
     win: 'Delete'.toUpperCase(),
     mac: `${MacKeyboard.CTRL.toUpperCase()} + Backspace `
   },
   {
-    label: '复制',
+    label: t('dashboard.copy'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + C `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + C `
   },
   {
-    label: '剪切',
+    label: t('dashboard.cut'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + X `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + X `
   },
   {
-    label: '粘贴',
+    label: t('dashboard.paste'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + V `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + V `
   },
   {
-    label: '后退',
+    label: t('dashboard.recoil'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + Z `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + Z `
   },
   {
-    label: '前进',
+    label: t('dashboard.advance'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + ${WinKeyboard.SHIFT.toUpperCase()} + Z `,
     mac: `${MacKeyboard.CTRL.toUpperCase()} + ${MacKeyboard.SHIFT.toUpperCase()} + Z `
   },
   {
-    label: '多选',
+    label: t('dashboard.multiple_choices'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + 🖱️ `,
     mac: `${MacKeyboard.CTRL_SOURCE_KEY.toUpperCase()} + 🖱️ `
   },
   {
-    label: '创建分组',
+    label: t('dashboard.create_groups'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + G / 🖱️ `,
     mac: `${MacKeyboard.CTRL_SOURCE_KEY.toUpperCase()} + G / 🖱️`
   },
   {
-    label: '解除分组',
+    label: t('dashboard.cancel_groups'),
     win: `${WinKeyboard.CTRL.toUpperCase()} + ${WinKeyboard.SHIFT.toUpperCase()} + G `,
     mac: `${MacKeyboard.CTRL_SOURCE_KEY.toUpperCase()} + ${WinKeyboard.SHIFT.toUpperCase()} + G `
   }

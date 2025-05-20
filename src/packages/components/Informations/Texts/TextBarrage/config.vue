@@ -1,36 +1,36 @@
 <template>
-  <collapse-item name="信息" :expanded="true">
-    <setting-item-box name="文字" :alone="true">
+  <collapse-item :name="t('dashboard.effect')" :expanded="true">
+    <setting-item-box :name="t('dashboard.texts')" :alone="true">
       <setting-item>
         <n-input v-model:value="optionData.dataset" type="textarea" size="small"></n-input>
       </setting-item>
     </setting-item-box>
   </collapse-item>
 
-  <collapse-item name="样式" :expanded="true">
-    <setting-item-box name="文字">
-      <setting-item name="颜色">
+  <collapse-item :name="t('dashboard.style')" :expanded="true">
+    <setting-item-box :name="t('dashboard.texts')">
+      <setting-item :name="t('dashboard.color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.fontColor"></n-color-picker>
       </setting-item>
-      <setting-item name="字体大小">
+      <setting-item :name="t('dashboard.font_size')">
         <n-input-number v-model:value="optionData.fontSize" size="small" placeholder="字体大小"></n-input-number>
       </setting-item>
-      <setting-item name="字体粗细">
+      <setting-item :name="t('dashboard.font_thickness')">
         <n-select v-model:value="optionData.fontWeight" size="small" :options="fontWeightOptions" />
       </setting-item>
 
-      <setting-item name="字间距">
+      <setting-item :name="t('dashboard.word_spacing')">
         <n-input-number v-model:value="optionData.letterSpacing" size="small" placeholder="输入字间距"></n-input-number>
       </setting-item>
     </setting-item-box>
-    <setting-item-box name="阴影">
+    <setting-item-box :name="t('dashboard.shadow')">
       <setting-item>
         <n-space>
           <n-switch v-model:value="optionData.showShadow" size="small" />
-          <n-text>展示阴影</n-text>
+          <n-text>{{ t('dashboard.show_shadows')}}</n-text>
         </n-space>
       </setting-item>
-      <setting-item name="颜色">
+      <setting-item :name="t('dashboard.color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.colorShadow"></n-color-picker
       ></setting-item>
       <setting-item name="x">
@@ -39,25 +39,25 @@
       <setting-item name="y">
         <n-input-number v-model:value="optionData.vShadow" size="small"></n-input-number
       ></setting-item>
-      <setting-item name="模糊">
+      <setting-item :name="t('dashboard.fuzzy')">
         <n-input-number v-model:value="optionData.blurShadow" size="small"></n-input-number
       ></setting-item>
     </setting-item-box>
 
-    <setting-item-box name="动画">
-      <setting-item name="动画速度">
+    <setting-item-box :name="t('dashboard.animation')">
+      <setting-item :name="t('dashboard.animation_speed')">
         <n-input-number
           v-model:value="optionData.animationSpeed"
           size="small"
-          placeholder="动画速度"
+          :placeholder="t('dashboard.animation_speed')"
           :min="0"
         ></n-input-number>
       </setting-item>
-      <setting-item name="动画间隔">
+      <setting-item :name="t('dashboard.animation_interval')">
         <n-input-number
           v-model:value="optionData.animationTime"
           size="small"
-          placeholder="动画间隔"
+          :placeholder="t('dashboard.animation_interval')"
           :min="0"
         ></n-input-number>
       </setting-item>
@@ -76,14 +76,17 @@ const props = defineProps({
   }
 })
 
+const t = window['$t']
+
 const fontWeightOptions = [
   {
-    label: FontWeightEnum.NORMAL,
+    label: t('dashboard.normal'),
     value: FontWeightObject[FontWeightEnum.NORMAL]
   },
   {
-    label: FontWeightEnum.BOLD,
+    label: t('dashboard.bold'),
     value: FontWeightObject[FontWeightEnum.BOLD]
   }
 ]
+
 </script>

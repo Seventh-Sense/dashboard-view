@@ -4,7 +4,7 @@
     <n-tooltip  placement="right" trigger="hover">
       <template #trigger>
         <n-button >
-          {{ $t('global.r_add') }}
+          {{ $t('global.r_create') }}
         </n-button>
       </template>
       <span>

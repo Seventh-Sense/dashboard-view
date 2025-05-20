@@ -35,7 +35,7 @@ const handleFocus = () => {
 
 const handleBlur = () => {
   if(!props.chartConfig.title.length) {
-    window['$message'].warning('请输入至少一个字符!')
+    window['$message'].warning(t('msg.please_input_chart'))
     props.chartConfig.title = valueCatch 
   }
 }

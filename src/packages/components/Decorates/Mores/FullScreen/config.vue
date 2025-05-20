@@ -1,13 +1,13 @@
 <template>
-  <CollapseItem name="全屏按钮" expanded>
-    <SettingItemBox name="按钮">
-      <SettingItem name="背景色">
+  <CollapseItem :name="t('dashboard.effect')" expanded>
+    <SettingItemBox :name="t('dashboard.button')">
+      <SettingItem :name="t('dashboard.background_color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.bgColor"></n-color-picker>
       </SettingItem>
-      <SettingItem name="边框色">
+      <SettingItem :name="t('dashboard.border_color')">
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.borderColor"></n-color-picker>
       </SettingItem>
-      <SettingItem name="边框大小">
+      <SettingItem :name="t('dashboard.border_size')">
         <n-input-number v-model:value="optionData.border" size="small" :step="0.5" :min="0"></n-input-number>
       </SettingItem>
     </SettingItemBox>
@@ -25,4 +25,6 @@ const props = defineProps({
     required: true
   }
 })
+
+const t = window['$t']
 </script>

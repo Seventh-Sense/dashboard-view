@@ -1,28 +1,28 @@
 <template>
-  <CollapseItem name="在线状态" :expanded="true">
-    <SettingItemBox name="内容">
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem>
         <n-space>
           <n-switch v-model:value="optionData.dataset" size="small"></n-switch>
         </n-space>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox name="样式">
-      <SettingItem name="在线颜色">
+    <SettingItemBox :name="t('dashboard.style')">
+      <SettingItem :name="t('dashboard.online_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
           v-model:value="optionData.onlineColor"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem name="离线颜色">
+      <SettingItem :name="t('dashboard.offline_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
           v-model:value="optionData.offlineColor"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem name="大小">
+      <SettingItem :name="t('dashboard.size')">
         <n-input-number v-model:value="optionData.size" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
@@ -44,6 +44,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const t = window['$t']
 </script>
 
 <style lang="scss" scoped></style>

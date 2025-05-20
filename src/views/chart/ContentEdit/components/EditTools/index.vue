@@ -186,13 +186,13 @@ const btnList: BtnListType[] = [
   {
     key: 'import',
     type: TypeEnum.IMPORTUPLOAD,
-    name: '导入',
+    name: window['$t']('device.import_devices'),
     icon: DownloadIcon
   },
   {
     key: 'export',
     type: TypeEnum.BUTTON,
-    name: '导出',
+    name: window['$t']('device.export_devices'),
     icon: ShareIcon,
     handle: exportHandle
   },
@@ -203,15 +203,15 @@ const btnList: BtnListType[] = [
   //   icon: CreateIcon,
   //   handle: editHandle
   // },
-  {
-    key: 'setting',
-    type: TypeEnum.BUTTON,
-    name: '设置',
-    icon: SettingsSharpIcon,
-    handle: () => {
-      globalSettingModel.value = true
-    }
-  }
+  // {
+  //   key: 'setting',
+  //   type: TypeEnum.BUTTON,
+  //   name: window['$t']('dashboard.setting'),
+  //   icon: SettingsSharpIcon,
+  //   handle: () => {
+  //     globalSettingModel.value = true
+  //   }
+  // }
 ]
 </script>
 

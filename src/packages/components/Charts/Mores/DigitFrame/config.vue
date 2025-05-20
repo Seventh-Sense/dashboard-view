@@ -1,25 +1,25 @@
 <template>
-  <CollapseItem name="数值" :expanded="true">
-    <SettingItemBox name="内容">
-      <SettingItem name="数值">
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.contant')">
+      <SettingItem :name="t('dashboard.value')">
         <n-input-number v-model:value="optionData.dataset" size="small" :min="0"></n-input-number>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox name="样式">
-      <SettingItem name="颜色">
+    <SettingItemBox :name="t('dashboard.style')">
+      <SettingItem :name="t('dashboard.color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
           v-model:value="optionData.color"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem name="字体大小">
+      <SettingItem :name="t('dashboard.font_size')">
         <n-input-number v-model:value="optionData.size" size="small"></n-input-number>
       </SettingItem>
-      <setting-item name="单位">
+      <setting-item :name="t('dashboard.unit')">
         <n-select v-model:value="optionData.unit" :options="units" size="small" />
       </setting-item>
-      <SettingItem name="小数位">
+      <SettingItem :name="t('dashboard.decimal_place')">
         <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
       </SettingItem>
     </SettingItemBox>
@@ -41,6 +41,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const t = window['$t']
 </script>
 
 <style lang="scss" scoped></style>

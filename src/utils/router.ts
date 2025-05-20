@@ -170,7 +170,7 @@ export const fetchRouteParamsLocation = () => {
  * @param confirm
  */
 export const goHome = () => {
-  routerTurnByName(PageEnum.BASE_HOME_NAME)
+  routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME)
 }
 
 /**

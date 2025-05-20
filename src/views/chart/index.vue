@@ -76,7 +76,7 @@ const { menuOptions, onClickOutSide, mousePosition, handleMenuSelect } = useCont
 onMounted(() => {
   const { id } = routerParamsInfo.params
   const previewId = typeof id === 'string' ? id : id[0]
-
+  
   readProject(previewId)
     .then((res: any) => {
       //console.log('readProject', res.data)

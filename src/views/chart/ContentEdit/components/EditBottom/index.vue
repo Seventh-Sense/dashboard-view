@@ -20,6 +20,7 @@
         :disabled="lockScale"
         :options="filterOptions"
         @update:value="selectHandle"
+        style="width: 110px;"
       ></n-select>
 
       <!-- 锁定缩放 -->
@@ -32,7 +33,10 @@
             </n-icon>
           </n-button>
         </template>
-        <span>{{ lockScale ? '解锁' : '锁定' }}当前比例</span>
+        <span>
+          {{ lockScale ? t('dashboard.unlock') : t('dashboard.lock')
+          }}{{ t('dashboard.current_proportion') }}
+        </span>
       </n-tooltip>
 
       <!-- 拖动 -->
@@ -65,7 +69,7 @@ import { useChartLayoutStore } from '@/store/modules/chartLayoutStore/chartLayou
 import { ChartLayoutStoreEnum } from '@/store/modules/chartLayoutStore/chartLayoutStore.d'
 
 const { LockClosedOutlineIcon, LockOpenOutlineIcon } = icon.ionicons5
-
+const t = window['$t']
 // 全局颜色
 const designStore = useDesignStore()
 const themeColor = ref(designStore.getAppTheme)
@@ -93,7 +97,7 @@ let filterOptions = [
     value: 50
   },
   {
-    label: '自适应',
+    label: t('dashboard.adaptive'),
     value: 0
   }
 ]

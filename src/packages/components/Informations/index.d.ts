@@ -6,9 +6,9 @@ export enum ChatCategoryEnum {
 }
 
 export enum ChatCategoryEnumName {
-  TEXT = '文本',
+  TEXT = () => window['$t']('dashboard.text'),
   TITLE = '标题',
   // 控件 => 数据录入
-  INPUTS = '控件',
+  INPUTS = () => window['$t']('dashboard.input'),
   MORE = '更多'
 }

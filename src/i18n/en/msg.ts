@@ -15,4 +15,6 @@ export default {
     //login
     login_msg_1: 'Login successful!',
     login_msg_2: 'Login failure!',
+
+    please_input_chart: 'Please enter at least one character!',
 }

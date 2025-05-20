@@ -640,3 +640,13 @@ export const createModbusPoint = async (data: any) => {
     throw error
   }
 }
+
+export const readPointsDataById = async (data: any) => {
+  try {
+    const response = await post2(`/points/newest`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
