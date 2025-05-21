@@ -1,5 +1,5 @@
 <template>
-  <CollapseItem :name="$t('dashboard.gauge_info')" :expanded="true">
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
         <!-- 与 config.ts 里的 option 对应 -->

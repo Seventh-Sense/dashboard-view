@@ -233,4 +233,11 @@ export default {
   multiple_choices: '多选',
   create_groups: '创建分组',
   cancel_groups: '解除分组',
+  numerical_control: '数值控件',
+  graphic: '图形',
+  clear_the_clipboard: '清空剪贴板',
+  is_show: '是否显示',
+  top_title: '顶部',
+  title: '标题',
+  icon_size: '图标大小',
 }

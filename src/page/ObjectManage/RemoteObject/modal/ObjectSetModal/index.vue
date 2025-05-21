@@ -136,7 +136,6 @@ const columns: DataTableColumns<DataType> = [
   {
     title: () => t('device.type'),
     key: 'type',
-    width: 200,
     render(row, index) {
       return DEVICE_TYPE_MAP[row.type]
     },
@@ -145,7 +144,6 @@ const columns: DataTableColumns<DataType> = [
   {
     title: () => t('device.id'),
     key: 'id',
-    width: 100,
     sorter: (row1, row2) => parseInt(row1.id) - parseInt(row2.id)
   }
 ]

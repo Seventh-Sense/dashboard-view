@@ -287,14 +287,6 @@ export const functionOptions = [
   {
     label: 'ReadInputRegister',
     value: '04'
-  },
-  {
-    label: 'WriteCoils',
-    value: '05'
-  },
-  {
-    label: 'WriteRegister',
-    value: '06'
   }
 ]
 
@@ -327,3 +319,19 @@ export const DatatypeOptions = [
   label: v,
   value: v
 }))
+
+export function formatTimestamp(timestamp: any) {
+  // 将时间戳转为毫秒并创建Date对象
+  const date = new Date(timestamp * 1000)
+
+  // 提取时间组成部分
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // 月份从0开始
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
+
+  // 组合成标准格式
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}

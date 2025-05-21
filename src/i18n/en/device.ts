@@ -98,4 +98,5 @@ export default {
   vendor_identifier: 'Vendor ID',
   vendor_name: 'Vendor Name',
   delete_all: 'Delete ALL',
+  msg_value_error: 'Please fill in the correct values!',
 }

@@ -70,7 +70,7 @@ export default {
   device: 'Devices',
   devices: 'Device',
   text: 'Texts',
-  input: 'Controls',
+  input: 'Icons',
 
   component: 'Module',
   single_row: 'Single Row',
@@ -237,5 +237,11 @@ export default {
   multiple_choices: 'Multiple Choices',
   create_groups: 'Create Groups',
   cancel_groups: 'Cancel Groups',
-
+  numerical_control: 'Numerical',
+  graphic: 'Graphic',
+  clear_the_clipboard: 'Clear The Clipboard',
+  is_show: 'IS Display',
+  top_title: 'Top',
+  title: 'Title',
+  icon_size: 'Icon Size',
 }

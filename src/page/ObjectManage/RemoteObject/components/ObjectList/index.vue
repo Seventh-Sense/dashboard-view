@@ -63,8 +63,14 @@
 
 <script setup lang="ts">
 import { icon } from '@/plugins'
-import { ref, onMounted, provide, nextTick, h, computed } from 'vue'
-import { DEVICE_TYPE_MAP, DeviceTypeEnum, PointData } from '../../utils/utils'
+import { ref, onMounted, provide, nextTick, h, computed, onUnmounted } from 'vue'
+import {
+  DEVICE_TYPE_MAP,
+  DeviceTypeEnum,
+  PointData,
+  formatTimestamp,
+  isEmptyObject
+} from '../../utils/utils'
 import { NIcon } from 'naive-ui'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { ObjectSetModal } from '../../modal/ObjectSetModal'
@@ -115,7 +121,6 @@ const columns: DataTableColumns<PointData> = [
   {
     title: () => t('device.id'),
     key: 'metric_uid',
-    width: 240,
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
         return DEVICE_TYPE_MAP[row.metric_type] + ',' + row.metric_id
@@ -124,8 +129,9 @@ const columns: DataTableColumns<PointData> = [
       }
     }
   },
-  { title: () => t('device.value'), key: 'value', width: 200 },
-  { title: () => t('device.desc'), key: 'description', width: 300 },
+  { title: () => t('device.value'), key: 'value' },
+  { title: () => t('device.desc'), key: 'description' },
+  { title: () => t('dashboard.time'), key: 'tags' },
   {
     title: '',
     key: 'actions',
@@ -168,6 +174,10 @@ onMounted(() => {
   initData()
 })
 
+onUnmounted(() => {
+  clearInterval(interval)
+})
+
 const initData = async () => {
   loading.value = true
 
@@ -182,8 +192,8 @@ const initData = async () => {
     const transformedData: PointData[] = res.data.map((item: any, index: number) => ({
       key: item.id,
       metric_uid: item.uid,
-      metric_id: item.uid.split(',')[1] || '',
-      metric_type: parseInt(item.uid.split(',')[0]),
+      metric_id: item.uid.includes(',') ? item.uid.split(',')[1] : item.uid,
+      metric_type: item.uid.includes(',') ? parseInt(item.uid.split(',')[0]) : '',
       metric_name: item.name || '',
       unit: '',
       value: '',
@@ -213,64 +223,73 @@ const periodicReading = () => {
   periodicFunc()
   //周期读取值
   interval = window.setInterval(async () => {
-    if (!isShowModal.value && !isDisplay.value) {
+    if (!isShowModal.value && !isDisplay.value && !isModbus.value) {
       periodicFunc()
     }
   }, 3000)
 }
 
 const periodicFunc = async () => {
-  let dataCopy = cloneDeep(data.value)
   try {
-    const res: any = await readPointValue(props.deviceData.key)
+    const response: any = await readPointValue(props.deviceData.key)
 
-    if (res.status !== 'OK') {
-      console.warn('Non-OK response status:', res.status)
+    if (response.status !== 'OK') {
+      console.warn('Non-OK response status:', response.status)
       return
     }
 
-    // 创建metric_id到point的映射
-    const pointsMap = new Map<string, any>(res.data.map((point: any) => [point.metric_id, point]))
-
+    // 创建快速查询映射
+    const metricPoints = new Map(response.data.map((point: any) => [point.metric_id, point]))
     // 生成新的数据源（不可变更新）
-    const newData = dataCopy.map((item: any) => {
-      const point = pointsMap.get(item.key)
+    const updatedData = data.value.map(originalItem => {
+      const point: any = metricPoints.get(originalItem.key)
+      if (!point) return originalItem
 
-      //console.log('point', point.property['priority-array'])
-      //console.log(pointsMap)
-      let value = ''
-      //value 翻译
-      if (point) {
-        let type = DEVICE_TYPE_MAP[item.metric_type]
-
-        if (type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO) {
-          value =
-            point.value === 'inactive'
-              ? point.property['inactive-text']
-              : point.property['active-text']
-        } else if (type === TypeEnum.MV) {
-          let array = point.property['state-text']
-          value = array[point.value - 1]
-        } else {
-          value = point.value
-        }
+      return {
+        ...originalItem,
+        value: getProcessedValue(point, originalItem.metric_type),
+        properties: mergeProperties(point.property, originalItem.properties),
+        description: point.property?.description ?? originalItem.description,
+        tags: formatTimestamp(point.timestamp)
       }
-
-      return point
-        ? {
-            ...item,
-            value: value,
-            properties: point.property,
-            description: point.property?.description
-          }
-        : item
     })
 
     // 更新状态
-    data.value = [...newData]
+    data.value = updatedData
   } catch (e) {
     console.error('Failed to fetch Points:', e)
   }
+}
+
+const getProcessedValue = (point: any, metricType: any) => {
+  const deviceType = DEVICE_TYPE_MAP[metricType]
+
+  switch (deviceType) {
+    case TypeEnum.BI:
+    case TypeEnum.BV:
+    case TypeEnum.BO: {
+      const status = point.value === 'inactive' ? 'inactive-text' : 'active-text'
+      return point.property?.[status] ?? point.value
+    }
+
+    case TypeEnum.MV: {
+      const states = point.property?.['state-text'] || []
+      const index = point.value - 1
+
+      if (index >= 0 && index < states.length) {
+        return states[index]
+      }
+      console.warn(`Invalid state index (${index}) for MV metric ${point.metric_id}`)
+      return point.value
+    }
+
+    default:
+      return point.value?.toString() ?? ''
+  }
+}
+
+const mergeProperties = (newProps: any, fallback: any) => {
+  return newProps && Object.keys(newProps).length > 0 ? newProps : fallback
 }
 
 const onDiscovery = () => {
@@ -279,6 +298,7 @@ const onDiscovery = () => {
     isShowModal.value = true
   } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
     isModbus.value = true
+    isModbusEdit.value = false
   }
 }
 

@@ -54,6 +54,10 @@
         style="margin-bottom: 10px"
         :disabled="isEdit"
       />
+      <div v-if="isWriteble">
+        <div class="modal-porperty">{{ $t('device.value') }}</div>
+        <n-input-number v-model:value="value" :min="0" style="margin-bottom: 10px" />
+      </div>
 
       <template #footer>
         <n-space justify="end">
@@ -69,9 +73,9 @@
 
 <script setup lang="ts">
 import SVG_ICON from '@/svg/SVG_ICON'
-import { ref, inject, watch } from 'vue'
+import { ref, inject, watch, computed } from 'vue'
 import { functionOptions, OrderOptions, DatatypeOptions } from '../../utils/utils'
-import { createModbusPoint } from '@/api/http'
+import { createModbusPoint, readIotPoints } from '@/api/http'
 
 const t = window['$t']
 
@@ -107,18 +111,34 @@ const data = ref({
   data_type: 'int16',
   byteorder: 1,
   wordorder: 1,
-  divisor: 10
+  divisor: 1
+})
+
+const value = ref()
+
+//01 03 可写值 02 04 不可写
+const isWriteble = computed(() => {
+  let flag = false
+
+  if (props.isEdit) {
+    if (data.value.function === '01' || data.value.function === '03') {
+      flag = true
+    }
+  }
+
+  return flag
 })
 
 const onSubmit = async () => {
   if (!props.isEdit) {
     addNewPoint()
   } else {
-    emit('update:isShowModal', false)
+    writeValue()
   }
 }
 
 const addNewPoint = async () => {
+  loading.value = true
   try {
     const res: any = await createModbusPoint({
       uid: data.value.address,
@@ -148,6 +168,43 @@ const addNewPoint = async () => {
     console.error('onSubmit:', e)
   } finally {
     refreshObjTable()
+    loading.value = false
+    emit('update:isShowModal', false)
+  }
+}
+
+const writeValue = async () => {
+  loading.value = true
+  const func = data.value.function === '03' ? '06' : '05'
+
+  if (value.value === '' || value.value === null || value.value === undefined) {
+    window['$message'].error(t('device.msg_value_error'))
+    return
+  }
+
+  try {
+    const res: any = await readIotPoints(props.deviceData.key, {
+      function: func,
+      parms: {
+        address: data.value.address,
+        values: [value.value],
+        data_type: data.value.data_type,
+        byteorder: data.value.byteorder,
+        wordorder: data.value.wordorder,
+        divisor: data.value.divisor
+      }
+    })
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.data)
+      window['$message'].warning(res.data)
+      return
+    }
+  } catch (e) {
+    console.error('onSubmit:', e)
+  } finally {
+    refreshObjTable()
+    loading.value = false
     emit('update:isShowModal', false)
   }
 }
@@ -159,8 +216,8 @@ const onClose = () => {
 watch(
   () => props.isEdit,
   newVal => {
+    console.log(props.editData)
     if (newVal) {
-      //console.log(props.editData)
       data.value = {
         name: props.editData.metric_name,
         description: props.editData.description,
@@ -172,6 +229,7 @@ watch(
         wordorder: props.editData.properties.parms.wordorder,
         divisor: props.editData.properties.parms.divisor
       }
+      value.value = parseFloat(props.editData.value)
     }
   },
   { immediate: true }

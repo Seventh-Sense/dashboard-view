@@ -6,6 +6,7 @@ import { icon } from '@/plugins'
 import { MenuOptionsItemType } from './useContextMenu.hook.d'
 import { MenuEnum } from '@/enums/editPageEnum'
 import cloneDeep from 'lodash/cloneDeep'
+import i18n from '@/i18n/index'
 
 const {
   CopyIcon,
@@ -38,25 +39,25 @@ export const divider = (n: number = 3) => {
 // * 默认单组件选项
 export const defaultOptions: MenuOptionsItemType[] = [
   {
-    label: '锁定',
+    label: i18n.global.t('dashboard.lock_'),
     key: MenuEnum.LOCK,
     icon: renderIcon(LockClosedOutlineIcon),
     fnHandle: chartEditStore.setLock
   },
   {
-    label: '解锁',
+    label: i18n.global.t('dashboard.unlock_'),
     key: MenuEnum.UNLOCK,
     icon: renderIcon(LockOpenOutlineIcon),
     fnHandle: chartEditStore.setUnLock
   },
   {
-    label: '隐藏',
+    label: i18n.global.t('dashboard.hide'),
     key: MenuEnum.HIDE,
     icon: renderIcon(EyeOffOutlineIcon),
     fnHandle: chartEditStore.setHide
   },
   {
-    label: '显示',
+    label: i18n.global.t('dashboard.display'),
     key: MenuEnum.SHOW,
     icon: renderIcon(EyeOutlineIcon),
     fnHandle: chartEditStore.setShow
@@ -66,19 +67,19 @@ export const defaultOptions: MenuOptionsItemType[] = [
     key: 'd0'
   },
   {
-    label: '复制',
+    label: i18n.global.t('dashboard.copy'),
     key: MenuEnum.COPY,
     icon: renderIcon(CopyIcon),
     fnHandle: chartEditStore.setCopy
   },
   {
-    label: '剪切',
+    label: i18n.global.t('dashboard.cut'),
     key: MenuEnum.CUT,
     icon: renderIcon(CutIcon),
     fnHandle: chartEditStore.setCut
   },
   {
-    label: '粘贴',
+    label: i18n.global.t('dashboard.paste'),
     key: MenuEnum.PARSE,
     icon: renderIcon(ClipboardOutlineIcon),
     fnHandle: chartEditStore.setParse
@@ -88,25 +89,25 @@ export const defaultOptions: MenuOptionsItemType[] = [
     key: 'd1'
   },
   {
-    label: '置顶',
+    label: i18n.global.t('dashboard.top'),
     key: MenuEnum.TOP,
     icon: renderIcon(UpToTopIcon),
     fnHandle: chartEditStore.setTop
   },
   {
-    label: '置底',
+    label: i18n.global.t('dashboard.bottom'),
     key: MenuEnum.BOTTOM,
     icon: renderIcon(DownToBottomIcon),
     fnHandle: chartEditStore.setBottom
   },
   {
-    label: '上移',
+    label: i18n.global.t('dashboard.move_up'),
     key: MenuEnum.UP,
     icon: renderIcon(ChevronUpIcon),
     fnHandle: chartEditStore.setUp
   },
   {
-    label: '下移',
+    label: i18n.global.t('dashboard.move_down'),
     key: MenuEnum.DOWN,
     icon: renderIcon(ChevronDownIcon),
     fnHandle: chartEditStore.setDown
@@ -116,13 +117,13 @@ export const defaultOptions: MenuOptionsItemType[] = [
     key: 'd2'
   },
   {
-    label: '清空剪贴板',
+    label: i18n.global.t('dashboard.clear_the_clipboard'),
     key: MenuEnum.CLEAR,
     icon: renderIcon(PaintBrushIcon),
     fnHandle: chartEditStore.setRecordChart
   },
   {
-    label: '删除',
+    label: i18n.global.t('dashboard.del'),
     key: MenuEnum.DELETE,
     icon: renderIcon(TrashIcon),
     fnHandle: chartEditStore.removeComponentList
@@ -132,13 +133,13 @@ export const defaultOptions: MenuOptionsItemType[] = [
 // * 默认多选组件选项
 export const defaultMultiSelectOptions: MenuOptionsItemType[] = [
   {
-    label: '创建分组',
+    label: i18n.global.t('dashboard.create_groups'),
     key: MenuEnum.GROUP,
     icon: renderIcon(Carbon3DSoftwareIcon),
     fnHandle: chartEditStore.setGroup
   },
   {
-    label: '解除分组',
+    label: i18n.global.t('dashboard.cancel_groups'),
     key: MenuEnum.UN_GROUP,
     icon: renderIcon(Carbon3DCursorIcon),
     fnHandle: chartEditStore.setUnGroup

@@ -480,7 +480,7 @@ export const deleteProject = async (id: any) => {
 
 export const getVersion = async () => {
   try {
-    const response = await get(`/version`)
+    const response = await get2(`/version`)
 
     return response
   } catch (error) {

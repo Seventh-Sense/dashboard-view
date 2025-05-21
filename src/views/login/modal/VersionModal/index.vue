@@ -22,7 +22,7 @@
         <img width="80" height="80" :src="SVG_ICON.card_icons.logo" />
         <div class="modal-content-title">XPlay by LUBANX</div>
         <div class="modal-content-tip">{{$t('login.version')}}: {{ version }}</div>
-        <div class="modal-content-b">UI: {{ ui }}</div>
+        <!-- <div class="modal-content-b">UI: {{ ui }}</div> -->
       </div>
       <template #footer>
         <div class="modal-content-foot">
@@ -64,14 +64,14 @@ watch(
     if (newVal) {
       getVersion()
         .then((res: any) => {
-          console.log('Version:', res.Version)
-          if (res.Version) {
-            version.value = res.Version
+          //console.log('Version:', res.Version)
+          if (res.status === 'OK') {
+            version.value = res.data
           }
 
-          if (res.info) {
-            ui.value = res.info.xplayui
-          }
+          // if (res.info) {
+          //   ui.value = res.info.xplayui
+          // }
         })
         .catch((e: any) => {
           console.error('Get version error:', e)

@@ -244,7 +244,7 @@ watch(
   () => props.displayData,
   newVal => {
     if (newVal) {
-      console.log('aaa', props.displayData.properties)
+      //console.log('aaa', props.displayData.properties)
     }
   },
   { immediate: true, deep: true }

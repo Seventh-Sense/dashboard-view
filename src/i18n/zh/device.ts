@@ -98,4 +98,5 @@ export default {
   vendor_identifier: '供应商编号',
   vendor_name: '供应商名称',
   delete_all: '清空',
+  msg_value_error: '请填写正确的值!',
 }

@@ -11,6 +11,7 @@ export enum ChatCategoryEnum {
   Gauge = 'Gauges',
   Device = 'Devices',
   Air = 'AirConditioner',
+  Graphic = 'Graphic',
 }
 
 export enum ChatCategoryEnumName {
@@ -24,6 +25,7 @@ export enum ChatCategoryEnumName {
   Gauge = () => window['$t']('dashboard.gauge'),
   Device = () => window['$t']('dashboard.device'),
   Air = () => window['$t']('dashboard.input'),
+  Graphic = () => window['$t']('dashboard.graphic'),
 }
 
 export const PROPERTY_TYPE_MAP = () => {
