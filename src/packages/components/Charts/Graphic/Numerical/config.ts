@@ -11,6 +11,7 @@ export const option: any = {
   title: '温度',
   textColor: '#FFFFFF99',
   rightIconSize: 36,
+  iconNo: 1,
   dataSize: 32,
   dataColor: '#FFFFFFEE',
   unitText: '℃',
@@ -22,7 +23,7 @@ export const option: any = {
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key = NumericalConfig.key
-  public attr = { ...chartInitConfig, w: 180, h: 150, zIndex: 1 }
+  public attr = { ...chartInitConfig, w: 116, h: 152, zIndex: 1 }
   public chartConfig = cloneDeep(NumericalConfig)
   public option = cloneDeep(option)
 }

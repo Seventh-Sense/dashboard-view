@@ -2,14 +2,14 @@ import { ConfigType, PackagesCategoryEnum, ChartFrameEnum } from '@/packages/ind
 import { ChatCategoryEnum, ChatCategoryEnumName } from '../../index.d'
 import i18n from '@/i18n/index'
 
-export const NumericalConfig: ConfigType = {
-  key: 'Numerical',
-  chartKey: 'VNumerical',
-  conKey: 'VCNumerical',
-  title: i18n.global.t('dashboard.numerical_control'),
+export const ConditionerConfig: ConfigType = {
+  key: 'Conditioner',
+  chartKey: 'VConditioner',
+  conKey: 'VCConditioner',
+  title: i18n.global.t('dashboard.tempControl'),
   category: ChatCategoryEnum.Graphic,
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'numerical.png'
+  image: 'door.png'
 }

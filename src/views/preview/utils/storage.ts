@@ -2,7 +2,6 @@ import { JSONParse, JSONStringify, getSessionStorage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import dataJson from '@/assets/data/demonstration.json'
 import { readProject } from '@/api/http'
 
 const chartEditStore = useChartEditStore()
@@ -35,14 +34,14 @@ export const getSessionStorageInfo = () => {
 }
 
 //演示获取本地数据
-export const getLocalStorageInfo = () => {
-  const filedata = JSONParse(JSONStringify(dataJson))
+// export const getLocalStorageInfo = () => {
+//   const filedata = JSONParse(JSONStringify(dataJson))
 
-  //console.log(filedata)
-  chartEditStore.editCanvasConfig = filedata.editCanvasConfig
-  chartEditStore.requestGlobalConfig = filedata.requestGlobalConfig
-  chartEditStore.componentList = filedata.componentList
-}
+//   //console.log(filedata)
+//   chartEditStore.editCanvasConfig = filedata.editCanvasConfig
+//   chartEditStore.requestGlobalConfig = filedata.requestGlobalConfig
+//   chartEditStore.componentList = filedata.componentList
+// }
 
 //预览 读取后端数据
 export const getPreviewInfo = () => {

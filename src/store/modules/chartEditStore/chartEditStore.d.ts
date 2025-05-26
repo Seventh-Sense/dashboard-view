@@ -203,7 +203,8 @@ export interface RequestConfigType extends RequestPublicConfigType {
     deviceID: any,
     objectName: any,
     objectID: any,
-  }
+  },
+  bindDatas: any[]
 }
 
 // Store 类型

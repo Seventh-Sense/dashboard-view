@@ -17,7 +17,18 @@
       {{ title }}
     </div>
     <div class="container-right">
-      <img :width="rightIconSize" :height="rightIconSize" :src="SVG_ICON.card_icons.snow_TL" />
+      <img
+        v-if="iconNo === 1"
+        :width="rightIconSize"
+        :height="rightIconSize"
+        :src="SVG_ICON.card_icons.snow_TL"
+      />
+      <img
+        v-else-if="iconNo === 2"
+        :width="rightIconSize"
+        :height="rightIconSize"
+        :src="SVG_ICON.card_icons.modbus_df"
+      />
     </div>
 
     <div class="container-bottom">
@@ -53,10 +64,10 @@
 
 <script setup lang="ts">
 import { PropType, shallowReactive, watch, toRefs, ref } from 'vue'
-import { CreateComponentType } from '../../../../../packages/index.d'
-import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
-import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
-import SVG_ICON from '../../../../../svg/SVG_ICON'
+import { CreateComponentType } from '@/packages/index.d'
+import { useChartDataFetch } from '@/hooks/useChartDataFetch.hook'
+import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
+import SVG_ICON from '@/svg/SVG_ICON'
 import { parseData } from '@/utils'
 
 const props = defineProps({
@@ -78,6 +89,7 @@ const {
   textColor,
   title,
   rightIconSize,
+  iconNo,
   dataSize,
   dataColor,
   unitText,

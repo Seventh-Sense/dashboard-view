@@ -409,7 +409,7 @@ export const writePoint = async (data: any) => {
 
 export const updatePoint = async (id: any, data: any) => {
   try {
-    const response = await patch(`/point/` + id, data)
+    const response = await post2(`/setting?metric_id=${id}`, data)
 
     return response
   } catch (error) {

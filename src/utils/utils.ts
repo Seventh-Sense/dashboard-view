@@ -409,7 +409,7 @@ export function parseData(data: any, accept_type: string): any {
       value = parseString(data, type)
       break
     case 'boolean':
-      value = parseBool(data, type)
+      value = parseBoolean(data, type)
       break
     default:
       break
@@ -418,62 +418,52 @@ export function parseData(data: any, accept_type: string): any {
   return value
 }
 
-export function parseNumber(data: any, type: string) {
-  let value = 0
-
+export function parseNumber(data: any, type: string): number {
   switch (type) {
     case 'number':
-      value = data
-      break
-    case 'string':
-      value = parseFloat(data)
-      break
+      return data
+    case 'string': {
+      const num = Number(data)
+      return Number.isFinite(num) ? num : 0
+    }
     case 'boolean':
-      value = data ? 1 : 0
-      break
+      return data ? 1 : 0
+    case 'array':
+    case 'object':
+      return 0
     default:
-      break
+      return 0
   }
-
-  return value
 }
 
-export function parseString(data: any, type: string) {
-  let value = ''
-
+export function parseString(data: any, type: string): string {
   switch (type) {
     case 'number':
-      value = data.toString()
-      break
+      return data.toString()
     case 'string':
-      value = data
-      break
+      return data
     case 'boolean':
-      value = String(data)
-      break
+      return data ? 'true' : 'false'
+    case 'array':
+    case 'object':
+      return JSON.stringify(data)
     default:
-      break
+      return String(data)
   }
-
-  return value
 }
 
-export function parseBool(data: any, type: string) {
-  let value = data
-
+export function parseBoolean(data: any, type: string): boolean {
   switch (type) {
     case 'number':
-      value = data > 0 ? true : false
-      break
+      return data > 0
     case 'string':
-      value = data === '0' ? false : true
-      break
+      return !['', '0', 'false', 'no', 'off'].includes(data.toLowerCase())
     case 'boolean':
-      value = data
-      break
+      return data
+    case 'array':
+    case 'object':
+      return true // Non-empty objects/arrays could be considered true
     default:
-      break
+      return Boolean(data)
   }
-
-  return value
 }

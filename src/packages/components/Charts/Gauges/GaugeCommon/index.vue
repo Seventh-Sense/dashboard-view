@@ -171,13 +171,27 @@ function fixedByDecimal(num: any) {
   }
 }
 
-const rightClick = throttle(() => {
-  onClick('right', step.value)
-}, 1500)
+const rightClick = throttle(
+  () => {
+    onClick('right', step.value)
+  },
+  1000,
+  {
+    leading: true,
+    trailing: false
+  }
+)
 
-const leftClick = throttle(() => {
-  onClick('left', step.value)
-}, 1500)
+const leftClick = throttle(
+  () => {
+    onClick('left', step.value)
+  },
+  1000,
+  {
+    leading: true,
+    trailing: false
+  }
+)
 
 const onClick = (mode: string, step: number) => {
   let params = props.chartConfig.request.bindParams
@@ -186,10 +200,10 @@ const onClick = (mode: string, step: number) => {
 
   if (params.objectID !== '') {
     flag.value = true
-    updatePoint(params.objectID, { value: data })
+    updatePoint(params.objectID, { value: Number(data) })
       .then((res: any) => {
-        if (res.value) {
-          dataHandle(res.value)
+        if (res.status === 'OK') {
+          dataHandle(Number(data))
           window['$message'].success(t('msg.gauge_msg_1'))
         } else {
           window['$message'].error(t('msg.gauge_msg_2'))
@@ -212,7 +226,7 @@ watch(
     try {
       if (!flag.value) {
         let num = parseData(newData, 'number')
-        //console.log(newData, num)
+        console.log(newData, num)
         dataHandle(num)
       }
     } catch (error) {

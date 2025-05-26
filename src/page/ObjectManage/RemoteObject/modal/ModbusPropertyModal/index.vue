@@ -187,7 +187,7 @@ const writeValue = async () => {
       function: func,
       parms: {
         address: data.value.address,
-        values: [value.value],
+        value: value.value,
         data_type: data.value.data_type,
         byteorder: data.value.byteorder,
         wordorder: data.value.wordorder,

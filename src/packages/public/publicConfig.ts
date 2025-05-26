@@ -44,8 +44,9 @@ export const requestConfig: RequestConfigType = {
     deviceName: '',
     deviceID: '',
     objectName: '',
-    objectID: '',
-  }
+    objectID: ''
+  },
+  bindDatas: []
 }
 
 // 单实例类

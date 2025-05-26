@@ -46,22 +46,29 @@ const option = shallowReactive({
 const flag = ref(false)
 const t = window['$t']
 
-const onClick = throttle(() => {
-  click()
-}, 1500)
+const onClick = throttle(
+  () => {
+    click()
+  },
+  1500,
+  {
+    leading: true,
+    trailing: false
+  }
+)
 
 const click = () => {
   let params = props.chartConfig.request.bindParams
 
-  let data = option.dataset ? '0' : '1'
+  let data = option.dataset ? 0 : 1
 
   if (params.objectID !== '') {
     flag.value = true
 
     updatePoint(params.objectID, { value: data })
       .then((res: any) => {
-        if (res.value) {
-          option.dataset = parseData(res.value, 'boolean')
+        if (res.status === 'OK') {
+          option.dataset = parseData(data, 'boolean')
           window['$message'].success(t('msg.gauge_msg_1'))
         } else {
           window['$message'].error(t('msg.gauge_msg_2'))

@@ -102,7 +102,7 @@ export const option = {
   maxTop: -33,
   linecap: "round",
   isWrite: false,
-  step: 0.5,
+  step: 1,
   isScale: false,
   decimal: 0,
 }

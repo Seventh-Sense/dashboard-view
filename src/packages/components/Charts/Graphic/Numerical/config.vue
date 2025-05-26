@@ -29,6 +29,9 @@
           v-model:value="optionData.textColor"
         ></n-color-picker>
       </SettingItem>
+      <setting-item :name="t('dashboard.icon')">
+        <n-select v-model:value="optionData.iconNo" :options="titles" size="small" />
+      </setting-item>
       <SettingItem :name="t('dashboard.icon_size')">
         <n-input-number v-model:value="optionData.rightIconSize" size="small" />
       </SettingItem>
@@ -111,12 +114,12 @@ const units = [
 
 const titles = [
   {
-    label: '温度',
-    value: '温度'
+    label: t('dashboard.temperature'),
+    value: 1
   },
   {
-    label: '湿度',
-    value: '湿度'
+    label: t('dashboard.humidity'),
+    value: 2
   }
 ]
 </script>

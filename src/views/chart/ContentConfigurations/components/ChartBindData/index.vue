@@ -12,19 +12,6 @@
         @update:value="bindValue"
       />
     </setting-item-box>
-    <!-- <setting-item-box :name="$t('dashboard.point')" :alone="true">
-      <n-cascader
-        size="small"
-        v-model:value="value"
-        placeholder=""
-        expand-trigger="click"
-        check-strategy="child"
-        :options="options"
-        @update:value="handleUpdateValue"
-        :clearable="true"
-        placement="bottom-end"
-      />
-    </setting-item-box> -->
   </div>
 </template>
 
@@ -39,12 +26,6 @@ const { targetData } = useTargetData()
 
 const deviceID = ref('')
 const pointID = ref('')
-
-const value = computed(() => {
-  let initData = targetData.value.request.bindParams
-
-  return initData.deviceName + '-' + initData.deviceID + '-' + initData.objectID
-})
 
 const deviceOptions = ref<any>([])
 const pointOptions = ref<any>([])
@@ -107,12 +88,14 @@ watch(
   () => targetData.value,
   newVal => {
     //判断绑定数据是否显示
-    bindDataDisplay(newVal)
+    if (newVal && newVal.chartConfig) {
+      bindDataDisplay(newVal)
 
-    //console.log('targetData.value', newVal.request.bindParams)
-    if (newVal.request.bindParams) {
-      deviceID.value = newVal.request.bindParams.deviceID
-      pointID.value = newVal.request.bindParams.objectID
+      //console.log('targetData.value', newVal.request.bindParams)
+      if (newVal.request.bindParams) {
+        deviceID.value = newVal.request.bindParams.deviceID
+        pointID.value = newVal.request.bindParams.objectID
+      }
     }
   },
   { deep: true, immediate: true }
@@ -122,6 +105,7 @@ watch(
   () => deviceID.value,
   newVal => {
     if (newVal !== '') {
+      pointOptions.value = []
       readSubscribePoints(newVal)
         .then((res: any) => {
           //console.log('readSubscribePoints', res.data)
