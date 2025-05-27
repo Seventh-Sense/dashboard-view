@@ -27,8 +27,9 @@
 import { PropType, toRefs, shallowReactive, watch, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import throttle from 'lodash/throttle'
-import { updatePoint } from '@/api/http'
 import { parseData } from '@/utils'
+import { animationTime, throttleTime, updateNodeData } from '@/packages/public'
+import { cloneDeep } from 'lodash'
 
 const props = defineProps({
   chartConfig: {
@@ -47,43 +48,31 @@ const flag = ref(false)
 const t = window['$t']
 
 const onClick = throttle(
-  () => {
-    click()
+  async () => {
+    try {
+      flag.value = true
+      let data = option.dataset ? 0 : 1
+
+      let tmp = cloneDeep(option.dataset)
+      option.dataset = parseData(data, 'boolean')
+
+      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      if (!result) {
+        option.dataset = tmp
+      }
+    } catch (error) {
+      // 错误已由 updateNodeData 处理，此处可补充额外逻辑
+      console.error('操作失败:', error)
+    } finally {
+      flag.value = false
+    }
   },
-  1500,
+  throttleTime,
   {
     leading: true,
     trailing: false
   }
 )
-
-const click = () => {
-  let params = props.chartConfig.request.bindParams
-
-  let data = option.dataset ? 0 : 1
-
-  if (params.objectID !== '') {
-    flag.value = true
-
-    updatePoint(params.objectID, { value: data })
-      .then((res: any) => {
-        if (res.status === 'OK') {
-          option.dataset = parseData(data, 'boolean')
-          window['$message'].success(t('msg.gauge_msg_1'))
-        } else {
-          window['$message'].error(t('msg.gauge_msg_2'))
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        flag.value = false
-      })
-  } else {
-    window['$message'].warning(t('msg.gauge_msg_3'))
-  }
-}
 
 watch(
   () => props.chartConfig.option.dataset,
@@ -106,5 +95,19 @@ watch(
   justify-content: center;
   width: v-bind('`${w}px`');
   height: v-bind('`${h}px`');
+}
+
+.blink-svg {
+  animation: blink 1s infinite; /* 动画持续时间为1秒，无限次重复 */
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1; /* 完全不透明 */
+  }
+  50% {
+    opacity: 0; /* 完全透明 */
+  }
 }
 </style>

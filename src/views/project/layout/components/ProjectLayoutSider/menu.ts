@@ -19,7 +19,7 @@ export const menuOptionsInit = (selectedKey: any) => {
 
   return reactive([
     {
-      label: () => 'Bacnet',
+      label: () => t('menu.device_manage'),
       key: PageEnum.BASE_REMOTE_MAN_NAME,
       icon: renderImage(
         selectedKey === PageEnum.BASE_HOME_ITEMS_NAME

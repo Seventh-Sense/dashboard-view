@@ -8,8 +8,8 @@ export default {
     modbus_msg_6: '请选择链路!',
 
     //gauge
-    gauge_msg_1: '该组态设置成功!',
-    gauge_msg_2: '该组态设置失败!',
+    gauge_msg_1: '组态数据更新成功!',
+    gauge_msg_2: '组态数据更新失败!',
     gauge_msg_3: '该组态未绑定对象!',
 
     //login

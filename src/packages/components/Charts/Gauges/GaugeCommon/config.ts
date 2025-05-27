@@ -71,7 +71,7 @@ export const decimals  = [
 ]
 
 export const option = {
-  dataset: 36,
+  dataset: 26,
   // data颜色
   dataColor: '#FFFFFFFF',
   // data字体大小

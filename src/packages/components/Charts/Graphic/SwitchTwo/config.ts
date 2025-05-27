@@ -10,7 +10,7 @@ export const option: any = {
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key = SwitchTwoConfig.key
-  public attr = { ...chartInitConfig, w: 80, h: 80, zIndex: 1 }
+  public attr = { ...chartInitConfig, w: 100, h: 56, zIndex: 1 }
   public chartConfig = cloneDeep(SwitchTwoConfig)
   public option = cloneDeep(option)
 }

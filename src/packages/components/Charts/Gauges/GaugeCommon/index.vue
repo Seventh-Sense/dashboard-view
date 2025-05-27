@@ -20,7 +20,8 @@
             :component="ChevronBackOutline"
             :size="dataSize"
             :depth="1"
-            @click="leftClick"
+            @click="handleClick('left')"
+            class="clickable-icon"
             style="cursor: pointer"
           />
           <span
@@ -39,7 +40,8 @@
             :component="ChevronForwardOutline"
             :size="dataSize"
             :depth="1"
-            @click="rightClick"
+            class="clickable-icon"
+            @click="handleClick('right')"
             style="cursor: pointer"
           />
         </div>
@@ -84,6 +86,9 @@ import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 import { updatePoint } from '@/api/http'
 import Decimal from 'decimal.js'
 import throttle from 'lodash/throttle'
+import debounce from 'lodash/debounce'
+import { cloneDeep } from 'lodash'
+import { throttleTime, updateNodeData } from '@/packages/public'
 
 const props = defineProps({
   chartConfig: {
@@ -95,7 +100,8 @@ const t = window['$t']
 const flag = ref(false)
 
 const process = ref(90)
-const value = ref<any>(35)
+const value = ref<number>(26)
+const tmp = ref<number>(26)
 
 const { w, h } = toRefs(props.chartConfig.attr)
 const {
@@ -130,37 +136,48 @@ const option = shallowReactive({
   dataset: configOption.dataset
 })
 
+const submitValue = debounce(async () => {
+  //console.log('提交值：', value.value)
+
+  try {
+    flag.value = true
+
+    let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(value.value))
+    if (!result) {
+      option.dataset = tmp.value
+    }
+  } catch (error) {
+    console.error('操作失败:', error)
+  } finally {
+    flag.value = false
+  }
+}, throttleTime)
+
+const handleClick = (direction: string) => {
+  let newValue
+
+  tmp.value = cloneDeep(value.value)
+
+  if (direction === 'left') {
+    newValue = value.value - step.value
+    if (newValue < minValue.value) {
+      newValue = minValue.value
+    }
+  } else if (direction === 'right') {
+    newValue = value.value + step.value
+    if (newValue > maxValue.value) {
+      newValue = maxValue.value
+    }
+  }
+
+  dataHandle(Number(newValue))
+  submitValue()
+}
+
 const dataHandle = (newData: any) => {
   value.value = newData
   let range = maxValue.value - minValue.value
   process.value = (Math.abs(minValue.value - newData) * 100) / range
-  //console.log(newData, process.value, range)
-}
-
-function tNumber(str: any) {
-  let value = 0.0
-
-  if (!str) {
-    return value
-  }
-
-  if (typeof str === 'string') {
-    value = Number(parseFloat(str).toFixed(1))
-  }
-
-  if (typeof str === 'number') {
-    value = Number(str.toFixed(1))
-  }
-
-  return value
-}
-
-function addition(a: any, b: any) {
-  return new Decimal(a).add(new Decimal(b))
-}
-
-function subtraction(a: any, b: any) {
-  return new Decimal(a).sub(new Decimal(b))
 }
 
 function fixedByDecimal(num: any) {
@@ -171,54 +188,6 @@ function fixedByDecimal(num: any) {
   }
 }
 
-const rightClick = throttle(
-  () => {
-    onClick('right', step.value)
-  },
-  1000,
-  {
-    leading: true,
-    trailing: false
-  }
-)
-
-const leftClick = throttle(
-  () => {
-    onClick('left', step.value)
-  },
-  1000,
-  {
-    leading: true,
-    trailing: false
-  }
-)
-
-const onClick = (mode: string, step: number) => {
-  let params = props.chartConfig.request.bindParams
-
-  let data = mode === 'right' ? addition(value.value, step) : subtraction(value.value, step)
-
-  if (params.objectID !== '') {
-    flag.value = true
-    updatePoint(params.objectID, { value: Number(data) })
-      .then((res: any) => {
-        if (res.status === 'OK') {
-          dataHandle(Number(data))
-          window['$message'].success(t('msg.gauge_msg_1'))
-        } else {
-          window['$message'].error(t('msg.gauge_msg_2'))
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        flag.value = false
-      })
-  } else {
-    window['$message'].warning(t('msg.gauge_msg_3'))
-  }
-}
 // 配置时
 watch(
   () => props.chartConfig.option.dataset,
@@ -226,7 +195,7 @@ watch(
     try {
       if (!flag.value) {
         let num = parseData(newData, 'number')
-        console.log(newData, num)
+        //console.log(newData, num)
         dataHandle(num)
       }
     } catch (error) {
@@ -259,4 +228,9 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newData: number) => {
   justify-content: center;
   align-items: center;
 }
+
+// .clickable-icon:active {
+//   background-color: v-bind('railColor');; /* 点击时的背景色 */
+//   border-radius: 8px;
+// }
 </style>

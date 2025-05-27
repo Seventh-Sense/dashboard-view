@@ -26,6 +26,10 @@ import 'ant-design-vue/dist/reset.css';
 
 import Antd from 'ant-design-vue';
 
+import './icon/style.css';
+import './icon/x-icon-color.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 // 注册图标
 addCollection(uimIcons)
 addCollection(lineMdIcons)

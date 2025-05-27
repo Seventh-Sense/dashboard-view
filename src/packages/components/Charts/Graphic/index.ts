@@ -6,11 +6,4 @@ import { ProgressConfig } from './Progress/index'
 import { SpeedConfig } from './Speed/index'
 import { SwitchTwoConfig } from './SwitchTwo/index'
 
-export default [
-  
-  ModeConfig,
-  
-  SpeedConfig,
-  SwitchConfig,
- 
-]
+export default [ModeConfig, SpeedConfig, SwitchConfig, SwitchTwoConfig, ProgressConfig, NumericalConfig]

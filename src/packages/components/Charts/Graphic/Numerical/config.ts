@@ -5,17 +5,17 @@ import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
 export const option: any = {
-  dataset: 36,
+  dataset: 26,
   backgroundColor: '#00000088',
-  fontSize: 16,
+  fontSize: 32,
   title: '温度',
   textColor: '#FFFFFF99',
-  rightIconSize: 36,
+  rightIconSize: 72,
   iconNo: 1,
-  dataSize: 32,
+  dataSize: 64,
   dataColor: '#FFFFFFEE',
   unitText: '℃',
-  bottomTextSize: 16,
+  bottomTextSize: 32,
   bottomTextColor: '#AAAAAA',
   isUnit: true,
   isStatus: false,
@@ -23,7 +23,7 @@ export const option: any = {
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key = NumericalConfig.key
-  public attr = { ...chartInitConfig, w: 116, h: 152, zIndex: 1 }
+  public attr = { ...chartInitConfig, w: 232, h: 304, zIndex: 1 }
   public chartConfig = cloneDeep(NumericalConfig)
   public option = cloneDeep(option)
 }

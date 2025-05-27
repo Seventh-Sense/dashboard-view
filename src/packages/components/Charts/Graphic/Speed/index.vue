@@ -31,7 +31,8 @@ import { PropType, shallowReactive, watch, toRefs, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
 import throttle from 'lodash/throttle'
-import { updatePoint } from '@/api/http'
+import { updateNodeData, clickCyclicData, throttleTime } from '@/packages/public'
+import { cloneDeep } from 'lodash'
 
 const t = window['$t']
 
@@ -52,7 +53,7 @@ const { speeds } = toRefs(props.chartConfig.option)
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    console.log('asdasd', newVal, speeds.value)
+    //console.log('asdasd', newVal, speeds.value)
     option.dataset = parseData(newVal, 'string')
   },
   {
@@ -62,57 +63,31 @@ watch(
 )
 
 const onClick = throttle(
-  () => {
-    click()
+  async () => {
+    try {
+      flag.value = true
+      let data = clickCyclicData(option.dataset, speeds.value)
+
+      let tmp = cloneDeep(option.dataset)
+      option.dataset = parseData(data, 'string')
+
+      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      if (!result) {
+        option.dataset = tmp
+      }
+    } catch (error) {
+      // 错误已由 updateNodeData 处理，此处可补充额外逻辑
+      console.error('操作失败:', error)
+    } finally {
+      flag.value = false // 无论成功失败都关闭加载状态
+    }
   },
-  1000,
+  throttleTime,
   {
     leading: true,
     trailing: false
   }
 )
-
-const click = () => {
-  let params = props.chartConfig.request.bindParams
-
-  let data = getData(option.dataset, speeds.value)
-
-  if (params.objectID !== '') {
-    flag.value = true
-
-    updatePoint(params.objectID, { value: Number(data) })
-      .then((res: any) => {
-        if (res.status === 'OK') {
-          option.dataset = parseData(data, 'string')
-          window['$message'].success(t('msg.gauge_msg_1'))
-        } else {
-          window['$message'].error(t('msg.gauge_msg_2'))
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(() => {
-        flag.value = false
-      })
-  } else {
-    window['$message'].warning(t('msg.gauge_msg_3'))
-  }
-}
-
-const getData = (value: string, options: string[]): string => {
-  if (options.length === 0) return '' // 处理空数组情况
-
-  const index = options.indexOf(value)
-  if (index === -1) return options[0] // 未找到返回首项
-
-  let nextIndex = index + 1
-
-  // 核心逻辑调整：确保索引有效且符合业务规则
-  nextIndex = nextIndex > 3 || nextIndex >= options.length ? 0 : nextIndex
-
-  return options[nextIndex]
-}
 </script>
 
 <style lang="scss" scoped></style>

@@ -17,6 +17,9 @@ importers:
       '@antv/g2':
         specifier: ^5.2.12
         version: 5.2.12
+      '@fortawesome/fontawesome-free':
+        specifier: ^6.4.0
+        version: 6.7.2
       '@iconify/json':
         specifier: ^2.2.158
         version: 2.2.158
@@ -798,6 +801,10 @@ packages:
 
   '@floating-ui/utils@0.2.1':
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
+
+  '@fortawesome/fontawesome-free@6.7.2':
+    resolution: {integrity: sha512-JUOtgFW6k9u4Y+xeIaEiLr3+cjoUPiAuLXoyKOJSia6Duzb7pq+A76P9ZdPDoAoxHdHzq6gE9/jKBGXlZT8FbA==}
+    engines: {node: '>=6'}
 
   '@humanwhocodes/config-array@0.9.5':
     resolution: {integrity: sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw==}
@@ -5312,6 +5319,8 @@ snapshots:
       '@floating-ui/utils': 0.2.1
 
   '@floating-ui/utils@0.2.1': {}
+
+  '@fortawesome/fontawesome-free@6.7.2': {}
 
   '@humanwhocodes/config-array@0.9.5':
     dependencies:

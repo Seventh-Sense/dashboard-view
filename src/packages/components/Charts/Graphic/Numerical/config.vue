@@ -22,7 +22,7 @@
       <SettingItem :name="t('dashboard.font_size')">
         <n-input-number v-model:value="optionData.fontSize" size="small" />
       </SettingItem>
-      <SettingItem :name="t('dashboard.value_color')">
+      <SettingItem :name="t('dashboard.color')">
         <n-color-picker
           size="small"
           :modes="['hex']"

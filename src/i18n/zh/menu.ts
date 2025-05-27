@@ -5,5 +5,6 @@ export default {
   remote_object_manage: '远程对象',
   modbus_manage: 'Modbus',
   IP: 'IP',
-  DashBoard: '可视化'
+  DashBoard: '可视化',
+  device_manage: '设备管理',
 }

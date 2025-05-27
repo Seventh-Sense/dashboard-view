@@ -5,5 +5,6 @@ export default {
   remote_object_manage: 'Remote',
   modbus_manage: 'Modbus',
   IP: 'IP',
-  DashBoard: 'DashBoard'
+  DashBoard: 'DashBoard',
+  device_manage: 'Device Manage',
 }

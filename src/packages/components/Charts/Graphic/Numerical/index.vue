@@ -7,35 +7,27 @@
       backgroundColor: backgroundColor
     }"
   >
-    <div
-      class="container-left"
-      :style="{
-        fontSize: fontSize + 'px',
-        color: textColor
-      }"
-    >
-      {{ title }}
-    </div>
-    <div class="container-right">
-      <img
-        v-if="iconNo === 1"
-        :width="rightIconSize"
-        :height="rightIconSize"
-        :src="SVG_ICON.card_icons.snow_TL"
-      />
-      <img
-        v-else-if="iconNo === 2"
-        :width="rightIconSize"
-        :height="rightIconSize"
-        :src="SVG_ICON.card_icons.modbus_df"
-      />
+    <div class="container-top">
+      <div
+        :style="{
+          fontSize: fontSize + 'px',
+          color: textColor
+        }"
+      >
+        {{ title }}
+      </div>
+      <div>
+        <Icon v-if="iconNo === 1" name="temperature" :size="72" :color="{ normal: '#3399ff' }" />
+        <Icon v-else-if="iconNo === 2" name="humidity" :size="72" :color="{ normal: '#3399ff' }" />
+      </div>
     </div>
 
     <div class="container-bottom">
       <div
         :style="{
           fontSize: dataSize + 'px',
-          color: dataColor
+          color: dataColor,
+          lineHeight: dataSize + 'px'
         }"
       >
         {{ value }}
@@ -44,7 +36,8 @@
         v-if="isUnit"
         :style="{
           fontSize: bottomTextSize + 'px',
-          color: bottomTextColor
+          color: bottomTextColor,
+          lineHeight: bottomTextColor + 'px'
         }"
       >
         {{ unitText }}
@@ -53,7 +46,8 @@
         v-if="isStatus"
         :style="{
           fontSize: bottomTextSize + 'px',
-          color: bottomTextColor
+          color: bottomTextColor,
+          lineHeight: bottomTextColor + 'px'
         }"
       >
         状态
@@ -67,8 +61,8 @@ import { PropType, shallowReactive, watch, toRefs, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { useChartDataFetch } from '@/hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { parseData } from '@/utils'
+import { Icon } from '@/icon/index'
 
 const props = defineProps({
   chartConfig: {
@@ -77,10 +71,10 @@ const props = defineProps({
   }
 })
 
-const value = ref<any>(35)
+const value = ref<any>(26)
 
 const option = shallowReactive({
-  dataset: true
+  dataset: 26
 })
 
 const {
@@ -120,31 +114,23 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 
 <style lang="scss" scoped>
 .container {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid transparent;
   border-radius: 16px;
-  padding: 12px;
+  padding: 12px 0 12px 12px;
 
-  &-left {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    text-align: left;
-  }
-
-  &-right {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    text-align: right;
+  &-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   &-bottom {
-    position: absolute;
-    left: 12px;
-    bottom: 12px;
     display: flex;
     gap: 8px;
+    justify-content: flex-start;
     align-items: flex-end;
   }
 }

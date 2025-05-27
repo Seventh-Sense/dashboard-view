@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <n-switch v-model:value="option.dataset"/>
-  </div>
+  <GoSwitch v-model="value" :width="`${w}px`" :height="`${h}px`" @change="onClick" />
 </template>
 
 <script setup lang="ts">
 import { PropType, toRefs, shallowReactive, watch, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
+import { GoSwitch } from '@/components/GoSwitch'
+import throttle from 'lodash/throttle'
+import { throttleTime, updateNodeData } from '@/packages/public'
+import { cloneDeep } from 'lodash'
 
 const props = defineProps({
   chartConfig: {
@@ -15,19 +17,22 @@ const props = defineProps({
     required: true
   }
 })
-
+const t = window['$t']
 //更新期间，不修改值
 const flag = ref(false)
 
+const { w, h } = toRefs(props.chartConfig.attr)
 const option = shallowReactive({
   dataset: false
 })
+
+const value = ref(false)
 
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      option.dataset = parseData(newVal, 'boolean')
+      value.value = parseData(newVal, 'boolean')
     }
   },
   {
@@ -35,8 +40,33 @@ watch(
     deep: true
   }
 )
+
+const onClick = throttle(
+  async () => {
+    try {
+      flag.value = true
+      let data = option.dataset ? 0 : 1
+
+      let tmp = cloneDeep(value.value)
+      value.value = parseData(data, 'boolean')
+
+      console.log('eeee', value.value)
+      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      if (!result) {
+        value.value = tmp
+      }
+    } catch (error) {
+      console.error('操作失败:', error)
+    } finally {
+      flag.value = false
+    }
+  },
+  throttleTime,
+  {
+    leading: true,
+    trailing: false
+  }
+)
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
