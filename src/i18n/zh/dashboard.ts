@@ -254,4 +254,5 @@ export default {
   speed_high: '高速风',
   refrigeration: '制冷',
   heating: '制热',
+  display_value: '显示数值',
 }

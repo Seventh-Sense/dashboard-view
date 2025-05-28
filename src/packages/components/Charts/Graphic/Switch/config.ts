@@ -5,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
-  off: '#000000',
+  off: '#FFFFFF',
   on: '#6666FF',
   dataset: false
 }

@@ -221,7 +221,7 @@ const convertToDataTypes = (selectedData: any[], resData: any[]): any[] => {
 
   // 处理并返回结果数据
   return resData
-    .filter(([typeNum]) => typeNum !== 8) // 过滤无效类型
+    .filter(([typeNum]) => ![8, 15, 17, 20, 23, 56].includes(typeNum)) // 过滤无效类型
     .map(([typeNum, idNum]) => {
       const compositeKey = `${typeNum},${idNum}` // 生成复合键
 

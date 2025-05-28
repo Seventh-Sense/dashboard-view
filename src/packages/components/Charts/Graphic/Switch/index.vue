@@ -28,7 +28,7 @@ import { PropType, toRefs, shallowReactive, watch, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import throttle from 'lodash/throttle'
 import { parseData } from '@/utils'
-import { animationTime, throttleTime, updateNodeData } from '@/packages/public'
+import { throttleTime, updateNodeData } from '@/packages/public'
 import { cloneDeep } from 'lodash'
 
 const props = defineProps({

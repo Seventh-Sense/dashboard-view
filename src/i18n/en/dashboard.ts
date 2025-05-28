@@ -258,4 +258,5 @@ export default {
   speed_high: 'High-speed Wind',
   refrigeration: 'Cooling',
   heating: 'Heating',
+  display_value: 'Display Value',
 }
