@@ -6,6 +6,7 @@ import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
   dataset: '0',
+  size: 72,
   speeds: ['0', '1', '2', '3']
 }
 

@@ -66,11 +66,12 @@ export default {
   gauge: 'Gauges',
   air: 'Air',
   more: 'More',
-  line: 'Lines',
+  line: 'Line',
   device: 'Devices',
   devices: 'Device',
   text: 'Texts',
   input: 'Icons',
+  trend: 'Trends',
 
   component: 'Module',
   single_row: 'Single Row',
@@ -259,4 +260,5 @@ export default {
   refrigeration: 'Cooling',
   heating: 'Heating',
   display_value: 'Display Value',
+  default: 'Default',
 }

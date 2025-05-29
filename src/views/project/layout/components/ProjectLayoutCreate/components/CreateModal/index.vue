@@ -1,5 +1,5 @@
 <template>
-  <n-modal v-model:show="showRef" class="go-create-modal">
+  <n-modal v-model:show="showRef" class="go-create-modal" :mask-closable="false">
     <n-card
       :bordered="true"
       role="dialog"
@@ -11,7 +11,7 @@
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="go-create-modal-title">
-            {{ $t('project.create_tip') }}
+            {{ $t('project.project') }}
           </span>
           <n-icon size="32" :depth="1" @click="closeHandle" style="cursor: pointer">
             <CloseOutlineIcon />
@@ -19,10 +19,10 @@
         </n-space>
       </template>
       <div class="card-box-con">
-        <div class="card-box-title">{{ $t('device.project_name') }}:</div>
+        <div class="card-box-title">{{ $t('device.project_name') }}</div>
         <n-input v-model:value="project_name" type="text" />
-        <!-- <div class="card-box-title">{{ $t('device.desc') }}:</div>
-        <n-input v-model:value="decs" type="textarea" /> -->
+        <div class="card-box-title">{{ $t('device.project_type') }}</div>
+        <n-select v-model:value="decs" :options="options" />
       </div>
       <template #footer>
         <n-space justify="end">
@@ -49,7 +49,18 @@ const props = defineProps({
 })
 
 const project_name = ref('')
-const decs = ref('')
+const decs = ref('dashboard')
+
+const options: any[] = [
+  {
+    label: 'Dashboard',
+    value: 'dashboard'
+  },
+  {
+    label: 'Graphic',
+    value: 'graphic'
+  }
+]
 
 watch(props, newValue => {
   showRef.value = newValue.show
@@ -62,7 +73,7 @@ const onPositiveClick = async () => {
         name: project_name.value,
         cover: '',
         content: '',
-        description: ''
+        description: decs.value
       })
 
       if (res.status !== 'OK') {

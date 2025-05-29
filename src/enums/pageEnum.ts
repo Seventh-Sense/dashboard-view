@@ -6,6 +6,18 @@ export enum ChartEnum {
   CHART_HOME_NAME = 'ChartHome'
 }
 
+export enum GraphicEnum {
+  // 图表创建
+  CHART_GRAPHIC = '/graphic/:id(.*)*',
+  CHART_GRAPHIC_NAME = 'Graphic'
+}
+
+export enum GraphicPreviewEnum {
+  //  图表预览
+  CHART_GRAPHIC_PREVIEW = '/graphic/preview/:id(.*)*',
+  CHART_GRAPHIC_PREVIEW_NAME = 'GraphicPreview'
+}
+
 export enum PreviewEnum {
   //  图表预览
   CHART_PREVIEW = '/chart/preview/:id(.*)*',

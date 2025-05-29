@@ -38,7 +38,7 @@ export default {
   stop_bits: 'Stop bits',
   mode: 'Mode',
   project_name: 'Project Name',
-
+  project_type: 'Project Type',
   //
   desc: 'Description',
 

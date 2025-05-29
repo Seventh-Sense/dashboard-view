@@ -1,5 +1,21 @@
 <template>
-  <span class="fa-stack" :style="sizeStyle">
+  <span v-if="type === 'mono-line'" class="fa-stack pointer" :style="sizeStyle">
+    <i
+      :class="['xicon_' + name + '_TL']"
+      class="fa-stack-1x"
+      :style="[fontSizeStyle, { color: color?.normal || 'var(--color-primary)' }]"
+    ></i>
+  </span>
+
+  <div
+    v-else-if="type === 'mono-filled'"
+    style="display: inline-block; text-align: center; margin: 0 6px; background-clip: text"
+    class="btn-menu active"
+    :style="sizeStyle"
+  >
+    <span :class="['xicon_' + name + '_TF']" :style="[fontSizeStyle, { color: 'transparent' }]"></span>
+  </div>
+  <span v-else class="fa-stack pointer" :style="sizeStyle">
     <i
       :class="['xicon_' + name + '_FL']"
       class="fa-stack-1x"
@@ -14,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -37,12 +53,21 @@ const props = withDefaults(
   }
 )
 
-const sizeStyle = ref({
-  width: props.size + 'px',
-  height: props.size + 'px',
-  lineHeight: props.size + 'px'
+const sizeStyle = computed(() => {
+  return {
+    width: props.size + 'px',
+    height: props.size + 'px',
+    'line-height': props.size + 'px'
+  }
 })
-const fontSizeStyle = ref({ fontSize: props.size + 'px' })
+
+const fontSizeStyle = computed(() => {
+  return { 'font-size': props.size + 'px' }
+})
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.pointer {
+  cursor: pointer;
+}
+</style>

@@ -38,6 +38,7 @@ export default {
   stop_bits: '停止位',
   mode: '模式',
   project_name: '项目名称',
+  project_type: '项目类型',
 
   //
   desc: '描述',

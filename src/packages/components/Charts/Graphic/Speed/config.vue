@@ -3,6 +3,7 @@
     <!-- <SettingItemBox name="123" :alone="true">
       <n-input v-model:value="optionData.dataset" size="small" />
     </SettingItemBox> -->
+
     <SettingItemBox :name="t('dashboard.speed_auto')" :alone="true">
       <n-input v-model:value="optionData.speeds[0]" size="small" />
     </SettingItemBox>
@@ -15,7 +16,6 @@
     <SettingItemBox :name="t('dashboard.speed_low')" :alone="true">
       <n-input v-model:value="optionData.speeds[3]" size="small" />
     </SettingItemBox>
-    
   </CollapseItem>
 </template>
 

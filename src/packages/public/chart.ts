@@ -66,7 +66,7 @@ export const clickCyclicData = (value: string, options: string[]): string => {
   let nextIndex = index + 1
 
   // 核心逻辑调整：确保索引有效且符合业务规则
-  nextIndex = nextIndex > 1 || nextIndex >= options.length ? 0 : nextIndex
+  nextIndex = nextIndex > (options.length - 1) || nextIndex >= options.length ? 0 : nextIndex
 
   return options[nextIndex]
 }

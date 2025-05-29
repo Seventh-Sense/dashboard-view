@@ -15,14 +15,14 @@ export const useDataListInit = () => {
       release: true,
       label: data.name,
       image: data.cover,
-      time: data.time
+      time: data.time,
+      type: data.description
     })
   }
 
   // 添加
   const addHandle = (data: any) => {
-    //console.log(data)
-    list.value.push({ id: data.id, title: data.id, release: true, label: data.id })
+    list.value.push({ id: data.id, title: data.id, release: true, label: data.id, type: data.description })
   }
 
   // 删除

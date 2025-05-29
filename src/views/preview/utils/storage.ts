@@ -33,6 +33,11 @@ export const getSessionStorageInfo = () => {
   chartEditStore.setInitCanves();
 }
 
+//清空数据
+export const clearStorage = () => {
+  chartEditStore.setInitCanves();
+}
+
 //演示获取本地数据
 // export const getLocalStorageInfo = () => {
 //   const filedata = JSONParse(JSONStringify(dataJson))

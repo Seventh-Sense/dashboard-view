@@ -17,8 +17,8 @@
         {{ title }}
       </div>
       <div>
-        <Icon v-if="iconNo === 1" name="temperature" :size="72" :color="{ normal: '#3399ff' }" />
-        <Icon v-else-if="iconNo === 2" name="humidity" :size="72" :color="{ normal: '#3399ff' }" />
+        <Icon v-if="iconNo === 1" name="temperature" :size="rightIconSize" />
+        <Icon v-else-if="iconNo === 2" name="humidity" :size="rightIconSize" />
       </div>
     </div>
 

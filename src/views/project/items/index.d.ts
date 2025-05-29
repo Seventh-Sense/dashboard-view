@@ -5,6 +5,7 @@ export type Chartype = {
   release: boolean // 0未发布 | 1已发布
   image?: any
   time?: any
+  type?: string
 }
 
 export type ChartList = Chartype[]

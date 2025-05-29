@@ -30,6 +30,8 @@ import { NThemeEditor } from 'naive-ui'
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { theme } from 'ant-design-vue'
+import '@x-plateform/graphic-editor/dist/style.css'
+import '@x-plateform/common/dist/style.css'
 
 const route = useRoute()
 

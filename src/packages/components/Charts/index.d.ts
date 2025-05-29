@@ -17,7 +17,7 @@ export enum ChatCategoryEnum {
 export enum ChatCategoryEnumName {
   BAR = '柱状图',
   PIE = '饼图',
-  LINE = '折线图',
+  LINE = () => window['$t']('dashboard.trend'),
   SCATTER = '散点图',
   MAP = '地图',
   COMBINATION = '组合图',

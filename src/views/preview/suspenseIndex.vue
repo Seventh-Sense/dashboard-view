@@ -36,7 +36,7 @@ import { getFilterStyle, setTitle } from '@/utils'
 import {
   getEditCanvasConfigStyle,
   getSessionStorageInfo,
-  getPreviewInfo,
+  clearStorage,
   keyRecordHandle,
   dragCanvas
 } from './utils'
@@ -94,11 +94,12 @@ const writeValue = (data: any) => {
 }
 
 onMounted(() => {
-  console.log('chartEditStore', chartEditStore.editCanvasConfig)
+  //console.log('chartEditStore', chartEditStore.editCanvasConfig)
   readPointValue(chartEditStore.componentList)
 })
 
 onUnmounted(() => {
+  clearStorage()
   if (interval) {
     window.clearInterval(interval)
   }

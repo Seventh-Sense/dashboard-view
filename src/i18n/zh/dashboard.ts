@@ -70,6 +70,7 @@ export default {
   devices: '设备',
   text: '文本',
   input: '控件',
+  trend: '趋势图',
 
   component: '组件',
   single_row: '单列',
@@ -255,4 +256,5 @@ export default {
   refrigeration: '制冷',
   heating: '制热',
   display_value: '显示数值',
+  default: '默认',
 }
