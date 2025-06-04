@@ -41,6 +41,7 @@ const option = shallowReactive({
   dataset: '0'
 })
 const value = ref('0')
+const retention = ref('0')
 
 const { speeds, size } = toRefs(props.chartConfig.option)
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -48,8 +49,8 @@ const { w, h } = toRefs(props.chartConfig.attr)
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    //console.log('asdasd', newVal, speeds.value)
     value.value = parseData(newVal, 'string')
+    retention.value = parseData(newVal, 'string')
   },
   {
     immediate: true,
@@ -86,4 +87,18 @@ const onClick = throttle(
 )
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.blink-svg {
+  animation: blink 1s infinite; /* 动画持续时间为1秒，无限次重复 */
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1; /* 完全不透明 */
+  }
+  50% {
+    opacity: 0; /* 完全透明 */
+  }
+}
+</style>

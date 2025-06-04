@@ -13,7 +13,8 @@ export default {
   release: 'Release',
   unreleased: 'Unrelease',
   last_edit: 'Last edit time',
-
+  task: 'Task',
+  
   //
   tip: 'Tip',
   msg_is_delete: 'Should this data be deleted?',

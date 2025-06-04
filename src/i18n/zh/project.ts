@@ -14,7 +14,7 @@ export default {
   release: '已发布',
   unreleased: '未发布',
   last_edit: '最后编辑',
-
+  task: '任务',
 
   //
   tip: '提示',

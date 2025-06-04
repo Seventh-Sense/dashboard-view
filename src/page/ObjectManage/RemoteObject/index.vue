@@ -55,7 +55,7 @@
               />
             </template>
             <template v-else-if="column.dataIndex === 'enabled'">
-              <a-switch v-model:checked="record.enabled" @click="onChange(record)" />
+              <n-switch v-model:value="record.enabled" @click="onChange(record)" />
             </template>
           </template>
         </a-table>

@@ -37,8 +37,12 @@
       <div>
         <div class="modal-filter">
           <n-input
+            ref="inputRef"
             v-model:value="keyword"
             clearable
+            :readonly="isReadonly"
+            @click="activateInput"
+            @touchstart="activateInput"
             style="width: 366px"
           />
         </div>
@@ -67,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, unref, onMounted, inject, onUnmounted } from 'vue'
+import { ref, computed, nextTick, onMounted, inject, onUnmounted } from 'vue'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { readIotPoints, addSubscribePoint } from '@/api/http'
 import { cloneDeep } from 'lodash-es'
@@ -75,6 +79,7 @@ import axiosTwo from '@/api/axiosTwo'
 import jsonList from '@/assets/data/Property.json'
 import { DEVICE_TYPE_MAP } from '../../utils/utils'
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui'
+import type { InputInst } from 'naive-ui';
 
 interface DataType {
   key: string
@@ -107,7 +112,22 @@ const loading = ref(false)
 const loadingButton = ref(false)
 
 // 搜索关键字
+const inputRef = ref<InputInst | null>(null);
+const isReadonly = ref(true);
 const keyword = ref('')
+
+const activateInput = async () => {
+  if (!inputRef.value) return;
+  
+  // 移除只读状态
+  isReadonly.value = false;
+  
+  // 等待 DOM 更新后聚焦
+  await nextTick();
+  
+  // 调用 Naive UI 的 focus 方法
+  inputRef.value.focus();
+};
 
 const filteredData = computed(() => {
   if (keyword.value === '') return data.value

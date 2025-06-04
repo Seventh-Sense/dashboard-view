@@ -43,7 +43,7 @@ export const useThemeOverridesHook = () => {
         tdTextColor: 'rgba(255, 255, 255, 0.93)',
       },
       Dropdown: {
-        color: 'rgba(0, 0, 0, 0.53)',
+        color: 'rgba(24, 22, 33, 1)',
         borderRadius: '6px',
         optionHeightMedium: '48px',
         padding: '0 0',

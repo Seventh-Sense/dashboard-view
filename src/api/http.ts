@@ -650,3 +650,34 @@ export const readPointsDataById = async (data: any) => {
     throw error
   }
 }
+
+//job
+export const readAllJobs = async () => {
+  try {
+    const response = await get2(`/job`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const addJob = async (data: any) => {
+  try {
+    const response = await post2(`/job`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const deleteJob = async (id: any) => {
+  try {
+    const response = await del2(`/` + id)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}

@@ -17,4 +17,6 @@ export default {
     login_msg_2: '登录失败!',
 
     please_input_chart: '请输入至少一个字符!',
+
+    creat_job_error: '创建失败!'
 }

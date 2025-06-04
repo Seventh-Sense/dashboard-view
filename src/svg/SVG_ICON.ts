@@ -61,10 +61,6 @@ import show_sun_g from './icons/show_sun_g.svg?url'
 import show_snow_g from './icons/show_snow_g.svg?url'
 import show_fan2_g from './icons/show_fan2_g.svg?url'
 
-import fanSpeed1 from './icons/_fanSpeed1.svg?url'
-import fanSpeed2 from './icons/_fanSpeed2.svg?url'
-import fanSpeed3 from './icons/_fanSpeed3.svg?url'
-import fanSpeedAuto from './icons/_fanSpeedAuto.svg?url'
 import snow from './icons/_snow.svg?url'
 import sun from './icons/_sun.svg?url'
 
@@ -132,10 +128,6 @@ export default {
     show_sun_g: show_sun_g,
     show_snow_g: show_snow_g,
     show_fan2_g: show_fan2_g,
-    fanSpeed1: fanSpeed1,
-    fanSpeed2: fanSpeed2,
-    fanSpeed3: fanSpeed3,
-    fanSpeedAuto: fanSpeedAuto,
     snow: snow,
     sun: sun
   }

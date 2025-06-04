@@ -18,6 +18,7 @@
   <!-- 关于软件 model -->
   <!-- <go-system-info v-model:modelShow="modelShowInfo"></go-system-info> -->
   <VersionModal v-model:showModal="modelShowInfo" />
+  <GoJob v-if="jobShow" v-model:isShowModal="jobShow"/>
 </template>
 
 <script lang="ts" setup>
@@ -31,12 +32,14 @@ import Person from './person.png'
 
 import { icon } from '@/plugins'
 import { VersionModal } from '@/views/login/modal/VersionModal'
-const { ChatboxEllipsesIcon, PersonIcon, LogOutOutlineIcon, SettingsSharpIcon } = icon.ionicons5
+import { GoJob } from '@/components/GoJob/index'
+const { ChatboxEllipsesIcon, PersonIcon, LogOutOutlineIcon, TvOutlineIcon } = icon.ionicons5
 
 const t = window['$t']
 
 const modelShowInfo = ref(false)
 const modelShow = ref(false)
+const jobShow = ref(false)
 
 // 是否失败
 const fallback = ref(false)
@@ -75,6 +78,11 @@ const options = ref([
   //   icon: renderIcon(SettingsSharpIcon)
   // },
   {
+    label: renderLang('project.task'),
+    key: 'job',
+    icon: renderIcon(TvOutlineIcon)
+  },
+  {
     label: renderLang('global.contact'),
     key: 'contact',
     icon: renderIcon(ChatboxEllipsesIcon)
@@ -100,9 +108,12 @@ const sysSetHandle = () => {
   modelShow.value = true
 }
 
-// 系统设置
 const sysInfoHandle = () => {
   modelShowInfo.value = true
+}
+
+const openJob = () => {
+  jobShow.value = true
 }
 
 const handleSelect = (key: string) => {
@@ -112,6 +123,9 @@ const handleSelect = (key: string) => {
       break
     case 'sysSet':
       sysSetHandle()
+      break
+    case 'job':
+      openJob()
       break
     case 'logout':
       logout()

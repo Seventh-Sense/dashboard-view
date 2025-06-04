@@ -207,7 +207,7 @@ const insertContent = (type: string) => {
 watch(
   () => data.value.type,
   newValue => {
-    console.log('data.value.type', data.value.type)
+    //console.log('data.value.type', data.value.type)
     insertContent(newValue)
   }
 )

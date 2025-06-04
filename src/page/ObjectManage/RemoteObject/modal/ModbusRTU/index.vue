@@ -95,7 +95,7 @@ const fetchSerialOptions = async () => {
 watch(
   () => props.data,
   newData => {
-    console.log('Data changed:', newData)
+    //console.log('Data changed:', newData)
   },
   { deep: true, immediate: true }
 )

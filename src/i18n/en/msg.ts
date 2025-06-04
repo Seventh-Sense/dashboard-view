@@ -17,4 +17,5 @@ export default {
     login_msg_2: 'Login failure!',
 
     please_input_chart: 'Please enter at least one character!',
+    creat_job_error: 'Creation failed!'
 }
