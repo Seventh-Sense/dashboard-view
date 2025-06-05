@@ -42,6 +42,7 @@ export interface DataType {
   type: string
   polling: number
   enabled: boolean
+  address: number
   property: null | any
 }
 
@@ -129,7 +130,8 @@ export function isBACnet(x: any): x is BACnetType {
 
 export enum DeviceTypeEnum {
   BACnet = 'bacnet',
-  ModbusRTU = 'ModbusRTU'
+  ModbusRTU = 'ModbusRTU',
+  ModbusTCP = 'ModbusTCP',
 }
 
 export const TypeOptions = [
@@ -140,11 +142,11 @@ export const TypeOptions = [
   {
     label: 'ModbusRTU',
     value: DeviceTypeEnum.ModbusRTU
-  }
-  // {
-  //   label: 'ModbusTCP',
-  //   value: 'ModbusTCP'
-  // },
+  },
+  {
+    label: 'ModbusTCP',
+    value: 'ModbusTCP'
+  },
   // {
   //   label: 'EthernetIP',
   //   value: 'EthernetIP'
@@ -166,6 +168,13 @@ export const BACnetData = {
   port: '47808',
   broadcast: '127.0.0.255',
   adpuTimeout: 6000
+}
+
+export const ModbusTCPData = {
+  slaveid: 1,
+  host: '127.0.0.1',
+  port: 5020,
+  connectionOption: 'tcp',
 }
 
 export const connectionOptions = ['SerialPort'].map(v => ({

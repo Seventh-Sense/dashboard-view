@@ -87,6 +87,7 @@ const fetchSerialOptions = async () => {
       label: v,
       value: v
     }))
+
   } catch (error) {
     console.error('Error fetching serial options:', error)
   }
@@ -114,4 +115,6 @@ watch(
     margin-top: 22px;
   }
 }
+
+
 </style>

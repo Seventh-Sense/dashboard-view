@@ -126,6 +126,8 @@ const columns: DataTableColumns<PointData> = [
         return DEVICE_TYPE_MAP[row.metric_type] + ',' + row.metric_id
       } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
         return row.metric_uid
+      } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
+        return row.metric_uid
       }
     }
   },
@@ -299,6 +301,9 @@ const onDiscovery = () => {
   } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
     isModbus.value = true
     isModbusEdit.value = false
+  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
+    isModbus.value = true
+    isModbusEdit.value = false
   }
 }
 
@@ -309,6 +314,9 @@ const onEdit = (row: PointData) => {
   if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
     isDisplay.value = true
   } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+    isModbusEdit.value = true
+    isModbus.value = true
+  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
     isModbusEdit.value = true
     isModbus.value = true
   }

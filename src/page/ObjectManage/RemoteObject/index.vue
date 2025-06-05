@@ -192,7 +192,7 @@ const onEdit = (row: DeviceTableData) => {
       readDeviceData(row)
       break
     case DeviceTypeEnum.ModbusRTU:
-      deviceData.value = row
+    case DeviceTypeEnum.ModbusTCP:
       isEdit.value = true
       isShowModal.value = true
       break

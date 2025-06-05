@@ -65,6 +65,7 @@ import { ref, watch, shallowRef, inject } from 'vue'
 import {
   DataType,
   ModbusRTUData,
+  ModbusTCPData,
   TypeOptions,
   pollOptions,
   isEmptyObject,
@@ -73,6 +74,7 @@ import {
 import { loadAsyncComponent } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { addDevice } from '@/api/http'
+import { cloneDeep } from 'lodash'
 
 const props = defineProps({
   isShowModal: {
@@ -95,6 +97,7 @@ const content = shallowRef(null)
 
 const BACnet = loadAsyncComponent(() => import('../BACnet/index.vue'))
 const ModbusRTU = loadAsyncComponent(() => import('../ModbusRTU/index.vue'))
+const ModbusTCP = loadAsyncComponent(() => import('../ModbusTCP/index.vue'))
 
 const data = ref<DataType>({
   id: '',
@@ -102,6 +105,7 @@ const data = ref<DataType>({
   type: DeviceTypeEnum.BACnet,
   polling: 3,
   enabled: true,
+  address: 1,
   property: {}
 })
 
@@ -115,11 +119,18 @@ const onSubmit = () => {
       handleBACnet()
     } else {
       //参数校验
-      if (data.value.name === '' || data.value.property.port === '') {
-        window['$message'].error(t('device.msg_enter_params'))
-        return
-      }
+      if (dataCheck(data.value)) return
+
       handleModbusRtu(data.value)
+    }
+  } else if (data.value.type === DeviceTypeEnum.ModbusTCP) {
+    if (props.isEdit) {
+      //clear
+      handleBACnet()
+    } else {
+      if (dataCheck(data.value)) return
+
+      handleModbusTCP(data.value)
     }
   }
 }
@@ -128,6 +139,38 @@ const handleBACnet = () => {
   onClear()
   refreshFunc()
   emit('update:isShowModal', false)
+}
+
+const handleModbusTCP = async (load: DataType) => {
+  try {
+    const res: any = await addDevice({
+      uid: 'modbus' + ',' + load.address,
+      name: load.name,
+      address: load.address.toString(),
+      protocol: DeviceTypeEnum.ModbusTCP,
+      enabled: true,
+      status: '',
+      description: '',
+      property: {
+        host: load.property.host,
+        port: load.property.port,
+        connectionOption: load.property.connectionOption
+      },
+      tags: ''
+    })
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(res.status)
+      return
+    }
+  } catch (error) {
+    console.error('handle ModbusRtu:', error)
+  } finally {
+    onClear()
+    refreshFunc()
+    emit('update:isShowModal', false)
+  }
 }
 
 const handleModbusRtu = async (load: DataType) => {
@@ -183,11 +226,37 @@ const onClear = () => {
     type: DeviceTypeEnum.BACnet,
     polling: 3,
     enabled: true,
+    address: 1,
     property: {}
   }
 }
 
-const insertContent = (type: string) => {
+const dataCheck = (load: DataType) => {
+  let flag = false
+
+  if (load.type === DeviceTypeEnum.ModbusTCP) {
+    if (
+      load.name === '' ||
+      load.property.host === '' ||
+      load.property.port === null ||
+      load.address === null
+    ) {
+      window['$message'].error(t('device.msg_enter_params'))
+      flag = true
+    }
+  }
+
+  if (load.type === DeviceTypeEnum.ModbusRTU) {
+    if (load.name === '' || load.property.port === '' || load.property.slaveid === null) {
+      window['$message'].error(t('device.msg_enter_params'))
+      flag = true
+    }
+  }
+
+  return flag
+}
+
+const insertContent = (type: string, edit: boolean) => {
   if (type === DeviceTypeEnum.BACnet) {
     content.value = BACnet
 
@@ -195,8 +264,14 @@ const insertContent = (type: string) => {
   } else if (type === DeviceTypeEnum.ModbusRTU) {
     content.value = ModbusRTU
 
-    if (isEmptyObject(data.value.property)) {
-      data.value.property = ModbusRTUData
+    if (!edit) {
+      data.value.property = cloneDeep(ModbusRTUData)
+    }
+  } else if (type === DeviceTypeEnum.ModbusTCP) {
+    content.value = ModbusTCP
+
+    if (!edit) {
+      data.value.property = cloneDeep(ModbusTCPData)
     }
   } else {
     content.value = null
@@ -208,7 +283,9 @@ watch(
   () => data.value.type,
   newValue => {
     //console.log('data.value.type', data.value.type)
-    insertContent(newValue)
+    if (!props.isEdit) {
+      insertContent(newValue, false)
+    }
   }
 )
 
@@ -217,7 +294,7 @@ watch(
   newValue => {
     if (newValue) {
       if (props.isEdit) {
-        insertContent(props.deviceData.device_type)
+        insertContent(props.deviceData.device_type, true)
 
         data.value = {
           id: '',
@@ -225,10 +302,11 @@ watch(
           type: props.deviceData.device_type,
           polling: 3,
           enabled: true,
+          address: Number(props.deviceData.address),
           property: props.deviceData.properties
         }
       } else {
-        insertContent(DeviceTypeEnum.BACnet)
+        insertContent(DeviceTypeEnum.BACnet, false)
       }
     }
   }
@@ -278,12 +356,16 @@ watch(
   }
 }
 
+::v-deep(.n-input) {
+  background-color: transparent;
+}
+
 ::v-deep(.n-input-wrapper) {
   background-color: #{$--color-dark-modal-content};
+  border-bottom: 1px solid #{$--color-dark-modal-title};
 }
 
 ::v-deep(.n-input__input-el) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
 }
 
 ::v-deep(.n-select) {

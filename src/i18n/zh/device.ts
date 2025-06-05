@@ -100,4 +100,6 @@ export default {
   vendor_name: '供应商名称',
   delete_all: '清空',
   msg_value_error: '请填写正确的值!',
+  host: '主机地址',
+  port: '端口',
 }
