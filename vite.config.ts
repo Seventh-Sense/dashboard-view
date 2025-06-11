@@ -72,24 +72,24 @@ export default defineConfig({
       watchFiles: true
     }),
     // 压缩
-    viteCompression({
-      verbose: true,
-      disable: false,
-      threshold: 10240,
-      algorithm: 'gzip',
-      ext: '.gz'
-    })
+    // viteCompression({
+    //   verbose: true,
+    //   disable: false,
+    //   threshold: 10240,
+    //   algorithm: 'gzip',
+    //   ext: '.gz'
+    // })
     // zipPack({
     //   inDir: `dist`,
-    //   outDir: "./",
+    //   outDir: './',
     //   outFileName: `dist.zip`
     // })
   ],
   build: {
     target: 'es2020',
     outDir: OUTPUT_DIR,
-    // minify: 'terser', // 如果需要用terser混淆，可打开这两行
-    // terserOptions: terserOptions,
+    //minify: 'terser', // 如果需要用terser混淆，可打开这两行
+    //terserOptions: terserOptions,
     rollupOptions: rollupOptions,
     //brotliSize: brotliSize,
     chunkSizeWarningLimit: chunkSizeWarningLimit

@@ -282,19 +282,19 @@ export const pollOptions = [
 
 export const functionOptions = [
   {
-    label: 'ReadCoils',
+    label: '01 Coils',
     value: '01'
   },
   {
-    label: 'ReadDiscreteInput',
+    label: '02 Discrete Input',
     value: '02'
   },
   {
-    label: 'ReadHoldingRegister',
+    label: '03 Holding Register',
     value: '03'
   },
   {
-    label: 'ReadInputRegister',
+    label: '04 Input Register',
     value: '04'
   }
 ]

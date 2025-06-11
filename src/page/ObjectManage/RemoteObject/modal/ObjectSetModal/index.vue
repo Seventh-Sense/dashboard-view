@@ -206,11 +206,10 @@ const fetchData = async () => {
   loading.value = true
   try {
     const res: any = await readIotPoints(props.deviceData.key, {
-      function: 'read_property',
+      function: 'read_object_list',
       parms: {
         address: props.deviceData.address,
         objid: props.deviceData.device_id,
-        prop: 'objectList'
       }
     })
 

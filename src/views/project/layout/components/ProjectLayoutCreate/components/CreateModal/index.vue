@@ -22,7 +22,7 @@
         <div class="card-box-title">{{ $t('device.project_name') }}</div>
         <n-input v-model:value="project_name" type="text" />
         <div class="card-box-title">{{ $t('device.project_type') }}</div>
-        <n-select v-model:value="decs" :options="options" />
+        <n-select v-model:value="decs" :options="options" disabled/>
       </div>
       <template #footer>
         <n-space justify="end">

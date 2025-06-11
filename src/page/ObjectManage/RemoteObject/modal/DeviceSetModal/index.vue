@@ -144,7 +144,7 @@ const handleBACnet = () => {
 const handleModbusTCP = async (load: DataType) => {
   try {
     const res: any = await addDevice({
-      uid: 'modbus' + ',' + load.address,
+      uid: 'ModbusTCP' + ',' + load.property.host + ':' + load.property.port,
       name: load.name,
       address: load.address.toString(),
       protocol: DeviceTypeEnum.ModbusTCP,
@@ -176,7 +176,7 @@ const handleModbusTCP = async (load: DataType) => {
 const handleModbusRtu = async (load: DataType) => {
   try {
     const res: any = await addDevice({
-      uid: 'modbus' + ',' + load.property.slaveid,
+      uid: 'ModbusRTU' + ',' + load.property.slaveid,
       name: load.name,
       address: load.property.slaveid.toString(),
       protocol: DeviceTypeEnum.ModbusRTU,
@@ -363,9 +363,6 @@ watch(
 ::v-deep(.n-input-wrapper) {
   background-color: #{$--color-dark-modal-content};
   border-bottom: 1px solid #{$--color-dark-modal-title};
-}
-
-::v-deep(.n-input__input-el) {
 }
 
 ::v-deep(.n-select) {
