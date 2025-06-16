@@ -1,6 +1,6 @@
 <template>
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
-    <SettingItemBox name="123" :alone="true">
+    <SettingItemBox :name="t('dashboard.type')" :alone="true">
       <n-select v-model:value="optionData.type" :options="options" size="small" />
     </SettingItemBox>
     <!-- <SettingItemBox :name="t('dashboard.icon_size')">
