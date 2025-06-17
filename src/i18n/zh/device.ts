@@ -102,4 +102,6 @@ export default {
   msg_value_error: '请填写正确的值!',
   host: '主机地址',
   port: '端口',
+
+  addr_example: '输入数字或数字范围(0-255)',
 }

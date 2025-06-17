@@ -16,6 +16,24 @@ export const PropertyMap = Object.freeze({
   }
 })
 
+export const MODBUS_ID_MAP = (key: string) => {
+  const t = window['$t']
+
+  const ID_MAP: { [key: string]: string } = {
+    name: t('device.name'),
+    description: t('device.desc'),
+    function: t('device.reg_type'),
+    address: t('device.reg_attr'),
+    count: t('device.reg_num'),
+    data_type: t('device.data_type'),
+    byteorder: t('device.byte_order'),
+    wordorder: t('device.word_order'),
+    divisor: t('device.coefficient'),
+  }
+
+  return ID_MAP[key] ? ID_MAP[key] : key
+}
+
 export const PROPERTY_TYPE_MAP = (key: string) => {
   const t = window['$t']
 

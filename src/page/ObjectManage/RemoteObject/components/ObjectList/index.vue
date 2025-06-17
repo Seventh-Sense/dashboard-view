@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import { icon } from '@/plugins'
-import { ref, onMounted, provide, nextTick, h, computed, onUnmounted } from 'vue'
+import { ref, onMounted, provide, nextTick, h, computed, onUnmounted, watch } from 'vue'
 import {
   DEVICE_TYPE_MAP,
   DeviceTypeEnum,
@@ -117,10 +117,17 @@ const loading = ref(false)
 let interval: number
 
 const columns: DataTableColumns<PointData> = [
-  { title: () => t('device.object_name'), key: 'metric_name' },
+  { title: () => t('device.object_name'), key: 'metric_name', sorter: 'default' },
   {
     title: () => t('device.id'),
     key: 'metric_uid',
+    sorter(rowA, rowB) {
+      if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
+        return parseInt(rowA.metric_id) - parseInt(rowB.metric_id)
+      } else {
+        return parseInt(rowA.metric_uid) - parseInt(rowB.metric_uid)
+      }
+    },
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
         return DEVICE_TYPE_MAP[row.metric_type] + ',' + row.metric_id
@@ -199,7 +206,7 @@ const initData = async () => {
       metric_name: item.name || '',
       unit: '',
       value: '',
-      description: '',
+      description: item.description || '', 
       properties: item.property || {},
       tags: item.tags || [],
       device_id: props.deviceData.device_id
@@ -310,6 +317,7 @@ const onDiscovery = () => {
 const onReset = (row: PointData) => {}
 
 const onEdit = (row: PointData) => {
+  console.log('edit row', row)
   displayData.value = row
   if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
     isDisplay.value = true
@@ -365,6 +373,15 @@ const onBack = () => {
 }
 
 provide('refreshObjTable', initData)
+
+watch(
+  () => isModbus.value,
+  newVal => {
+    if (!newVal) {
+      initData()
+    }
+  }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -442,7 +459,7 @@ provide('refreshObjTable', initData)
   background: transparent !important;
 }
 
-::v-deep(.n-input__input-el) {
+::v-deep(.n-input-wrapper) {
   border-bottom: 1px solid #{$--color-dark-modal-title};
 }
 

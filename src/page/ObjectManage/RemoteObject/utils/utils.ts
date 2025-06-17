@@ -131,7 +131,7 @@ export function isBACnet(x: any): x is BACnetType {
 export enum DeviceTypeEnum {
   BACnet = 'bacnet',
   ModbusRTU = 'ModbusRTU',
-  ModbusTCP = 'ModbusTCP',
+  ModbusTCP = 'ModbusTCP'
 }
 
 export const TypeOptions = [
@@ -146,7 +146,7 @@ export const TypeOptions = [
   {
     label: 'ModbusTCP',
     value: 'ModbusTCP'
-  },
+  }
   // {
   //   label: 'EthernetIP',
   //   value: 'EthernetIP'
@@ -174,7 +174,7 @@ export const ModbusTCPData = {
   slaveid: 1,
   host: '127.0.0.1',
   port: 5020,
-  connectionOption: 'tcp',
+  connectionOption: 'tcp'
 }
 
 export const connectionOptions = ['SerialPort'].map(v => ({
@@ -343,4 +343,72 @@ export function formatTimestamp(timestamp: any) {
 
   // 组合成标准格式
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+/**
+ * 校验输入字符串是否为有效的非负整数（0-255）或整数范围（0-255）
+ * @param value 输入字符串
+ * @returns 校验结果 (true: 有效, false: 无效)
+ */
+export const validateIntegerOrRange = (value: string): boolean => {
+  // 移除字符串两端空格
+  const trimmedValue = value.trim()
+
+  // 情况1：单个整数校验（必须 ≥0 且 ≤255 的整数）
+  if (!trimmedValue.includes('-')) {
+    // 使用正则验证整数格式
+    if (!/^\d+$/.test(trimmedValue)) return false
+    const num = parseInt(trimmedValue, 10)
+    return num >= 0 && num <= 255
+  }
+
+  // 情况2：范围格式校验（必须满足 X-Y 格式）
+  const parts = trimmedValue.split('-')
+  if (parts.length !== 2) return false
+
+  const [startStr, endStr] = parts.map(s => s.trim())
+
+  // 验证两个部分都是整数
+  if (!/^\d+$/.test(startStr) || !/^\d+$/.test(endStr)) return false
+
+  const start = parseInt(startStr, 10)
+  const end = parseInt(endStr, 10)
+
+  // 范围值校验（必须满足 0≤start≤end≤255）
+  return start >= 0 && end >= 0 && start <= end && end <= 255
+}
+
+// 创建配置映射表，便于扩展和维护
+
+const getLabelByValue = (value: any, options: any[]) => {
+  const option = options.find(opt => opt.value === value)
+  return option?.label || value // 严格遵循找不到返回空字符串
+}
+
+const MODBUS_TEXT_MAPPER: Record<string, any[]> = {
+  function: functionOptions,
+  byteorder: OrderOptions,
+  wordorder: OrderOptions,
+  data_type: DatatypeOptions
+}
+
+export const modbusSelectTextMap = (key: any, value: any) => {
+  if (MODBUS_TEXT_MAPPER[key]) {
+    return getLabelByValue(value, MODBUS_TEXT_MAPPER[key])
+  }
+  return String(value)
+}
+
+export const modbusSelectOptions = (key: any) => {
+  return MODBUS_TEXT_MAPPER[key] ? MODBUS_TEXT_MAPPER[key] : []
+}
+
+//通用字符串排序函数
+export const sortByString = (a: string, b: string, emptyLast = false) => {
+  // 空值处理
+  if (a === null || a === undefined) return emptyLast ? 1 : -1
+  if (b === null || b === undefined) return emptyLast ? -1 : 1
+
+  // 中文排序使用 localeCompare
+  return a.localeCompare(b, 'zh-CN')
 }

@@ -1,15 +1,15 @@
 <template>
-  <GraphicEditor
+  <!-- <GraphicEditor
     v-if="graphicData !== null"
     :graphicData="graphicData"
     @onExit="onExit()"
     @onSave="onSave"
     @showPreview="showPreview"
-  ></GraphicEditor>
+  ></GraphicEditor> -->
 </template>
 
 <script setup lang="ts">
-import { GraphicEditor } from '@x-plateform/graphic-editor'
+//import { GraphicEditor } from '@x-plateform/graphic-editor'
 import { onMounted, ref } from 'vue';
 
 const graphicData = ref<any|null>(null);

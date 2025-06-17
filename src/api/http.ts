@@ -590,6 +590,16 @@ export const readIotPoints = async (deviceId: any, data: any) => {
   }
 }
 
+export const updateIotPoints = async (id: any, data: any) => {
+  try {
+    const response = await patch2(`/metric/` + id, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const addSubscribePoint = async (data: any) => {
   try {
     const response = await post2(`/metrics`, data)

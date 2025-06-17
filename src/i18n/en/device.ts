@@ -101,4 +101,6 @@ export default {
   msg_value_error: 'Please fill in the correct values!',
   host: 'Host',
   port: 'Port',
+
+  addr_example: 'Enter a number or a number range (0-255)',
 }

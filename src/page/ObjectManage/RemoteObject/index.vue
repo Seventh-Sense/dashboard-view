@@ -3,19 +3,16 @@
     <div v-if="!isToggle" class="project-card">
       <div class="project-card-top">
         <div class="project-card-top-title">{{ $t('device.device_list') }}</div>
-        <n-space justify="end" align="center">
-          <!-- <n-dropdown
-            trigger="hover"
-            :options="options"
-            placement="bottom-end"
-            @select="handleSelect"
-          >
-            <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
-          </n-dropdown> -->
+      </div>
+      <div class="project-card-filter">
+        <div class="project-card-filter-left">
+          <n-input v-model:value="keyword" type="text" clearable style="width: 366px" />
+        </div>
+        <div class="project-card-filter-right">
           <n-button class="project-card-top-extra-button" @click="onAdd">
             {{ $t('global.r_add') }}
           </n-button>
-        </n-space>
+        </div>
       </div>
       <div class="project-card-content" :style="{ height: height + 'px' }">
         <a-table
@@ -23,8 +20,8 @@
           size="middle"
           :loading="loading"
           :columns="columns"
-          :data-source="data"
-          :scroll="{ y: height - 44 }"
+          :data-source="filteredData"
+          :scroll="{ y: height - 44 - 48 }"
           :pagination="false"
           :row-class-name="(_record: any, index: any) => (index % 2 === 1 ? 'table-striped1' : 'table-striped2')"
         >
@@ -75,9 +72,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, provide } from 'vue'
+import { ref, onMounted, provide, computed } from 'vue'
 import { NButton } from 'naive-ui'
-import { DeviceTableData, DeviceTypeEnum } from './utils/utils'
+import { DeviceTableData, DeviceTypeEnum, sortByString } from './utils/utils'
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
 import { PropertyDisplayModal } from './modal/PropertyDisplayModal'
@@ -102,14 +99,40 @@ const displayData = ref({})
 const data = ref<DeviceTableData[]>([])
 const loading = ref(false)
 
-const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72)
+const keyword = ref('')
+
+const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72 - 48)
+
+const filteredData = computed(() => {
+  if (keyword.value === '') return data.value
+
+  const searchTerm = keyword.value.toLowerCase()
+
+  return data.value.filter(item => {
+    return Object.values(item).some(value => {
+      return String(value).toLowerCase().includes(searchTerm)
+    })
+  })
+})
 
 const columns = [
   { title: '', dataIndex: 'link', width: 50 },
-  { title: () => t('device.name'), dataIndex: 'device_name' },
-  { title: () => t('device.type'), dataIndex: 'device_type' },
+  {
+    title: () => t('device.name'),
+    dataIndex: 'device_name',
+    sorter: (a: any, b: any) => sortByString(a.device_name, b.device_name)
+  },
+  {
+    title: () => t('device.type'),
+    dataIndex: 'device_type',
+    sorter: (a: any, b: any) => sortByString(a.device_type, b.device_type)
+  },
   { title: () => t('device.polling'), dataIndex: 'polling' },
-  { title: () => t('device.address'), dataIndex: 'address' },
+  {
+    title: () => t('device.address'),
+    dataIndex: 'address',
+    sorter: (a: any, b: any) => sortByString(a.address, b.address)
+  },
   { title: () => t('device.status'), dataIndex: 'status' },
   { title: () => t('device.enabled'), dataIndex: 'enabled' },
   { title: '', dataIndex: 'actions', width: 120 }
@@ -316,6 +339,14 @@ provide('refreshFunc', initData)
       }
     }
 
+    &-filter {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
     &-content {
       padding: 0 16px;
     }
@@ -376,5 +407,21 @@ provide('refreshFunc', initData)
 
 .ant-table-striped :deep(.table-striped2) td:last-child {
   border-radius: 0 8px 8px 0 !important;
+}
+
+:deep(.n-input__input) {
+  margin-left: 12px !important;
+}
+
+::v-deep(.n-input) {
+  background: transparent;
+}
+
+::v-deep(.n-input--focus) {
+  background: transparent !important;
+}
+
+::v-deep(.n-input-wrapper) {
+  border-bottom: 1px solid #{$--color-dark-modal-title};
 }
 </style>
