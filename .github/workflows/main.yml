@@ -1,6 +1,5 @@
 name: Build Vue App
 
-
 on:
   push:
     tags:
@@ -8,14 +7,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: windows-latest  # 使用Windows运行器
 
     steps:
     - name: Get version
       id: get_version
       run: | 
-        echo "Tag ref: $GITHUB_REF"
-      
+        echo "Tag ref: $env:GITHUB_REF"
+      shell: pwsh  # 使用PowerShell Core
+
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
@@ -30,21 +30,30 @@ jobs:
       run: |
         npm install -g pnpm@8
         pnpm --version
+      shell: cmd  # 使用CMD安装全局包更可靠
 
     - name: Install Dependencies && run build
-      run: pnpm install && export NODE_OPTIONS=--max_old_space_size=4096 && pnpm run build
+      run: | 
+        pnpm install
+        $env:NODE_OPTIONS = "--max_old_space_size=4096"
+        pnpm run build
+      shell: pwsh
 
     - name: Print tag
       run: |
-        echo "The tag is $GITHUB_REF_NAME"
+        echo "The tag is $env:GITHUB_REF_NAME"
+      shell: pwsh
       
     - name: Write version file
-      run: sudo echo "xplayui:$GITHUB_REF_NAME" > ./dist/version.txt
+      run: |
+        New-Item -Path ./dist -ItemType Directory -Force  # 确保目录存在
+        "xplayui:$env:GITHUB_REF_NAME" | Out-File -FilePath ./dist/version.txt -Encoding ascii
+      shell: pwsh
 
     - name: Create zip file
       run: |
-        zip -r ./dist.zip ./dist
-      
+        Compress-Archive -Path ./dist -DestinationPath ./dist.zip -Force
+      shell: pwsh
 
     - name: Upload Windows Executable
       uses: actions/upload-artifact@v4
@@ -55,7 +64,8 @@ jobs:
     - name: Generate release notes
       run: |
         python generate_release_notes.py > release_notes.md
-        
+      shell: cmd  # Python在CMD环境更稳定
+
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
@@ -63,5 +73,3 @@ jobs:
         draft: false
         prerelease: false
         files: dist.zip
-  
-         
