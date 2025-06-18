@@ -63,8 +63,15 @@ jobs:
 
     - name: Generate release notes
       run: |
-        python generate_release_notes.py > release_notes.md
-      shell: cmd  # Python在CMD环境更稳定
+        # 使用绝对路径确保在正确位置创建文件
+        $notesPath = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "release_notes.md"
+        # 确保文件不存在时创建空文件
+        New-Item -Path $notesPath -ItemType File -Force | Out-Null
+        # 设置文件可写权限
+        attrib -R $notesPath
+        # 生成内容
+        python generate_release_notes.py | Out-File -FilePath $notesPath -Encoding utf8
+      shell: pwsh
 
     - name: Release
       uses: softprops/action-gh-release@v2
