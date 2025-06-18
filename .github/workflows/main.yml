@@ -27,30 +27,12 @@ jobs:
         node-version: '20.10.0'
 
     - name: Install pnpm
-      run: npm install -g pnpm@8
-
-    - name: Fix pnpm configuration
       run: |
-        # 确保全局 ignore-scripts=false
-        pnpm config set ignore-scripts false
-        
-        # 检查项目级配置 (重要！)
-        if [ -f .npmrc ]; then
-          echo "检查项目 .npmrc 文件:"
-          cat .npmrc
-          # 移除项目中的 ignore-scripts 设置
-          sed -i '/ignore-scripts/d' .npmrc
-        fi
-        
-        # 确保 pnpm 允许执行脚本
-        echo "修复后配置:"
-        pnpm config get ignore-scripts
+        npm install -g pnpm@8
+        pnpm --version
 
-    - name: Install Dependencies
-      run: pnpm install
-
-    - name: run build
-      run: export NODE_OPTIONS=--max_old_space_size=4096 && pnpm run build
+    - name: Install Dependencies && run build
+      run: pnpm install && export NODE_OPTIONS=--max_old_space_size=4096 && pnpm run build
 
     - name: Print tag
       run: |
