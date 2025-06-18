@@ -25,30 +25,30 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.10.0'
-
-    - name: ignore-scripts
-      run: |
-        if [ "$(npm config get ignore-scripts)" = "true" ]; then
-          echo "正在修复: 设置 ignore-scripts=false"
-          npm config set ignore-scripts false
-        fi
-        
-        if [[ $(npm --version) == 7.* ]]; then
-          echo "检测到 npm v7, 检查 package-lock.json"
-          if [ -f package-lock.json ] && \
-             ! grep -q '"lockfileVersion": 1' package-lock.json && \
-             ! grep -q '"hasInstallScript": true' package-lock.json; then
-            echo "修复损坏的 package-lock.json"
-            rm -f package-lock.json
-            npm install --package-lock-only
-          fi
-        fi
+        cache: 'pnpm'
 
     - name: Install pnpm
-      run: npm install -g pnpm
+      run: npm install -g pnpm@8
+
+    - name: Fix pnpm configuration
+      run: |
+        # 确保全局 ignore-scripts=false
+        pnpm config set ignore-scripts false
+        
+        # 检查项目级配置 (重要！)
+        if [ -f .npmrc ]; then
+          echo "检查项目 .npmrc 文件:"
+          cat .npmrc
+          # 移除项目中的 ignore-scripts 设置
+          sed -i '/ignore-scripts/d' .npmrc
+        fi
+        
+        # 确保 pnpm 允许执行脚本
+        echo "修复后配置:"
+        pnpm config get ignore-scripts
 
     - name: Install Dependencies
-      run: pnpm ci --force
+      run: pnpm install --frozen-lockfile
 
     - name: run build
       run: export NODE_OPTIONS=--max_old_space_size=4096 && pnpm run build
