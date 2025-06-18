@@ -63,14 +63,13 @@ jobs:
 
     - name: Generate release notes
       run: |
-        # 使用绝对路径确保在正确位置创建文件
-        $notesPath = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "release_notes.md"
-        # 确保文件不存在时创建空文件
-        New-Item -Path $notesPath -ItemType File -Force | Out-Null
-        # 设置文件可写权限
-        attrib -R $notesPath
-        # 生成内容
-        python generate_release_notes.py | Out-File -FilePath $notesPath -Encoding utf8
+        # 在临时目录创建文件
+        $tempPath = Join-Path -Path $env:RUNNER_TEMP -ChildPath "release_notes.md"
+        python generate_release_notes.py | Out-File -FilePath $tempPath -Encoding utf8
+    
+        # 移动文件到工作区
+        $destPath = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "release_notes.md"
+        Move-Item -Path $tempPath -Destination $destPath -Force
       shell: pwsh
 
     - name: Release
