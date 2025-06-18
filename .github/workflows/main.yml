@@ -47,7 +47,7 @@ jobs:
         pnpm config get ignore-scripts
 
     - name: Install Dependencies
-      run: pnpm install --frozen-lockfile
+      run: pnpm install
 
     - name: run build
       run: export NODE_OPTIONS=--max_old_space_size=4096 && pnpm run build
