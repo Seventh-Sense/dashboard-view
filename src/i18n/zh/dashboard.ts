@@ -249,6 +249,7 @@ export default {
   progress: '进度条',
   speed: '风速',
   switch2: '开关2',
+  radio: '单选框',
   speed_auto: '自动',
   speed_low: '低速风',
   speed_middle: '中速风',

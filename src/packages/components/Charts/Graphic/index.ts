@@ -5,6 +5,14 @@ import { ModeConfig } from './Mode/index'
 import { ProgressConfig } from './Progress/index'
 import { SpeedConfig } from './Speed/index'
 import { SwitchTwoConfig } from './SwitchTwo/index'
-import { SwitchThreeConfig } from './SwitchThree/index'
+import { RadioConfig } from './Radio/index'
 
-export default [ModeConfig, SpeedConfig, SwitchConfig, SwitchTwoConfig, ProgressConfig, NumericalConfig]
+export default [
+  ModeConfig,
+  SpeedConfig,
+  SwitchConfig,
+  SwitchTwoConfig,
+  //RadioConfig,
+  ProgressConfig,
+  NumericalConfig
+]

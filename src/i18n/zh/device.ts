@@ -103,5 +103,5 @@ export default {
   host: '主机地址',
   port: '端口',
 
-  addr_example: '输入数字或数字范围(0-255)',
+  addr_example: '输入数字或数字范围(10-20)',
 }

@@ -354,12 +354,12 @@ export const validateIntegerOrRange = (value: string): boolean => {
   // 移除字符串两端空格
   const trimmedValue = value.trim()
 
-  // 情况1：单个整数校验（必须 ≥0 且 ≤255 的整数）
+  // 情况1：单个整数校验（必须 ≥0 且 ≤65535 的整数）
   if (!trimmedValue.includes('-')) {
     // 使用正则验证整数格式
     if (!/^\d+$/.test(trimmedValue)) return false
     const num = parseInt(trimmedValue, 10)
-    return num >= 0 && num <= 255
+    return num >= 0 && num <= 65535
   }
 
   // 情况2：范围格式校验（必须满足 X-Y 格式）
@@ -374,8 +374,8 @@ export const validateIntegerOrRange = (value: string): boolean => {
   const start = parseInt(startStr, 10)
   const end = parseInt(endStr, 10)
 
-  // 范围值校验（必须满足 0≤start≤end≤255）
-  return start >= 0 && end >= 0 && start <= end && end <= 255
+  // 范围值校验（必须满足 0≤start≤end≤65535）
+  return start >= 0 && end >= 0 && start <= end && end <= 65535
 }
 
 // 创建配置映射表，便于扩展和维护

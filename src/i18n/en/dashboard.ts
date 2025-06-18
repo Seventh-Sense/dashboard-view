@@ -253,6 +253,7 @@ export default {
   progress: 'Progress Bar',
   speed: 'Wind Speed',
   switch2: 'Switch2',
+  radio: 'Radio',
   speed_auto: 'Auto-matic wind',
   speed_low: 'Low-speed Wind',
   speed_middle: 'Medium-speed Wind',

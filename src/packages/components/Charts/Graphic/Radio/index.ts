@@ -2,11 +2,11 @@ import { ConfigType, PackagesCategoryEnum, ChartFrameEnum } from '@/packages/ind
 import { ChatCategoryEnum, ChatCategoryEnumName } from '../../index.d'
 import i18n from '@/i18n/index'
 
-export const SwitchThreeConfig: ConfigType = {
-  key: 'SwitchThree',
-  chartKey: 'VSwitchThree',
-  conKey: 'VCSwitchThree',
-  title: i18n.global.t('dashboard.switch2'),
+export const RadioConfig: ConfigType = {
+  key: 'Radio',
+  chartKey: 'VRadio',
+  conKey: 'VCRadio',
+  title: i18n.global.t('dashboard.radio'),
   category: ChatCategoryEnum.Graphic,
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,

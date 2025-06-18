@@ -102,5 +102,5 @@ export default {
   host: 'Host',
   port: 'Port',
 
-  addr_example: 'Enter a number or a number range (0-255)',
+  addr_example: 'Enter a number or a number range (10-20)',
 }
