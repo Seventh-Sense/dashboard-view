@@ -44,7 +44,9 @@ export default defineConfig({
       scss: {
         javascriptEnabled: true,
         additionalData: `@import "src/styles/common/style.scss";`,
-        quietDeps: true,
+        sassOptions: {
+          quietDeps: true,
+        }
       }
     }
   },
