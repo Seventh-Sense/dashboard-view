@@ -88,6 +88,10 @@ export const DEVICE_TYPE_MAP: { [key: number]: string } = {
   56: TypeEnum.NetworkPort
 }
 
+// export function getDeviceTypeName(key: number): string {
+//   return DEVICE_TYPE_MAP[key] ?? String(key);
+// }
+
 export const PRIMARY_ORDER = [
   'object-name',
   'object-type',

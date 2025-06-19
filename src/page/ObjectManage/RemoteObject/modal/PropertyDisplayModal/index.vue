@@ -71,13 +71,16 @@
               </div>
               <div v-else class="modal-content-editvalue">
                 <n-select
-                  v-if="type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO"
+                  v-if="
+                    BinaryOption.length > 0 &&
+                    (type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO)
+                  "
                   v-model:value="tempValues[key]"
                   :options="BinaryOption"
                   :style="{ width: '300px' }"
                 />
                 <n-select
-                  v-else-if="type === TypeEnum.MV"
+                  v-else-if="MVOption.length > 0 && type === TypeEnum.MV"
                   v-model:value="tempValues[key]"
                   :options="MVOption"
                   :style="{ width: '300px' }"
@@ -125,19 +128,22 @@
             <div v-else-if="key === 'relinquish-default'" class="modal-content-editstyle">
               <div v-if="!editStates[key]" class="modal-content-editvalue">
                 <span>{{ presentValueTrans(val, type, BinaryOption, MVOption) }}</span>
-                <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                <n-icon v-show="val !== 'unknown-property'" size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
                   <EditIcon />
                 </n-icon>
               </div>
               <div v-else class="modal-content-editvalue">
                 <n-select
-                  v-if="type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO"
+                  v-if="
+                    BinaryOption.length > 0 &&
+                    (type === TypeEnum.BI || type === TypeEnum.BV || type === TypeEnum.BO)
+                  "
                   v-model:value="tempValues[key]"
                   :options="BinaryOption"
                   :style="{ width: '600px' }"
                 />
                 <n-select
-                  v-else-if="type === TypeEnum.MV"
+                  v-else-if="MVOption.length > 0 && type === TypeEnum.MV"
                   v-model:value="tempValues[key]"
                   :options="MVOption"
                   :style="{ width: '600px' }"
@@ -159,7 +165,7 @@
       </div>
 
       <template #footer>
-        <n-space justify="end" style="height: 20px;">
+        <n-space justify="end" style="height: 20px">
           <!-- <n-button class="modal-button-ok" @click="onSubmit">{{ $t('global.r_ok') }}</n-button> -->
         </n-space>
       </template>
@@ -259,24 +265,41 @@ const initializeStates = () => {
   })
 
   if (type.value === TypeEnum.BI || type.value === TypeEnum.BV || type.value === TypeEnum.BO) {
-    BinaryOption.value = [
-      {
-        label: obj.value['inactive-text'],
-        value: 0
-      },
-      {
-        label: obj.value['active-text'],
-        value: 1
-      }
-    ]
+    let on = obj.value['active-text']
+    let off = obj.value['inactive-text']
+
+    if (
+      on === undefined ||
+      off === undefined ||
+      on === 'unknown-property' ||
+      off === 'unknown-property'
+    ) {
+      BinaryOption.value = []
+    } else {
+      BinaryOption.value = [
+        {
+          label: obj.value['inactive-text'],
+          value: 0
+        },
+        {
+          label: obj.value['active-text'],
+          value: 1
+        }
+      ]
+    }
   } else if (type.value === TypeEnum.MV) {
     let array = obj.value['state-text']
-    array.forEach((item: any, index: number) => {
-      MVOption.value.push({
-        label: item,
-        value: index + 1
+
+    if (!Array.isArray(array) || array.length === 0) {
+      MVOption.value = []
+    } else {
+      array.forEach((item: any, index: number) => {
+        MVOption.value.push({
+          label: item,
+          value: index + 1
+        })
       })
-    })
+    }
   }
 }
 

@@ -206,7 +206,7 @@ const initData = async () => {
       metric_name: item.name || '',
       unit: '',
       value: '',
-      description: item.description || '', 
+      description: item.description || '',
       properties: item.property || {},
       tags: item.tags || [],
       device_id: props.deviceData.device_id
@@ -258,7 +258,10 @@ const periodicFunc = async () => {
         ...originalItem,
         value: getProcessedValue(point, originalItem.metric_type),
         properties: mergeProperties(point.property, originalItem.properties),
-        description: point.property?.description ?? originalItem.description,
+        description:
+          point.property?.description === 'unknown-property'
+            ? originalItem.description
+            : point.property?.description,
         tags: formatTimestamp(point.timestamp)
       }
     })
@@ -278,7 +281,12 @@ const getProcessedValue = (point: any, metricType: any) => {
     case TypeEnum.BV:
     case TypeEnum.BO: {
       const status = point.value === 'inactive' ? 'inactive-text' : 'active-text'
-      return point.property?.[status] ?? point.value
+
+      if (!point.property?.[status] || point.property?.[status] === 'unknown-property') {
+        return point.value
+      } else {
+        return point.property?.[status]
+      }
     }
 
     case TypeEnum.MV: {
