@@ -44,12 +44,10 @@ export default defineConfig({
       scss: {
         javascriptEnabled: true,
         additionalData: `@import "src/styles/common/style.scss";`,
-        sassOptions: {
-          quietDeps: true,
-        },
-        scssOptions: {
-          quietDeps: true,
-        }
+        quietDeps: true
+      },
+      sass: {
+        quietDeps: true
       }
     }
   },
@@ -76,7 +74,7 @@ export default defineConfig({
       supportTs: true,
       // 监视文件更改
       watchFiles: true
-    }),
+    })
     // 压缩
     // viteCompression({
     //   verbose: true,
