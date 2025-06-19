@@ -37,10 +37,6 @@ jobs:
         pnpm install
       shell: pwsh
 
-    - name: Check Dart Sass version
-      run: sass --version
-      shell: pwsh
-
     - name: run build
       run: | 
         $env:NODE_OPTIONS = "--max_old_space_size=4096"
