@@ -26,7 +26,7 @@ export interface PointData {
   key?: string
   metric_uid: string
   metric_id: string
-  metric_type: number
+  metric_type: string
   metric_name: string
   unit: string
   value: any
@@ -90,6 +90,20 @@ export const DEVICE_TYPE_MAP: { [key: number]: string } = {
 
 export function getDeviceTypeName(key: number): string {
   return DEVICE_TYPE_MAP[key] ?? String(key);
+}
+
+export function getDeviceTypeId(typeStr: string): number | string {
+  // 创建反向映射表 { 字符串值: 数字ID }
+  const reverseMap: Record<string, number> = {};
+
+  // 构建反向映射
+  (Object.entries(DEVICE_TYPE_MAP) as [string, TypeEnum][])
+    .forEach(([key, value]) => {
+      reverseMap[value] = parseInt(key, 10);
+    });
+
+  // 查找并返回结果
+  return reverseMap[typeStr] ?? typeStr;
 }
 
 export const PRIMARY_ORDER = [

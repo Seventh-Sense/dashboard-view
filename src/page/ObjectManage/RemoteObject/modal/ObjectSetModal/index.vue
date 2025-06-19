@@ -77,14 +77,14 @@ import { readIotPoints, addSubscribePoint } from '@/api/http'
 import { cloneDeep } from 'lodash-es'
 import axiosTwo from '@/api/axiosTwo'
 import jsonList from '@/assets/data/Property.json'
-import { getDeviceTypeName } from '../../utils/utils'
+import { getDeviceTypeName, getDeviceTypeId } from '../../utils/utils'
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui'
 import type { InputInst } from 'naive-ui';
 
 interface DataType {
   key: string
   name: string
-  type: number
+  type: string
   id: string
   disabled?: boolean
 }
@@ -156,9 +156,6 @@ const columns: DataTableColumns<DataType> = [
   {
     title: () => t('device.type'),
     key: 'type',
-    render(row, index) {
-      return getDeviceTypeName(row.type)
-    },
     sorter: 'default'
   },
   {
@@ -181,20 +178,6 @@ onMounted(() => {
   fetchData()
   //init()
 })
-
-const init = () => {
-  loading.value = true
-  for (let i = 1; i < 3000; i++) {
-    data.value.push({
-      key: i.toString(),
-      name: '2',
-      type: 2,
-      id: i.toString(),
-      disabled: false
-    })
-  }
-  loading.value = false
-}
 
 onUnmounted(() => {
   selectedObjKeys.value = []
@@ -234,7 +217,7 @@ const convertToDataTypes = (selectedData: any[], resData: any[]): any[] => {
   selectedObjKeys.value = cloneDeep(newKeys)
 
   const mergedKeysSet = new Set([...checkedRowKeysRef.value, ...newKeys])
-  console.log('mergedKeysSet', mergedKeysSet)
+  //console.log('mergedKeysSet', mergedKeysSet)
 
   checkedRowKeysRef.value = Array.from(mergedKeysSet)
 
@@ -247,7 +230,7 @@ const convertToDataTypes = (selectedData: any[], resData: any[]): any[] => {
       return {
         key: compositeKey, // 唯一标识符
         name: '', // 保留字段（后续可能需要填充）
-        type: parseInt(typeNum), // 确保字符串类型
+        type: getDeviceTypeName(parseInt(typeNum)), // 确保字符串类型
         id: idNum.toString(), // 确保字符串类型
         disabled: mergedKeysSet.has(compositeKey) // 设置禁用状态
       }
@@ -339,11 +322,11 @@ const onSubmit = async () => {
       const record = data.value.find(item => item.key === key)
       if (!record) return null
 
-      const type = getDeviceTypeName(record.type) as keyof typeof jsonList
+      const type = record.type as keyof typeof jsonList
       const proList = jsonList[type] ?? []
 
       return {
-        uid: `${record.type},${record.id}`,
+        uid: `${getDeviceTypeId(record.type)},${record.id}`,
         name: record.name,
         description: '',
         property: {

@@ -64,12 +64,7 @@
 <script setup lang="ts">
 import { icon } from '@/plugins'
 import { ref, onMounted, provide, nextTick, h, computed, onUnmounted, watch } from 'vue'
-import {
-  getDeviceTypeName,
-  DeviceTypeEnum,
-  PointData,
-  formatTimestamp,
-} from '../../utils/utils'
+import { getDeviceTypeName, DeviceTypeEnum, PointData, formatTimestamp } from '../../utils/utils'
 import { NIcon } from 'naive-ui'
 import { ObjectSetModal } from '../../modal/ObjectSetModal'
 import { ModbusPropertyModal } from '../../modal/ModbusPropertyModal'
@@ -128,7 +123,7 @@ const columns: DataTableColumns<PointData> = [
     },
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
-        return getDeviceTypeName(row.metric_type) + ',' + row.metric_id
+        return row.metric_type + ',' + row.metric_id
       } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
         return row.metric_uid
       } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
@@ -200,7 +195,9 @@ const initData = async () => {
       key: item.id,
       metric_uid: item.uid,
       metric_id: item.uid.includes(',') ? item.uid.split(',')[1] : item.uid,
-      metric_type: item.uid.includes(',') ? parseInt(item.uid.split(',')[0]) : '',
+      metric_type: item.uid.includes(',')
+        ? getDeviceTypeName(parseInt(item.uid.split(',')[0]))
+        : '',
       metric_name: item.name || '',
       unit: '',
       value: '',
@@ -272,7 +269,7 @@ const periodicFunc = async () => {
 }
 
 const getProcessedValue = (point: any, metricType: any) => {
-  const deviceType = getDeviceTypeName(metricType)
+  const deviceType = metricType
 
   switch (deviceType) {
     case TypeEnum.BI:
