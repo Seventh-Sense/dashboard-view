@@ -86,6 +86,8 @@ export enum TypeEnum {
   MV = 'Multi-state Value',
   Calendar = 'Calendar',
   Device = 'Device',
+  MI = 'Multi-state Input',
+  MO = 'Multi-state Output',
   Notification = 'Notification',
   Schedule = 'Schedule',
   TrendLog = 'Trend Log',

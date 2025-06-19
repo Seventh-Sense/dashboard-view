@@ -115,6 +115,39 @@
     "stateText",
     "priorityArray"
   ],
+  "Multi-state Input": [
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "numberOfStates"
+  ],
+  "Multi-state Output": [
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "numberOfStates",
+    "priorityArray",
+    "relinquishDefault"
+  ],
+  "Accumulator": [
+    "objectType",
+    "objectIdentifier",
+    "objectName",
+    "presentValue",
+    "statusFlags",
+    "eventState",
+    "outOfService",
+    "units",
+    "maxPresValue"
+  ],
   "Calendar": ["presentValue", "objectType", "objectIdentifier", "objectName", "description"],
   "Trend Log": [
     "enable",

@@ -78,6 +78,8 @@ export const DEVICE_TYPE_MAP: { [key: number]: string } = {
   5: TypeEnum.BV,
   6: TypeEnum.Calendar,
   8: TypeEnum.Device,
+  13: TypeEnum.MI,
+  14: TypeEnum.MO,
   15: TypeEnum.Notification,
   17: TypeEnum.Schedule,
   19: TypeEnum.MV,
