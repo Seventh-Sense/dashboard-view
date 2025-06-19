@@ -30,6 +30,7 @@ jobs:
       run: |
         npm install -g pnpm@8
         pnpm --version
+        pnpm list sass
       shell: cmd  # 使用CMD安装全局包更可靠
 
     - name: Install Dependencies && run build
