@@ -65,14 +65,12 @@
 import { icon } from '@/plugins'
 import { ref, onMounted, provide, nextTick, h, computed, onUnmounted, watch } from 'vue'
 import {
-  DEVICE_TYPE_MAP,
+  getDeviceTypeName,
   DeviceTypeEnum,
   PointData,
   formatTimestamp,
-  isEmptyObject
 } from '../../utils/utils'
 import { NIcon } from 'naive-ui'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { ObjectSetModal } from '../../modal/ObjectSetModal'
 import { ModbusPropertyModal } from '../../modal/ModbusPropertyModal'
 import { PropertyDisplayModal } from '../../modal/PropertyDisplayModal'
@@ -130,7 +128,7 @@ const columns: DataTableColumns<PointData> = [
     },
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
-        return DEVICE_TYPE_MAP[row.metric_type] + ',' + row.metric_id
+        return getDeviceTypeName(row.metric_type) + ',' + row.metric_id
       } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
         return row.metric_uid
       } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
@@ -274,7 +272,7 @@ const periodicFunc = async () => {
 }
 
 const getProcessedValue = (point: any, metricType: any) => {
-  const deviceType = DEVICE_TYPE_MAP[metricType]
+  const deviceType = getDeviceTypeName(metricType)
 
   switch (deviceType) {
     case TypeEnum.BI:

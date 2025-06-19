@@ -44,9 +44,15 @@ export default defineConfig({
       scss: {
         javascriptEnabled: true,
         additionalData: `@import "src/styles/common/style.scss";`,
+        logger: {
+          warn: () => {}
+        },
         quietDeps: true
       },
       sass: {
+        logger: {
+          warn: () => {}
+        },
         quietDeps: true
       }
     }

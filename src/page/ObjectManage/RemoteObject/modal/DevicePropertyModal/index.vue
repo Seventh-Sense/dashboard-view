@@ -26,7 +26,7 @@
         <div v-for="([key, val], index) in sortedEntries" :key="key" class="modal-content-item">
           <span class="modal-content-porperty">{{ PROPERTY_TYPE_MAP(key) }}</span>
           <div v-if="key === 'object-type'" class="modal-content-value">
-            {{ DEVICE_TYPE_MAP[val] }}
+            {{ getDeviceTypeName(val) }}
           </div>
           <div v-else-if="key === 'object-identifier'" class="modal-content-value">
             {{ objIDTrans(val) }}
@@ -75,7 +75,7 @@ import {
   unitsTrans,
   presentValueTrans
 } from '../../utils/propertyMap'
-import { DEVICE_TYPE_MAP } from '../../utils/utils'
+import { getDeviceTypeName } from '../../utils/utils'
 import { icon } from '@/plugins'
 import { readIotPoints } from '@/api/http'
 

@@ -37,7 +37,7 @@
           <div v-else>
             <span class="modal-content-porperty">{{ PROPERTY_TYPE_MAP(key) }}</span>
             <div v-if="key === 'object-type'" class="modal-content-value">
-              {{ DEVICE_TYPE_MAP[val] }}
+              {{ getDeviceTypeName(val) }}
             </div>
             <div v-else-if="key === 'object-identifier'" class="modal-content-value">
               {{ objIDTrans(val) }}
@@ -186,7 +186,7 @@ import {
   isPriority,
   BooleanOption
 } from '../../utils/propertyMap'
-import { DEVICE_TYPE_MAP } from '../../utils/utils'
+import { getDeviceTypeName } from '../../utils/utils'
 import { icon } from '@/plugins'
 import { readIotPoints } from '@/api/http'
 
@@ -237,7 +237,7 @@ const editStates = reactive<EditState>({})
 const tempValues = reactive<Record<string, any>>({})
 
 //
-const type = ref(DEVICE_TYPE_MAP[obj.value['object-type']])
+const type = ref(getDeviceTypeName(obj.value['object-type']))
 const BinaryOption = ref<any>([])
 const MVOption = ref<any>([])
 

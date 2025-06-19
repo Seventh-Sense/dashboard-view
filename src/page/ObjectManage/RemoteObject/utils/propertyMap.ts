@@ -1,4 +1,4 @@
-import { DEVICE_TYPE_MAP } from './utils'
+import { getDeviceTypeName } from './utils'
 import unitsJson from '@/assets/data/Units.json'
 import { PropertyConstants } from './propertyID'
 
@@ -117,7 +117,7 @@ export const objIDTrans = (value: Array<number>) => {
   let text = ''
 
   if (value.length === 2) {
-    text = DEVICE_TYPE_MAP[value[0]] + ',' + value[1]
+    text = getDeviceTypeName(value[0]) + ',' + value[1]
   }
   return text
 }

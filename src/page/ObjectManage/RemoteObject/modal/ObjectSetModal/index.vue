@@ -77,7 +77,7 @@ import { readIotPoints, addSubscribePoint } from '@/api/http'
 import { cloneDeep } from 'lodash-es'
 import axiosTwo from '@/api/axiosTwo'
 import jsonList from '@/assets/data/Property.json'
-import { DEVICE_TYPE_MAP } from '../../utils/utils'
+import { getDeviceTypeName } from '../../utils/utils'
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui'
 import type { InputInst } from 'naive-ui';
 
@@ -157,7 +157,7 @@ const columns: DataTableColumns<DataType> = [
     title: () => t('device.type'),
     key: 'type',
     render(row, index) {
-      return DEVICE_TYPE_MAP[row.type]
+      return getDeviceTypeName(row.type)
     },
     sorter: 'default'
   },
@@ -339,7 +339,7 @@ const onSubmit = async () => {
       const record = data.value.find(item => item.key === key)
       if (!record) return null
 
-      const type = DEVICE_TYPE_MAP[record.type] as keyof typeof jsonList
+      const type = getDeviceTypeName(record.type) as keyof typeof jsonList
       const proList = jsonList[type] ?? []
 
       return {
