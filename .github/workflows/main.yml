@@ -30,12 +30,19 @@ jobs:
       run: |
         npm install -g pnpm@8
         pnpm --version
-        pnpm list sass
       shell: cmd  # 使用CMD安装全局包更可靠
 
-    - name: Install Dependencies && run build
+    - name: Install Dependencies
       run: | 
         pnpm install
+      shell: pwsh
+
+    - name: Check Dart Sass version
+      run: sass --version
+      shell: pwsh
+
+    - name: run build
+      run: | 
         $env:NODE_OPTIONS = "--max_old_space_size=4096"
         pnpm run build
       shell: pwsh
