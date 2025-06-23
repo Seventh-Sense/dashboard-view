@@ -139,7 +139,7 @@ export const unitsTrans = (value: any) => {
 
 //present-value
 export const presentValueTrans = (value: any, type: string, BinaryOption: any, MVOption: any) => {
-  let text = ''
+  let text = value
 
   //console.log('presentValueTrans', value, type, BinaryOption, MVOption)
 

@@ -237,13 +237,13 @@ const editStates = reactive<EditState>({})
 const tempValues = reactive<Record<string, any>>({})
 
 //
-const type = ref(getDeviceTypeName(obj.value['object-type']))
+const type = ref(props.displayData.metric_type)
 const BinaryOption = ref<any>([])
 const MVOption = ref<any>([])
 
 onMounted(() => {
   initializeStates()
-  //console.log('aaa', props.displayData)
+  console.log('aaa', props.displayData)
 })
 
 watch(
@@ -315,7 +315,7 @@ const handleSave = async (key: string) => {
     function: 'write_property',
     parms: {
       address: props.deviceData.address,
-      objid: obj.value['object-identifier'].join(','),
+      objid: props.displayData.metric_uid,
       prop: key,
       value: tempValues[key],
       ...(isPriority(type.value) &&
