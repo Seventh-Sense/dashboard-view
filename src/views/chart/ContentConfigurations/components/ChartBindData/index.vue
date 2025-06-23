@@ -1,7 +1,13 @@
 <template>
   <div v-if="isShow" class="go-chart-configurations-data">
     <setting-item-box :name="$t('dashboard.devices')" :alone="true">
-      <n-select size="small" v-model:value="deviceID" placeholder="" :options="deviceOptions" />
+      <n-select
+        size="small"
+        v-model:value="deviceID"
+        placeholder=""
+        :options="deviceOptions"
+        style="width: 260px"
+      />
     </setting-item-box>
     <setting-item-box :name="$t('dashboard.point')" :alone="true">
       <n-select
@@ -10,6 +16,7 @@
         placeholder=""
         :options="pointOptions"
         @update:value="bindValue"
+        style="width: 260px"
       />
     </setting-item-box>
   </div>

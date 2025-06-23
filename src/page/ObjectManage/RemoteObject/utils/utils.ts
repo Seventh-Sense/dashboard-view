@@ -31,6 +31,7 @@ export interface PointData {
   unit: string
   value: any
   description: string
+  status?: string
   properties: any
   tags: string
   device_id: string

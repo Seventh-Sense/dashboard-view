@@ -13,7 +13,7 @@
       <div class="content-filter">
         <div style="display: flex; align-items: center; gap: 16px">
           <div>
-            <n-input v-model:value="keyword" type="text" clearable style="width: 366px" />
+            <n-input v-model:value="keyword" type="text" :placeholder="t('device.tip_search')" clearable style="width: 366px" />
           </div>
           <!-- <div class="content-button content-button-color1" @click="onSearch">
             {{ $t('device.search') }}
@@ -131,6 +131,7 @@ const columns: DataTableColumns<PointData> = [
       }
     }
   },
+  { title: () => t('device.status'), key: 'status' },
   { title: () => t('device.value'), key: 'value' },
   { title: () => t('device.desc'), key: 'description' },
   { title: () => t('dashboard.time'), key: 'tags' },
@@ -202,6 +203,7 @@ const initData = async () => {
       unit: '',
       value: '',
       description: item.description || '',
+      status: '',
       properties: item.property || {},
       tags: item.tags || [],
       device_id: props.deviceData.device_id
@@ -257,6 +259,7 @@ const periodicFunc = async () => {
           point.property?.description === 'unknown-property'
             ? originalItem.description
             : point.property?.description,
+        status: point.status === 0 ? 'OffLine' : 'Online',    
         tags: formatTimestamp(point.timestamp)
       }
     })

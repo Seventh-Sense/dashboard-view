@@ -1,26 +1,13 @@
 <template>
-  <div class="radio">
+  <div class="radios">
     <div
-      class="radio-item"
-      @click="onClick(1)"
-      :style="{
-        fontSize: on_font_size + 'px',
-        backgroundColor: option.dataset ? active_bg_color : inactive_bg_color,
-        color: option.dataset ? active_color : inactive_color
-      }"
+      v-for="mode in modes"
+      class="radios-item"
+      :key="mode.key"
+      @click="onClick(mode.value)"
+      :class="option.dataset === mode.value ? 'active' : 'inactive'"
     >
-      {{ on_text }}
-    </div>
-    <div
-      class="radio-item"
-      @click="onClick(0)"
-      :style="{
-        fontSize: off_font_size + 'px',
-        backgroundColor: option.dataset ? inactive_bg_color : active_bg_color,
-        color: option.dataset ? inactive_color : active_color
-      }"
-    >
-      {{ off_text }}
+      {{ mode.label }}
     </div>
   </div>
 </template>
@@ -29,9 +16,9 @@
 import { PropType, toRefs, shallowReactive, watch, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
-import { throttleTime, updateNodeData } from '@/packages/public'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 import throttle from 'lodash/throttle'
+import { throttleTime, updateNodeData } from '@/packages/public'
 
 const props = defineProps({
   chartConfig: {
@@ -43,17 +30,8 @@ const props = defineProps({
 const flag = ref(false)
 const t = window['$t']
 
-const {
-  background,
-  active_color,
-  inactive_color,
-  on_text,
-  off_text,
-  on_font_size,
-  off_font_size,
-  inactive_bg_color,
-  active_bg_color
-} = toRefs(props.chartConfig.option)
+const { background, active_color, inactive_color, inactive_bg_color, active_bg_color, modes } =
+  toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
   dataset: false
@@ -65,7 +43,7 @@ const onClick = throttle(
       flag.value = true
 
       let tmp = cloneDeep(option.dataset)
-      option.dataset = parseData(data, 'boolean')
+      option.dataset = parseData(data, 'number')
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
@@ -89,7 +67,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      option.dataset = parseData(newVal, 'boolean')
+      option.dataset = parseData(newVal, 'number')
     }
   },
   {
@@ -100,17 +78,28 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.radio {
+.radios {
   background-color: v-bind('background');
   padding: 4px;
   display: flex;
+  justify-content: space-between;
   gap: 8px;
 
   &-item {
     flex: 1;
+    text-align: center;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
+}
+.active {
+  background-color: v-bind('active_bg_color');
+  color: v-bind('active_color');
+}
+.inactive {
+  background-color: v-bind('inactive_bg_color');
+  color: v-bind('inactive_color');
 }
 </style>

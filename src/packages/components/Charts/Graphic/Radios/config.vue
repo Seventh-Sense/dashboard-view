@@ -2,27 +2,42 @@
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
-        <n-input-number
-          v-model:value="optionData.dataset"
-          :min="0"
-          :max="1"
-          size="small"
-        ></n-input-number>
+        <n-input-number v-model:value="optionData.dataset" :min="0" size="small"></n-input-number>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.option') + '1'">
+      <SettingItem >
+        <n-input v-model:value="optionData.modes[0].label" type="text" size="small"></n-input>
+      </SettingItem>
+      <SettingItem >
+        <n-input-number v-model:value="optionData.modes[0].value" :min="0" size="small"></n-input-number>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.option') + '2'">
+        <SettingItem >
+        <n-input v-model:value="optionData.modes[1].label" type="text" size="small"></n-input>
+      </SettingItem>
+      <SettingItem >
+        <n-input-number v-model:value="optionData.modes[1].value" :min="0" size="small"></n-input-number>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.option') + '3'">
+        <SettingItem >
+        <n-input v-model:value="optionData.modes[2].label" type="text" size="small"></n-input>
+      </SettingItem>
+      <SettingItem >
+        <n-input-number v-model:value="optionData.modes[2].value" :min="0" size="small"></n-input-number>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.option') + '4'">
+        <SettingItem >
+        <n-input v-model:value="optionData.modes[3].label" type="text" size="small"></n-input>
+      </SettingItem>
+      <SettingItem >
+        <n-input-number v-model:value="optionData.modes[3].value" :min="0" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')" :alone="false">
-      <SettingItem :name="t('dashboard.on_text')">
-        <n-input v-model:value="optionData.on_text" type="text" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.off_text')">
-        <n-input v-model:value="optionData.off_text" type="text" size="small"></n-input>
-      </SettingItem>
-      <setting-item :name="t('dashboard.on_font_size')">
-        <n-input-number v-model:value="optionData.on_font_size" size="small" placeholder="字体大小"></n-input-number>
-      </setting-item>
-      <setting-item :name="t('dashboard.off_font_size')">
-        <n-input-number v-model:value="optionData.off_font_size" size="small" placeholder="字体大小"></n-input-number>
-      </setting-item>
       <SettingItem :name="t('dashboard.on_text_color')">
         <n-color-picker
           size="small"

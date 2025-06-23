@@ -1,8 +1,10 @@
 <template>
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
-    <!-- <SettingItemBox name="123" :alone="true">
-      <n-input v-model:value="optionData.dataset" size="small" />
-    </SettingItemBox> -->
+    <SettingItemBox :name="t('dashboard.contant')">
+      <SettingItem>
+        <n-input v-model:value="optionData.dataset" size="small"></n-input>
+      </SettingItem>
+    </SettingItemBox>
     <SettingItemBox :name="t('dashboard.refrigeration')" :alone="true">
       <n-input v-model:value="optionData.modes[0]" size="small" />
     </SettingItemBox>

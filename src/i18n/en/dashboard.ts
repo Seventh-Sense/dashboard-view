@@ -106,6 +106,7 @@ export default {
   full_screen: 'Full Screen',
   general_time: 'General Time',
   square_block: 'Square Block',
+  circle_block: 'Circle Block',
   click_upload: 'Click Upload Picture',
   click_upload_msg: 'The picture should be less than 5M and only temporarily exist in the browser. The current image storage limit is 5M. If it exceeds this limit, no new images will be cached!',
   is_delete_pictrue: 'Should this picture be deleted?',
@@ -262,4 +263,15 @@ export default {
   heating: 'Heating',
   display_value: 'Display Value',
   default: 'Default',
+
+  on_text: 'On Text',
+  off_text: 'Off Text',
+  on_font_size: 'On Font Size',
+  off_font_size: 'Off Font Size',
+  on_bg_color: 'Active Background',
+  off_bg_color: 'Inactive Background',
+  on_text_color: 'Active Font Color',
+  off_text_color: 'Inactive Font Color',
+  radios: 'Radios',
+  option: 'Option',
 }

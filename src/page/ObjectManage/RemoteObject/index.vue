@@ -6,7 +6,7 @@
       </div>
       <div class="project-card-filter">
         <div class="project-card-filter-left">
-          <n-input v-model:value="keyword" type="text" clearable style="width: 366px" />
+          <n-input v-model:value="keyword" type="text" :placeholder="t('device.tip_search')" clearable style="width: 366px" />
         </div>
         <div class="project-card-filter-right">
           <n-button class="project-card-top-extra-button" @click="onAdd">
@@ -133,7 +133,7 @@ const columns = [
     dataIndex: 'address',
     sorter: (a: any, b: any) => sortByString(a.address, b.address)
   },
-  { title: () => t('device.status'), dataIndex: 'status' },
+  // { title: () => t('device.status'), dataIndex: 'status' },
   { title: () => t('device.enabled'), dataIndex: 'enabled' },
   { title: '', dataIndex: 'actions', width: 120 }
 ]

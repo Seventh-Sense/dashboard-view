@@ -1,5 +1,10 @@
 <template>
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.contant')">
+      <SettingItem>
+        <n-input v-model:value="optionData.dataset" size="small"></n-input>
+      </SettingItem>
+    </SettingItemBox>
     <SettingItemBox :name="t('dashboard.off_color')">
       <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.off"></n-color-picker>
     </SettingItemBox>

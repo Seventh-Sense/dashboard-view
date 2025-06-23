@@ -104,4 +104,5 @@ export default {
   port: '端口',
 
   addr_example: '输入数字或数字范围(10-20)',
+  tip_search: '请输入搜索内容',
 }

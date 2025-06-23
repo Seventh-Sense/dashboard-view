@@ -105,6 +105,7 @@ export default {
   full_screen: '全屏',
   general_time: '通用时间',
   square_block: '方形块',
+  circle_block: '圆形块',
   click_upload: '点击上传图片',
   click_upload_msg: '图片需小于 5M 且只暂存在浏览器中。当前图片暂存上限5M，超过不再缓存新图片！',
   is_delete_pictrue: '是否删除此图片？',
@@ -258,4 +259,15 @@ export default {
   heating: '制热',
   display_value: '显示数值',
   default: '默认',
+
+  on_text: 'On 文本',
+  off_text: 'Off 文本',
+  on_font_size: 'On 字体大小',
+  off_font_size: 'Off 字体大小',
+  on_bg_color: '激活背景色',
+  off_bg_color: '未激活背景色',
+  on_text_color: '激活字体色',
+  off_text_color: '未激活字体色',
+  radios: '单选框2',
+  option: '选项',
 }
