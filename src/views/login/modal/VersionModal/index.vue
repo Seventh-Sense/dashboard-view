@@ -22,7 +22,8 @@
         <img width="80" height="80" :src="SVG_ICON.card_icons.logo" />
         <div class="modal-content-title">XPlay by LUBANX</div>
         <div class="modal-content-tip">{{$t('login.version')}}: {{ version }}</div>
-        <!-- <div class="modal-content-b">UI: {{ ui }}</div> -->
+        <div class="modal-content-b">Core: {{ core }}, UI: {{ ui }}</div>
+      
       </div>
       <template #footer>
         <div class="modal-content-foot">
@@ -50,6 +51,7 @@ const props = defineProps({
 })
 
 const version = ref('')
+const core = ref('')
 const ui = ref('')
 
 onMounted(() => {})
@@ -65,13 +67,9 @@ watch(
       getVersion()
         .then((res: any) => {
           //console.log('Version:', res.Version)
-          if (res.status === 'OK') {
-            version.value = res.data
-          }
-
-          // if (res.info) {
-          //   ui.value = res.info.xplayui
-          // }
+          version.value = res.Version 
+          core.value = res.info.xplay_core 
+          ui.value = res.info.xplay_ui 
         })
         .catch((e: any) => {
           console.error('Get version error:', e)

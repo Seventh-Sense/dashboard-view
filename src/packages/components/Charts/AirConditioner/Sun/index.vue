@@ -1,6 +1,7 @@
 <template>
   <img v-if="option.dataset" width="96" height="96" :src="SVG_ICON.card_icons.sun_TF" />
   <img v-else width="96" height="96" :src="SVG_ICON.card_icons.sun_TL" />
+  <!-- <Icon name="sun"  :size="32" /> -->
 </template>
 
 <script setup lang="ts">
@@ -10,6 +11,7 @@ import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
 import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
 import SVG_ICON from '../../../../../svg/SVG_ICON'
 import { parseData } from '@/utils'
+import { Icon } from '@/icon/index'
 
 const props = defineProps({
   chartConfig: {
@@ -39,6 +41,4 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
