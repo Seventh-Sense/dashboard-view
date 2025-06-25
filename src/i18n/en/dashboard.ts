@@ -87,10 +87,11 @@ export default {
   //Water pump
   pump_left: 'Water Pump',
   dry_title: 'Dry',
-  fan2_title: 'Fan',
+  fan2_title: 'Ventilation',
   humidify_title: 'Humidify',
   snow_title: 'Snow',
   sun_title: 'Sun',
+  auto_title: 'Automatic',
   gradient_dial: 'Gradient Dial',
   numerical: 'Number',
   door: 'Door',
@@ -274,4 +275,6 @@ export default {
   off_text_color: 'Inactive Font Color',
   radios: 'Radios',
   option: 'Option',
+  on_value: 'Active Value'
+  
 }

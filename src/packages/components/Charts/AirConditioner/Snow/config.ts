@@ -4,17 +4,16 @@ import { SnowConfig } from './index'
 import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
-export interface OptionType {
-    dataset: boolean
-}
-
-export const option: OptionType = {
-    dataset: true,
+export const option = {
+    dataset: 0,
+    on_value: 1,
+    on_color: '#FFFFFF',
+    off_color: '#FFFFFF',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key = SnowConfig.key
-  public attr = { ...chartInitConfig, w: 150, h: 150, zIndex: 1 }
+  public attr = { ...chartInitConfig, w: 80, h: 80, zIndex: 1 }
   public chartConfig = cloneDeep(SnowConfig)
   public option = cloneDeep(option)
 }

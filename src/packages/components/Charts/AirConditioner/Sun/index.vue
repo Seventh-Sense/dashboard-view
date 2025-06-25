@@ -1,17 +1,23 @@
 <template>
-  <img v-if="option.dataset" width="96" height="96" :src="SVG_ICON.card_icons.sun_TF" />
-  <img v-else width="96" height="96" :src="SVG_ICON.card_icons.sun_TL" />
-  <!-- <Icon name="sun"  :size="32" /> -->
+  <Icon v-if="option.dataset === on_value" name="sun" :size="w" @click="onClick" />
+  <Icon
+    v-else
+    name="sun"
+    :size="w"
+    type="mono-line"
+    :color="{ normal: '#FFFFFFFF' }"
+    @click="onClick"
+  />
 </template>
 
 <script setup lang="ts">
-import { PropType, shallowReactive, watch } from 'vue'
-import { CreateComponentType } from '../../../../../packages/index.d'
-import { useChartDataFetch } from '../../../../../hooks/useChartDataFetch.hook'
-import { useChartEditStore } from '../../../../../store/modules/chartEditStore/chartEditStore'
-import SVG_ICON from '../../../../../svg/SVG_ICON'
+import { PropType, shallowReactive, watch, toRefs, ref } from 'vue'
+import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
 import { Icon } from '@/icon/index'
+import throttle from 'lodash/throttle'
+import { updateNodeData, throttleTime } from '@/packages/public'
+import cloneDeep from 'lodash/cloneDeep'
 
 const props = defineProps({
   chartConfig: {
@@ -20,25 +26,52 @@ const props = defineProps({
   }
 })
 
+const flag = ref(false)
+
 const option = shallowReactive({
   dataset: true
 })
 
+const { w, h } = toRefs(props.chartConfig.attr)
+const { on_value } = toRefs(props.chartConfig.option)
+
+
+const onClick = throttle(
+  async () => {
+    try {
+      flag.value = true
+      let data = on_value
+
+      let tmp = cloneDeep(option.dataset)
+      option.dataset = parseData(data, 'number')
+
+      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      if (!result) {
+        option.dataset = tmp
+      }
+    } catch (error) {
+      console.error('操作失败:', error)
+    } finally {
+      flag.value = false
+    }
+  },
+  throttleTime,
+  {
+    leading: true,
+    trailing: false
+  }
+)
+
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    option.dataset = parseData(newVal, 'boolean')
+    option.dataset = parseData(newVal, 'number')
   },
   {
     immediate: true,
     deep: true
   }
 )
-
-useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number) => {
-  // @ts-ignore
-  option.dataset = newVal
-})
 </script>
 
 <style lang="scss" scoped></style>

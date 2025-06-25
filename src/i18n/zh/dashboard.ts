@@ -86,10 +86,11 @@ export default {
   //水式泵
   pump_left: '水式泵',
   dry_title: '干燥',
-  fan2_title: '风扇',
+  fan2_title: '通风',
   humidify_title: '湿度',
   snow_title: '制冷',
   sun_title: '制热',
+  auto_title: '自动',
   gradient_dial: '渐变色表盘',
   numerical: '数值',
   door: '门',
@@ -270,4 +271,5 @@ export default {
   off_text_color: '未激活字体色',
   radios: '单选框2',
   option: '选项',
+  on_value: '激活值'
 }
