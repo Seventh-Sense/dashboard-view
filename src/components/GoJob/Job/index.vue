@@ -70,12 +70,12 @@ const data = ref({
 
 const options = [
   {
-    label: 'monitor_db',
-    value: 'xplay.app.task:monitor_db'
+    label: 'polling_bacnet_device',
+    value: 'xplay.app.task:polling_bacnet_device'
   },
   {
-    label: 'polling_device',
-    value: 'xplay.app.task:polling_device'
+    label: 'polling_modbus_device',
+    value: 'xplay.app.task:polling_modbus_device'
   }
 ]
 
@@ -118,10 +118,10 @@ const onClose = () => {
 watch(
   () => data.value.func,
   newVal => {
-    if (newVal === 'xplay.app.task:monitor_db') {
-      data.value.id = 'monitor_db'
-    } else if (newVal === 'xplay.app.task:polling_device') {
-      data.value.id = 'polling_device'
+    if (newVal === 'xplay.app.task:polling_bacnet_device') {
+      data.value.id = 'polling_bacnet_device'
+    } else if (newVal === 'xplay.app.task:polling_modbus_device') {
+      data.value.id = 'polling_modbus_device'
     }
   }
 )
