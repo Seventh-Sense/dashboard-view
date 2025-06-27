@@ -7,7 +7,7 @@ import { chartInitConfig } from '@/settings/designSetting'
 export const option = {
   off: '#FFFFFF',
   on: '#6666FF',
-  dataset: false
+  dataset: 0
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

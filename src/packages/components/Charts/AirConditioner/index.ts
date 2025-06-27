@@ -5,4 +5,4 @@ import { HumidifyConfig } from './Humidify/index'
 import { SnowConfig } from './Snow/index'
 import { AutomaticConfig } from './Automatic/index'
 
-export default [SunConfig, SnowConfig, Fan2Config, DryConfig, HumidifyConfig]
+export default [SunConfig, SnowConfig, Fan2Config, AutomaticConfig, DryConfig,  HumidifyConfig]

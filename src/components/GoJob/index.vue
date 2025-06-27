@@ -51,10 +51,16 @@
               </n-space>
             </template>
             <div class="modal-list">
-              <div v-for="(value, key) in job">
+              <!-- <div v-for="(value, key) in job">
                 <div class="modal-list-key">{{ key }}</div>
                 <div class="modal-list-value">{{ value }}</div>
-              </div>
+              </div> -->
+              <div class="modal-list-key">ID</div>
+              <div class="modal-list-value">{{ job['id'] }}</div>
+              <div class="modal-list-key">Trigger</div>
+              <div class="modal-list-value">{{ job['kwargs'].ttl }}</div>
+              <div class="modal-list-key">Next Run Time</div>
+              <div class="modal-list-value">{{ job['next_run_time'] }}</div>
             </div>
           </n-collapse-item>
         </n-collapse>

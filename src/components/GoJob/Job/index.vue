@@ -28,7 +28,7 @@
         <div class="modal-porperty">trigger</div>
         <n-input v-model:value="data.trigger" type="text" :style="{ width: '450px' }" disabled />
         <div class="modal-porperty">seconds</div>
-        <n-input-number v-model:value="data.seconds" style="width: 450px" />
+        <n-input-number v-model:value="data.seconds" :min="1" style="width: 450px" />
         <div class="modal-porperty">id</div>
         <n-input v-model:value="data.id" type="text" :style="{ width: '450px' }" disabled />
       </div>
@@ -63,7 +63,7 @@ const t = window['$t']
 const data = ref({
   func: '',
   trigger: 'interval',
-  seconds: 0,
+  seconds: 5,
   id: '',
   kwargs: {}
 })
@@ -83,7 +83,15 @@ const onSubmit = async () => {
   try {
     if (dataCheck()) return
 
-    const res: any = await addJob(data.value)
+    const res: any = await addJob({
+      func: data.value.func,
+      trigger: data.value.trigger,
+      seconds: data.value.seconds,
+      id: data.value.id,
+      kwargs: {
+        ttl: data.value.seconds
+      }
+    })
 
     if (res.job === data.value.id) {
       emit('update:isShowModal', false)
