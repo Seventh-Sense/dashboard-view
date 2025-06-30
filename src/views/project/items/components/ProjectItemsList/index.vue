@@ -3,7 +3,11 @@
     <div class="list-pagination">
       <project-layout-create :collapsed="true"></project-layout-create>
     </div>
-    <n-grid :x-gap="20" :y-gap="20" cols="2 s:2 m:3 l:3 xl:5 xxl:5" responsive="screen">
+    <div v-if="flag" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
+      <n-spin size="small" />
+    </div>
+
+    <n-grid v-else :x-gap="20" :y-gap="20" cols="2 s:2 m:3 l:3 xl:5 xxl:5" responsive="screen">
       <n-grid-item v-for="(item, index) in list" :key="item.id">
         <project-items-card
           :cardData="item"
@@ -40,11 +44,15 @@ const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
 const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } =
   useModalDataInit()
 
+const flag = ref(false)
+
 onMounted(() => {
   initTable()
 })
 
 const initTable = async () => {
+  flag.value = true
+
   try {
     deleteAll()
 
@@ -61,6 +69,8 @@ const initTable = async () => {
     storageInfo(res.data)
   } catch (e) {
     console.error('onChange:', e)
+  } finally {
+    flag.value = false
   }
 }
 

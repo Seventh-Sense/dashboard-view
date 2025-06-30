@@ -41,7 +41,6 @@ const option = shallowReactive({
   dataset: '0'
 })
 const value = ref('0')
-const retention = ref('0')
 
 const { speeds, size } = toRefs(props.chartConfig.option)
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -50,7 +49,6 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     value.value = parseData(newVal, 'string')
-    retention.value = parseData(newVal, 'string')
   },
   {
     immediate: true,
@@ -67,7 +65,7 @@ const onClick = throttle(
       let tmp = cloneDeep(value.value)
       value.value = parseData(data, 'string')
 
-      console.log(value.value, data, speeds.value)
+      //console.log(value.value, data, speeds.value)
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {

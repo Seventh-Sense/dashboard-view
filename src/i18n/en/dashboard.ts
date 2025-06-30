@@ -275,6 +275,7 @@ export default {
   off_text_color: 'Inactive Font Color',
   radios: 'Radios',
   option: 'Option',
-  on_value: 'Active Value'
-  
+  on_value: 'Active Value',
+  picture: 'Picture',
+  click_picture: 'Click to select the picture',
 }

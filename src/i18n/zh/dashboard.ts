@@ -271,5 +271,7 @@ export default {
   off_text_color: '未激活字体色',
   radios: '单选框2',
   option: '选项',
-  on_value: '激活值'
+  on_value: '激活值',
+  picture: '图片',
+  click_picture: '点击选择图片',
 }

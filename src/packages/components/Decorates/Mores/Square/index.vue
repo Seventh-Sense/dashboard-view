@@ -35,5 +35,6 @@ svg {
   height: 100%;
   cursor: pointer;
   backdrop-filter: blur(50px);
+  background-color: transparent;
 }
 </style>

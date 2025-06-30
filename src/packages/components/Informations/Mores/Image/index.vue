@@ -3,7 +3,7 @@
     <n-image
       :object-fit="fit"
       preview-disabled
-      :src="option.dataset"
+      :src="url"
       :fallback-src="requireErrorImg()"
       :width="w"
       :height="h"
@@ -13,11 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, shallowReactive, watch, toRefs } from 'vue'
+import { PropType, shallowReactive, watch, toRefs, ref, computed } from 'vue'
 import { requireErrorImg } from '@/utils'
-import { useChartDataFetch } from '@/hooks'
 import { CreateComponentType } from '@/packages/index.d'
-import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
+import { parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -27,10 +26,21 @@ const props = defineProps({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { dataset, fit, borderRadius } = toRefs(props.chartConfig.option)
+const { pictures, fit, borderRadius, dataset } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
   dataset: ''
+})
+
+const value = ref('0')
+const url = computed(() => {
+  // 如果 pictures 数组不为空，则返回匹配的 URL，否则返回默认图片
+  if (pictures && pictures.value && pictures.value.length > 0) {
+    const matched = pictures.value.find((item: any) => item.value === value.value)
+    return matched?.url || pictures.value[0].url
+  }
+  
+  return dataset!.value
 })
 
 const getStyle = (radius: number) => {
@@ -42,17 +52,24 @@ const getStyle = (radius: number) => {
 
 // 编辑更新
 watch(
-  () => props.chartConfig.option.dataset,
+  () => props.chartConfig.option.datavalue,
   (newData: any) => {
-    option.dataset = newData
+    value.value = parseData(newData, 'string')
   },
   {
     immediate: true
   }
 )
 
-// 预览更新
-useChartDataFetch(props.chartConfig, useChartEditStore, (newData: any) => {
-  option.dataset = newData
-})
+watch(
+  () => props.chartConfig.option.dataset,
+  (newData: any) => {
+    if (pictures && pictures.value[0].url) {
+      pictures.value[0].url = newData
+    }
+  },
+  {
+    immediate: true
+  }
+)
 </script>
