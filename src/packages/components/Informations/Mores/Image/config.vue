@@ -1,12 +1,17 @@
 <template>
   <collapse-item :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.contant')">
+      <SettingItem>
+        <n-input v-model:value="optionData.datavalue" size="small"></n-input>
+      </SettingItem>
+    </SettingItemBox>
     <setting-item-box v-for="picture in optionData.pictures" :name="t('dashboard.picture')">
       <setting-item :name="t('dashboard.picture')">
         <n-input
           v-model:value="picture.url"
           :placeholder="t('dashboard.click_picture')"
           size="small"
-          @click="handleFileChange"
+          @click="handleFileChange(picture.key)"
         ></n-input>
       </setting-item>
       <setting-item :name="t('dashboard.value')">
@@ -114,13 +119,15 @@ const uploadFile = (callback: Function | null = null) => {
   input.click()
 }
 
-const handleFileChange = () => {
+const handleFileChange = (key: number) => {
   // 处理文件上传逻辑
 
   uploadFile((e: UploadCompletedEventType) => {
-    props.optionData.pictures[0].url = e.url
-
-    console.log('File selected:', e.fileName)
+    props.optionData.pictures.forEach((item: any) => {
+      if (item.key === key) {
+        item.url = e.url
+      }
+    })
   })
 }
 

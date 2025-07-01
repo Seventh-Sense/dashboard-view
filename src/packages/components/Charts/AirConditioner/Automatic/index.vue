@@ -40,7 +40,7 @@ const onClick = throttle(
   async () => {
     try {
       flag.value = true
-      let data = on_value
+      let data = on_value.value
 
       let tmp = cloneDeep(option.dataset)
       option.dataset = parseData(data, 'number')

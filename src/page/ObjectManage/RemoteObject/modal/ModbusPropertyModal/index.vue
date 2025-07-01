@@ -450,7 +450,7 @@ const writeValue = async (key: any) => {
     const res: any = await readIotPoints(props.deviceData.key, {
       function: func,
       parms: {
-        address: data.value.address,
+        address: Number(data.value.address),
         value: tempValues[key],
         data_type: data.value.data_type,
         byteorder: data.value.byteorder,

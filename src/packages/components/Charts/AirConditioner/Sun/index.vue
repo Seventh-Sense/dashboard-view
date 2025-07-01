@@ -29,7 +29,7 @@ const props = defineProps({
 const flag = ref(false)
 
 const option = shallowReactive({
-  dataset: true
+  dataset: 0
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -40,7 +40,8 @@ const onClick = throttle(
   async () => {
     try {
       flag.value = true
-      let data = on_value
+      
+      let data = on_value.value
 
       let tmp = cloneDeep(option.dataset)
       option.dataset = parseData(data, 'number')

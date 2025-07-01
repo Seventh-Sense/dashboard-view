@@ -89,12 +89,12 @@ export const updateNodeData = async (bindInfo: any, data: any) => {
 
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.data)
-      //window['$message'].warning(i18n.global.t('msg.gauge_msg_2'))
+      window['$message'].warning(i18n.global.t('msg.gauge_msg_2'))
       flag = false
     }
   } catch (e) {
     console.error('Update Node Data failed', e)
-    //window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
+    window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
     flag = false
   } finally {
     return flag

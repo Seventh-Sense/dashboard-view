@@ -5,8 +5,8 @@
       @click="onClick(1)"
       :style="{
         fontSize: on_font_size + 'px',
-        backgroundColor: option.dataset ? active_bg_color : inactive_bg_color,
-        color: option.dataset ? active_color : inactive_color
+        backgroundColor: option.dataset === on_contant ? active_bg_color : inactive_bg_color,
+        color: option.dataset === on_contant ? active_color : inactive_color
       }"
     >
       {{ on_text }}
@@ -16,8 +16,8 @@
       @click="onClick(0)"
       :style="{
         fontSize: off_font_size + 'px',
-        backgroundColor: option.dataset ? inactive_bg_color : active_bg_color,
-        color: option.dataset ? inactive_color : active_color
+        backgroundColor: option.dataset === off_contant ? active_bg_color : inactive_bg_color,
+        color: option.dataset === off_contant ? active_color : inactive_color
       }"
     >
       {{ off_text }}
@@ -48,7 +48,9 @@ const {
   active_color,
   inactive_color,
   on_text,
+  on_contant,
   off_text,
+  off_contant,
   on_font_size,
   off_font_size,
   inactive_bg_color,
@@ -56,7 +58,7 @@ const {
 } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
-  dataset: false
+  dataset: '0'
 })
 
 const onClick = throttle(
@@ -65,7 +67,12 @@ const onClick = throttle(
       flag.value = true
 
       let tmp = cloneDeep(option.dataset)
-      option.dataset = parseData(data, 'boolean')
+      if (data === 0) {
+        option.dataset = off_contant.value
+      } else if (data === 1) {
+        option.dataset = on_contant.value
+      }
+      //option.dataset = parseData(data, 'string')
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
@@ -89,7 +96,8 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      option.dataset = parseData(newVal, 'boolean')
+      option.dataset = parseData(newVal, 'string')
+      console.log('option.dataset', option.dataset, on_contant.value, off_contant.value)
     }
   },
   {
@@ -111,6 +119,7 @@ watch(
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 }
 </style>

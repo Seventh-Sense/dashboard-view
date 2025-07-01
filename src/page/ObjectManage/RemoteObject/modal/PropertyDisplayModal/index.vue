@@ -123,12 +123,17 @@
               </div>
             </div>
             <div v-else-if="key === 'status-flags'" class="modal-content-value">
-              {{ val.join('') }}
+              {{ val instanceof Array ? val.join('') : val }}
             </div>
             <div v-else-if="key === 'relinquish-default'" class="modal-content-editstyle">
               <div v-if="!editStates[key]" class="modal-content-editvalue">
                 <span>{{ presentValueTrans(val, type, BinaryOption, MVOption) }}</span>
-                <n-icon v-show="val !== 'unknown-property'" size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                <n-icon
+                  v-show="val !== 'unknown-property'"
+                  size="20"
+                  class="go-cursor-pointer"
+                  @click="() => enterEditMode(key)"
+                >
                   <EditIcon />
                 </n-icon>
               </div>

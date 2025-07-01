@@ -83,7 +83,7 @@ const bindDataDisplay = (data: any) => {
   isShow.value = false
   let classType = data.chartConfig.package
 
-  if (classType === 'Charts') {
+  if (classType === 'Charts' || classType === 'Informations') {
     flag = true
     isShow.value = true
   }

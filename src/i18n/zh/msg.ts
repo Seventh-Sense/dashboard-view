@@ -9,7 +9,7 @@ export default {
 
     //gauge
     gauge_msg_1: '组态数据更新成功!',
-    gauge_msg_2: '组态数据更新失败!',
+    gauge_msg_2: '数据更新失败!',
     gauge_msg_3: '该组态未绑定对象!',
 
     //login
