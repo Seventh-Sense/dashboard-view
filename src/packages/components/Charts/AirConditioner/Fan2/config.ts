@@ -6,7 +6,8 @@ import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
   dataset: 0,
-  on_value: 1
+  on_value: 1,
+  iswrite: true,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

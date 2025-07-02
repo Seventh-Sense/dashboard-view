@@ -32,10 +32,14 @@ const option = shallowReactive({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { on_value } = toRefs(props.chartConfig.option)
+const { on_value, iswrite } = toRefs(props.chartConfig.option)
 
 const onClick = throttle(
   async () => {
+    if (iswrite && !iswrite.value) {
+      return
+    }
+
     try {
       flag.value = true
       let data = on_value.value
@@ -72,5 +76,4 @@ watch(
 )
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

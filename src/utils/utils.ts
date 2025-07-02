@@ -376,6 +376,16 @@ export const setTitle = (title?: string) => {
   title && (document.title = title)
 }
 
+export const isRealValue = (value: any) => {
+  let flag = true
+
+  if (value === null || value === undefined) {
+    flag = false
+  }
+
+  return flag
+}
+
 /**
  * * 获取数据类型
  * @param title

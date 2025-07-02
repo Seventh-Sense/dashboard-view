@@ -278,7 +278,7 @@ const getProcessedValue = (point: any, metricType: any) => {
     case TypeEnum.BI:
     case TypeEnum.BV:
     case TypeEnum.BO: {
-      const status = point.value === 'inactive' ? 'inactive-text' : 'active-text'
+      const status = point.value === 0 ? 'inactive-text' : 'active-text'
 
       if (!point.property?.[status] || point.property?.[status] === 'unknown-property') {
         return point.value

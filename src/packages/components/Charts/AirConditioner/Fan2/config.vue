@@ -9,6 +9,9 @@
       <SettingItem>
         <n-input-number v-model:value="optionData.on_value" :min="0" size="small"></n-input-number>
       </SettingItem>
+      <SettingItem>
+        <n-switch v-model:value="optionData.iswrite" size="small" />
+      </SettingItem>
     </SettingItemBox>
   </CollapseItem>
 </template>

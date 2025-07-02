@@ -88,9 +88,15 @@ const writeValue = (data: any) => {
     if (!matchedData) return
 
     //console.log(matchedData.property?.['present-value'])
-    component.option.dataset =
-      component.key === 'Online' ? matchedData.status : matchedData.value
+    if (component.key === 'Online') {
+      component.option.dataset = matchedData.status
+    } else if (component.key === 'Image') {
+      component.option.datavalue = matchedData.value
+    } else {
+      component.option.dataset = matchedData.value
+    }
   })
+  //console.log(chartEditStore.componentList)
 }
 
 onMounted(() => {
@@ -119,7 +125,7 @@ const readPointValue = (dataList: any[]) => {
       .catch(err => {
         console.log(err)
       })
-  }, 3000)
+  }, 1500)
 }
 
 //获取所有需要读取数据的点位

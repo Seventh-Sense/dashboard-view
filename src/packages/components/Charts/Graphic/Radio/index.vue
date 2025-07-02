@@ -97,7 +97,6 @@ watch(
   newVal => {
     if (!flag.value) {
       option.dataset = parseData(newVal, 'string')
-      console.log('option.dataset', option.dataset, on_contant.value, off_contant.value)
     }
   },
   {

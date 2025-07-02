@@ -81,7 +81,7 @@ import { PropType, toRefs, watch, shallowReactive, ref } from 'vue'
 import { useChartDataFetch } from '@/hooks'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import config, { option as configOption } from './config'
-import { parseData, toNumber } from '@/utils'
+import { parseData, toNumber, isRealValue } from '@/utils'
 import { ChevronForwardOutline, ChevronBackOutline } from '@vicons/ionicons5'
 import debounce from 'lodash/debounce'
 import { cloneDeep } from 'lodash'
@@ -190,7 +190,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newData => {
     try {
-      if (!flag.value) {
+      if (!flag.value && isRealValue(newData)) {
         let num = parseData(newData, 'number')
         //console.log(newData, num)
         dataHandle(num)
