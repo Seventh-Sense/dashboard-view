@@ -241,6 +241,7 @@ export default {
   create_groups: 'Create Groups',
   cancel_groups: 'Cancel Groups',
   numerical_control: 'Numerical',
+  light_control: 'Light Control',
   graphic: 'Graphic',
   clear_the_clipboard: 'Clear The Clipboard',
   is_show: 'IS Display',
@@ -278,4 +279,6 @@ export default {
   on_value: 'Active Value',
   picture: 'Picture',
   click_picture: 'Click to select the picture',
+  upload_msg_err: 'The picture exceeds the limit. Please re-upload it!',
+  upload_msg_err1: 'The file format does not match. Please re-upload!',
 }

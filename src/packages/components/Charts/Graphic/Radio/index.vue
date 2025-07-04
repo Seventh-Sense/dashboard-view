@@ -119,6 +119,7 @@ watch(
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 8px;
   }
 }
 </style>

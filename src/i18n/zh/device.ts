@@ -105,4 +105,6 @@ export default {
 
   addr_example: '输入数字或数字范围(10-20)',
   tip_search: '请输入搜索内容',
+  total: '共',
+  total_num:'条记录',
 }

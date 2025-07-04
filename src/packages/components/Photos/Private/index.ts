@@ -8,7 +8,7 @@ import { backgroundImageSize } from '@/settings/designSetting'
 import { usePackagesStore } from '@/store/modules/packagesStore/packagesStore'
 
 const StoreKey = StorageEnum.GO_USER_MEDIA_PHOTOS
-
+const t = window['$t']
 /**
  * 上传完成事件类型
  */
@@ -28,11 +28,11 @@ const uploadFile = (callback: Function | null = null) => {
     const file = input.files[0]
     const { name, size, type } = file
     if (size > 1024 * 1024 * backgroundImageSize) {
-      window['$message'].warning(`图片超出 ${backgroundImageSize}M 限制，请重新上传！`)
+      window['$message'].warning(t('dashboard.upload_msg_err'))
       return false
     }
     if (type !== FileTypeEnum.PNG && type !== FileTypeEnum.JPEG && type !== FileTypeEnum.GIF) {
-      window['$message'].warning('文件格式不符合，请重新上传！')
+      window['$message'].warning(t('dashboard.upload_msg_err1'))
       return false
     }
     const reader = new FileReader()

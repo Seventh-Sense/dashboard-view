@@ -104,4 +104,6 @@ export default {
 
   addr_example: 'Enter a number or a number range (10-20)',
   tip_search: 'Please enter the search content',
+  total: 'A total of',
+  total_num:'records',
 }

@@ -9,6 +9,9 @@
           <n-input v-model:value="keyword" type="text" :placeholder="t('device.tip_search')" clearable style="width: 366px" />
         </div>
         <div class="project-card-filter-right">
+          <div style="display: flex; justify-content: center; align-items: center">
+            {{ $t('device.total') }} {{ filter_num }} {{ $t('device.total_num') }}
+          </div>
           <n-button class="project-card-top-extra-button" @click="onAdd">
             {{ $t('global.r_add') }}
           </n-button>
@@ -113,6 +116,10 @@ const filteredData = computed(() => {
       return String(value).toLowerCase().includes(searchTerm)
     })
   })
+})
+
+const filter_num = computed(() => {
+  return filteredData.value.length
 })
 
 const columns = [
@@ -345,6 +352,11 @@ provide('refreshFunc', initData)
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
+
+      &-right {
+        display: flex;
+        gap: 16px;
+      }
     }
 
     &-content {

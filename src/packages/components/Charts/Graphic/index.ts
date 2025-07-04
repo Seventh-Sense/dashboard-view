@@ -1,5 +1,5 @@
 import { NumericalConfig } from './Numerical/index'
-import { ConditionerConfig } from './Conditioner/index'
+import { LightControlConfig } from './LightControl/index'
 import { SwitchConfig } from './Switch/index'
 import { ModeConfig } from './Mode/index'
 import { ProgressConfig } from './Progress/index'
@@ -16,5 +16,6 @@ export default [
   RadioConfig,
   RadiosConfig,
   ProgressConfig,
-  NumericalConfig
+  NumericalConfig,
+  LightControlConfig,
 ]

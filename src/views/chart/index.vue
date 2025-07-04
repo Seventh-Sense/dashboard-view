@@ -80,7 +80,7 @@ onMounted(() => {
   readProject(previewId)
     .then((res: any) => {
       //console.log('readProject', res.data)
-      if (res.status === 'OK' && res.data.content !== '') {
+      if (res.status === 'OK' && res.data && res.data.content !== '') {
         nextTick(() => {
           updateComponent(JSONParse(res.data.content), true, true)
         })
