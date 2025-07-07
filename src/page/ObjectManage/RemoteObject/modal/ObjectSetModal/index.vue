@@ -60,6 +60,7 @@
 
       <template #footer>
         <n-space justify="end">
+          <!-- <span>{{ select_num }} {{ $t('device.total_num') }}</span> -->
           <div class="modal-button-close" @click="onClose">{{ $t('global.r_cancel') }}</div>
           <n-button class="modal-button-ok" :loading="loadingButton" @click="onSubmit">
             {{ $t('global.r_ok') }}
@@ -115,6 +116,7 @@ const loadingButton = ref(false)
 const inputRef = ref<InputInst | null>(null);
 const isReadonly = ref(true);
 const keyword = ref('')
+
 
 const activateInput = async () => {
   if (!inputRef.value) return;
@@ -174,6 +176,10 @@ const handleCheck = (rowKeys: DataTableRowKey[]) => {
   checkedRowKeysRef.value = rowKeys
 }
 
+const select_num = computed(() => {
+  return checkedRowKeysRef.value.length
+})
+
 onMounted(() => {
   fetchData()
   //init()
@@ -212,7 +218,7 @@ const fetchData = async () => {
 }
 
 const convertToDataTypes = (selectedData: any[], resData: any[]): any[] => {
-  const newKeys = selectedData.map(({ metric_type, metric_id }) => `${metric_type},${metric_id}`)
+  const newKeys = selectedData.map(({ metric_uid }) => `${metric_uid}`)
 
   selectedObjKeys.value = cloneDeep(newKeys)
 

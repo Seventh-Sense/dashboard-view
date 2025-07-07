@@ -9,7 +9,7 @@
   >
     <div class="container-top">
       <div
-        style="margin-top: 12px"
+        style="margin-top: 12px; font-weight: bold"
         :style="{
           fontSize: top_title_size + 'px',
           color: top_title_color
@@ -45,12 +45,14 @@
         }"
       >
         <div
+          @click="onClick(1)"
           class="container-bottom-switch-item"
           :class="value === on_contant ? 'active' : 'inactive'"
         >
           {{ on_text }}
         </div>
         <div
+          @click="onClick(0)"
           class="container-bottom-switch-item"
           :class="value === off_contant ? 'active' : 'inactive'"
         >
@@ -66,7 +68,9 @@ import { PropType, watch, toRefs, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
 import { requireErrorImg } from '@/utils'
-
+import { throttleTime, updateNodeData } from '@/packages/public'
+import { cloneDeep } from 'lodash'
+import throttle from 'lodash/throttle'
 
 const props = defineProps({
   chartConfig: {
@@ -74,6 +78,9 @@ const props = defineProps({
     required: true
   }
 })
+
+const flag = ref(false)
+const t = window['$t']
 
 const value = ref<any>('0')
 
@@ -98,10 +105,41 @@ const {
   on_url,
   off_url,
   image_w,
-  image_h,
+  image_h
 } = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
+
+const onClick = throttle(
+  async (data: number) => {
+    try {
+      flag.value = true
+
+      let tmp = cloneDeep(value.value)
+      if (data === 0) {
+        value.value = off_contant.value
+      } else if (data === 1) {
+        value.value = on_contant.value
+      }
+      //option.dataset = parseData(data, 'string')
+
+      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      if (!result) {
+        value.value = tmp
+      }
+    } catch (error) {
+      // 错误已由 updateNodeData 处理，此处可补充额外逻辑
+      console.error('操作失败:', error)
+    } finally {
+      flag.value = false
+    }
+  },
+  throttleTime,
+  {
+    leading: true,
+    trailing: false
+  }
+)
 
 watch(
   () => props.chartConfig.option.dataset,

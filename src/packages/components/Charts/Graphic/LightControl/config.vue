@@ -38,6 +38,14 @@
     </SettingItemBox>
 
     <SettingItemBox :name="t('dashboard.style')" :alone="false">
+      <SettingItem :name="t('dashboard.background')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.backgroundColor"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem></SettingItem>
       <setting-item :name="t('dashboard.title')">
         <n-input v-model:value="optionData.top_title" size="small" />
       </setting-item>
