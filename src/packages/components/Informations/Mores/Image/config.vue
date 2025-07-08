@@ -8,7 +8,7 @@
     <setting-item-box v-for="picture in optionData.pictures" :name="t('dashboard.picture')">
       <setting-item :name="t('dashboard.picture')">
         <n-input
-          v-model:value="picture.url"
+          v-model:value="picture.name"
           :placeholder="t('dashboard.click_picture')"
           size="small"
           @click="handleFileChange(picture.key)"
@@ -125,6 +125,7 @@ const handleFileChange = (key: number) => {
   uploadFile((e: UploadCompletedEventType) => {
     props.optionData.pictures.forEach((item: any) => {
       if (item.key === key) {
+        item.name = e.fileName
         item.url = e.url
       }
     })
@@ -135,6 +136,7 @@ const add = () => {
   props.optionData.pictures.push({
     key: new Date().getTime(),
     url: '',
+    name: '',
     value: '0'
   })
 }

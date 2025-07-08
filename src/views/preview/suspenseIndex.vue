@@ -125,7 +125,7 @@ const readPointValue = (dataList: any[]) => {
       .catch(err => {
         console.log(err)
       })
-  }, 1500)
+  }, 3000)
 }
 
 //获取所有需要读取数据的点位

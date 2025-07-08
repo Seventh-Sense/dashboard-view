@@ -45,8 +45,8 @@ export default {
 
   //msg
   msg_mod_success: '修改成功！',
-  enable_mod_fail: 'Enable 设置失败！',
-  enable_mod_success: 'Enable 设置成功！',
+  enable_mod_fail: '使能设置失败！',
+  enable_mod_success: '使能设置成功！',
   device_no_data: '当前没有添加设备！',
   msg_del_fail: '删除失败！',
   msg_read_fail: '读取数据失败！',
@@ -59,7 +59,7 @@ export default {
   point_list: '设备点位列表',
 
   type: '类型',
-  polling: '轮询',
+  polling: '轮询(秒)',
   address: '地址',
   enabled: '使能',
   add_device: '新增设备',
@@ -107,4 +107,11 @@ export default {
   tip_search: '请输入搜索内容',
   total: '共',
   total_num:'条记录',
+  msg_enter_name: '请输入对象名称',
+  serialport: '串口',
+  little_endian: '小端',
+  big_endian: '大端',
+  none: '无',
+  odd: '奇校验',
+  even: '偶校验',
 }

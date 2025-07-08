@@ -12,6 +12,7 @@ export const option = {
     {
       key: 1,
       url: logo,
+      name: 'init.png',
       value: '0'
     }
   ],

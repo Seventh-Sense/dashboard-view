@@ -208,6 +208,7 @@ const fetchData = async () => {
       //console.log(tmp)
       fetchProperties(tmp)
     } else {
+      console.log(res.data)
       window['$message'].warning(res.data)
       loading.value = false
     }

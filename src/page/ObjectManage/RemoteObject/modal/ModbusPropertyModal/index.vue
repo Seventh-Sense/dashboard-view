@@ -50,7 +50,13 @@
             <n-input
               v-model:value="data[key]"
               type="text"
-              :placeholder="key === 'address' ? t('device.addr_example') : ''"
+              :placeholder="
+                key === 'address'
+                  ? t('device.addr_example')
+                  : key === 'name'
+                  ? t('device.msg_enter_name')
+                  : ''
+              "
             />
           </div>
         </div>
@@ -90,7 +96,7 @@
               </n-icon>
             </div>
             <div v-else class="modal-editvalue">
-              <n-input-number v-model:value="tempValues[key]" :min="0" style="width: 100%;"/>
+              <n-input-number v-model:value="tempValues[key]" :min="0" style="width: 100%" />
               <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave(key)">
                 <CheckmarkIcon />
               </n-icon>
@@ -106,14 +112,14 @@
       </div>
       <div v-if="isWriteble">
         <div class="modal-porperty">{{ $t('device.value') }}</div>
-        <div v-if="!editStates['vvalue']" class="modal-editvalue modal-editstyle" >
+        <div v-if="!editStates['vvalue']" class="modal-editvalue modal-editstyle">
           <span>{{ value }}</span>
           <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode('vvalue')">
             <EditIcon />
           </n-icon>
         </div>
         <div v-else class="modal-editvalue modal-editstyle">
-          <n-input-number v-model:value="tempValues['vvalue']" :min="0" style="width: 100%;" />
+          <n-input-number v-model:value="tempValues['vvalue']" :min="0" style="width: 100%" />
           <n-icon size="20" class="go-cursor-pointer" @click="() => handleSave('vvalue')">
             <CheckmarkIcon />
           </n-icon>
@@ -188,7 +194,7 @@ const data = ref<{
   wordorder: number
   divisor: number
 }>({
-  name: 'New Point',
+  name: '',
   description: '',
   function: '03',
   address: '',
@@ -465,10 +471,8 @@ const writeValue = async (key: any) => {
       return
     }
 
-
     value.value = tempValues[key]
     editStates[key] = false
-
   } catch (e) {
     console.error('onSubmit:', e)
   }

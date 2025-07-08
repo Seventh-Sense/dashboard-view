@@ -58,7 +58,7 @@ export default {
   point_list: 'Points List',
 
   type: 'Type',
-  polling: 'Polling',
+  polling: 'Polling(sec)',
   address: 'Address',
   enabled: 'Enabled',
   add_device: 'New Device',
@@ -106,4 +106,11 @@ export default {
   tip_search: 'Please enter the search content',
   total: 'A total of',
   total_num:'records',
+  msg_enter_name: 'Please enter the object name',
+  serialport: 'Serial Port',
+  little_endian: 'Little-endian mode',
+  big_endian: 'Big-endian mode',
+  none: 'None',
+  odd: 'Odd',
+  even: 'Even',
 }

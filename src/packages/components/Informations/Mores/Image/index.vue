@@ -39,7 +39,7 @@ const url = computed(() => {
     const matched = pictures.value.find((item: any) => item.value === value.value)
     return matched?.url || pictures.value[0].url
   }
-  
+
   return dataset!.value
 })
 
@@ -64,7 +64,9 @@ watch(
 watch(
   () => props.chartConfig.option.dataset,
   (newData: any) => {
+    //console.log('dataset', props.chartConfig)
     if (pictures && pictures.value[0].url) {
+      pictures.value[0].name = props.chartConfig.chartConfig.title
       pictures.value[0].url = newData
     }
   },

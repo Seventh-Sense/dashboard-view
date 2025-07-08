@@ -25,7 +25,12 @@
 
       <div v-if="data.type !== DeviceTypeEnum.BACnet">
         <div class="modal-porperty" style="margin-top: 7px">{{ $t('device.name') }}</div>
-        <n-input v-model:value="data.name" type="text" :disabled="isEdit" />
+        <n-input
+          v-model:value="data.name"
+          type="text"
+          :disabled="isEdit"
+          :placeholder="t('device.msg_enter_name')"
+        />
       </div>
 
       <n-grid x-gap="12" :cols="4">
@@ -101,7 +106,7 @@ const ModbusTCP = loadAsyncComponent(() => import('../ModbusTCP/index.vue'))
 
 const data = ref<DataType>({
   id: '',
-  name: 'New Object',
+  name: '',
   type: DeviceTypeEnum.BACnet,
   polling: 3,
   enabled: true,
@@ -222,7 +227,7 @@ const onClear = () => {
   content.value = null
   data.value = {
     id: '',
-    name: 'New Object',
+    name: '',
     type: DeviceTypeEnum.BACnet,
     polling: 3,
     enabled: true,

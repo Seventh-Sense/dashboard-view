@@ -90,21 +90,20 @@ export const DEVICE_TYPE_MAP: { [key: number]: string } = {
 }
 
 export function getDeviceTypeName(key: number): string {
-  return DEVICE_TYPE_MAP[key] ?? String(key);
+  return DEVICE_TYPE_MAP[key] ?? String(key)
 }
 
 export function getDeviceTypeId(typeStr: string): number | string {
   // 创建反向映射表 { 字符串值: 数字ID }
-  const reverseMap: Record<string, number> = {};
+  const reverseMap: Record<string, number> = {}
 
   // 构建反向映射
-  (Object.entries(DEVICE_TYPE_MAP) as [string, TypeEnum][])
-    .forEach(([key, value]) => {
-      reverseMap[value] = parseInt(key, 10);
-    });
+  ;(Object.entries(DEVICE_TYPE_MAP) as [string, TypeEnum][]).forEach(([key, value]) => {
+    reverseMap[value] = parseInt(key, 10)
+  })
 
   // 查找并返回结果
-  return reverseMap[typeStr] ?? typeStr;
+  return reverseMap[typeStr] ?? typeStr
 }
 
 export const PRIMARY_ORDER = [
@@ -198,11 +197,6 @@ export const ModbusTCPData = {
   connectionOption: 'tcp'
 }
 
-export const connectionOptions = ['SerialPort'].map(v => ({
-  label: v,
-  value: v
-}))
-
 export const baudOptions = [
   300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 56000, 57600, 115200, 128000, 256000
 ].map(v => ({
@@ -215,17 +209,24 @@ export const databitOptions = [7, 8].map(v => ({
   value: v
 }))
 
+export const connectionOptions = [
+  {
+    label: () => window['$t']('device.serialport'),
+    value: 'SerialPort'
+  }
+]
+
 export const parityOptions = [
   {
-    label: 'None',
+    label: () => window['$t']('device.none'),
     value: 'N'
   },
   {
-    label: 'Odd',
+    label: () => window['$t']('device.odd'),
     value: 'O'
   },
   {
-    label: 'Even',
+    label: () => window['$t']('device.even'),
     value: 'E'
   }
 ]
@@ -276,7 +277,7 @@ export const pollOptions = [
     value: 2
   },
   {
-    label: '3 sec',
+    label: '3',
     value: 3
   },
   {
@@ -322,11 +323,11 @@ export const functionOptions = [
 
 export const OrderOptions = [
   {
-    label: 'Little-endian mode',
+    label: () => window['$t']('device.little_endian'),
     value: 0
   },
   {
-    label: 'Big-end mode',
+    label: () => window['$t']('device.big_endian'),
     value: 1
   }
 ]
@@ -432,4 +433,10 @@ export const sortByString = (a: string, b: string, emptyLast = false) => {
 
   // 中文排序使用 localeCompare
   return a.localeCompare(b, 'zh-CN')
+}
+
+
+//msg handle
+const msgHandle = (msg: string) => {
+
 }

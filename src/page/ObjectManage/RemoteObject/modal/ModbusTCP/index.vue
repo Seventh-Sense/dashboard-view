@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="content-porperty">Slave ID</div>
+    <div class="content-porperty">{{ $t('device.slave_id') }}</div>
     <n-input-number v-model:value="data.address" :min="1" :max="254" :disabled="isEdit" />
     <div class="content-porperty">{{ $t('device.host') }}</div>
     <n-input v-model:value="data.property.host" :disabled="isEdit" />
