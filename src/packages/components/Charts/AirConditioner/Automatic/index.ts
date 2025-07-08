@@ -11,5 +11,5 @@ export const AutomaticConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Air,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'snow.png'
+  image: 'autocontrol.png'
 }

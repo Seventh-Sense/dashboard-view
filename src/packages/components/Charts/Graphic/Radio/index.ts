@@ -11,5 +11,5 @@ export const RadioConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'switch2.png'
+  image: 'radio.png'
 }

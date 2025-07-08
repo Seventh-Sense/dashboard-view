@@ -287,4 +287,9 @@ export default {
   text_size: '文本字体大小',
   switch_h: '开关高度',
   switch_bg_color: '开关背景颜色',
+  fill: '填充',
+  contain: '包含',
+  cover: '覆盖',
+  scaledown: '缩小适应',
+  none: '无',
 }

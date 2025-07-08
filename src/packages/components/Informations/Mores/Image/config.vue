@@ -73,23 +73,23 @@ const t = window['$t']
 const fitList = [
   {
     value: 'fill',
-    label: 'fill'
+    label: t('dashboard.fill')
   },
   {
     value: 'contain',
-    label: 'contain'
+    label: t('dashboard.contain')
   },
   {
     value: 'cover',
-    label: 'cover'
+    label: t('dashboard.cover')
   },
   {
     value: 'scale-down',
-    label: 'scale-down'
+    label: t('dashboard.scaledown')
   },
   {
     value: 'none',
-    label: 'none'
+    label: t('dashboard.none')
   }
 ]
 
