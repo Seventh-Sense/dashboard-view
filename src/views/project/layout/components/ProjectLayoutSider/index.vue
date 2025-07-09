@@ -60,7 +60,6 @@ const { getAsideCollapsedWidth } = toRefs(useSettingStore())
 
 const route = useRoute()
 const menuValue = ref(route.name)
-
 //const menuOptions = menuOptionsInit()
 
 const defaultExpandedKeys = expandedKeys()

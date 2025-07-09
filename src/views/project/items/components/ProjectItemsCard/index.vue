@@ -23,7 +23,7 @@
         <span class="list-footer-title">{{ formatTime(cardData.time) }}</span>
       </div>
 
-      <n-space size="large" justify="end" align="center" :wrap="false">
+      <n-space v-if="isShow" size="large" justify="end" align="center" :wrap="false">
         <img
           width="24"
           height="24"
@@ -44,16 +44,23 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { onMounted, PropType, ref } from 'vue'
 
 import { Chartype } from '../../index.d'
 
 import SVG_ICON from '@/svg/SVG_ICON'
+import { getLoginUser } from '@/utils'
 
 const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
+})
+
+const isShow = ref(false)
+
+onMounted(() => {
+  isShow.value = getLoginUser()
 })
 const formatTime = (data: string) => {
   //2024-08-19T00:56:22.141127

@@ -6,6 +6,7 @@ import { cryptoDecode } from './crypto'
 import { StorageEnum } from '@/enums/storageEnum'
 import { clearLocalStorage, getLocalStorage } from './storage'
 import router from '@/router'
+import { JSONParse } from '@/utils'
 
 /**
  * * 根据名字跳转路由
@@ -40,7 +41,7 @@ export const fetchPathByName = (pageName: string, p?: string) => {
     const pathData = router.resolve({
       name: pageName
     })
-    
+
     return p ? (pathData as any)[p] : pathData
   } catch (error) {
     window['$message'].warning('查询路由信息失败，请联系管理员！')
@@ -187,6 +188,34 @@ export const loginCheck = () => {
     }
     return false
   } catch (error) {
+    return false
+  }
+}
+
+//
+export const getLoginInfo = () => {
+  try {
+    const info = getLocalStorage(StorageEnum.GO_LOGIN_INFO_STORE)
+
+    return info ? cryptoDecode(info) : null
+  } catch (error) {
+    console.error('获取登录信息失败', error)
+    return null
+  }
+}
+
+export const getLoginUser = () => {
+  let info = getLoginInfo()
+  
+  if (info !== null) {
+    const infos: any = JSONParse(info)
+
+    if (infos.username === 'admin') {
+      return true
+    } else {
+      return false
+    }
+  } else {
     return false
   }
 }

@@ -53,7 +53,7 @@
                   </n-input>
                 </n-form-item>
                 <n-form-item>
-                  <div style="width: 100%;display: flex; justify-content: flex-end">
+                  <div style="width: 100%; display: flex; justify-content: flex-end">
                     <go-lang />
                   </div>
                 </n-form-item>
@@ -118,7 +118,7 @@ const showModal = ref(false)
 const showCModal = ref(false)
 
 const formInline = reactive({
-  username: 'admin',
+  username: 'user',
   password: ''
 })
 
@@ -141,7 +141,10 @@ const handleSubmit = (e: Event) => {
   formRef.value.validate(async (errors: any) => {
     if (!errors) {
       const { username, password } = formInline
-      if (username === 'admin' && password === '123456') {
+      if (
+        (username === 'admin' && password === '123456') ||
+        (username === 'user' && password === '123456')
+      ) {
         loading.value = true
         //get cookies
         // onLogin(formInline).then(data => {
@@ -158,7 +161,7 @@ const handleSubmit = (e: Event) => {
           )
         )
         window['$message'].success(t('msg.login_msg_1'))
-        routerTurnByName(PageEnum.BASE_REMOTE_MAN_NAME, true)
+        routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
       } else {
         window['$message'].error(t('msg.login_msg_2'))
       }

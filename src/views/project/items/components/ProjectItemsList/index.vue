@@ -1,7 +1,7 @@
 <template>
   <div class="go-items-list">
     <div class="list-pagination">
-      <project-layout-create :collapsed="true"></project-layout-create>
+      <project-layout-create v-if="isShow" :collapsed="true"></project-layout-create>
     </div>
     <div v-if="flag" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
       <n-spin size="small" />
@@ -37,7 +37,7 @@ import { useDataListInit } from './hooks/useData.hook'
 import { ProjectLayoutCreate } from '../../../layout/components/ProjectLayoutCreate/index'
 import { provide, onMounted, ref, watch } from 'vue'
 import { readProjectList } from '@/api/http'
-import { setLocalStorage } from '@/utils'
+import { setLocalStorage, getLoginUser } from '@/utils'
 
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
 const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
@@ -45,8 +45,11 @@ const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandl
   useModalDataInit()
 
 const flag = ref(false)
+const isShow = ref(false)
 
 onMounted(() => {
+  isShow.value = getLoginUser()
+
   initTable()
 })
 

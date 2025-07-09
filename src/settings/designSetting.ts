@@ -3,7 +3,7 @@ import { RequestHttpIntervalEnum } from '@/enums/httpEnum'
 import designColor from './designColor.json'
 
 // 默认语言
-export const lang = LangEnum.EN
+export const lang = LangEnum.ZH
 
 // 水印文字
 export const watermarkText = 'XPlay'
