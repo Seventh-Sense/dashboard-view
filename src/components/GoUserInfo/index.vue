@@ -1,5 +1,5 @@
 <template>
-  <n-dropdown trigger="hover" @select="handleSelect" :show-arrow="true" :options="options">
+  <n-dropdown trigger="hover" @select="handleSelect" :show-arrow="true" :options="isShow ? options: option">
     <div class="user-info-box">
       <person-icon v-if="fallback"></person-icon>
       <n-avatar
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-import { h, ref } from 'vue'
+import { h, onMounted, ref } from 'vue'
 import { NAvatar, NText } from 'naive-ui'
 import { renderIcon } from '@/utils'
-import { logout, renderLang } from '@/utils'
+import { logout, renderLang, getLoginUser } from '@/utils'
 import { GoSystemSet } from '@/components/GoSystemSet/index'
 import { GoSystemInfo } from '@/components/GoSystemInfo/index'
 import Person from './person.png'
@@ -43,6 +43,7 @@ const jobShow = ref(false)
 
 // 是否失败
 const fallback = ref(false)
+const isShow = ref(false)
 
 // 用户图标渲染
 const renderUserInfo = () => {
@@ -57,10 +58,28 @@ const renderUserInfo = () => {
         style: 'margin-right: 12px;',
         src: Person
       }),
-      h('div', null, [h('div', null, [h(NText, { depth: 2 }, { default: () => 'admin' })])])
+      h('div', null, [h('div', null, [h(NText, { depth: 2 }, { default: () => isShow.value ? 'admin' : 'User' })])])
     ]
   )
 }
+
+const option = ref([
+  {
+    label: '我的信息',
+    key: 'info',
+    type: 'render',
+    render: renderUserInfo
+  },
+  {
+    type: 'divider',
+    key: 'd1'
+  },
+  {
+    label: renderLang('global.logout'),
+    key: 'logout',
+    icon: renderIcon(LogOutOutlineIcon)
+  }
+])
 const options = ref([
   {
     label: '我的信息',
@@ -97,6 +116,13 @@ const options = ref([
     icon: renderIcon(LogOutOutlineIcon)
   }
 ])
+
+
+
+onMounted(() => {
+  // 获取登录用户信息
+  isShow.value = getLoginUser()
+})
 
 // 图片渲染错误
 const errorHandle = (e: Event) => {

@@ -2,7 +2,12 @@
   <div class="content">
     <div class="content-title">
       <span class="content-porperty">{{ t('device.device_list') }}</span>
-      <div class="content-button" @click="onDiscovery">{{ $t('device.search') }}</div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; gap: 16px">
+        <!-- <div>
+          <n-select v-model:value="networkCard" :options="[]" style="width: 200px;"/>
+        </div> -->
+        <div class="content-button" @click="onDiscovery">{{ $t('device.search') }}</div>
+      </div>
     </div>
     <a-table
       class="ant-table-striped"
@@ -65,6 +70,8 @@ interface DataType {
 
 const data = ref<DataType[]>([])
 const loading = ref(false)
+
+const networkCard = ref('')
 
 const columns = [
   { title: () => t('device.name'), dataIndex: 'object_name' },
