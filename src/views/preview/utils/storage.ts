@@ -17,7 +17,7 @@ export const getSessionStorageInfo = () => {
   const id = toPathArray && toPathArray[toPathArray.length - 1]
 
   const storageList: ChartEditStorageType[] = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST)
- 
+
   if (storageList) {
     for (let i = 0; i < storageList.length; i++) {
       if (id.toString() === storageList[i]['id']) {
@@ -30,12 +30,12 @@ export const getSessionStorageInfo = () => {
     }
   }
 
-  chartEditStore.setInitCanves();
+  chartEditStore.setInitCanves()
 }
 
 //清空数据
 export const clearStorage = () => {
-  chartEditStore.setInitCanves();
+  chartEditStore.setInitCanves()
 }
 
 //演示获取本地数据
@@ -68,6 +68,18 @@ export const getPreviewInfo = () => {
     })
 }
 
+//传入参数，获取数据
+// export const getPreviewInfoByInfo = (load: string) => {
+//   if (load === '') {
+//     chartEditStore.setInitCanves()
+//     return
+//   }
+
+//   let data = JSONParse(load)
+//   chartEditStore.editCanvasConfig = data.editCanvasConfig
+//   chartEditStore.requestGlobalConfig = data.requestGlobalConfig
+//   chartEditStore.componentList = data.componentList
+// }
 
 function getRandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min

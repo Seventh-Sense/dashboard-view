@@ -1,6 +1,7 @@
 <template>
   <div class="go-items-list">
     <div class="list-pagination">
+      <div class="list-preview" @click="onPreview">预览</div>
       <project-layout-create v-if="isShow" :collapsed="true"></project-layout-create>
     </div>
     <div v-if="flag" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
@@ -37,7 +38,8 @@ import { useDataListInit } from './hooks/useData.hook'
 import { ProjectLayoutCreate } from '../../../layout/components/ProjectLayoutCreate/index'
 import { provide, onMounted, ref, watch } from 'vue'
 import { readProjectList } from '@/api/http'
-import { setLocalStorage, getLoginUser } from '@/utils'
+import { setLocalStorage, getLoginUser, routerTurnByName } from '@/utils'
+import { PageEnum } from '@/enums/pageEnum'
 
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
 const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
@@ -91,6 +93,10 @@ const storageInfo = (res: any[]) => {
   setLocalStorage('ProjectInfo', array)
 }
 
+const onPreview = () => {
+  routerTurnByName(PageEnum.BASE_DISPLAY_NAME, true)
+}
+
 provide('initTable', initTable)
 </script>
 
@@ -111,8 +117,20 @@ $contentHeight: 250px;
   .list-pagination {
     display: flex;
     justify-content: flex-end;
+    gap: 12px;
     align-items: center;
     height: 72px;
+  }
+
+  .list-preview {
+    height: 34px;
+    width: 78px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px #FFFFFF12 solid;
+    border-radius: 4px;
+    cursor: pointer;
   }
 }
 </style>

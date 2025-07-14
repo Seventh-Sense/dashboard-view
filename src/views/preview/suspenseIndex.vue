@@ -47,6 +47,7 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { readPointsDataById } from '@/api/http'
+import { IntervalTimeOut, getAllDataIdsSafe, writeValue } from '../display/util/util'
 
 const t = window['$t']
 
@@ -79,26 +80,6 @@ const { show } = useComInstall(chartEditStore)
 // 开启键盘监听
 keyRecordHandle()
 
-const writeValue = (data: any) => {
-  chartEditStore.componentList.map((component: any) => {
-    const { deviceID, objectID } = component.request.bindParams
-
-    const matchedData = data.find((item: any) => item.metric_id === objectID)
-
-    if (!matchedData) return
-
-    //console.log(matchedData.property?.['present-value'])
-    if (component.key === 'Online') {
-      component.option.dataset = matchedData.status
-    } else if (component.key === 'Image') {
-      component.option.datavalue = matchedData.value
-    } else {
-      component.option.dataset = matchedData.value
-    }
-  })
-  //console.log(chartEditStore.componentList)
-}
-
 onMounted(() => {
   //console.log('chartEditStore', chartEditStore.editCanvasConfig)
   readPointValue(chartEditStore.componentList)
@@ -117,7 +98,7 @@ const readPointValue = (dataList: any[]) => {
     readPointsDataById(load)
       .then((res: any) => {
         if (res.status === 'OK') {
-          writeValue(res.data)
+          chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
         } else {
           console.log('no data!')
         }
@@ -125,16 +106,7 @@ const readPointValue = (dataList: any[]) => {
       .catch(err => {
         console.log(err)
       })
-  }, 3000)
-}
-
-//获取所有需要读取数据的点位
-const getAllDataIdsSafe = (points: any[]): string[] => {
-  return [
-    ...new Set(
-      points.map(com => com.request?.bindParams?.objectID).filter(Boolean) // 过滤 null/undefined/空字符串
-    )
-  ]
+  }, IntervalTimeOut)
 }
 </script>
 

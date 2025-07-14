@@ -108,7 +108,9 @@ const sendHandle = async () => {
     updateProject(previewId, {
       name: storageInfo.editCanvasConfig.projectName,
       content: JSONStringify(storageInfo),
-      cover: canvas.toDataURL()
+      //画布缩图
+      //cover: canvas.toDataURL()
+      cover: ''
     })
       .then(res => {
         if (res) {

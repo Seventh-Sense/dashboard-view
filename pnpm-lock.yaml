@@ -35,6 +35,9 @@ importers:
       '@types/lodash':
         specifier: ^4.14.184
         version: 4.14.185
+      '@types/swiper':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@x-plateform/common':
         specifier: ^1.0.211
         version: 1.0.211(typescript@4.6.3)
@@ -110,6 +113,9 @@ importers:
       screenfull:
         specifier: ^6.0.1
         version: 6.0.1
+      swiper:
+        specifier: ^11.2.10
+        version: 11.2.10
       three:
         specifier: ^0.145.0
         version: 0.145.0
@@ -1132,6 +1138,10 @@ packages:
 
   '@types/resolve@1.17.1':
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
+
+  '@types/swiper@6.0.0':
+    resolution: {integrity: sha512-QPZRgxZ+ivXXtzV43B3LxpXUIC7FE/EoKM+rtxngmgt2M7eeUYypZhyqZD8UxJtlBcUDw/ATGoVeSNpvBBrz2w==}
+    deprecated: This is a stub types definition. swiper provides its own type definitions, so you do not need this installed.
 
   '@types/three@0.144.0':
     resolution: {integrity: sha512-psvEs6q5rLN50jUYZ3D4pZMfxTbdt3A243blt0my7/NcL6chaCZpHe2csbCtx0SOD9fI/XnF3wnVUAYZGqCSYg==}
@@ -4718,6 +4728,10 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
+  swiper@11.2.10:
+    resolution: {integrity: sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==}
+    engines: {node: '>= 4.7.0'}
+
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
@@ -6528,6 +6542,10 @@ snapshots:
   '@types/resolve@1.17.1':
     dependencies:
       '@types/node': 17.0.43
+
+  '@types/swiper@6.0.0':
+    dependencies:
+      swiper: 11.2.10
 
   '@types/three@0.144.0':
     dependencies:
@@ -10793,6 +10811,8 @@ snapshots:
       css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.0.0
+
+  swiper@11.2.10: {}
 
   tapable@2.2.1: {}
 

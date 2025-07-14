@@ -1,6 +1,13 @@
 <template>
-  <Icon v-if="type === 1" name="exit" :size="h" @click="clickExit" />
-  <Icon v-else name="logo" type="mono-filled" :size="h" @click="clickExit" />
+  <Icon v-if="type === 1" name="exit" :size="h" @click="clickExit" style="cursor: pointer" />
+  <Icon
+    v-else
+    name="logo"
+    type="mono-filled"
+    :size="h"
+    @click="clickExit"
+    style="cursor: pointer"
+  />
 </template>
 
 <script setup lang="ts">
