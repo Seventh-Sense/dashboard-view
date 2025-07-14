@@ -7,6 +7,8 @@ import { SpeedConfig } from './Speed/index'
 import { SwitchTwoConfig } from './SwitchTwo/index'
 import { RadioConfig } from './Radio/index'
 import { RadiosConfig } from './Radios/index'
+import { AirComponentConfig } from './AirComponent/index'
+import { ModeControlConfig } from './ModeControl/index'
 
 export default [
   ModeConfig,
@@ -18,4 +20,6 @@ export default [
   ProgressConfig,
   NumericalConfig,
   LightControlConfig,
+  AirComponentConfig,
+  ModeControlConfig,
 ]
