@@ -183,6 +183,11 @@ const { show } = useComInstall(chartData)
 keyRecordHandle()
 
 const getPreviewInfoByInfo = (load: string) => {
+  //console.log('load', load)
+  if (load === '') {
+    return
+  }
+
   let data = JSONParse(load)
   chartData.editCanvasConfig = data.editCanvasConfig
   chartData.requestGlobalConfig = data.requestGlobalConfig

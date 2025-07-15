@@ -6,6 +6,13 @@
       :style="[fontSizeStyle, { color: color?.normal || 'var(--color-primary)' }]"
     ></i>
   </span>
+  <span v-else-if="type === 'color-white'" class="fa-stack pointer" :style="sizeStyle">
+    <i
+      :class="['xicon_' + name + '_TF']"
+      class="fa-stack-1x"
+      :style="[fontSizeStyle, { color: color?.normal || 'var(--color-primary)' }]"
+    ></i>
+  </span>
 
   <div
     v-else-if="type === 'mono-filled'"

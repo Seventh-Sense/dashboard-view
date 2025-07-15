@@ -1,5 +1,7 @@
 <template>
-  <GoSwitch v-model="value" :width="`${w}px`" :height="`${h}px`" @change="onClick" />
+  <!-- <GoSwitch v-model="value" :width="`${w}px`" :height="`${h}px`" @change="onClick" /> -->
+  <img v-if="value" style="cursor: pointer" @click="onClick" :src="SVG_ICON.card_icons.switch_on" />
+  <img v-else style="cursor: pointer" @click="onClick" :src="SVG_ICON.card_icons.switch_off" />
 </template>
 
 <script setup lang="ts">
@@ -10,6 +12,7 @@ import { GoSwitch } from '@/components/GoSwitch'
 import throttle from 'lodash/throttle'
 import { throttleTime, updateNodeData } from '@/packages/public'
 import { cloneDeep } from 'lodash'
+import SVG_ICON from '@/svg/SVG_ICON'
 
 const props = defineProps({
   chartConfig: {
@@ -50,7 +53,7 @@ const onClick = throttle(
       let tmp = cloneDeep(value.value)
       value.value = parseData(data, 'boolean')
 
-      console.log('eeee', value.value)
+      //console.log('eeee', value.value)
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
         value.value = tmp

@@ -63,6 +63,8 @@ import show_fan2_g from './icons/show_fan2_g.svg?url'
 
 import snow from './icons/_snow.svg?url'
 import sun from './icons/_sun.svg?url'
+import switch_off from './icons/switch_off.svg?url'
+import switch_on from './icons/switch_on.svg?url'
 
 export default {
   card_icons: {
@@ -129,6 +131,8 @@ export default {
     show_snow_g: show_snow_g,
     show_fan2_g: show_fan2_g,
     snow: snow,
-    sun: sun
+    sun: sun,
+    switch_off: switch_off,
+    switch_on: switch_on,
   }
 }

@@ -6,6 +6,10 @@ import { chartInitConfig } from '@/settings/designSetting'
 
 export const option: any = {
   dataset: 0,
+  on_color1: '',
+  on_color2: '',
+  off_color1: '',
+  off_color2: '',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
