@@ -301,4 +301,7 @@ export default {
   excellent: 'Excellent',
   bad: 'Bad',
   mode_control: 'Mode Control',
+  brightness: 'Brightness',
+  on_image: 'On Image',
+  off_image: 'Off Image',
 }

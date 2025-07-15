@@ -144,7 +144,9 @@ const onClick = throttle(
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    value.value = parseData(newVal, 'string')
+    if (!flag.value) {
+      value.value = parseData(newVal, 'string')
+    }
   },
   {
     immediate: true,

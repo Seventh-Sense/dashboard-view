@@ -9,6 +9,8 @@ import { RadioConfig } from './Radio/index'
 import { RadiosConfig } from './Radios/index'
 import { AirComponentConfig } from './AirComponent/index'
 import { ModeControlConfig } from './ModeControl/index'
+import { BrightnessConfig } from './Brightness/index'
+import { Light2ControlConfig } from './Light2Control/index'
 
 export default [
   ModeConfig,
@@ -20,6 +22,8 @@ export default [
   ProgressConfig,
   NumericalConfig,
   LightControlConfig,
+  Light2ControlConfig,
   AirComponentConfig,
   ModeControlConfig,
+  BrightnessConfig
 ]

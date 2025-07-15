@@ -3,7 +3,8 @@ import { CreateComponentType } from '@/packages/index.d'
 import { LightControlConfig } from './index'
 import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
-import logo from '@/assets/images/exception/image-404.png'
+import led_on from '@/assets/led_on.png'
+import led_off from '@/assets/led_off.png'
 
 export const option: any = {
   dataset: '0',
@@ -20,8 +21,8 @@ export const option: any = {
   off_text: 'OFF',
   on_contant: '1',
   off_contant: '0',
-  on_url: logo,
-  off_url: logo,
+  on_url: led_on,
+  off_url: led_off,
   image_w: 182,
   image_h: 250,
   active_color: '#FFFFFFFF',

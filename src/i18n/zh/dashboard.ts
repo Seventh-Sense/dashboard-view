@@ -301,4 +301,7 @@ export default {
   excellent: '优',
   bad: '质量较差',
   mode_control: '模式控制',
+  brightness: '亮度',
+  on_image: '灯开 图片',
+  off_image: '灯关 图片',
 }
