@@ -1,10 +1,26 @@
 <template>
-  <div></div>
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.contant')">
+      <SettingItem :name="t('dashboard.value')">
+        <n-input v-model:value="optionData.dataset" size="small"></n-input>
+      </SettingItem>
+    </SettingItemBox>
+  </CollapseItem>
 </template>
 
 <script setup lang="ts">
+import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
+import { PropType } from 'vue'
+import { option } from './config'
 
+const t = window['$t']
+
+const props = defineProps({
+  optionData: {
+    type: Object as PropType<typeof option>,
+    required: true
+  }
+})
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

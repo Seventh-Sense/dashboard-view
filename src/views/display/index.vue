@@ -1,18 +1,26 @@
 <template>
   <swiper
     :modules="[Navigation, Pagination]"
-    navigation
+    :navigation="{
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    }"
     pagination
+    :loop="true"
     :slides-per-view="1"
-    :space-between="50"
+    :free-mode="{ enabled: false, momentumBounce: false, sticky: true }"
+    :resistance-ratio="0"
+    :space-between="10"
     @swiper="onSwiper"
     @slide-change="onSlideChange"
   >
     <!-- 幻灯片内容 -->
-    <swiper-slide v-for="(slide, index) in slides" :key="index">
+    <swiper-slide v-for="(slide, index) in slides" :key="index" @touchstart.stop>
       <PreviewList :ProjectData="slide" :ProjectNum="index" />
     </swiper-slide>
   </swiper>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
   <FloatingIcon @click="handleFloatingIconClick" />
 </template>
 
@@ -74,5 +82,31 @@ const handleFloatingIconClick = () => {
 .swiper {
   height: 100vh;
   width: 100%;
+}
+
+.swiper-slide {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.swiper-slide * {
+  touch-action: pan-y;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  width: 70px !important;  /* 增大宽度 */
+  height: 70px !important; /* 增大高度 */
+  background-size: 30px 30px !important; /* 调整图标大小 */
+  background-color: rgba(0,0,0,0.2); /* 可选：添加背景 */
+  border-radius: 50%; /* 可选：圆形按钮 */
+}
+
+/* 单独调整左右按钮位置 */
+.swiper-button-prev {
+  left: 10px !important;
+}
+.swiper-button-next {
+  right: 10px !important;
 }
 </style>

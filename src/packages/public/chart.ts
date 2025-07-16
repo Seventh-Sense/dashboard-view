@@ -77,7 +77,7 @@ export const updateNodeData = async (bindInfo: any, data: any) => {
   let flag = true
 
   if (bindInfo.objectID === '') {
-    window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
+    //window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
     console.warn(i18n.global.t('msg.gauge_msg_3'))
     return false
   }

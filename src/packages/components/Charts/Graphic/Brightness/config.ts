@@ -5,7 +5,10 @@ import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
-  dataset: 0
+  dataset: 30,
+  thumb_color: 'white',
+  track_color: 'rgba(102, 102, 255, 1)',
+  percent_color: 'white',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

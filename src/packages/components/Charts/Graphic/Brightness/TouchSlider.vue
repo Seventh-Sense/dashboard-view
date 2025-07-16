@@ -1,210 +1,182 @@
 <template>
-  <div class="touch-slider">
-    <div 
-      ref="sliderRef"
-      class="slider-track"
-      :style="trackStyle"
-      @mousedown="startDrag"
-      @touchstart="startDrag"
-      @mousemove="onDrag"
-      @touchmove="onDrag"
-      @mouseup="endDrag"
-      @touchend="endDrag"
-      @mouseleave="endDrag"
-    >
-      <div class="slider-progress" :style="progressStyle"></div>
-      <div 
-        class="slider-thumb" 
-        :style="thumbStyle"
-        @mousedown="startDrag"
-        @touchstart="startDrag"
-      >
-        <span v-if="showPercent" class="percent-text">{{ progress }}%</span>
-      </div>
+  <div
+    class="slider-container"
+    ref="container"
+    @click="handleClick"
+    @touchstart.passive="handleClick"
+    :style="{
+      height: height + 'px'
+    }"
+  >
+    <div class="slider-track" :style="trackStyle">
+      <div  class="slider-percent">{{ modelValue }}%</div>
     </div>
+    <div
+      class="slider-thumb"
+      :class="{ active: isDragging }"
+      :style="thumbStyle"
+      @touchstart="startDrag"
+      @mousedown="startDrag"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 
-const props = withDefaults(defineProps<{
-  modelValue: number
-  height?: number
-  thumbSize?: number
-  barColor?: string
-  thumbColor?: string
-  trackColor?: string
-  showPercent?: boolean
-}>(), {
-  height: 8,
-  thumbSize: 24,
-  barColor: '#42b983',
-  thumbColor: '#ffffff',
-  trackColor: '#e0e0e0',
-  showPercent: false
+const props = defineProps({
+  modelValue: {
+    type: Number,
+    required: true,
+    validator: (value: any) => value >= 0 && value <= 100
+  },
+  sliderColor: {
+    type: String,
+    default: '#6666FF'
+  },
+  height: {
+    type: Number,
+    default: '56'
+  }
 })
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void
-}>()
+const emit = defineEmits(['update:modelValue'])
 
-const sliderRef = ref<HTMLElement | null>(null)
+const container = ref<any>(null)
 const isDragging = ref(false)
 
-// 计算进度值（0-100）
-const progress = computed(() => Math.min(100, Math.max(0, props.modelValue)))
-
-// 计算进度条样式
-const progressStyle = computed(() => ({
-  width: `${progress.value}%`,
-  backgroundColor: props.barColor,
-  height: `${props.height}px`,
-  borderRadius: `${props.height / 2}px`
-}))
-
-// 计算轨道样式
+// 计算样式
 const trackStyle = computed(() => ({
-  backgroundColor: props.trackColor,
-  height: `${props.height}px`,
-  borderRadius: `${props.height / 2}px`
+  width: `${props.modelValue}%`,
+  background: props.sliderColor,
+  '--theme-color': props.sliderColor
 }))
 
-// 计算滑块样式
 const thumbStyle = computed(() => ({
-  width: `${props.thumbSize}px`,
-  height: `${props.thumbSize}px`,
-  backgroundColor: props.thumbColor,
-  borderRadius: '50%',
-  left: `calc(${progress.value}% - ${props.thumbSize / 2}px)`,
-  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
-  transform: isDragging.value ? 'scale(1.2)' : 'scale(1)',
-  transition: isDragging.value ? 'none' : 'all 0.2s ease'
+  left: `${props.modelValue}%`,
+  height: `${props.height}px`,
 }))
 
 // 开始拖动
-const startDrag = (event: MouseEvent | TouchEvent) => {
+const startDrag = (e: any) => {
+  e.preventDefault()
   isDragging.value = true
-  updateProgress(event)
-  event.preventDefault()
+  addDragListeners()
 }
 
-// 拖动中
-const onDrag = (event: MouseEvent | TouchEvent) => {
-  if (isDragging.value) {
-    updateProgress(event)
-  }
+// 添加事件监听器
+const addDragListeners = () => {
+  document.addEventListener('touchmove', handleDrag)
+  document.addEventListener('touchend', stopDrag)
+  document.addEventListener('mousemove', handleDrag)
+  document.addEventListener('mouseup', stopDrag)
 }
 
-// 结束拖动
-const endDrag = () => {
-  if (isDragging.value) {
-    isDragging.value = false
-  }
-}
+// 处理拖动
+const handleDrag = (e: any) => {
+  if (!isDragging.value || !container.value) return
 
-// 更新进度值
-const updateProgress = (event: MouseEvent | TouchEvent) => {
-  if (!sliderRef.value) return
-  
-  const rect = sliderRef.value.getBoundingClientRect()
-  let clientX: number
-  
-  if (event instanceof TouchEvent && event.touches.length > 0) {
-    clientX = event.touches[0].clientX
-  } else if (event instanceof MouseEvent) {
-    clientX = event.clientX
+  const rect = container.value.getBoundingClientRect()
+  const containerWidth = rect.width
+  let offsetX = 0
+
+  if (e.type.includes('touch')) {
+    offsetX = e.touches[0].clientX - rect.left
   } else {
-    return
+    offsetX = e.clientX - rect.left
   }
-  
-  let position = (clientX - rect.left) / rect.width
-  position = Math.max(0, Math.min(1, position))
-  
-  const newValue = Math.round(position * 100)
-  emit('update:modelValue', newValue)
+
+  const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
+  emit('update:modelValue', Math.round(newProgress))
 }
 
-// 添加全局事件监听器
-const addGlobalListeners = () => {
-  document.addEventListener('mousemove', onDrag as EventListener)
-  document.addEventListener('touchmove', onDrag as EventListener, { passive: false })
-  document.addEventListener('mouseup', endDrag)
-  document.addEventListener('touchend', endDrag)
+// 停止拖动
+const stopDrag = () => {
+  isDragging.value = false
+  removeDragListeners()
 }
 
-// 移除全局事件监听器
-const removeGlobalListeners = () => {
-  document.removeEventListener('mousemove', onDrag as EventListener)
-  document.removeEventListener('touchmove', onDrag as EventListener)
-  document.removeEventListener('mouseup', endDrag)
-  document.removeEventListener('touchend', endDrag)
+// 移除事件监听器
+const removeDragListeners = () => {
+  document.removeEventListener('touchmove', handleDrag)
+  document.removeEventListener('touchend', stopDrag)
+  document.removeEventListener('mousemove', handleDrag)
+  document.removeEventListener('mouseup', stopDrag)
 }
 
-watch(isDragging, (newVal) => {
-  if (newVal) {
-    addGlobalListeners()
-  } else {
-    removeGlobalListeners()
-  }
-})
+// 点击跳转
+const handleClick = (e: any) => {
+  if (!container.value) return
 
+  const rect = container.value.getBoundingClientRect()
+  const containerWidth = rect.width
+  const offsetX = e.type.includes('touch')
+    ? e.touches[0].clientX - rect.left
+    : e.clientX - rect.left
+
+  const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
+  emit('update:modelValue', Math.round(newProgress))
+}
+
+// 组件卸载时清理事件监听
 onUnmounted(() => {
-  removeGlobalListeners()
+  removeDragListeners()
 })
 </script>
 
 <style scoped>
-.touch-slider {
-  width: 100%;
+.slider-container {
+  background: rgba(255, 255, 255, 0.2);
+  height: 46px;
+  border-radius: 4px;
   position: relative;
-  padding: 15px 0;
+  overflow: hidden;
   cursor: pointer;
-  user-select: none;
 }
 
 .slider-track {
-  position: relative;
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  overflow: visible;
-}
-
-.slider-progress {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  border-radius: 4px;
-  transition: width 0.1s ease;
+  background: rgba(102, 102, 255, 1);
+  border-radius: 4px 0 0 4px;
+  transition: width 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.slider-percent {
+  color: rgba(255, 255, 255, 1);
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  font-family: 'Courier New', monospace;
+  font-weight: 800;
+  min-width: 0px;
+  text-align: right;
 }
 
 .slider-thumb {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 46px;
+  background: white;
+  border-radius: 4px;
+  z-index: 10;
+  transition: all 0.2s ease;
   cursor: grab;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.slider-thumb:active {
-  cursor: grabbing;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) !important;
-}
-
-.slider-track:hover .slider-thumb {
-  transform: translateY(-50%) scale(1.1);
-}
-
-.percent-text {
-  font-size: 0.7em;
-  color: #333;
-  font-weight: bold;
-  pointer-events: none;
+.slider-thumb.active {
+  transform: translate(-50%, -50%) scaleX(2.2);
+  border-radius: 4px;
 }
 </style>

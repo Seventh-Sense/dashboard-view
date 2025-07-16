@@ -4,7 +4,7 @@
     :style="{
       width: w + 'px',
       height: h + 'px',
-      background: value ? active_bgColor : inactive_bgColor,
+      background: value === active_value ? active_bgColor : inactive_bgColor,
       borderRadius: radius + 'px',
       backdropFilter: 'blur(' + filter + 'px)'
     }"
@@ -36,9 +36,9 @@ const props = defineProps({
 })
 
 const t = window['$t']
-const value = ref<any>(false)
+const value = ref<any>('0')
 const flag = ref(false)
-const { inactive_bgColor, active_bgColor, icon_size, icon, radius, filter } = toRefs(
+const { inactive_bgColor, active_bgColor, icon_size, icon, radius, filter, active_value } = toRefs(
   props.chartConfig.option
 )
 
@@ -49,11 +49,11 @@ const onClick = throttle(
     try {
       flag.value = true
 
-      let data = value.value ? 0 : 1
+      let data = active_value.value
 
       let tmp = cloneDeep(value.value)
 
-      value.value = parseData(data, 'boolean')
+      value.value = parseData(data, 'string')
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
@@ -77,7 +77,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      value.value = parseData(newVal, 'boolean')
+      value.value = parseData(newVal, 'string')
     }
   },
   {

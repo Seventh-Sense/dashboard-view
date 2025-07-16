@@ -1,12 +1,15 @@
 <template>
   <div class="floating-icon" @click="handleIconClick">
     <!-- 或使用图片 -->
-    <Icon name="logo" type="mono-filled" :size="48" style="cursor: pointer;"/>
+    <!-- <Icon name="logo" type="mono-filled" :size="48" style="cursor: pointer;"/> -->
+    <!-- <img :width="48" :height="48" :src="SVG_ICON.card_icons.logo" /> -->
+    <div style="width: 48px; height: 48px"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Icon } from '@/icon/index'
+import SVG_ICON from '@/svg/SVG_ICON'
 
 const emit = defineEmits(['click'])
 

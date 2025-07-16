@@ -9,6 +9,9 @@
           size="small"
         ></n-input-number>
       </SettingItem>
+      <SettingItem :name="t('dashboard.on_value')">
+        <n-input v-model:value="optionData.active_value" size="small"></n-input>
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.icon')">
       <setting-item :name="t('dashboard.contant')">
