@@ -6,11 +6,19 @@
       prevEl: '.swiper-button-prev'
     }"
     pagination
-    :loop="true"
+    :loop="false"
     :slides-per-view="1"
-    :free-mode="{ enabled: false, momentumBounce: false, sticky: true }"
+    :free-mode="{ enabled: false }"
     :resistance-ratio="0"
-    :space-between="10"
+    :follow-finger="true"
+    :threshold="10"
+    :speed="500"
+    :space-between="0"
+    :touch="{
+      touchRatio: 0.8,
+      touchStartPreventDefault: false,
+      touchMoveStopPropagation: true
+    }"
     @swiper="onSwiper"
     @slide-change="onSlideChange"
   >
@@ -95,10 +103,10 @@ const handleFloatingIconClick = () => {
 
 .swiper-button-prev,
 .swiper-button-next {
-  width: 70px !important;  /* 增大宽度 */
+  width: 70px !important; /* 增大宽度 */
   height: 70px !important; /* 增大高度 */
   background-size: 30px 30px !important; /* 调整图标大小 */
-  background-color: rgba(0,0,0,0.2); /* 可选：添加背景 */
+  background-color: rgba(0, 0, 0, 0.2); /* 可选：添加背景 */
   border-radius: 50%; /* 可选：圆形按钮 */
 }
 

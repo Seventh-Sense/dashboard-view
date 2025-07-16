@@ -2,7 +2,7 @@
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.dataset" size="small"></n-input>
+        <n-input-number v-model:value="optionData.dataset" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.switch')" :alone="false">
@@ -25,7 +25,7 @@
           v-model:value="optionData.image_on"
           :placeholder="t('dashboard.click_picture')"
           size="small"
-          @click="handleFileChange('off')"
+          @click="handleFileChange('on')"
         ></n-input>
       </SettingItem>
       <SettingItem :name="t('dashboard.off_image')">

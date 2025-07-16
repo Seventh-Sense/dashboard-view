@@ -7,6 +7,7 @@
         placeholder=""
         :options="deviceOptions"
         style="width: 260px"
+        clearable
       />
     </setting-item-box>
     <setting-item-box :name="$t('dashboard.point')" :alone="true">
@@ -17,6 +18,7 @@
         :options="pointOptions"
         @update:value="bindValue"
         style="width: 260px"
+        clearable
       />
     </setting-item-box>
   </div>
@@ -41,7 +43,7 @@ const options: any = ref([])
 const isShow = ref(false)
 
 const bindValue = (value: any) => {
-  //console.log('aaaaaa', value)
+  console.log('aaaaaa', value)
   targetData.value.request.bindParams = {
     deviceID: deviceID.value,
     deviceName: '',
@@ -112,12 +114,13 @@ watch(
 watch(
   () => deviceID.value,
   newVal => {
-    if (newVal !== '') {
+    //debugger
+    if (newVal !== '' && newVal !== null) {
       pointOptions.value = []
       readSubscribePoints(newVal)
         .then((res: any) => {
           //console.log('readSubscribePoints', res.data)
-          if (res.status === 'OK') {
+          if (res.status && res.status === 'OK') {
             res.data.map((point: any) => {
               pointOptions.value.push({
                 label: point.name,
