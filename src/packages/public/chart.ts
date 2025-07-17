@@ -77,7 +77,7 @@ export const updateNodeData = async (bindInfo: any, data: any) => {
   let flag = true
 
   if (bindInfo.objectID === '') {
-    //window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
+    window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
     console.warn(i18n.global.t('msg.gauge_msg_3'))
     return false
   }
@@ -93,7 +93,7 @@ export const updateNodeData = async (bindInfo: any, data: any) => {
       flag = false
     }
   } catch (e) {
-    console.error('Update Node Data failed', e)
+    console.warn('Update Node Data failed', e)
     window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
     flag = false
   } finally {

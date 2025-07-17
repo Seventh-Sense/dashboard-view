@@ -4,12 +4,13 @@
     ref="container"
     @click="handleClick"
     @touchstart.passive="handleClick"
+    
     :style="{
       height: h + 'px'
     }"
   >
     <div class="slider-track" :style="trackStyle">
-      <div  class="slider-percent">{{ value }}%</div>
+      <div class="slider-percent">{{ value }}%</div>
     </div>
     <div
       class="slider-thumb"
@@ -53,7 +54,7 @@ const trackStyle = computed(() => ({
 
 const thumbStyle = computed(() => ({
   left: `${value.value}%`,
-  height: `${h}px`,
+  height: `${h}px`
 }))
 
 const startDrag = (e: any) => {
@@ -87,6 +88,10 @@ const handleDrag = (e: any) => {
   onClick(Math.round(newProgress))
 }
 
+const handleInput = (e: Event) => {
+  e.stopPropagation() // 确保阻止冒泡
+}
+
 const handleClick = (e: any) => {
   if (!container.value) return
 
@@ -97,7 +102,7 @@ const handleClick = (e: any) => {
     : e.clientX - rect.left
 
   const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
-  
+
   value.value = Math.round(newProgress)
   onClick(Math.round(newProgress))
 }
@@ -209,5 +214,4 @@ watch(
   transform: translate(-50%, -50%) scaleX(2.2);
   border-radius: 4px;
 }
-
 </style>

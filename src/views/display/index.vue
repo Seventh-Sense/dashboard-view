@@ -1,39 +1,45 @@
 <template>
-  <swiper
-    :modules="[Navigation, Pagination]"
-    :navigation="{
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    }"
-    pagination
-    :loop="false"
-    :slides-per-view="1"
-    :free-mode="{ enabled: false }"
-    :resistance-ratio="0"
-    :follow-finger="true"
-    :threshold="10"
-    :speed="500"
-    :space-between="0"
-    :touch="{
-      touchRatio: 0.8,
-      touchStartPreventDefault: false,
-      touchMoveStopPropagation: true
-    }"
-    @swiper="onSwiper"
-    @slide-change="onSlideChange"
-  >
-    <!-- 幻灯片内容 -->
-    <swiper-slide v-for="(slide, index) in slides" :key="index" @touchstart.stop>
-      <PreviewList :ProjectData="slide" :ProjectNum="index" />
-    </swiper-slide>
-  </swiper>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-  <FloatingIcon @click="handleFloatingIconClick" />
+  <div v-if="flag" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+      <n-spin size="small" />
+    </div>
+  <div v-else>
+    <swiper
+      :modules="[Navigation, Pagination]"
+      :navigation="{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      }"
+      :noSwipingSelector="'.slider-container'"
+      pagination
+      :loop="canLoop"
+      :slides-per-view="slidesPerView"
+      :free-mode="{ enabled: false }"
+      :resistance-ratio="0"
+      :follow-finger="true"
+      :threshold="10"
+      :speed="500"
+      :space-between="0"
+      :touch="{
+        touchRatio: 0.8,
+        touchStartPreventDefault: false,
+        touchMoveStopPropagation: true
+      }"
+      @swiper="onSwiper"
+      @slide-change="onSlideChange"
+    >
+      <!-- 幻灯片内容 -->
+      <swiper-slide v-for="(slide, index) in slides" :key="index" @touchstart.stop>
+        <PreviewList :ProjectData="slide" :ProjectNum="index" />
+      </swiper-slide>
+    </swiper>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <FloatingIcon @click="handleFloatingIconClick" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css'
@@ -47,12 +53,19 @@ import { PageEnum } from '@/enums/pageEnum'
 
 const router = useRouter()
 const slides = ref<any[]>([])
+const flag = ref(false)
+
+const slidesPerView = 1;
+
+const canLoop = computed(() => slides.value.length >= slidesPerView * 2);
 
 onMounted(() => {
   initTable()
 })
 
 const initTable = async () => {
+  flag.value = true
+
   try {
     const res: any = await readProjectList()
 
@@ -68,6 +81,8 @@ const initTable = async () => {
     }
   } catch (e) {
     console.error('onChange:', e)
+  } finally {
+    flag.value = false
   }
 }
 

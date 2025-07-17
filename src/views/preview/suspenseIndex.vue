@@ -26,6 +26,7 @@
         </div>
       </div>
     </template>
+    <FloatingIcon @click="handleFloatingIconClick" />
   </div>
 </template>
 
@@ -47,9 +48,13 @@ import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { readPointsDataById } from '@/api/http'
+import { useRouter } from 'vue-router'
 import { IntervalTimeOut, getAllDataIdsSafe, writeValue } from '../display/util/util'
+import { FloatingIcon } from '../display/FloatingIcon'
+import { PageEnum } from '@/enums/pageEnum'
 
 const t = window['$t']
+const router = useRouter()
 
 await getSessionStorageInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
@@ -91,6 +96,12 @@ onUnmounted(() => {
     window.clearInterval(interval)
   }
 })
+
+const handleFloatingIconClick = () => {
+  router.replace({
+    path: PageEnum.BASE_HOME_ITEMS
+  })
+}
 
 const readPointValue = (dataList: any[]) => {
   let load = getAllDataIdsSafe(dataList)
