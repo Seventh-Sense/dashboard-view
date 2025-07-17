@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import TouchSlider from './TouchSlider.vue'
 import { PropType, watch, toRefs, ref, computed, onUnmounted } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
@@ -158,7 +157,7 @@ watch(
 <style lang="scss" scoped>
 .slider-container {
   background: rgba(255, 255, 255, 0.2);
-  height: 46px;
+  height: 100%;
   border-radius: 4px;
   position: relative;
   overflow: hidden;
@@ -198,7 +197,7 @@ watch(
   top: 50%;
   transform: translate(-50%, -50%);
   width: 8px;
-  height: 46px;
+  height: 100%;
   background: white;
   border-radius: 4px;
   z-index: 10;

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, inject } from 'vue'
+import { ref, watch, inject, onMounted } from 'vue'
 import { icon } from '@/plugins'
 import { createProject } from '@/api/http'
 
@@ -85,6 +85,7 @@ const onPositiveClick = async () => {
     } catch (e) {
       console.error('onChange:', e)
     } finally {
+      project_name.value = ''
       emit('close', false)
     }
   }
@@ -103,6 +104,7 @@ const paramCheck = () => {
 
 // 关闭对话框
 const closeHandle = () => {
+  project_name.value = ''
   emit('close', false)
 }
 </script>

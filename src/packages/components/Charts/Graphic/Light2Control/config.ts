@@ -7,7 +7,7 @@ import led_on from '@/assets/led_on.png'
 import led_off from '@/assets/led_off.png'
 
 export const option: any = {
-  dataset: '0',
+  dataset: 0,
   backgroundColor: '#00000087',
   radius: 6,
   filter: 32,

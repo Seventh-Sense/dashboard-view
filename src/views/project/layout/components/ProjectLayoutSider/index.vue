@@ -26,7 +26,14 @@
             @click="onCollapse"
             style="cursor: pointer"
           />
-          <img v-if="!collapsed" :src="SVG_ICON.card_icons.XPlay" height="48" width="100" />
+          <img
+            v-if="!collapsed"
+            :src="SVG_ICON.card_icons.XPlay"
+            height="48"
+            width="100"
+            @click="onReload"
+            style="cursor: pointer"
+          />
           <!-- <project-layout-create :collapsed="collapsed"></project-layout-create> -->
           <!-- <img src="~@/assets/images/tips/loadingSvg.svg" height="32" width="200" /> -->
         </n-space>
@@ -81,6 +88,10 @@ onUnmounted(() => {
 
 const onCollapse = () => {
   collapsed.value = !collapsed.value
+}
+
+const onReload = () => {
+  window.location.reload()
 }
 
 const onSelcet = (key: string, item: MenuOption) => {
