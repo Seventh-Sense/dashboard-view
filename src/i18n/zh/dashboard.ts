@@ -304,4 +304,6 @@ export default {
   brightness: '亮度',
   on_image: '灯开 图片',
   off_image: '灯关 图片',
+  mode_group: '模式组',
+  set_value: '设置值',
 }

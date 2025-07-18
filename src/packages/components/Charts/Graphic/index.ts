@@ -11,9 +11,11 @@ import { AirComponentConfig } from './AirComponent/index'
 import { ModeControlConfig } from './ModeControl/index'
 import { BrightnessConfig } from './Brightness/index'
 import { Light2ControlConfig } from './Light2Control/index'
+import { ModeGroupConfig } from './ModeGroup/index'
 
 export default [
   ModeConfig,
+  ModeGroupConfig,
   SpeedConfig,
   SwitchConfig,
   SwitchTwoConfig,

@@ -304,4 +304,6 @@ export default {
   brightness: 'Brightness',
   on_image: 'On Image',
   off_image: 'Off Image',
+  mode_group: 'Mode Group',
+  set_value: 'Set Value',
 }

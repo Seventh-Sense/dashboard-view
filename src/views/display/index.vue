@@ -1,10 +1,13 @@
 <template>
-  <div v-if="flag" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
-      <n-spin size="small" />
-    </div>
+  <div
+    v-if="flag"
+    style="display: flex; align-items: center; justify-content: center; height: 100vh"
+  >
+    <n-spin size="small" />
+  </div>
   <div v-else>
     <swiper
-      :modules="[Navigation, Pagination]"
+      :modules="[Navigation, Pagination, Virtual]"
       :navigation="{
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev'
@@ -24,11 +27,17 @@
         touchStartPreventDefault: false,
         touchMoveStopPropagation: true
       }"
+      virtual
       @swiper="onSwiper"
       @slide-change="onSlideChange"
     >
       <!-- 幻灯片内容 -->
-      <swiper-slide v-for="(slide, index) in slides" :key="index" @touchstart.stop>
+      <swiper-slide
+        v-for="(slide, index) in slides"
+        :key="index"
+        :virtualIndex="index"
+        @touchstart.stop
+      >
         <PreviewList :ProjectData="slide" :ProjectNum="index" />
       </swiper-slide>
     </swiper>
@@ -41,7 +50,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Navigation, Pagination, Virtual } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
@@ -55,9 +64,9 @@ const router = useRouter()
 const slides = ref<any[]>([])
 const flag = ref(false)
 
-const slidesPerView = 1;
+const slidesPerView = 1
 
-const canLoop = computed(() => slides.value.length >= slidesPerView * 2);
+const canLoop = computed(() => slides.value.length >= slidesPerView * 2)
 
 onMounted(() => {
   initTable()
@@ -105,11 +114,14 @@ const handleFloatingIconClick = () => {
 .swiper {
   height: 100vh;
   width: 100%;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .swiper-slide {
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .swiper-slide * {
