@@ -306,4 +306,6 @@ export default {
   off_image: 'Off Image',
   mode_group: 'Mode Group',
   set_value: 'Set Value',
+  is_picture: 'Is Picture',
+  is_title: 'Is Title',
 }

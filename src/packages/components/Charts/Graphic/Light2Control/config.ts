@@ -16,6 +16,7 @@ export const option: any = {
   top_title_color: '#FFFFFFFF',
   switch_w: 51,
   switch_h: 24,
+  image_switch: true,
   image_on: led_on,
   image_off: led_off,
   image_w: 156,

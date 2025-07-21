@@ -18,7 +18,7 @@
       :slides-per-view="slidesPerView"
       :free-mode="{ enabled: false }"
       :resistance-ratio="0"
-      :follow-finger="true"
+      :follow-finger="false"
       :threshold="10"
       :speed="500"
       :space-between="0"

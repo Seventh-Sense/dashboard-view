@@ -13,10 +13,13 @@ export const option: any = {
   on_contant: '1',
   off_text: 'OFF',
   off_contant: '0',
-  on_font_size: 16,
-  off_font_size: 16,
+  font_size: 16,
   active_bg_color: '#6666FFFF',
   inactive_bg_color: '#FFFFFF12',
+  title_switch: false,
+  title_text: '窗帘',
+  title_size: 14,
+  title_color: '#FFFFFF99',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

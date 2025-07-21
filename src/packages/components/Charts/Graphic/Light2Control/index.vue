@@ -36,7 +36,7 @@
         :src="SVG_ICON.card_icons.switch_off"
       />
     </div>
-    <div class="container-image">
+    <div v-if="image_switch" class="container-image">
       <n-image
         object-fit="fill"
         preview-disabled
@@ -81,6 +81,7 @@ const {
   top_title_color,
   switch_w,
   switch_h,
+  image_switch,
   image_on,
   image_off,
   image_w,

@@ -194,7 +194,7 @@ watch(
   font-family: 'Courier New', monospace;
   font-weight: 800;
   min-width: 0px;
-  text-align: right;
+  text-align: center;
 }
 
 .slider-thumb {

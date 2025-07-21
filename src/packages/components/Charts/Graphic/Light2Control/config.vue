@@ -2,7 +2,12 @@
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
-        <n-input-number v-model:value="optionData.dataset" size="small" :min="0" :max="1"></n-input-number>
+        <n-input-number
+          v-model:value="optionData.dataset"
+          size="small"
+          :min="0"
+          :max="1"
+        ></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.switch')" :alone="false">
@@ -14,13 +19,22 @@
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.picture')" :alone="false">
-      <SettingItem :name="t('dashboard.width')">
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.image_switch" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.is_picture') }}</n-text>
+          </n-text>
+        </n-space>
+      </SettingItem>
+      <SettingItem v-if="optionData.image_switch" :name="t('dashboard.width')">
         <n-input-number v-model:value="optionData.image_w" :min="1" size="small" />
       </SettingItem>
-      <SettingItem :name="t('dashboard.height')">
+      <SettingItem v-if="optionData.image_switch" :name="t('dashboard.height')">
         <n-input-number v-model:value="optionData.image_h" :min="1" size="small" />
       </SettingItem>
-      <SettingItem :name="t('dashboard.on_image')">
+      <SettingItem v-if="optionData.image_switch" :name="t('dashboard.on_image')">
         <n-input
           v-model:value="optionData.image_on"
           :placeholder="t('dashboard.click_picture')"
@@ -28,7 +42,7 @@
           @click="handleFileChange('on')"
         ></n-input>
       </SettingItem>
-      <SettingItem :name="t('dashboard.off_image')">
+      <SettingItem v-if="optionData.image_switch" :name="t('dashboard.off_image')">
         <n-input
           v-model:value="optionData.image_off"
           :placeholder="t('dashboard.click_picture')"
@@ -116,7 +130,6 @@ const uploadFile = (callback: Function | null = null) => {
   }
   input.click()
 }
-
 
 const handleFileChange = (key: string) => {
   // 处理文件上传逻辑

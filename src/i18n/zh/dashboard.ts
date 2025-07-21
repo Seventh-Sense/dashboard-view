@@ -306,4 +306,6 @@ export default {
   off_image: '灯关 图片',
   mode_group: '模式组',
   set_value: '设置值',
+  is_picture: '是否图片',
+  is_title: '是否显示标题',
 }

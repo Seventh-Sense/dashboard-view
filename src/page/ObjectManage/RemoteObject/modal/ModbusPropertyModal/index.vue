@@ -68,7 +68,8 @@
         >
           <div v-if="isEdit">
             <div v-if="!editStates[key]" class="modal-editvalue">
-              <span>{{ modbusSelectTextMap(key, val) }}</span>
+              <span v-if="key === 'wordorder' || key === 'byteorder'">{{ orderTrans(val) }}</span>
+              <span v-else>{{ modbusSelectTextMap(key, val) }}</span>
               <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
                 <EditIcon />
               </n-icon>
@@ -480,6 +481,22 @@ const writeValue = async (key: any) => {
 
 const onClose = () => {
   emit('update:isShowModal', false)
+}
+
+const orderTrans = (value: any) => {
+  const OrderOptions = [
+    {
+      label: t('device.little_endian'),
+      value: 0
+    },
+    {
+      label: t('device.big_endian'),
+      value: 1
+    }
+  ]
+
+  const option = OrderOptions.find(opt => opt.value === value)
+  return option?.label || value // 严格遵循找不到返回空字符串
 }
 
 watch(

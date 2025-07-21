@@ -1,26 +1,42 @@
 <template>
-  <div class="radio">
+  <div class="container">
     <div
-      class="radio-item"
-      @click="onClick(1)"
+      v-if="title_switch"
       :style="{
-        fontSize: on_font_size + 'px',
-        backgroundColor: option.dataset === on_contant ? active_bg_color : inactive_bg_color,
-        color: option.dataset === on_contant ? active_color : inactive_color
+        fontSize: title_size + 'px',
+        color: title_color
       }"
     >
-      {{ on_text }}
+      {{ title_text }}
     </div>
     <div
-      class="radio-item"
-      @click="onClick(0)"
+      class="radio"
       :style="{
-        fontSize: off_font_size + 'px',
-        backgroundColor: option.dataset === off_contant ? active_bg_color : inactive_bg_color,
-        color: option.dataset === off_contant ? active_color : inactive_color
+        height: h + 'px'
       }"
     >
-      {{ off_text }}
+      <div
+        class="radio-item"
+        @click="onClick(on_contant)"
+        :style="{
+          fontSize: font_size + 'px',
+          backgroundColor: option.dataset === on_contant ? active_bg_color : inactive_bg_color,
+          color: option.dataset === on_contant ? active_color : inactive_color
+        }"
+      >
+        {{ on_text }}
+      </div>
+      <div
+        class="radio-item"
+        @click="onClick(off_contant)"
+        :style="{
+          fontSize: font_size + 'px',
+          backgroundColor: option.dataset === off_contant ? active_bg_color : inactive_bg_color,
+          color: option.dataset === off_contant ? active_color : inactive_color
+        }"
+      >
+        {{ off_text }}
+      </div>
     </div>
   </div>
 </template>
@@ -51,27 +67,29 @@ const {
   on_contant,
   off_text,
   off_contant,
-  on_font_size,
-  off_font_size,
+  font_size,
   inactive_bg_color,
-  active_bg_color
+  active_bg_color,
+  title_switch,
+  title_text,
+  title_size,
+  title_color
 } = toRefs(props.chartConfig.option)
 
 const option = shallowReactive({
   dataset: '0'
 })
 
+const { w, h } = toRefs(props.chartConfig.attr)
+
 const onClick = throttle(
-  async (data: number) => {
+  async (data: any) => {
     try {
       flag.value = true
 
       let tmp = cloneDeep(option.dataset)
-      if (data === 0) {
-        option.dataset = off_contant.value
-      } else if (data === 1) {
-        option.dataset = on_contant.value
-      }
+
+      option.dataset = data
       //option.dataset = parseData(data, 'string')
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
@@ -107,9 +125,18 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+
+.container {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
 .radio {
   background-color: v-bind('background');
   padding: 4px;
+  flex: 1;
   display: flex;
   gap: 8px;
 
