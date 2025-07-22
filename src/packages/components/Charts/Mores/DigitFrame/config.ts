@@ -5,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
 export interface OptionType {
-    dataset: any
+  dataset: any
 }
 
 export const units = [
@@ -39,7 +39,7 @@ export const units = [
   }
 ]
 
-export const decimals  = [
+export const decimals = [
   {
     label: '0',
     value: 0
@@ -55,20 +55,22 @@ export const decimals  = [
   {
     label: '3',
     value: 3
-  },
+  }
 ]
 
 export const option = {
-    dataset: 40,
-    size: 32,
-    color: '#FFFFFF87',
-    unit: '',
-    decimal: 0
+  dataset: 40,
+  size: 20,
+  color: '#FFFFFFFF',
+  unit: '',
+  decimal: 0,
+  title_switch: false,
+  title_text: '当前值:',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key = DigitFrameConfig.key
-  public attr = { ...chartInitConfig, w: 50, h: 50, zIndex: 1 }
+  public attr = { ...chartInitConfig, w: 120, h: 50, zIndex: 1 }
   public chartConfig = cloneDeep(DigitFrameConfig)
   public option = cloneDeep(option)
 }

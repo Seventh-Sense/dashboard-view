@@ -23,6 +23,20 @@
         <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
       </SettingItem>
     </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.title')" :alone="false">
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.title_switch" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.is_title') }}</n-text>
+          </n-text>
+        </n-space>
+      </SettingItem>
+      <SettingItem v-if="optionData.title_switch" :name="t('dashboard.text')">
+        <n-input v-model:value="optionData.title_text" type="text" size="small"></n-input>
+      </SettingItem>
+    </SettingItemBox>
   </CollapseItem>
 </template>
 

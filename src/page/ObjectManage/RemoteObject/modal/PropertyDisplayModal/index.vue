@@ -194,6 +194,7 @@ import {
 import { getDeviceTypeName } from '../../utils/utils'
 import { icon } from '@/plugins'
 import { readIotPoints } from '@/api/http'
+import { msghandle } from '@/utils'
 
 const { EditIcon } = icon.carbon
 const { CloseIcon, CheckmarkIcon } = icon.ionicons5
@@ -248,7 +249,6 @@ const MVOption = ref<any>([])
 
 onMounted(() => {
   initializeStates()
-  console.log('aaa', props.displayData)
 })
 
 watch(
@@ -334,7 +334,7 @@ const handleSave = async (key: string) => {
 
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
-      window['$message'].warning(res.data)
+      msghandle(res)
       return
     }
 

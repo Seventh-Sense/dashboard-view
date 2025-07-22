@@ -1,12 +1,14 @@
 <template>
   <div
-    class="digit-style"
+    class="container"
     :style="{
       color: color,
-      fontSize: size + 'px'
+      fontSize: size + 'px',
+      height: h + 'px'
     }"
   >
-    {{ fixedByDecimal(option.dataset) }} {{ unit }}
+    <div v-if="title_switch">{{ title_text }}</div>
+    <div class="digit-style">{{ fixedByDecimal(option.dataset) }} {{ unit }}</div>
   </div>
 </template>
 
@@ -24,7 +26,8 @@ const props = defineProps({
   }
 })
 
-const { size, color, unit, decimal } = toRefs(props.chartConfig.option)
+const { size, color, unit, decimal, title_switch, title_text } = toRefs(props.chartConfig.option)
+const { w, h } = toRefs(props.chartConfig.attr)
 
 const option = shallowReactive({
   dataset: 40
@@ -56,9 +59,18 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 </script>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
 .digit-style {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  flex: 1;
 }
 </style>

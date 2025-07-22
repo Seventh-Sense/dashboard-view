@@ -1,13 +1,29 @@
 <template>
-  <div class="radios">
+  <div class="container">
     <div
-      v-for="mode in modes"
-      class="radios-item"
-      :key="mode.key"
-      @click="onClick(mode.value)"
-      :class="option.dataset === mode.value ? 'active' : 'inactive'"
+      v-if="title_switch"
+      :style="{
+        fontSize: title_size + 'px',
+        color: title_color
+      }"
     >
-      {{ mode.label }}
+      {{ title_text }}
+    </div>
+    <div
+      class="radios"
+      :style="{
+        height: h + 'px'
+      }"
+    >
+      <div
+        v-for="mode in modes"
+        class="radios-item"
+        :key="mode.key"
+        @click="onClick(mode.value)"
+        :class="option.dataset === mode.value ? 'active' : 'inactive'"
+      >
+        {{ mode.label }}
+      </div>
     </div>
   </div>
 </template>
@@ -30,9 +46,20 @@ const props = defineProps({
 const flag = ref(false)
 const t = window['$t']
 
-const { background, active_color, inactive_color, inactive_bg_color, active_bg_color, modes } =
-  toRefs(props.chartConfig.option)
+const {
+  background,
+  active_color,
+  inactive_color,
+  inactive_bg_color,
+  active_bg_color,
+  modes,
+  title_switch,
+  title_text,
+  title_size,
+  title_color
+} = toRefs(props.chartConfig.option)
 
+const { w, h } = toRefs(props.chartConfig.attr)
 const option = shallowReactive({
   dataset: false
 })
@@ -78,10 +105,18 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
 .radios {
   background-color: v-bind('background');
   padding: 4px;
   display: flex;
+  flex: 1;
   justify-content: space-between;
   gap: 8px;
 

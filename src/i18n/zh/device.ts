@@ -114,4 +114,6 @@ export default {
   none: '无',
   odd: '奇校验',
   even: '偶校验',
+  online: '在线',
+  offline: '离线',
 }

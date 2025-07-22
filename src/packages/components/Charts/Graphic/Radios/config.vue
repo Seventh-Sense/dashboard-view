@@ -6,35 +6,75 @@
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.option') + '1'">
-      <SettingItem >
+      <SettingItem>
         <n-input v-model:value="optionData.modes[0].label" type="text" size="small"></n-input>
       </SettingItem>
-      <SettingItem >
-        <n-input-number v-model:value="optionData.modes[0].value" :min="0" size="small"></n-input-number>
+      <SettingItem>
+        <n-input-number
+          v-model:value="optionData.modes[0].value"
+          :min="0"
+          size="small"
+        ></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.option') + '2'">
-        <SettingItem >
+      <SettingItem>
         <n-input v-model:value="optionData.modes[1].label" type="text" size="small"></n-input>
       </SettingItem>
-      <SettingItem >
-        <n-input-number v-model:value="optionData.modes[1].value" :min="0" size="small"></n-input-number>
+      <SettingItem>
+        <n-input-number
+          v-model:value="optionData.modes[1].value"
+          :min="0"
+          size="small"
+        ></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.option') + '3'">
-        <SettingItem >
+      <SettingItem>
         <n-input v-model:value="optionData.modes[2].label" type="text" size="small"></n-input>
       </SettingItem>
-      <SettingItem >
-        <n-input-number v-model:value="optionData.modes[2].value" :min="0" size="small"></n-input-number>
+      <SettingItem>
+        <n-input-number
+          v-model:value="optionData.modes[2].value"
+          :min="0"
+          size="small"
+        ></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.option') + '4'">
-        <SettingItem >
+      <SettingItem>
         <n-input v-model:value="optionData.modes[3].label" type="text" size="small"></n-input>
       </SettingItem>
-      <SettingItem >
-        <n-input-number v-model:value="optionData.modes[3].value" :min="0" size="small"></n-input-number>
+      <SettingItem>
+        <n-input-number
+          v-model:value="optionData.modes[3].value"
+          :min="0"
+          size="small"
+        ></n-input-number>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.title')" :alone="false">
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.title_switch" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.is_title') }}</n-text>
+          </n-text>
+        </n-space>
+      </SettingItem>
+      <SettingItem v-if="optionData.title_switch" :name="t('dashboard.text')">
+        <n-input v-model:value="optionData.title_text" type="text" size="small"></n-input>
+      </SettingItem>
+      <setting-item v-if="optionData.title_switch" :name="t('dashboard.font_size')">
+        <n-input-number v-model:value="optionData.title_size" size="small"></n-input-number>
+      </setting-item>
+      <SettingItem v-if="optionData.title_switch" :name="t('dashboard.text_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.title_color"
+        ></n-color-picker>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')" :alone="false">

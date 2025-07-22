@@ -221,9 +221,9 @@ const initData = async () => {
       tags: item.tags || [],
       device_id: props.deviceData.device_id
     }))
-
-    //console.log('props.deviceData', transformedData)
     data.value = [...transformedData]
+
+    //console.log('props.deviceData', data.value)
     periodicReading()
   } catch (e) {
     console.error('Failed to fetch Points:', e)
@@ -268,11 +268,8 @@ const periodicFunc = async () => {
         ...originalItem,
         value: getProcessedValue(point, originalItem.metric_type),
         properties: mergeProperties(point.property, originalItem.properties),
-        description:
-          point.property?.description === 'unknown-property'
-            ? originalItem.description
-            : point.property?.description,
-        status: point.status === 0 ? 'OffLine' : 'Online',
+        description: getDescription(point, originalItem),
+        status: point.status === 0 ? t('device.offline') : t('device.online'),
         tags: formatTimestamp(point.timestamp)
       }
     })
@@ -282,6 +279,24 @@ const periodicFunc = async () => {
   } catch (e) {
     console.error('Failed to fetch Points:', e)
   }
+}
+
+const getDescription = (point: any, origin: any) => {
+  let text: string = ''
+
+  if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
+    
+    if (point.property?.description === 'unknown-property') {
+      text = origin.description
+    } else {
+      text = point.property?.description
+    }
+  } else {
+    text = origin.description
+  }
+
+  //console.log(point.property?.description, origin.description)
+  return text
 }
 
 const getProcessedValue = (point: any, metricType: any) => {
@@ -307,7 +322,7 @@ const getProcessedValue = (point: any, metricType: any) => {
       if (index >= 0 && index < states.length) {
         return states[index]
       }
-      console.warn(`Invalid state index (${index}) for MV metric ${point.metric_id}`)
+      
       return point.value
     }
 
@@ -337,9 +352,14 @@ const onReset = (row: PointData) => {}
 
 const onEdit = (row: PointData) => {
   console.log('edit row', row)
+
   displayData.value = row
   if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
-    isDisplay.value = true
+    if (row.status === '在线' || row.status === 'Online') {
+      isDisplay.value = true
+    } else {
+      window['$message'].warning(t('msg.msg_error_4'))
+    }
   } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
     isModbusEdit.value = true
     isModbus.value = true

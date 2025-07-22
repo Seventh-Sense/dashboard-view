@@ -6,7 +6,7 @@
     :date-locale="dateLocale"
     :theme-overrides="overridesTheme"
   >
-    <a-config-provider
+    <a-config-provider :locale="lang.getLang === 'ZH' ? zhCN : enUS"
       :theme="{
         algorithm: theme.darkAlgorithm
       }"
@@ -28,12 +28,16 @@ import { I18n } from '@/components/I18n'
 import { useDarkThemeHook, useThemeOverridesHook, useCode, useLang } from '@/hooks'
 import { NThemeEditor } from 'naive-ui'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { theme } from 'ant-design-vue'
 import '@x-plateform/graphic-editor/dist/style.css'
 import '@x-plateform/common/dist/style.css'
+import enUS from 'ant-design-vue/es/locale/en_US';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import { useLangStore } from '@/store/modules/langStore/langStore'
 
 const route = useRoute()
+const lang = useLangStore()
 
 const routeKey = computed(() => route.path)
 // 暗黑主题

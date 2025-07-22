@@ -156,7 +156,7 @@ export enum DeviceTypeEnum {
 
 export const TypeOptions = [
   {
-    label: 'BACnet',
+    label: 'BACnet/IP',
     value: DeviceTypeEnum.BACnet
   },
   {

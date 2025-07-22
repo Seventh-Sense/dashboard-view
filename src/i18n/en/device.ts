@@ -113,4 +113,6 @@ export default {
   none: 'None',
   odd: 'Odd',
   even: 'Even',
+  online: 'Online',
+  offline: 'Offline',
 }

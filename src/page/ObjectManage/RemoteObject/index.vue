@@ -242,8 +242,13 @@ const readDeviceData = async (row: DeviceTableData) => {
     })
 
     if (res.status !== 'OK') {
-      console.warn('Non-OK response status:', res.status)
-      window['$message'].warning(t('device.msg_read_fail') + res.data)
+      //console.warn('Non-OK response status:', res.status)
+      if (res.data.includes('not enabled')) {
+        window['$message'].warning(t('msg.msg_error_3'))
+      } else {
+        window['$message'].warning(t('device.msg_read_fail') + res.data)
+      }
+      
       return
     }
 

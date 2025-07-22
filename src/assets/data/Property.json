@@ -141,6 +141,7 @@
     "objectType",
     "objectIdentifier",
     "objectName",
+    "description",
     "presentValue",
     "statusFlags",
     "eventState",

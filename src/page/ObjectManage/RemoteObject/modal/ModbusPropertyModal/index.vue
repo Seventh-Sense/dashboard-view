@@ -518,7 +518,7 @@ watch(
         value.value = parseFloat(props.editData.value)
       }
 
-      //console.log(props.editData)
+      //console.log('asda', props.editData)
     }
   },
   { immediate: true }

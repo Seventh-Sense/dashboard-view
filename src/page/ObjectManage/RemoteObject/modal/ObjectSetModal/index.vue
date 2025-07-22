@@ -208,8 +208,12 @@ const fetchData = async () => {
       //console.log(tmp)
       fetchProperties(tmp)
     } else {
-      console.log(res.data)
-      window['$message'].warning(res.data)
+      if (res.data.includes('not enabled')) {
+        window['$message'].warning(t('msg.msg_error_3'))
+      } else {
+        window['$message'].warning(t('device.msg_read_fail') + res.data)
+      }
+      
       loading.value = false
     }
   } catch (e) {

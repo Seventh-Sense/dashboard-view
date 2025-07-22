@@ -12,7 +12,6 @@ import { RequestHttpIntervalEnum, RequestParamsObjType } from '@/enums/httpEnum'
 import { CreateComponentType, CreateComponentGroupType } from '@/packages/index.d'
 import { excludeParseEventKeyList, excludeParseEventValueList } from '@/enums/eventEnum'
 import { isNull } from 'lodash'
-
 /**
  * * 判断是否是开发环境
  * @return { Boolean }
@@ -475,5 +474,20 @@ export function parseBoolean(data: any, type: string): boolean {
       return true // Non-empty objects/arrays could be considered true
     default:
       return Boolean(data)
+  }
+}
+
+//消息处理
+export const msghandle = (load: { data: string; status: string }) => {
+  if (load.status === 'FAIL') {
+    switch (load.data) {
+      case 'Error property: write-access-denied':
+        window['$message'].warning(window['$t']('msg.msg_error_1'))
+        break
+
+      default:
+        window['$message'].warning(window['$t']('msg.msg_error_1'))
+        break
+    }
   }
 }

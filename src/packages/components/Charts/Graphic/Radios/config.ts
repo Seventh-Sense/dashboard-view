@@ -32,7 +32,11 @@ export const option: any = {
       label: '高',
       value: 3,
     }
-  ]
+  ],
+  title_switch: false,
+  title_text: '风速',
+  title_size: 14,
+  title_color: '#FFFFFF99',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

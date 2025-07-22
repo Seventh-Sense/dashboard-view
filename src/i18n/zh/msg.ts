@@ -1,3 +1,5 @@
+import msg from "../en/msg";
+
 export default {
     //modbus
     modbus_msg_1: '请输入对象名称!',
@@ -18,5 +20,10 @@ export default {
 
     please_input_chart: '请输入至少一个字符!',
 
-    creat_job_error: '创建失败!'
+    creat_job_error: '创建失败!',
+
+    msg_error_1: '错误属性：写入访问被拒绝。',
+    msg_error_2: '执行失败。',
+    msg_error_3: '请打开该设备的使能开关！',
+    msg_error_4: '点位离线状态，无法执行操作！',
 }

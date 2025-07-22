@@ -108,7 +108,7 @@ export default {
   square_block: '方形块',
   circle_block: '圆形块',
   click_upload: '点击上传图片',
-  click_upload_msg: '图片需小于 5M 且只暂存在浏览器中。当前图片暂存上限5M，超过不再缓存新图片！',
+  click_upload_msg: '图片目前只支持PNG格式，当前图片暂存上限5M， 且只暂存在浏览器中，超过不再缓存新图片！',
   is_delete_pictrue: '是否删除此图片？',
   //gauge
   gauge_info: '仪表盘',

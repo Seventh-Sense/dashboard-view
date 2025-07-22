@@ -43,7 +43,6 @@ const options: any = ref([])
 const isShow = ref(false)
 
 const bindValue = (value: any) => {
-  console.log('aaaaaa', value)
   targetData.value.request.bindParams = {
     deviceID: deviceID.value,
     deviceName: '',
