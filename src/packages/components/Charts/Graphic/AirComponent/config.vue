@@ -47,6 +47,9 @@
           v-model:value="optionData.unit_color"
         ></n-color-picker>
       </SettingItem>
+      <SettingItem :name="t('dashboard.decimal_place')">
+        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.quality')" :alone="false">
       <SettingItem :name="t('dashboard.icon_size')">
@@ -80,6 +83,25 @@ const images = [
   { label: t('dashboard.image_1'), value: 1 },
   { label: t('dashboard.image_2'), value: 2 },
   { label: t('dashboard.image_3'), value: 3 }
+]
+
+const decimals = [
+  {
+    label: '0',
+    value: 0
+  },
+  {
+    label: '1',
+    value: 1
+  },
+  {
+    label: '2',
+    value: 2
+  },
+  {
+    label: '3',
+    value: 3
+  }
 ]
 </script>
 

@@ -48,7 +48,7 @@
           color: data_color
         }"
       >
-        {{ value }}
+        {{ fixedByDecimal(value) }}
       </div>
       <div
         :style="{
@@ -78,7 +78,7 @@ const props = defineProps({
   }
 })
 const t = window['$t']
-const value = ref<any>(26)
+const value = ref<number>(26)
 
 const {
   bg_png,
@@ -92,7 +92,8 @@ const {
   unit_color,
   conditions,
   icon_text_size,
-  icon_size
+  icon_size,
+  decimal
 } = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -108,6 +109,14 @@ const bgStyle = computed(() => {
     backgroundImage: `url(${image})`,
   }
 })
+
+function fixedByDecimal(num: any) {
+  if (decimal.value === 0) {
+    return Number(num).toFixed()
+  } else {
+    return Number(num).toFixed(decimal.value)
+  }
+}
 
 watch(
   () => props.chartConfig.option.dataset,

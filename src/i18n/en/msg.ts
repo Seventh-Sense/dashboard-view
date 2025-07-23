@@ -23,4 +23,6 @@ export default {
     msg_error_2: 'Execution failed.',
     msg_error_3: 'Please turn on the enable switch of this device!',
     msg_error_4: 'The point is offline and cannot perform the operation!',
+    msg_error_5: 'The IP address format is incorrect!',
+    msg_error_6: 'Data verification failed!',
 }

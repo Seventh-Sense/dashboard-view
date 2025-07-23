@@ -308,4 +308,5 @@ export default {
   set_value: 'Set Value',
   is_picture: 'Is Picture',
   is_title: 'Is Title',
+  conference_scene: 'Conference Scene',
 }

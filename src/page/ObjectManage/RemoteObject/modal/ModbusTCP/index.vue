@@ -5,7 +5,7 @@
     <div class="content-porperty">{{ $t('device.host') }}</div>
     <n-input v-model:value="data.property.host" :disabled="isEdit" />
     <div class="content-porperty">{{ $t('device.port') }}</div>
-    <n-input-number v-model:value="data.property.port" :disabled="isEdit" />
+    <n-input-number v-model:value="data.property.port" :min="0" :disabled="isEdit" />
     <div class="content-porperty">{{ $t('device.connection') }}</div>
     <n-input v-model:value="data.property.connectionOption" :disabled="true" />
   </div>

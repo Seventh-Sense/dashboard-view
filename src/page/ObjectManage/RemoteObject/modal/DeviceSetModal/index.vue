@@ -76,7 +76,7 @@ import {
   isEmptyObject,
   DeviceTypeEnum
 } from '../../utils/utils'
-import { loadAsyncComponent } from '@/utils'
+import { loadAsyncComponent, validateIPv4 } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { addDevice } from '@/api/http'
 import { cloneDeep } from 'lodash'
@@ -247,14 +247,19 @@ const dataCheck = (load: DataType) => {
       load.address === null
     ) {
       window['$message'].error(t('device.msg_enter_params'))
-      flag = true
+      return true
+    }
+
+    if (!validateIPv4(load.property.host)) {
+      window['$message'].error(t('msg.msg_error_5'))
+      return true
     }
   }
 
   if (load.type === DeviceTypeEnum.ModbusRTU) {
     if (load.name === '' || load.property.port === '' || load.property.slaveid === null) {
       window['$message'].error(t('device.msg_enter_params'))
-      flag = true
+      return true
     }
   }
 

@@ -26,4 +26,6 @@ export default {
     msg_error_2: '执行失败。',
     msg_error_3: '请打开该设备的使能开关！',
     msg_error_4: '点位离线状态，无法执行操作！',
+    msg_error_5: 'IP地址格式不正确！',
+    msg_error_6: '数据校验失败！',
 }

@@ -18,6 +18,7 @@ export const option: any = {
   conditions: 20,
   icon_size: 22,
   icon_text_size: 16,
+  decimal: 0
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

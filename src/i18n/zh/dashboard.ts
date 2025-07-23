@@ -308,4 +308,10 @@ export default {
   set_value: '设置值',
   is_picture: '是否图片',
   is_title: '是否显示标题',
+  conference_scene: '会议场景',
+  padding: '内边距',
+  x_gap: 'X轴间距',
+  y_gap: 'Y轴间距',
+  text_w: '图标宽度',
+  text_h: '图标高度',
 }

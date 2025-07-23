@@ -241,6 +241,16 @@ const handleSave = async (key: any) => {
 const handleSaveCommon = async (key: any) => {
   let load = {}
 
+  if ((key === 'name' && tempValues[key] === '') || (key === 'address' && tempValues[key] === '')) {
+    window['$message'].warning(t('device.msg_enter_params'))
+    return
+  }
+
+  if (key === 'address' && !validateIntegerOrRange(tempValues[key])) {
+    window['$message'].warning(t('msg.msg_error_6'))
+    return
+  }
+
   if (key === 'name' || key === 'description') {
     load = { [key]: tempValues[key] }
   } else {
@@ -257,7 +267,7 @@ const handleSaveCommon = async (key: any) => {
         : { property: propertyObj }
   }
 
-  //console.log('Saving data:', key, load)
+  console.log('Saving data:', key, load)
   try {
     const res: any = await updateIotPoints(props.editData.key, load)
 
@@ -311,22 +321,27 @@ const dataCheck = (data: any) => {
   //console.log(data)
   if (data.name === '') {
     window['$message'].warning(t('device.msg_enter_params'))
-    flag = true
+    return true
   }
 
   if (data.count === null) {
     window['$message'].warning(t('device.msg_enter_params'))
-    flag = true
+    return true
   }
 
   if (data.divisor === null) {
     window['$message'].warning(t('device.msg_enter_params'))
-    flag = true
+    return true
   }
 
-  if (data.address === '' || !validateIntegerOrRange(data.address)) {
+  if (data.address === '') {
     window['$message'].warning(t('device.msg_enter_params'))
-    flag = true
+    return true
+  }
+
+  if (!validateIntegerOrRange(data.address)) {
+    window['$message'].warning(t('msg.msg_error_6'))
+    return true
   }
 
   return flag
@@ -451,6 +466,8 @@ const writeValue = async (key: any) => {
     window['$message'].error(t('device.msg_value_error'))
     return
   }
+
+  //console.log('Writing value:', tempValues[key])
 
   const func = data.value.function === '03' ? '06' : '05'
   try {

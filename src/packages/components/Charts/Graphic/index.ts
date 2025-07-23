@@ -12,6 +12,7 @@ import { ModeControlConfig } from './ModeControl/index'
 import { BrightnessConfig } from './Brightness/index'
 import { Light2ControlConfig } from './Light2Control/index'
 import { ModeGroupConfig } from './ModeGroup/index'
+import { ConferenceSceneConfig } from './ConferenceScene/index'
 
 export default [
   ModeConfig,
@@ -27,5 +28,6 @@ export default [
   Light2ControlConfig,
   AirComponentConfig,
   ModeControlConfig,
-  BrightnessConfig
+  BrightnessConfig,
+  ConferenceSceneConfig
 ]
