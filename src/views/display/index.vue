@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Pagination, Virtual } from 'swiper/modules'
+import { Navigation, Pagination, Virtual  } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
