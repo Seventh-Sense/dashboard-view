@@ -276,6 +276,7 @@ export default {
   radios: '单选框2',
   option: '选项',
   on_value: '激活值',
+  off_value: '未激活值',
   picture: '图片',
   click_picture: '点击选择图片',
   upload_msg_err: '图片超出限制，请重新上传！',
@@ -314,4 +315,6 @@ export default {
   y_gap: 'Y轴间距',
   text_w: '图标宽度',
   text_h: '图标高度',
+  opacity: '透明度',
+  custom_icon: '自定义图标',
 }

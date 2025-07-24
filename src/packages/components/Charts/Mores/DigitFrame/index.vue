@@ -26,7 +26,7 @@ const props = defineProps({
   }
 })
 
-const { size, color, unit, decimal, title_switch, title_text } = toRefs(props.chartConfig.option)
+const { size, color, unit, decimal, title_switch, title_text, textAlign } = toRefs(props.chartConfig.option)
 const { w, h } = toRefs(props.chartConfig.attr)
 
 const option = shallowReactive({
@@ -61,7 +61,7 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
 <style lang="scss" scoped>
 .container {
   display: flex;
-  justify-items: flex-start;
+  justify-content: v-bind('textAlign');
   align-items: center;
   gap: 8px;
   font-weight: bold;
@@ -71,6 +71,5 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex: 1;
 }
 </style>

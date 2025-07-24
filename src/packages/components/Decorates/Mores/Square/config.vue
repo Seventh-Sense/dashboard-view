@@ -9,7 +9,7 @@
         ></n-color-picker>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.fuzzy')">
+    <SettingItemBox :name="t('dashboard.opacity')">
       <SettingItem>
         <n-input-number
           v-model:value="optionData.opacity"

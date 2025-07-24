@@ -66,6 +66,7 @@ export const option = {
   decimal: 0,
   title_switch: false,
   title_text: '当前值:',
+  textAlign: 'center',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

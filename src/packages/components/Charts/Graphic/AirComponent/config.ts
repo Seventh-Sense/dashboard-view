@@ -15,7 +15,7 @@ export const option: any = {
   unit: 'μg/m³',
   unit_size: 24,
   unit_color: '#FFFFFF99',
-  conditions: 20,
+  conditions: 100,
   icon_size: 22,
   icon_text_size: 16,
   decimal: 0

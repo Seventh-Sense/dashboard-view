@@ -278,6 +278,7 @@ export default {
   radios: 'Radios',
   option: 'Option',
   on_value: 'Active Value',
+  off_value: 'Inactive Value',
   picture: 'Picture',
   click_picture: 'Click to select the picture',
   upload_msg_err: 'The picture exceeds the limit. Please re-upload it!',
@@ -309,4 +310,6 @@ export default {
   is_picture: 'Is Picture',
   is_title: 'Is Title',
   conference_scene: 'Conference Scene',
+  opacity: 'Opacity',
+  custom_icon: 'Custom Icon',
 }

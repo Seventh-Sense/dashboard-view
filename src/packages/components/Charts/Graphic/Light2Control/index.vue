@@ -11,7 +11,7 @@
   >
     <div class="container-top">
       <div
-        style="font-weight: bold"
+        style="font-weight: 400"
         :style="{
           fontSize: top_title_size + 'px',
           color: top_title_color
