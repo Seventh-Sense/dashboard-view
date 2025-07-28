@@ -22,42 +22,69 @@ export const option = {
   icon_h: 348,
   title_size: 20,
   title_color: '#FFFFFF',
-  modes: [
+  mode_num: 6,
+  modes_6: [
     {
       key: '1',
       icon: 'meeting',
       value: '1',
-      title: '开会模式',
+      title: '开会模式'
     },
     {
       key: '2',
       icon: 'projector',
       value: '0',
-      title: '投影模式',
+      title: '投影模式'
     },
     {
       key: '3',
       icon: 'podium',
       value: '4',
-      title: '宣讲模式',
+      title: '宣讲模式'
     },
     {
       key: '4',
       icon: 'rest',
       value: '5',
-      title: '离场模式',
+      title: '离场模式'
     },
     {
       key: '5',
       icon: 'film',
       value: '2',
-      title: '观影模式',
+      title: '观影模式'
     },
     {
       key: '6',
       icon: 'shutdown',
       value: '3',
-      title: '全关模式',
+      title: '全关模式'
+    }
+  ],
+  modes_4: [
+    {
+      key: '1',
+      icon: 'home',
+      value: '1',
+      title: '日常模式'
+    },
+    {
+      key: '2',
+      icon: 'meeting',
+      value: '2',
+      title: '会客模式'
+    },
+    {
+      key: '3',
+      icon: 'shutdown',
+      value: '3',
+      title: '一楼全关'
+    },
+    {
+      key: '4',
+      icon: 'shutdown',
+      value: '5',
+      title: '展厅全关'
     }
   ]
 }

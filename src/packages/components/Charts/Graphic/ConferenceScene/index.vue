@@ -7,8 +7,48 @@
       padding: padding + 'px'
     }"
   >
-    <n-grid :x-gap="x_gap" :y-gap="y_gap" :cols="3">
-      <n-grid-item v-for="mode in modes">
+    <n-grid v-if="mode_num === 6" :x-gap="x_gap" :y-gap="y_gap" :cols="3">
+      <n-grid-item v-for="mode in modes_6">
+        <div
+          @click="onClick(mode.value)"
+          class="container-item"
+          :style="{
+            width: icon_w + 'px',
+            height: icon_h + 'px',
+            borderRadius: radius + 'px',
+            backdropFilter: 'blur(' + filter + 'px)',
+            backgroundColor: mode.value === value ? active_bgColor : inactive_bgColor
+          }"
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 16px;
+            "
+          >
+            <Icon
+              :name="mode.icon"
+              type="color-white"
+              :size="icon_size"
+              :color="{ normal: 'white' }"
+            />
+            <div
+              :style="{
+                fontSize: title_size + 'px',
+                color: title_color
+              }"
+            >
+              {{ mode.title }}
+            </div>
+          </div>
+        </div>
+      </n-grid-item>
+    </n-grid>
+    <n-grid v-else-if="mode_num === 4" :x-gap="x_gap" :y-gap="y_gap" :cols="2">
+      <n-grid-item v-for="mode in modes_4">
         <div
           @click="onClick(mode.value)"
           class="container-item"
@@ -83,7 +123,10 @@ const {
   icon_w,
   icon_h,
   title_size,
-  title_color
+  title_color,
+  mode_num,
+  modes_6,
+  modes_4
 } = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -92,7 +135,7 @@ const onClick = throttle(
   async (data: any) => {
     try {
       flag.value = true
-      
+
       let tmp = cloneDeep(value.value)
 
       value.value = parseData(data, 'string')

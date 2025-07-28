@@ -6,6 +6,9 @@
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')" :alone="false">
+      <setting-item>
+        <n-select v-model:value="optionData.mode_num" :options="options" size="small" />
+      </setting-item>
       <SettingItem :name="t('dashboard.x_gap')">
         <n-input-number v-model:value="optionData.x_gap" :min="0" size="small" />
       </SettingItem>
@@ -55,72 +58,30 @@
         ></n-color-picker>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.option') + '1'">
+
+    <SettingItemBox v-if="optionData.mode_num === 6" v-for="(item, index) in optionData.modes_6" :name="t('dashboard.option') + (index + 1)">
       <SettingItem>
-        <n-input v-model:value="optionData.modes[0].title" type="text" size="small"></n-input>
+        <n-input v-model:value="item.title" type="text" size="small"></n-input>
       </SettingItem>
       <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.modes[0].value" size="small"></n-input>
+        <n-input v-model:value="item.value" size="small"></n-input>
       </SettingItem>
       <SettingItem :name="t('dashboard.icon')">
-        <n-input v-model:value="optionData.modes[0].icon" type="text" size="small"></n-input>
+        <n-input v-model:value="item.icon" type="text" size="small"></n-input>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.option') + '2'">
+    <SettingItemBox v-else-if="optionData.mode_num === 4" v-for="(item, index) in optionData.modes_4" :name="t('dashboard.option') + (index + 1)">
       <SettingItem>
-        <n-input v-model:value="optionData.modes[1].title" type="text" size="small"></n-input>
+        <n-input v-model:value="item.title" type="text" size="small"></n-input>
       </SettingItem>
       <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.modes[1].value" size="small"></n-input>
+        <n-input v-model:value="item.value" size="small"></n-input>
       </SettingItem>
       <SettingItem :name="t('dashboard.icon')">
-        <n-input v-model:value="optionData.modes[1].icon" type="text" size="small"></n-input>
+        <n-input v-model:value="item.icon" type="text" size="small"></n-input>
       </SettingItem>
     </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.option') + '3'">
-      <SettingItem>
-        <n-input v-model:value="optionData.modes[2].title" type="text" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.modes[2].value" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.icon')">
-        <n-input v-model:value="optionData.modes[2].icon" type="text" size="small"></n-input>
-      </SettingItem>
-    </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.option') + '4'">
-      <SettingItem>
-        <n-input v-model:value="optionData.modes[3].title" type="text" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.modes[3].value" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.icon')">
-        <n-input v-model:value="optionData.modes[3].icon" type="text" size="small"></n-input>
-      </SettingItem>
-    </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.option') + '5'">
-      <SettingItem>
-        <n-input v-model:value="optionData.modes[4].title" type="text" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.modes[4].value" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.icon')">
-        <n-input v-model:value="optionData.modes[4].icon" type="text" size="small"></n-input>
-      </SettingItem>
-    </SettingItemBox>
-    <SettingItemBox :name="t('dashboard.option') + '6'">
-      <SettingItem>
-        <n-input v-model:value="optionData.modes[5].title" type="text" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.value')">
-        <n-input v-model:value="optionData.modes[5].value" size="small"></n-input>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.icon')">
-        <n-input v-model:value="optionData.modes[5].icon" type="text" size="small"></n-input>
-      </SettingItem>
-    </SettingItemBox>
+    
   </CollapseItem>
 </template>
 
@@ -137,6 +98,17 @@ const props = defineProps({
     required: true
   }
 })
+
+const options = [
+  {
+    label: '2 X 2',
+    value: 4
+  },
+  {
+    label: '2 X 3',
+    value: 6
+  },
+]
 </script>
 
 <style lang="scss" scoped></style>
