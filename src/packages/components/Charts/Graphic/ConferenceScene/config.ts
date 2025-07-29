@@ -86,6 +86,20 @@ export const option = {
       value: '5',
       title: '展厅全关'
     }
+  ],
+  modes_2: [
+    {
+      key: '1',
+      icon: 'home',
+      value: '1',
+      title: '日常模式'
+    },
+    {
+      key: '2',
+      icon: 'meeting',
+      value: '2',
+      title: '会客模式'
+    },
   ]
 }
 

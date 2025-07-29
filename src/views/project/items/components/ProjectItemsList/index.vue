@@ -1,10 +1,13 @@
 <template>
   <div class="go-items-list">
     <div class="list-pagination">
-      <div class="list-preview" @click="onPreview">预览</div>
+      <div class="list-preview" @click="onPreview">{{ $t('dashboard.preview') }}</div>
       <project-layout-create v-if="isShow" :collapsed="true"></project-layout-create>
     </div>
-    <div v-if="flag" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
+    <div
+      v-if="flag"
+      style="display: flex; align-items: center; justify-content: center; height: 80vh"
+    >
       <n-spin size="small" />
     </div>
 
@@ -16,6 +19,7 @@
           @delete="deleteHandle($event, index)"
           @edit="editHandle"
           @preview="previewHandle"
+          @rename="renameHandle"
         ></project-items-card>
       </n-grid-item>
     </n-grid>
@@ -42,7 +46,7 @@ import { setLocalStorage, getLoginUser, routerTurnByName } from '@/utils'
 import { PageEnum } from '@/enums/pageEnum'
 
 const { CopyIcon, EllipsisHorizontalCircleSharpIcon } = icon.ionicons5
-const { list, deleteHandle, addProject, deleteAll } = useDataListInit()
+const { list, deleteHandle, addProject, deleteAll, renameHandle } = useDataListInit()
 const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } =
   useModalDataInit()
 
@@ -94,7 +98,9 @@ const storageInfo = (res: any[]) => {
 }
 
 const onPreview = () => {
-  routerTurnByName(PageEnum.BASE_DISPLAY_NAME, true)
+  //routerTurnByName(PageEnum.BASE_DISPLAY_NAME, true)
+
+  routerTurnByName(PageEnum.BASE_VANT_NAME, true)
 }
 
 provide('initTable', initTable)
@@ -128,7 +134,7 @@ $contentHeight: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px #FFFFFF12 solid;
+    border: 1px #ffffff12 solid;
     border-radius: 4px;
     cursor: pointer;
   }

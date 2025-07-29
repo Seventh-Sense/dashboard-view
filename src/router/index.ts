@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import { DisplayRoute, RedirectRoute, DeviceManageRoute } from '@/router/base'
+import { DisplayRoute, VantRoute, RedirectRoute, DeviceManageRoute } from '@/router/base'
 import { createRouterGuards } from './router-guards'
 import { PageEnum } from '@/enums/pageEnum'
 import { HttpErrorPage, LoginRoute, ReloadRoute } from '@/router/base'
@@ -15,7 +15,7 @@ const RootRoute: Array<RouteRecordRaw> = [
     redirect: PageEnum.BASE_LOGIN,
     component: Layout,
     meta: {
-      title: 'Root',
+      title: 'Root'
     },
     children: [
       ...HttpErrorPage,
@@ -24,22 +24,29 @@ const RootRoute: Array<RouteRecordRaw> = [
       modules.previewRoutes,
       modules.editRoutes,
       modules.graphicRoutes,
-      modules.graphicPreviewRoutes,
+      modules.graphicPreviewRoutes
     ]
   }
 ]
 
-
-export const constantRouter: any[] = [LoginRoute, ...RootRoute, RedirectRoute, ReloadRoute, DisplayRoute, DeviceManageRoute];
+export const constantRouter: any[] = [
+  LoginRoute,
+  ...RootRoute,
+  RedirectRoute,
+  ReloadRoute,
+  DisplayRoute,
+  VantRoute,
+  DeviceManageRoute
+]
 
 const router = createRouter({
   history: createWebHashHistory(''),
   routes: constantRouter,
-  strict: true,
+  strict: true
 })
 
 export function setupRouter(app: App) {
-  app.use(router);
+  app.use(router)
   // 创建路由守卫
   createRouterGuards(router)
 }

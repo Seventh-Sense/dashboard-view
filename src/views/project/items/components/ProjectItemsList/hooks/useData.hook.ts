@@ -48,11 +48,16 @@ export const useDataListInit = () => {
     list.value = []
   }
 
+  const renameHandle = () => {
+    
+  }
+
   return {
     list,
     addProject,
     addHandle,
     deleteHandle,
-    deleteAll
+    deleteAll,
+    renameHandle
   }
 }

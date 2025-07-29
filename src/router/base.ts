@@ -23,6 +23,15 @@ export const DisplayRoute: RouteRecordRaw = {
   },
 };
 
+export const VantRoute: RouteRecordRaw = {
+  path: '/vant',
+  name: 'Vant',
+  component: () => import('@/views/vant/index.vue'),
+  meta: {
+    title: 'XPlay',
+  },
+};
+
 export const DeviceManageRoute: RouteRecordRaw = {
   path: '/devicemanage',
   name: PageEnum.BASE_DEVICE_MANAGE_NAME,

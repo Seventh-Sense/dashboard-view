@@ -13,6 +13,8 @@ import { viteMockServe } from 'vite-plugin-mock'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import svgLoader from 'vite-svg-loader'
 import zipPack, { Options as ZipPickOptions } from 'vite-plugin-zip-pack'
+import Components from 'unplugin-vue-components/vite'
+import { VantResolver } from 'unplugin-vue-components/resolvers'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -65,6 +67,10 @@ export default defineConfig({
           isCustomElement: tag => tag.startsWith('iconify-icon')
         }
       }
+    }),
+    Components({
+      resolvers: [VantResolver()], // 自动注册 Vant 组件
+      dts: true // 生成 TypeScript 声明文件
     }),
     svgLoader(),
     monacoEditorPlugin({

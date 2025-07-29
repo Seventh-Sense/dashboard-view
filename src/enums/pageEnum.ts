@@ -82,6 +82,10 @@ export enum PageEnum {
   BASE_DISPLAY = '/display',
   BASE_DISPLAY_NAME = 'Display',
 
+  //vant
+  BASE_VANT = '/vant',
+  BASE_VANT_NAME = 'Vant',
+
   //device manage
   BASE_DEVICE_MANAGE = '/devicemanage',
   BASE_DEVICE_MANAGE_NAME = 'DeviceManage',

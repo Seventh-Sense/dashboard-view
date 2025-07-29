@@ -19,17 +19,19 @@
         @update:value="bindValue"
         style="width: 260px"
         clearable
+        :render-label="renderLabel"
       />
     </setting-item-box>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue'
+import { onMounted, ref, h, watch } from 'vue'
 import { useTargetData } from '../hooks/useTargetData.hook'
 import { CascaderOption } from 'naive-ui'
 import { SettingItemBox } from '@/components/Pages/ChartItemSetting'
 import { getDeviceList, readSubscribePoints } from '@/api/http'
+import { NTooltip } from 'naive-ui';
 
 const { targetData } = useTargetData()
 
@@ -50,6 +52,17 @@ const bindValue = (value: any) => {
     objectName: ''
   }
 }
+
+const renderLabel = (option: any) => {
+  return h(
+    NTooltip,
+    { placement: 'top-start', trigger: 'hover' },
+    {
+      trigger: () => h('span', { class: 'truncated-text' }, option.label),
+      default: () => option.label
+    }
+  );
+};
 
 onMounted(() => {
   readDevices()

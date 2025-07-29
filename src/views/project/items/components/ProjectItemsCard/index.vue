@@ -24,52 +24,45 @@
       </div>
 
       <n-space v-if="isShow" size="large" justify="end" align="center" :wrap="false">
-        <img
-          width="24"
-          height="24"
-          :src="SVG_ICON.card_icons.edit"
-          @click="editHandle()"
-          style="cursor: pointer"
-        />
-        <img
-          width="24"
-          height="24"
-          :src="SVG_ICON.card_icons.delete_one"
-          @click="deleteHanlde()"
-          style="cursor: pointer"
-        />
+        <Icon name="input" :size="26" :color="{ normal: '#ffffff' }" @click="renameHandle()" />
+        <Icon name="edit" :size="26" :color="{ normal: '#ffffff' }" @click="editHandle()" />
+        <Icon name="delete" :size="26" :color="{ normal: '#ffffff' }" @click="deleteHanlde()" />
       </n-space>
     </n-space>
+    <RenameModal :show="modalShow" :cardData="cardData" @close="closeHandle"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, PropType, ref } from 'vue'
-
+import { Icon } from '@/icon/index'
 import { Chartype } from '../../index.d'
-
 import SVG_ICON from '@/svg/SVG_ICON'
 import { getLoginUser } from '@/utils'
+import { RenameModal } from './RenameModal'
 
-const emit = defineEmits(['delete', 'resize', 'edit', 'preview'])
+const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'rename'])
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
 })
 
 const isShow = ref(false)
+const modalShow = ref<boolean>(false)
 
 onMounted(() => {
   isShow.value = getLoginUser()
 })
+
 const formatTime = (data: string) => {
   //2024-08-19T00:56:22.141127
   let localZone = new Date().getTimezoneOffset() / -60
-  
+
   let localTime = new Date(data).getTime()
-  
+
   return new Date(localTime).toLocaleString()
 }
+
 // 删除处理
 const deleteHanlde = () => {
   emit('delete', props.cardData)
@@ -83,6 +76,16 @@ const editHandle = () => {
 //预览处理
 const previewHandle = () => {
   emit('preview', props.cardData)
+}
+
+const renameHandle = () => {
+  console.log('renameHandle', props.cardData)
+  modalShow.value = true
+  //emit('rename', props.cardData)
+}
+
+const closeHandle = () => {
+  modalShow.value = false
 }
 </script>
 
