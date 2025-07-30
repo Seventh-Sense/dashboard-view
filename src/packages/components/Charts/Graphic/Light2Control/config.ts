@@ -12,7 +12,7 @@ export const option: any = {
   radius: 6,
   filter: 32,
   top_title_size: 16,
-  top_title: '灯',
+  top_title: '',
   top_title_color: '#FFFFFFFF',
   switch_w: 51,
   switch_h: 24,

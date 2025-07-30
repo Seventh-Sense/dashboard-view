@@ -7,12 +7,17 @@ import { chartInitConfig } from '@/settings/designSetting'
 export const option: any = {
   dataset: 0,
   active_value: '1',
+  inactive_value: '0',
   inactive_bgColor: '#FFFFFF12',
   active_bgColor: '#6666FFFF',
   icon: 'meeting',
   icon_size: 140,
   radius: 6,
   filter: 32,
+  title: '',
+  title_size: 16,
+  title_color: '#FFFFFF',
+  gap: 10,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

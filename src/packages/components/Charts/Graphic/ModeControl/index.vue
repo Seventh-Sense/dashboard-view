@@ -4,18 +4,23 @@
     :style="{
       width: w + 'px',
       height: h + 'px',
-      background: value === active_value ? active_bgColor : inactive_bgColor,
+      background: value ? active_bgColor : inactive_bgColor,
       borderRadius: radius + 'px',
-      backdropFilter: 'blur(' + filter + 'px)'
+      backdropFilter: 'blur(' + filter + 'px)',
+      gap: gap + 'px'
     }"
+    @click="onClick()"
   >
     <Icon
       :name="icon"
       type="color-white"
       :size="icon_size"
       :color="{ normal: 'white' }"
-      @click="onClick()"
     />
+    <div :style="{
+      fontSize: title_size + 'px',
+      color: title_color,
+    }">{{ title }}</div>
   </div>
 </template>
 
@@ -36,11 +41,21 @@ const props = defineProps({
 })
 
 const t = window['$t']
-const value = ref<any>('0')
+const value = ref<boolean>(false)
 const flag = ref(false)
-const { inactive_bgColor, active_bgColor, icon_size, icon, radius, filter, active_value } = toRefs(
-  props.chartConfig.option
-)
+
+const {
+  active_bgColor,
+  inactive_bgColor,
+  icon_size,
+  icon,
+  radius,
+  filter,
+  title,
+  title_size,
+  title_color,
+  gap
+} = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
 
@@ -49,11 +64,11 @@ const onClick = throttle(
     try {
       flag.value = true
 
-      let data = active_value.value
+      let data = value.value ? 0 : 1
 
       let tmp = cloneDeep(value.value)
 
-      value.value = parseData(data, 'string')
+      value.value = parseData(data, 'boolean')
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
@@ -77,7 +92,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      value.value = parseData(newVal, 'string')
+      value.value = parseData(newVal, 'boolean')
     }
   },
   {
@@ -90,6 +105,7 @@ watch(
 <style lang="scss" scoped>
 .container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

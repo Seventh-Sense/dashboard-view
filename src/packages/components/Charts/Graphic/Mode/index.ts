@@ -6,7 +6,7 @@ export const ModeConfig: ConfigType = {
   key: 'Mode',
   chartKey: 'VMode',
   conKey: 'VCMode',
-  title: i18n.global.t('dashboard.mode'),
+  title: i18n.global.t('dashboard.coolOrHeat'),
   category: ChatCategoryEnum.Graphic,
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,

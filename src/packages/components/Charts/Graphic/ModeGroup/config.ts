@@ -8,22 +8,22 @@ export const option = {
   dataset: '0',
   modes: [
     {
-      title: '自动',
+      title: window['$t']('dashboard.auto_title'),
       icon: 'auto',
       value: '0'
     },
     {
-      title: '制热',
+      title: window['$t']('dashboard.sun_title'),
       icon: 'sun',
       value: '1'
     },
     {
-      title: '制冷',
+      title: window['$t']('dashboard.snow_title'),
       icon: 'snow',
       value: '2'
     },
     {
-      title: '吹风',
+      title: window['$t']('dashboard.fan2_title'),
       icon: 'fan2',
       value: '3'
     }

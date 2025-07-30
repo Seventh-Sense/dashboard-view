@@ -14,7 +14,7 @@ export const option: any = {
   modes: [
     {
       key: 'Option 1',
-      label: '自动',
+      label: window['$t']('dashboard.auto_title'),
       value: 0,
     },
     {

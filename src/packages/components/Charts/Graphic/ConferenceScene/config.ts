@@ -28,37 +28,37 @@ export const option = {
       key: '1',
       icon: 'meeting',
       value: '1',
-      title: '开会模式'
+      title: ''
     },
     {
       key: '2',
       icon: 'projector',
       value: '0',
-      title: '投影模式'
+      title: ''
     },
     {
       key: '3',
       icon: 'podium',
       value: '4',
-      title: '宣讲模式'
+      title: ''
     },
     {
       key: '4',
       icon: 'rest',
       value: '5',
-      title: '离场模式'
+      title: ''
     },
     {
       key: '5',
       icon: 'film',
       value: '2',
-      title: '观影模式'
+      title: ''
     },
     {
       key: '6',
       icon: 'shutdown',
       value: '3',
-      title: '全关模式'
+      title: ''
     }
   ],
   modes_4: [
@@ -66,25 +66,25 @@ export const option = {
       key: '1',
       icon: 'home',
       value: '1',
-      title: '日常模式'
+      title: ''
     },
     {
       key: '2',
       icon: 'meeting',
       value: '2',
-      title: '会客模式'
+      title: ''
     },
     {
       key: '3',
       icon: 'shutdown',
       value: '3',
-      title: '一楼全关'
+      title: ''
     },
     {
       key: '4',
       icon: 'shutdown',
       value: '5',
-      title: '展厅全关'
+      title: ''
     }
   ],
   modes_2: [
@@ -92,13 +92,13 @@ export const option = {
       key: '1',
       icon: 'home',
       value: '1',
-      title: '日常模式'
+      title: ''
     },
     {
       key: '2',
       icon: 'meeting',
       value: '2',
-      title: '会客模式'
+      title: ''
     },
   ]
 }

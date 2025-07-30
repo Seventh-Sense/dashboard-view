@@ -6,7 +6,7 @@ export const RadiosConfig: ConfigType = {
   key: 'Radios',
   chartKey: 'VRadios',
   conKey: 'VCRadios',
-  title: i18n.global.t('dashboard.radios'),
+  title: i18n.global.t('dashboard.speed') + '2',
   category: ChatCategoryEnum.Graphic,
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,

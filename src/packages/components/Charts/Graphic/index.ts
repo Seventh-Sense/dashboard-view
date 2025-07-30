@@ -18,16 +18,16 @@ export default [
   ModeConfig,
   ModeGroupConfig,
   SpeedConfig,
+  RadiosConfig,
   SwitchConfig,
   SwitchTwoConfig,
   RadioConfig,
-  RadiosConfig,
   ProgressConfig,
   NumericalConfig,
   LightControlConfig,
   Light2ControlConfig,
   AirComponentConfig,
-  ModeControlConfig,
   BrightnessConfig,
+  ModeControlConfig,
   ConferenceSceneConfig
 ]

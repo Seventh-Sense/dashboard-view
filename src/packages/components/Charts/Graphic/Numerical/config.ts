@@ -8,7 +8,7 @@ export const option: any = {
   dataset: 26,
   backgroundColor: '#00000088',
   fontSize: 32,
-  title: '温度',
+  title: '',
   textColor: '#FFFFFF99',
   rightIconSize: 72,
   iconNo: 1,

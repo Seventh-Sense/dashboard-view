@@ -9,9 +9,9 @@
           size="small"
         ></n-input-number>
       </SettingItem>
-      <SettingItem :name="t('dashboard.on_value')">
+      <!-- <SettingItem :name="t('dashboard.on_value')">
         <n-input v-model:value="optionData.active_value" size="small"></n-input>
-      </SettingItem>
+      </SettingItem> -->
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.icon')">
       <setting-item :name="t('dashboard.contant')">
@@ -19,6 +19,21 @@
       </setting-item>
       <SettingItem :name="t('dashboard.icon_size')">
         <n-input-number v-model:value="optionData.icon_size" :min="0" size="small" />
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.title')">
+      <setting-item :name="t('dashboard.contant')">
+        <n-input v-model:value="optionData.title" size="small" />
+      </setting-item>
+      <SettingItem :name="t('dashboard.title_size')">
+        <n-input-number v-model:value="optionData.title_size" :min="0" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.title_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.title_color"
+        ></n-color-picker>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')">
@@ -38,6 +53,9 @@
       </SettingItem>
       <SettingItem :name="t('dashboard.radius')">
         <n-input-number v-model:value="optionData.radius" :min="0" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.y_gap')">
+        <n-input-number v-model:value="optionData.gap" :min="0" size="small" />
       </SettingItem>
       <SettingItem :name="t('dashboard.filter')">
         <n-input-number v-model:value="optionData.filter" :min="0" size="small" />
