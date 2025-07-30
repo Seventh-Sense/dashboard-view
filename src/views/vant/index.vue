@@ -66,15 +66,13 @@ const initTabs = async () => {
     }
 
     if (Array.isArray(res.data) && res.data.length > 0) {
-      res.data.forEach((item: any) => {
-        slides.value.push(item)
-      })
+      slides.value = [...res.data]
     }
   } catch (e) {
     console.error('onChange:', e)
   } finally {
     flag.value = false
-    console.log('Tabs initialized with data:', slides.value)
+    //console.log('Tabs initialized with data:', slides.value)
   }
 }
 

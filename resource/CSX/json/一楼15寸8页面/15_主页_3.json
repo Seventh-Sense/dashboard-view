@@ -137,7 +137,7 @@
   },
   "componentList": [
     {
-      "id": "id_17kkhw24130g00",
+      "id": "id_17902ue9o2xs00",
       "isGroup": false,
       "attr": {
         "x": 140,
@@ -232,421 +232,7 @@
       }
     },
     {
-      "id": "id_2li3xr6c8mw000",
-      "isGroup": false,
-      "attr": {
-        "x": 371,
-        "y": 192,
-        "w": 480,
-        "h": 348,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        },
-        "bindDatas": []
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "ModeControl",
-      "chartConfig": {
-        "key": "ModeControl",
-        "chartKey": "VModeControl",
-        "conKey": "VCModeControl",
-        "title": "Mode Control",
-        "category": "Graphic",
-        "categoryName": "() => window[\"$t\"](\"dashboard.graphic\")",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "numerical.png"
-      },
-      "option": {
-        "dataset": 0,
-        "active_value": "1",
-        "inactive_bgColor": "#FFFFFF12",
-        "active_bgColor": "#6666FFFF",
-        "icon": "home",
-        "icon_size": 140,
-        "radius": 6,
-        "filter": 32
-      }
-    },
-    {
-      "id": "id_1tsqk217efgg00",
-      "isGroup": false,
-      "attr": {
-        "x": 917,
-        "y": 192,
-        "w": 480,
-        "h": 348,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": 1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": false,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        },
-        "bindDatas": []
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "ModeControl",
-      "chartConfig": {
-        "key": "ModeControl",
-        "chartKey": "VModeControl",
-        "conKey": "VCModeControl",
-        "title": "Mode Control",
-        "category": "Graphic",
-        "categoryName": "() => window[\"$t\"](\"dashboard.graphic\")",
-        "package": "Charts",
-        "chartFrame": "common",
-        "image": "numerical.png"
-      },
-      "option": {
-        "dataset": 0,
-        "active_value": "1",
-        "inactive_bgColor": "#FFFFFF12",
-        "active_bgColor": "#6666FFFF",
-        "icon": "meeting",
-        "icon_size": 140,
-        "radius": 6,
-        "filter": 32
-      }
-    },
-    {
-      "id": "id_52c23efu10g000",
-      "isGroup": false,
-      "attr": {
-        "x": 547,
-        "y": 461,
-        "w": 128,
-        "h": 53,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": true,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        },
-        "bindDatas": []
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "Text",
-        "category": "Texts",
-        "categoryName": "() => window[\"$t\"](\"dashboard.text\")",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "日常模式",
-        "fontSize": 20,
-        "fontColor": "#ffffff",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "center",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_38qd7i5qc7e000",
-      "isGroup": false,
-      "attr": {
-        "x": 1093,
-        "y": 460,
-        "w": 128,
-        "h": 53,
-        "offsetX": 0,
-        "offsetY": 0,
-        "zIndex": -1
-      },
-      "styles": {
-        "filterShow": false,
-        "hueRotate": 0,
-        "saturate": 1,
-        "contrast": 1,
-        "brightness": 1,
-        "opacity": 1,
-        "rotateZ": 0,
-        "rotateX": 0,
-        "rotateY": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "blendMode": "normal",
-        "animations": []
-      },
-      "preview": {
-        "overFlowHidden": false
-      },
-      "status": {
-        "lock": true,
-        "hide": false
-      },
-      "request": {
-        "requestDataType": 0,
-        "requestHttpType": "get",
-        "requestUrl": "",
-        "requestInterval": null,
-        "requestIntervalUnit": "second",
-        "requestContentType": 0,
-        "requestParamsBodyType": "none",
-        "requestSQLContent": {
-          "sql": "select * from  where"
-        },
-        "requestParams": {
-          "Body": {
-            "form-data": {},
-            "x-www-form-urlencoded": {},
-            "json": "",
-            "xml": ""
-          },
-          "Header": {},
-          "Params": {}
-        },
-        "bindParams": {
-          "deviceName": "",
-          "deviceID": "",
-          "objectName": "",
-          "objectID": ""
-        },
-        "bindDatas": []
-      },
-      "filter": null,
-      "events": {
-        "baseEvent": {
-          "click": null,
-          "dblclick": null,
-          "mouseenter": null,
-          "mouseleave": null
-        },
-        "advancedEvents": {
-          "vnodeMounted": null,
-          "vnodeBeforeMount": null
-        },
-        "interactEvents": []
-      },
-      "key": "TextCommon",
-      "chartConfig": {
-        "key": "TextCommon",
-        "chartKey": "VTextCommon",
-        "conKey": "VCTextCommon",
-        "title": "Text",
-        "category": "Texts",
-        "categoryName": "() => window[\"$t\"](\"dashboard.text\")",
-        "package": "Informations",
-        "chartFrame": "common",
-        "image": "text_static.png"
-      },
-      "option": {
-        "link": "",
-        "linkHead": "http://",
-        "dataset": "会客模式",
-        "fontSize": 20,
-        "fontColor": "#ffffff",
-        "paddingX": 10,
-        "paddingY": 10,
-        "textAlign": "center",
-        "fontWeight": "bold",
-        "borderWidth": 0,
-        "borderColor": "#ffffff",
-        "borderRadius": 5,
-        "letterSpacing": 0,
-        "writingMode": "horizontal-tb",
-        "backgroundColor": "#00000000"
-      }
-    },
-    {
-      "id": "id_4yj27kj5fcw000",
+      "id": "id_4dsymsfq8zo000",
       "isGroup": false,
       "attr": {
         "x": 371,
@@ -741,7 +327,7 @@
       }
     },
     {
-      "id": "id_4dy9j6lvs5k000",
+      "id": "id_3yghqoj18so000",
       "isGroup": false,
       "attr": {
         "x": 547,
@@ -848,7 +434,7 @@
       }
     },
     {
-      "id": "id_1afqec2l44e80",
+      "id": "id_tspldnhfs1s00",
       "isGroup": false,
       "attr": {
         "x": 917,
@@ -878,7 +464,7 @@
         "overFlowHidden": false
       },
       "status": {
-        "lock": true,
+        "lock": false,
         "hide": false
       },
       "request": {
@@ -943,7 +529,7 @@
       }
     },
     {
-      "id": "id_1ed671ph2tpc00",
+      "id": "id_34wq8u1cvnw000",
       "isGroup": false,
       "attr": {
         "x": 1093,
@@ -1050,7 +636,7 @@
       }
     },
     {
-      "id": "id_5rx2bs0cczw000",
+      "id": "id_496bchtxvrw000",
       "isGroup": false,
       "attr": {
         "x": 544,
@@ -1145,7 +731,7 @@
       }
     },
     {
-      "id": "id_2opcbahybxc000",
+      "id": "id_2mxgn5fdmwc000",
       "isGroup": false,
       "attr": {
         "x": 1081,
@@ -1237,6 +823,190 @@
         "off": "#FFFFFF",
         "on": "#6666FF",
         "dataset": 0
+      }
+    },
+    {
+      "id": "id_4j59b7z5kn4000",
+      "isGroup": false,
+      "attr": {
+        "x": 352,
+        "y": 140,
+        "w": 1067,
+        "h": 396,
+        "offsetX": 0,
+        "offsetY": 0,
+        "zIndex": 1
+      },
+      "styles": {
+        "filterShow": false,
+        "hueRotate": 0,
+        "saturate": 1,
+        "contrast": 1,
+        "brightness": 1,
+        "opacity": 1,
+        "rotateZ": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "skewX": 0,
+        "skewY": 0,
+        "blendMode": "normal",
+        "animations": []
+      },
+      "preview": {
+        "overFlowHidden": false
+      },
+      "status": {
+        "lock": false,
+        "hide": false
+      },
+      "request": {
+        "requestDataType": 0,
+        "requestHttpType": "get",
+        "requestUrl": "",
+        "requestInterval": null,
+        "requestIntervalUnit": "second",
+        "requestContentType": 0,
+        "requestParamsBodyType": "none",
+        "requestSQLContent": {
+          "sql": "select * from  where"
+        },
+        "requestParams": {
+          "Body": {
+            "form-data": {},
+            "x-www-form-urlencoded": {},
+            "json": "",
+            "xml": ""
+          },
+          "Header": {},
+          "Params": {}
+        },
+        "bindParams": {
+          "deviceName": "",
+          "deviceID": "",
+          "objectName": "",
+          "objectID": ""
+        },
+        "bindDatas": []
+      },
+      "filter": null,
+      "events": {
+        "baseEvent": {
+          "click": null,
+          "dblclick": null,
+          "mouseenter": null,
+          "mouseleave": null
+        },
+        "advancedEvents": {
+          "vnodeMounted": null,
+          "vnodeBeforeMount": null
+        },
+        "interactEvents": []
+      },
+      "key": "ConferenceScene",
+      "chartConfig": {
+        "key": "ConferenceScene",
+        "chartKey": "VConferenceScene",
+        "conKey": "VCConferenceScene",
+        "title": "Conference Scene",
+        "category": "Graphic",
+        "categoryName": "() => window[\"$t\"](\"dashboard.graphic\")",
+        "package": "Charts",
+        "chartFrame": "common",
+        "image": "numerical.png"
+      },
+      "option": {
+        "dataset": "1",
+        "inactive_bgColor": "#FFFFFF12",
+        "active_bgColor": "#6666FFFF",
+        "icon_size": 140,
+        "radius": 18,
+        "filter": 32,
+        "x_gap": 60,
+        "y_gap": 80,
+        "padding": 20,
+        "icon_w": 480,
+        "icon_h": 348,
+        "title_size": 20,
+        "title_color": "#FFFFFF",
+        "mode_num": 2,
+        "modes_6": [
+          {
+            "key": "1",
+            "icon": "meeting",
+            "value": "1",
+            "title": "开会模式"
+          },
+          {
+            "key": "2",
+            "icon": "projector",
+            "value": "0",
+            "title": "投影模式"
+          },
+          {
+            "key": "3",
+            "icon": "podium",
+            "value": "4",
+            "title": "宣讲模式"
+          },
+          {
+            "key": "4",
+            "icon": "rest",
+            "value": "5",
+            "title": "离场模式"
+          },
+          {
+            "key": "5",
+            "icon": "film",
+            "value": "2",
+            "title": "观影模式"
+          },
+          {
+            "key": "6",
+            "icon": "shutdown",
+            "value": "3",
+            "title": "全关模式"
+          }
+        ],
+        "modes_4": [
+          {
+            "key": "1",
+            "icon": "home",
+            "value": "1",
+            "title": "日常模式"
+          },
+          {
+            "key": "2",
+            "icon": "meeting",
+            "value": "2",
+            "title": "会客模式"
+          },
+          {
+            "key": "3",
+            "icon": "shutdown",
+            "value": "3",
+            "title": "一楼全关"
+          },
+          {
+            "key": "4",
+            "icon": "shutdown",
+            "value": "5",
+            "title": "展厅全关"
+          }
+        ],
+        "modes_2": [
+          {
+            "key": "1",
+            "icon": "home",
+            "value": "0",
+            "title": "日常模式"
+          },
+          {
+            "key": "2",
+            "icon": "meeting",
+            "value": "1",
+            "title": "会客模式"
+          }
+        ]
       }
     }
   ],

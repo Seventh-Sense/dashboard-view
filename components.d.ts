@@ -46,5 +46,8 @@ declare module 'vue' {
     SizeSetting: typeof import('./src/components/Pages/ChartItemSetting/SizeSetting.vue')['default']
     StylesSetting: typeof import('./src/components/Pages/ChartItemSetting/StylesSetting.vue')['default']
     ThemeColorSelect: typeof import('./src/components/Pages/ThemeColorSelect/index.vue')['default']
+    VanButton: typeof import('vant/es')['Button']
+    VanTab: typeof import('vant/es')['Tab']
+    VanTabs: typeof import('vant/es')['Tabs']
   }
 }

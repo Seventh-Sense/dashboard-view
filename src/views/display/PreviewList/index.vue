@@ -157,7 +157,7 @@ let interval: number | null = null
 onMounted(async () => {
   await getPreviewInfoByInfo(props.ProjectData.content)
 
-  console.log(props.ProjectNum, chartData.editCanvasConfig)
+  //console.log(props.ProjectNum, chartData.editCanvasConfig)
   readPointValue(chartData.componentList)
 })
 
