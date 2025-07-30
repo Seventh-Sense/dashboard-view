@@ -87,6 +87,26 @@ export const option = {
       title: ''
     }
   ],
+  modes_3: [
+    {
+      key: '1',
+      icon: 'home',
+      value: '1',
+      title: '日常模式'
+    },
+    {
+      key: '2',
+      icon: 'meeting',
+      value: '2',
+      title: '会客模式'
+    },
+    {
+      key: '3',
+      icon: 'display',
+      value: '3',
+      title: '沙盘模式'
+    }
+  ],
   modes_2: [
     {
       key: '1',

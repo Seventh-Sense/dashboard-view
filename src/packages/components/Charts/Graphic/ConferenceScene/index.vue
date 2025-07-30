@@ -87,6 +87,46 @@
         </div>
       </n-grid-item>
     </n-grid>
+    <n-grid v-else-if="mode_num === 3" :x-gap="x_gap" :y-gap="y_gap" :cols="3">
+      <n-grid-item v-for="mode in modes_3">
+        <div
+          @click="onClick(mode.value)"
+          class="container-item"
+          :style="{
+            width: icon_w + 'px',
+            height: icon_h + 'px',
+            borderRadius: radius + 'px',
+            backdropFilter: 'blur(' + filter + 'px)',
+            backgroundColor: mode.value === value ? active_bgColor : inactive_bgColor
+          }"
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 16px;
+            "
+          >
+            <Icon
+              :name="mode.icon"
+              type="color-white"
+              :size="icon_size"
+              :color="{ normal: 'white' }"
+            />
+            <div
+              :style="{
+                fontSize: title_size + 'px',
+                color: title_color
+              }"
+            >
+              {{ mode.title }}
+            </div>
+          </div>
+        </div>
+      </n-grid-item>
+    </n-grid>
     <n-grid v-else-if="mode_num === 2" :x-gap="x_gap" :y-gap="y_gap" :cols="2">
       <n-grid-item v-for="mode in modes_2">
         <div
@@ -167,6 +207,7 @@ const {
   mode_num,
   modes_6,
   modes_4,
+  modes_3,
   modes_2
 } = toRefs(props.chartConfig.option)
 

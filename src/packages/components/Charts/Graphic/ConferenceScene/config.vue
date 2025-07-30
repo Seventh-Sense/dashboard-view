@@ -82,6 +82,17 @@
         <n-input v-model:value="item.icon" type="text" size="small"></n-input>
       </SettingItem>
     </SettingItemBox>
+    <SettingItemBox v-else-if="optionData.mode_num === 3" v-for="(item, index) in optionData.modes_3" :name="t('dashboard.option') + (index + 1)">
+      <SettingItem>
+        <n-input v-model:value="item.title" type="text" size="small"></n-input>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.value')">
+        <n-input v-model:value="item.value" size="small"></n-input>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.icon')">
+        <n-input v-model:value="item.icon" type="text" size="small"></n-input>
+      </SettingItem>
+    </SettingItemBox>
     <SettingItemBox v-else-if="optionData.mode_num === 2" v-for="(item, index) in optionData.modes_2" :name="t('dashboard.option') + (index + 1)">
       <SettingItem>
         <n-input v-model:value="item.title" type="text" size="small"></n-input>
@@ -115,6 +126,10 @@ const options = [
   {
     label: '1 X 2',
     value: 2
+  },
+  {
+    label: '1 X 3',
+    value: 3
   },
   {
     label: '2 X 2',
