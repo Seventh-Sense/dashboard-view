@@ -53,6 +53,8 @@ export default {
   msg_add_device_fail: 'Device addition failed!',
   msg_add_device_success: 'Device added successfully!',
   msg_enter_params: 'Please enter the parameters!',
+  msg_no_network_card: 'No available network card currently!',
+  msg_no_select_card: 'Please select a network card first!',
 
   //bacnet
   point_list: 'Points List',

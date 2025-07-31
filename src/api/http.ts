@@ -530,6 +530,16 @@ export const discoveryDevices = async () => {
   }
 }
 
+export const getNetWorkCards = async () => {
+  try {
+    const response = await get2(`/netinfo`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const setDeviceEnable = async (deviceId: string, data: any) => {
   try {
     const response = await post2(`/enable?device_id=${deviceId}&enable=${data}`, data)

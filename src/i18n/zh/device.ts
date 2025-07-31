@@ -54,6 +54,8 @@ export default {
   msg_add_device_fail: '添加设备失败！',
   msg_add_device_success: '添加设备成功！',
   msg_enter_params: '请输入参数！',
+  msg_no_network_card: '当前没有可用的网卡！',
+  msg_no_select_card: '请先选择网卡！',
 
   //bacnet
   point_list: '设备点位列表',
