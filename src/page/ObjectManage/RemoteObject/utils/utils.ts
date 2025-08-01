@@ -34,7 +34,8 @@ export interface PointData {
   status?: string
   properties: any
   tags: string
-  device_id: string
+  device_id: string,
+  timestamp?: any,
 }
 
 export interface DataType {
@@ -151,7 +152,8 @@ export function isBACnet(x: any): x is BACnetType {
 export enum DeviceTypeEnum {
   BACnet = 'bacnet',
   ModbusRTU = 'ModbusRTU',
-  ModbusTCP = 'ModbusTCP'
+  ModbusTCP = 'ModbusTCP',
+  KNX = 'KNX'
 }
 
 export const TypeOptions = [
@@ -165,12 +167,12 @@ export const TypeOptions = [
   },
   {
     label: 'ModbusTCP',
-    value: 'ModbusTCP'
+    value: DeviceTypeEnum.ModbusTCP
+  },
+  {
+    label: 'KNX',
+    value: DeviceTypeEnum.KNX
   }
-  // {
-  //   label: 'EthernetIP',
-  //   value: 'EthernetIP'
-  // }
 ]
 
 export const ModbusRTUData = {
@@ -183,11 +185,11 @@ export const ModbusRTUData = {
   parity: 'N'
 }
 
-export const BACnetData = {
-  interface: '127.0.0.1',
-  port: '47808',
-  broadcast: '127.0.0.255',
-  adpuTimeout: 6000
+export const KNXData = {
+  address_format: 3,
+  connection_type: 1,
+  gateway_ip: '127.0.0.255',
+  gateway_port: 3671
 }
 
 export const ModbusTCPData = {
@@ -350,6 +352,55 @@ export const DatatypeOptions = [
   label: v,
   value: v
 }))
+
+export const addrFormatOptions = [
+  {
+    label: () => window['$t']('device.free'),
+    value: 0
+  },
+  {
+    label: () => window['$t']('device.short'),
+    value: 2
+  },
+  {
+    label: () => window['$t']('device.long'),
+    value: 3
+  }
+]
+
+export const connectTypeOptions = [
+  {
+    label: () => window['$t']('device.automatic'),
+    value: 1
+  },
+  {
+    label: () => window['$t']('device.routing'),
+    value: 2
+  },
+  {
+    label: () => window['$t']('device.routing_secure'),
+    value: 3
+  },
+  {
+    label: () => window['$t']('device.tunneling'),
+    value: 4
+  },
+  {
+    label: () => window['$t']('device.tunneling_tcp'),
+    value: 5
+  }
+]
+
+export const KNXValueTypeOptions = [
+  {
+    label: () => window['$t']('device.bool'),
+    value: 'bool'
+  },
+  {
+    label: () => window['$t']('device.percent'),
+    value: 'percent'
+  }
+]
 
 export function formatTimestamp(timestamp: any) {
   // 将时间戳转为毫秒并创建Date对象

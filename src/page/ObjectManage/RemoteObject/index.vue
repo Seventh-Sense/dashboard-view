@@ -6,7 +6,13 @@
       </div>
       <div class="project-card-filter">
         <div class="project-card-filter-left">
-          <n-input v-model:value="keyword" type="text" :placeholder="t('device.tip_search')" clearable style="width: 366px" />
+          <n-input
+            v-model:value="keyword"
+            type="text"
+            :placeholder="t('device.tip_search')"
+            clearable
+            style="width: 366px"
+          />
         </div>
         <div class="project-card-filter-right">
           <div style="display: flex; justify-content: center; align-items: center">
@@ -223,6 +229,7 @@ const onEdit = (row: DeviceTableData) => {
       break
     case DeviceTypeEnum.ModbusRTU:
     case DeviceTypeEnum.ModbusTCP:
+    case DeviceTypeEnum.KNX:
       isEdit.value = true
       isShowModal.value = true
       break
@@ -248,7 +255,7 @@ const readDeviceData = async (row: DeviceTableData) => {
       } else {
         window['$message'].warning(t('device.msg_read_fail') + res.data)
       }
-      
+
       return
     }
 

@@ -66,6 +66,13 @@
         :deviceData="deviceData"
         :editData="displayData"
       />
+      <KNXPropertyModal
+        v-if="isKNX"
+        v-model:isShowModal="isKNX"
+        :isEdit="isKNXEdit"
+        :deviceData="deviceData"
+        :editData="displayData"
+      />
     </div>
   </div>
 </template>
@@ -87,6 +94,7 @@ import {
 import { TypeEnum } from '../../utils/propertyMap'
 import { cloneDeep } from 'lodash'
 import type { DataTableColumns } from 'naive-ui'
+import { KNXPropertyModal } from '../../modal/KNXPropertyModal'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
@@ -105,6 +113,11 @@ const isDisplay = ref(false)
 const isModbus = ref(false)
 
 const isModbusEdit = ref(false)
+
+//KNX
+const isKNX = ref(false)
+
+const isKNXEdit = ref(false)
 
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 60 - 90)
 
@@ -133,17 +146,15 @@ const columns: DataTableColumns<PointData> = [
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
         return row.metric_type + ',' + row.metric_id
-      } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+      } else  {
         return row.metric_uid
-      } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
-        return row.metric_uid
-      }
+      } 
     }
   },
   { title: () => t('device.status'), key: 'status' },
   { title: () => t('device.value'), key: 'value' },
   { title: () => t('device.desc'), key: 'description' },
-  { title: () => t('dashboard.time'), key: 'tags' },
+  { title: () => t('dashboard.time'), key: 'timestamp' },
   {
     title: '',
     key: 'actions',
@@ -219,6 +230,7 @@ const initData = async () => {
       status: '',
       properties: item.property || {},
       tags: item.tags || [],
+      timestamp: '',
       device_id: props.deviceData.device_id
     }))
     data.value = [...transformedData]
@@ -270,7 +282,7 @@ const periodicFunc = async () => {
         properties: mergeProperties(point.property, originalItem.properties),
         description: getDescription(point, originalItem),
         status: point.status === 0 ? t('device.offline') : t('device.online'),
-        tags: formatTimestamp(point.timestamp)
+        timestamp: formatTimestamp(point.timestamp)
       }
     })
 
@@ -285,7 +297,6 @@ const getDescription = (point: any, origin: any) => {
   let text: string = ''
 
   if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
-    
     if (point.property?.description === 'unknown-property') {
       text = origin.description
     } else {
@@ -322,7 +333,7 @@ const getProcessedValue = (point: any, metricType: any) => {
       if (index >= 0 && index < states.length) {
         return states[index]
       }
-      
+
       return point.value
     }
 
@@ -339,12 +350,15 @@ const onDiscovery = () => {
   //console.log('device data', props.deviceData)
   if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
     isShowModal.value = true
-  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+  } else if (
+    props.deviceData.device_type === DeviceTypeEnum.ModbusRTU ||
+    props.deviceData.device_type === DeviceTypeEnum.ModbusTCP
+  ) {
     isModbus.value = true
     isModbusEdit.value = false
-  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
-    isModbus.value = true
-    isModbusEdit.value = false
+  } else if (props.deviceData.device_type === DeviceTypeEnum.KNX) {
+    isKNX.value = true
+    isKNXEdit.value = false
   }
 }
 
@@ -360,12 +374,15 @@ const onEdit = (row: PointData) => {
     } else {
       window['$message'].warning(t('msg.msg_error_4'))
     }
-  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusRTU) {
+  } else if (
+    props.deviceData.device_type === DeviceTypeEnum.ModbusRTU ||
+    props.deviceData.device_type === DeviceTypeEnum.ModbusTCP
+  ) {
     isModbusEdit.value = true
     isModbus.value = true
-  } else if (props.deviceData.device_type === DeviceTypeEnum.ModbusTCP) {
-    isModbusEdit.value = true
-    isModbus.value = true
+  } else if (props.deviceData.device_type === DeviceTypeEnum.KNX) {
+    isKNXEdit.value = true
+    isKNX.value = true
   }
 }
 
@@ -415,6 +432,15 @@ provide('refreshObjTable', initData)
 
 watch(
   () => isModbus.value,
+  newVal => {
+    if (!newVal) {
+      initData()
+    }
+  }
+)
+
+watch(
+  () => isKNX.value,
   newVal => {
     if (!newVal) {
       initData()

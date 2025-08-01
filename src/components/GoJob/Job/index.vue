@@ -76,6 +76,10 @@ const options = [
   {
     label: 'polling_modbus_device',
     value: 'xplay.app.task:polling_modbus_device'
+  },
+  {
+    label: 'polling_knx_device',
+    value: 'xplay.app.task:polling_knx_device'
   }
 ]
 
@@ -130,6 +134,8 @@ watch(
       data.value.id = 'polling_bacnet_device'
     } else if (newVal === 'xplay.app.task:polling_modbus_device') {
       data.value.id = 'polling_modbus_device'
+    } else if (newVal === 'xplay.app.task:polling_knx_device') {
+      data.value.id = 'polling_knx_device'
     }
   }
 )
