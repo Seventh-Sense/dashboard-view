@@ -411,7 +411,6 @@ const handleFileUpload = (event: Event) => {
 
       if (res.status !== 'OK') {
         console.warn('Non-OK response status:', res.status)
-
         return
       }
       initData()
