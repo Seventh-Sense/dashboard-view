@@ -3,6 +3,24 @@
     <div v-if="!isToggle" class="project-card">
       <div class="project-card-top">
         <div class="project-card-top-title">{{ $t('device.device_list') }}</div>
+        <n-space justify="end" align="center">
+          <n-dropdown
+            trigger="hover"
+            :options="options"
+            placement="bottom-end"
+            @select="handleSelect"
+          >
+            <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
+          </n-dropdown>
+        </n-space>
+        <!-- <n-space>
+          <div class="content-button" @click="importAllDevices">
+            {{ $t('device.import_devices') }}
+          </div>
+          <div class="content-button" @click="exportAllDevices">
+            {{ $t('device.export_devices') }}
+          </div>
+        </n-space> -->
       </div>
       <div class="project-card-filter">
         <div class="project-card-filter-left">
@@ -73,6 +91,14 @@
         :displayData="displayData"
         :deviceData="deviceData"
       />
+      <!-- 隐藏的文件输入 -->
+      <input
+        ref="fileInput"
+        type="file"
+        accept=".xlsx, .xls"
+        style="display: none"
+        @change="handleFileUpload"
+      />
     </div>
     <div v-else class="project-card">
       <ObjectList :deviceData="deviceData" @goback="goback" />
@@ -82,15 +108,29 @@
 
 <script setup lang="ts">
 import { ref, onMounted, provide, computed } from 'vue'
-import { NButton } from 'naive-ui'
-import { DeviceTableData, DeviceTypeEnum, sortByString } from './utils/utils'
+import { NButton, DropdownOption } from 'naive-ui'
+import {
+  DeviceTableData,
+  DeviceTypeEnum,
+  sortByString,
+  exportJsonToExcel,
+  processExcel
+} from './utils/utils'
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
 import { PropertyDisplayModal } from './modal/PropertyDisplayModal'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { renderImage, routerTurnByName } from '@/utils'
 import { PageEnum } from '@/enums/pageEnum'
-import { setDeviceEnable, getDeviceList, deleteDevice, readIotPoints } from '@/api/http'
+import {
+  setDeviceEnable,
+  getDeviceList,
+  deleteDevice,
+  readIotPoints,
+  addSubscribePoint,
+  concurrentRequests,
+  importData
+} from '@/api/http'
 import jsonList from '@/assets/data/Property.json'
 import { deviceTrans } from './utils/propertyMap'
 
@@ -315,7 +355,76 @@ const options: any[] = [
     icon: renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
   }
 ]
-const handleSelect = () => {}
+
+const fileInput = ref<HTMLInputElement | null>(null)
+
+const handleSelect = (key: string | number, option: DropdownOption, event: MouseEvent) => {
+  switch (key) {
+    case '1':
+      fileInput.value?.click()
+      break
+    case '2':
+      exportAllDevices()
+      break
+    case '3':
+      initData()
+      break
+    default:
+      console.warn('Unknown menu option selected:', key)
+  }
+}
+
+const exportAllDevices = async () => {
+  const apiUrls = ['/devices', '/metrics']
+
+  try {
+    const res: any = await concurrentRequests(apiUrls)
+    console.log('API Response:', res)
+    if (res.length === 2 && res[0].status === 'OK' && res[1].status === 'OK') {
+      exportJsonToExcel(res[0].data, res[1].data, 'all_data')
+    } else {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+  } catch (e) {
+    console.error('Failed to get devices:', e)
+  }
+}
+
+// 处理文件上传
+const handleFileUpload = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (!input.files?.length) return
+
+  const file = input.files[0]
+  const reader = new FileReader()
+
+  reader.onload = async e => {
+    try {
+      const data = e.target?.result as ArrayBuffer
+      const sheetsData = processExcel(data)
+
+      console.warn('Non-OK response status:', sheetsData)
+      //const res: any = await addSubscribePoint(sheetsData.points)
+
+      const res: any = await importData(sheetsData)
+
+      if (res.status !== 'OK') {
+        console.warn('Non-OK response status:', res.status)
+
+        return
+      }
+      initData()
+    } catch (error) {
+      console.error('Failed to get files:', e)
+    } finally {
+      // 重置输入以允许重复选择相同文件
+      input.value = ''
+    }
+  }
+
+  reader.readAsArrayBuffer(file)
+}
 
 provide('deviceList', data)
 provide('refreshFunc', initData)
@@ -375,6 +484,19 @@ provide('refreshFunc', initData)
       padding: 0 16px;
     }
   }
+}
+
+.content-button {
+  width: 88px;
+  height: 32px;
+  border-radius: 2px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #{$--color-dark-button2};
+  border: 1px solid #{$--color-dark-button2-border};
 }
 
 :deep(.ant-table) {

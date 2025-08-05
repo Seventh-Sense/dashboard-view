@@ -3,9 +3,9 @@
     <div class="content-title">
       <span class="content-porperty">{{ t('device.device_list') }}</span>
       <div style="display: flex; align-items: center; justify-content: flex-end; gap: 32px">
-        <div>
+        <!-- <div>
           <n-select v-model:value="networkCard" :options="options" style="width: 200px" />
-        </div>
+        </div> -->
         <div class="content-button" @click="onDiscovery">{{ $t('device.search') }}</div>
       </div>
     </div>
@@ -117,10 +117,10 @@ const getNetWorks = async () => {
 }
 
 const onDiscovery = async () => {
-  if (networkCard.value === '') {
-    window['$message'].warning(t('device.msg_no_select_card'))
-    return
-  }
+  // if (networkCard.value === '') {
+  //   window['$message'].warning(t('device.msg_no_select_card'))
+  //   return
+  // }
 
   loading.value = true
 

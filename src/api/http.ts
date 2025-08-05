@@ -570,6 +570,26 @@ export const addDevice = async (data: any) => {
   }
 }
 
+export const addDevices = async (data: any) => {
+  try {
+    const response = await post2('/devices', data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const readAllPoints = async () => {
+  try {
+    const response = await get2(`/metrics`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const readSubscribePoints = async (deviceId: any) => {
   try {
     const response = await get2(`/metrics/` + deviceId)
@@ -695,6 +715,53 @@ export const addJob = async (data: any) => {
 export const deleteJob = async (id: any) => {
   try {
     const response = await del2(`/` + id)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+interface ApiResponse<T = any> {
+  data: T;
+  status: number;
+}
+
+/**
+ * 并发请求多个URL
+ * @param urls 请求的URL数组
+ * @returns 包含所有响应结果的Promise
+ */
+export const concurrentRequests = <T>(urls: string[]): Promise<ApiResponse<T>[]> => {
+  // 创建axios请求数组
+  const requests = urls.map(url => 
+    get2(url).then(res => ({
+      data: res.data,
+      status: res.status
+    }))
+  );
+  
+  // 等待所有请求完成
+  return Promise.all(requests);
+};
+
+export const executeParallelRequests  = <T>(data: any[]): Promise<ApiResponse<T>[]> => {
+  // 创建axios请求数组
+  const requests = data.map(item => 
+    post2(item.url, item.data).then(res => ({
+      data: res.data,
+      status: res.status
+    }))
+  );
+  
+  // 等待所有请求完成
+  return Promise.all(requests);
+};
+
+
+export const importData = async (data: any) => {
+  try {
+    const response = await post2(`/import/data`, data)
 
     return response
   } catch (error) {
