@@ -17,6 +17,9 @@
       "@/*": ["src/*"],
       "/#/*": ["types/*"]
     },
+    "incremental": true,
+    "tsBuildInfoFile": "./.tsbuildinfo",
+    "maxNodeModuleJsDepth": 0,
     "noImplicitAny": true, //不允许使用any
     // "strictNullChecks": true, //不允许使用null
     "noImplicitThis": true //不允许往this上面挂属性

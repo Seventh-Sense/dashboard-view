@@ -22,7 +22,7 @@
           />
         </n-space>
       </template>
-      <div style="height: 550px; overflow-y: auto">
+      <div style="height: 550px; overflow-y: auto;overflow-x: hidden;">
         <div class="modal-top">
           <n-button class="modal-button-ok" @click="onAdd">
             {{ $t('global.r_create') }}
@@ -38,7 +38,7 @@
           <n-collapse-item v-for="job in jobData" :name="job.name">
             <template #header>
               <n-space align="center" justify="space-between" style="height: 52px; width: 740px">
-                <div>
+                <div style="display: flex;align-items: center;">
                   <img width="24" height="24" :src="SVG_ICON.card_icons.separator" />
                   <span>{{ job.name }}</span>
                 </div>

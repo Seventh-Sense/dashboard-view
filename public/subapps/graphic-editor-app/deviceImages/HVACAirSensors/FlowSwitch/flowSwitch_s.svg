@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 583 948">
+  <defs>
+    <clipPath id="clippath-1">
+      <rect x="-32.18" y="309.32" width="678.43" height="620.44" transform="translate(-63.08 35.49) rotate(-6)" style="fill: none;"/>
+    </clipPath>
+    <filter id="AI_GaussianBlur_64" x="-200%" y="-200%" width="600%" height="600%">
+      <feGaussianBlur stdDeviation="64"/>
+    </filter>
+    <clipPath id="clippath-2">
+      <rect x="-74.55" y="134.38" width="678.43" height="164.17" transform="translate(-21.18 28.85) rotate(-6)" style="fill: none;"/>
+    </clipPath>
+    <filter id="AI_GaussianBlur_32" x="-200%" y="-200%" width="400%" height="400%">
+      <feGaussianBlur stdDeviation="32"/>
+    </filter>
+  </defs>
+  <g style="clip-path: url(#clippath-1);">
+    <g style="filter: url(#AI_GaussianBlur_64); opacity: .27;">
+      <polygon points="120.8 149.04 120.8 669.04 181.2 662.7 181.2 142.7 120.8 149.04"/>
+    </g>
+  </g>
+  <g style="clip-path: url(#clippath-2);">
+    <g style="filter: url(#AI_GaussianBlur_32); opacity: .27;">
+      <polygon points="317.5 243.93 205.1 189.71 386.3 170.66 498.7 224.88 317.5 243.93"/>
+    </g>
+  </g>
+</svg>

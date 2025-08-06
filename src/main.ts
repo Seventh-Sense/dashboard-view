@@ -22,7 +22,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import VueCookies from 'vue-cookies'
-import 'ant-design-vue/dist/reset.css';
+//import 'ant-design-vue/dist/reset.css';
 
 import Antd from 'ant-design-vue';
 

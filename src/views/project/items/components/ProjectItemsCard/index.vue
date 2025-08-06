@@ -110,7 +110,6 @@ $cardTopHeight: 44px;
 
     &-title {
       padding: 0 10px;
-      width: 100%;
       height: $cardTopHeight;
       display: flex;
       align-items: center;
