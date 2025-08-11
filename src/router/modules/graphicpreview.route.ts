@@ -3,7 +3,7 @@ import { GraphicPreviewEnum } from '@/enums/pageEnum'
 
 // 引入路径
 const importPath = {
-  'GraphicPreviewEnum.CHART_GRAPHIC_PREVIEW_NAME': () => import('@/page/Preview/index.vue')
+  'GraphicPreviewEnum.CHART_GRAPHIC_PREVIEW_NAME': () => import('@/page/GraphicPreview/index.vue')
 }
 
 const graphicPreviewRoutes: RouteRecordRaw = {

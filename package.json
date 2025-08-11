@@ -21,6 +21,7 @@
     "@types/swiper": "^6.0.0",
     "@x-plateform/common": "^1.0.211",
     "@x-plateform/graphic-editor": "^1.0.0",
+    "@x-plateform/business": "^1.0.21",
     "animate.css": "^4.1.1",
     "ant-design-vue": "4.x",
     "axios": "^1.4.0",

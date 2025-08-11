@@ -38,6 +38,9 @@ importers:
       '@types/swiper':
         specifier: ^6.0.0
         version: 6.0.0
+      '@x-plateform/business':
+        specifier: ^1.0.21
+        version: 1.0.184(encoding@0.1.13)(typescript@4.6.3)
       '@x-plateform/common':
         specifier: ^1.0.211
         version: 1.0.211(typescript@4.6.3)
@@ -1007,6 +1010,9 @@ packages:
   '@tsconfig/node16@1.0.3':
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
 
+  '@tweenjs/tween.js@25.0.0':
+    resolution: {integrity: sha512-XKLA6syeBUaPzx4j3qwMqzzq+V4uo72BnlbOjmuljLrRqdsd3qnzvZZoxvMHZ23ndsRS4aufU6JOZYpCbU6T1A==}
+
   '@types/color-convert@2.0.0':
     resolution: {integrity: sha512-m7GG7IKKGuJUXvkZ1qqG3ChccdIM/qBBo913z+Xft0nKCX4hAU/IxKwZBU4cpRZ7GS5kV4vOblUkILtSShCPXQ==}
 
@@ -1483,11 +1489,14 @@ packages:
   '@webassemblyjs/wast-printer@1.11.6':
     resolution: {integrity: sha512-JM7AhRcE+yW2GWYaKeHL5vt4xqee5N2WcezptmgyhNS+ScggqcT1OtXykhAb13Sn5Yas0j2uv9tHgrjwvzAP4A==}
 
-  '@x-plateform/business@1.0.168':
-    resolution: {integrity: sha512-VB/FzL+hnifZaGSZO+8DCk8+ej9czyjacFTsL3GyRWj28KNsUl+Zblr9uCv2OqE7M5xlJfAi/g3rmwhnJY9j8Q==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/business/-/@x-plateform/business-1.0.168.tgz}
+  '@x-plateform/business@1.0.184':
+    resolution: {integrity: sha512-S+gy/QEVD1y9Q4lFROEMttQ8LuLetzZfr0tX6fuIgSnhPl/fXUdZVv7W8EW/0v15IKhne31i7sraRPTUiQpctA==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/business/-/@x-plateform/business-1.0.184.tgz}
 
   '@x-plateform/common@1.0.211':
     resolution: {integrity: sha512-EtCLoxuLnGG7nrhjLfsuGtk2cqUpoCxvMGdFaO0wxqBfbE6opHCX5RMYkFNaTezlEzbFHOMIJ3KdjQCxLYjPkQ==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/common/-/@x-plateform/common-1.0.211.tgz}
+
+  '@x-plateform/common@1.0.224':
+    resolution: {integrity: sha512-F7WCode0qHbAe+e1PtFgDDtl74XnnJpDj9qHasJIrbbtvG9DhuIG8qy6S6dwZB8xoOycCXw5yrdc/VbSifU2ZA==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/common/-/@x-plateform/common-1.0.224.tgz}
 
   '@x-plateform/gif-parser@1.0.2':
     resolution: {integrity: sha512-GG+XlesZcuwHxHnARAgECjRmWQbUp2F1lHjpsX21/s2m0NBPxO4kr8+JYvzGj1PQ/9mNO74LHrtRK/QsTKP2VA==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/gif-parser/-/@x-plateform/gif-parser-1.0.2.tgz}
@@ -1500,6 +1509,9 @@ packages:
 
   '@x-plateform/service@1.0.165':
     resolution: {integrity: sha512-YJKtFlPEhr9LVfQibrXpkoGYhvPJZu2fc2+k4A8mA155edsK6mRfBFjPYhXjtQJeGwaocUdLfw34uOE4ysncnw==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/service/-/@x-plateform/service-1.0.165.tgz}
+
+  '@x-plateform/service@1.0.181':
+    resolution: {integrity: sha512-KPN3WDee1MZdlC6m/7pE7NJJzYemt7jF29og0U9tvDxU+fcTjez6kLtI4jy0e8cDA3lu3+kztHS3ZjGyf5bMbw==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/service/-/@x-plateform/service-1.0.181.tgz}
 
   '@x-plateform/x-icons@1.0.48':
     resolution: {integrity: sha512-0ICBAMrI3VqGQCGFVr70gfyKsZJLN1l5x2BmBJflyLu0AA8ebEixecSN9Tx/MaJT1BTV1SOF9Z3l4Da7m2bZBg==, tarball: https://medicinecenter-npm.pkg.coding.net/xplateform/npm/@x-plateform/x-icons/-/@x-plateform/x-icons-1.0.48.tgz}
@@ -6581,6 +6593,8 @@ snapshots:
 
   '@tsconfig/node16@1.0.3': {}
 
+  '@tweenjs/tween.js@25.0.0': {}
+
   '@types/color-convert@2.0.0':
     dependencies:
       '@types/color-name': 1.1.1
@@ -6905,7 +6919,7 @@ snapshots:
       '@babel/parser': 7.27.3
       '@vue/shared': 3.3.13
       estree-walker: 2.0.2
-      source-map-js: 1.0.2
+      source-map-js: 1.2.1
 
   '@vue/compiler-core@3.5.16':
     dependencies:
@@ -6954,7 +6968,7 @@ snapshots:
       estree-walker: 2.0.2
       magic-string: 0.30.17
       postcss: 8.5.3
-      source-map-js: 1.0.2
+      source-map-js: 1.2.1
 
   '@vue/compiler-sfc@3.5.16':
     dependencies:
@@ -7225,14 +7239,14 @@ snapshots:
       '@webassemblyjs/ast': 1.11.6
       '@xtuc/long': 4.2.2
 
-  '@x-plateform/business@1.0.168(encoding@0.1.13)(typescript@4.6.3)':
+  '@x-plateform/business@1.0.184(encoding@0.1.13)(typescript@4.6.3)':
     dependencies:
       '@fortawesome/fontawesome-free': 6.7.2
       '@voerkai18n/runtime': 2.1.13
       '@vueuse/core': 12.8.2(typescript@4.6.3)
-      '@x-plateform/common': 1.0.211(typescript@4.6.3)
+      '@x-plateform/common': 1.0.224(typescript@4.6.3)
       '@x-plateform/neo-icons': 1.0.2(typescript@4.6.3)
-      '@x-plateform/service': 1.0.165(encoding@0.1.13)
+      '@x-plateform/service': 1.0.181(encoding@0.1.13)
       '@x-plateform/x-icons': 1.0.48
       echarts: 5.6.0
       pako: 2.1.0
@@ -7277,13 +7291,43 @@ snapshots:
       - supports-color
       - typescript
 
+  '@x-plateform/common@1.0.224(typescript@4.6.3)':
+    dependencies:
+      '@fortawesome/fontawesome-free': 6.7.2
+      '@lottiefiles/lottie-player': 1.7.1
+      '@popperjs/core': 2.11.8
+      '@tweenjs/tween.js': 25.0.0
+      '@types/lodash': 4.17.7
+      '@voerkai18n/runtime': 2.1.13
+      '@vuepic/vue-datepicker': 3.6.8(vue@3.3.13(typescript@4.6.3))
+      '@x-plateform/neo-icons': 1.0.2(typescript@4.6.3)
+      '@x-plateform/x-icons': 1.0.48
+      color-string: 1.9.1
+      date-fns: 2.30.0
+      docxtemplater: 3.63.2
+      docxtemplater-image-module-free: 1.1.1
+      echarts: 5.6.0
+      element-plus: 2.9.11(vue@3.3.13(typescript@4.6.3))
+      font-awesome: 4.7.0
+      lodash: 4.17.21
+      pizzip: 3.2.0
+      qrcode: 1.5.4
+      vanilla-colorful: 0.6.2
+      vue: 3.3.13(typescript@4.6.3)
+      vue-router: 4.5.1(vue@3.3.13(typescript@4.6.3))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - bluebird
+      - supports-color
+      - typescript
+
   '@x-plateform/gif-parser@1.0.2': {}
 
   '@x-plateform/graphic-editor@1.1.160(encoding@0.1.13)(typescript@4.6.3)(vite@4.3.6(@types/node@16.11.40)(sass@1.52.3)(terser@5.17.3))':
     dependencies:
       '@fortawesome/fontawesome-free': 6.7.2
       '@lottiefiles/lottie-player': 1.7.1
-      '@x-plateform/business': 1.0.168(encoding@0.1.13)(typescript@4.6.3)
+      '@x-plateform/business': 1.0.184(encoding@0.1.13)(typescript@4.6.3)
       '@x-plateform/common': 1.0.211(typescript@4.6.3)
       '@x-plateform/gif-parser': 1.0.2
       '@x-plateform/neo-icons': 1.0.2(typescript@4.6.3)
@@ -7323,6 +7367,21 @@ snapshots:
       - typescript
 
   '@x-plateform/service@1.0.165(encoding@0.1.13)':
+    dependencies:
+      '@microsoft/signalr': 7.0.14(encoding@0.1.13)
+      '@types/js-cookie': 3.0.6
+      axios: 0.27.2
+      date-fns: 2.30.0
+      js-cookie: 3.0.5
+      localforage-indexes: 1.1.1
+      localforage-lru-driver: 1.0.4
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+
+  '@x-plateform/service@1.0.181(encoding@0.1.13)':
     dependencies:
       '@microsoft/signalr': 7.0.14(encoding@0.1.13)
       '@types/js-cookie': 3.0.6

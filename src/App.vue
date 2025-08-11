@@ -36,7 +36,7 @@ import '@x-plateform/common/dist/style.css'
 import enUS from 'ant-design-vue/es/locale/en_US';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import { useLangStore } from '@/store/modules/langStore/langStore'
-import { he } from 'element-plus/es/locale'
+//import { he } from 'element-plus/es/locale'
 
 const route = useRoute()
 const lang = useLangStore()
