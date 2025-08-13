@@ -1,115 +1,137 @@
-import { readPointById } from '@/api/http'
-import { getAllDataIdsSafe } from '@/views/display/util/util'
 
-export default class DataHandleManager {
-  currentSpaceRef: string = ''
+import { IntervalTimeOut } from '@/views/display/util/util'
+import DataManager from './DataManager'
+import { readPointsDataById } from '@/api/http'
 
-  dataModels: any[] = []
+export enum PointAttrValueType {
+  Analog = 'Analog',
+  State = 'State',
+  String = 'String',
+  Binary = 'Binary'
+}
 
-  modelBindings: any[] = []
+export enum BasicValueTypes {
+  binary = 'binary',
+  state = 'state',
+  analog = 'analog',
+  text = 'text',
+  timestamp = 'timestamp'
+}
 
-  setDataModels(list: any[]) {}
+export interface PointBinding {
+  cpntId: number
+  bindingType: 'point'
+  pointRef: string
+  pointName: string
+  pointType: PointAttrValueType
+  valueType: BasicValueTypes
+  range: Record<string, unknown>
+}
 
-  spaceEquipmentsPromise: Promise<any[]> = Promise.resolve([])
+type PointCallback = (value: any, type?: any, translatedText?: string) => void
+type BindingPair = [PointBinding | undefined, PointCallback | undefined]
 
-  async setPointBindings(
-    list: [
-      any | undefined,
-      ((value: any, type?: any, translatedText?: string) => void) | undefined
-    ][]
-  ): Promise<any[]> {
-    const load = Array.from(
-      new Set(
-        list.flatMap(([point]) => {
-          const pointId = point?.pointID
-          return pointId ? [pointId] : [] // 有效值放入数组，无效值返回空数组
-        })
-      )
-    )
+interface PointCallbackInfo {
+  callback: PointCallback
+  pointType: PointAttrValueType
+}
 
-    console.log('setPointBindings', load)
+export default class DataHandleManager extends DataManager {
+  private intervalId: number | null = null
 
-    if (load.length > 0) {
-      let resData = []
+  async setPointBindings(bindingPairs: BindingPair[]): Promise<any[]> {
+    // 清理之前的定时器
+    this.clearInterval()
 
-      readPointById(load)
-        .then((res: any) => {
-          if (res.status === 'OK') {
-            //挨个set
-            resData = res.data || []
-          } else {
-            console.log('no data!')
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    // 创建点ID到回调信息的映射
+    const callbackMap = new Map<string, PointCallbackInfo[]>()
+
+    // 收集有效点ID
+    const pointIds = new Set<string>()
+
+    bindingPairs.forEach(([binding, callback]) => {
+      if (!binding || !callback) return
+      
+      const parts = binding.pointRef.split(',')
+      if (parts.length < 2) return
+      
+      const pointId = parts[1]
+      if (!pointId) return
+      
+      // 添加到点ID集合
+      pointIds.add(pointId)
+      
+      // 添加到回调映射
+      if (!callbackMap.has(pointId)) {
+        callbackMap.set(pointId, [])
+      }
+      
+      callbackMap.get(pointId)!.push({
+        callback,
+        pointType: binding.pointType
+      })
+    })
+
+    const uniquePointIds = Array.from(pointIds)
+    if (uniquePointIds.length === 0) {
+      return []
     }
 
+    // 立即获取初始数据
+    try {
+      await this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+    } catch (error) {
+      console.error('Initial points data fetch failed', error)
+    }
+
+    // 设置定时轮询
+    this.intervalId = window.setInterval(
+      () => {
+        this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+      },
+      IntervalTimeOut
+    )
+
     return []
   }
 
-  setCurrentSpace(spaceRef?: string) {}
-
-  async getCurrentSpaceEquipmentByName(name: string, templateRef: string) {
-    return undefined
-  }
-
-  setModelBindings(list: any[]) {}
-
-  pointTrendCache: Map<string, Promise<string>> = new Map()
-
-  async getTrendRefByPointRef(pointRef: string) {
-    return ''
-  }
-
-  async getTrendRef(list: (any | undefined)[]) {
-    return []
-  }
-
-  async getTrendResult(
-    list: (any | undefined)[],
-    chartCondition: { jMode: number; dMode: number; startDate: Date; endDate: Date }
+  private async fetchAndUpdatePoints(
+    pointIds: string[],
+    callbackMap: Map<string, PointCallbackInfo[]>
   ) {
-    return []
+    try {
+      const res = await readPointsDataById(pointIds)
+      if (!res.data || !Array.isArray(res.data)) {
+        console.warn('Invalid points data response', res)
+        return
+      }
+
+      res.data.forEach((item: any) => {
+        const callbackInfos = callbackMap.get(item.metric_id)
+        if (!callbackInfos) return
+        
+        callbackInfos.forEach(({ callback, pointType }) => {
+          try {
+            callback(item.value, pointType)
+          } catch (err) {
+            console.error(`Error executing callback for point ${item.metric_id}`, err)
+          }
+        })
+      })
+    } catch (err) {
+      console.error('Failed to fetch points data', err)
+    }
   }
 
-  subscribedPointMap: Map<string, ((value: any, type?: any, translatedText?: string) => void)[]> =
-    new Map()
 
-  async getEquipmentByDataModelBinding(binding: any) {
-    return undefined
+  private clearInterval() {
+    if (this.intervalId !== null) {
+      window.clearInterval(this.intervalId)
+      this.intervalId = null
+    }
   }
 
-  pointValidateCache = new Map<string, Promise<boolean>>()
-  modelValidateCache = new Map<string, Promise<any | undefined>>()
-
-  async validateBinding(
-    binding?: any | { cpntId: number; innerName?: string; bindingType?: undefined }
-  ): Promise<
-    | undefined
-    | 'networkPointLost'
-    | 'equipmentReferenceLost'
-    | 'equipmentPointUnbind'
-    | 'equipmentPointBindingLost'
-  > {
-    return undefined
+  dispose() {
+    this.clearInterval()
   }
-
-  async validatePoint(pointRef: string) {
-    return true
-  }
-
-  async getEquipmentByRef(modelRef: string): Promise<any | undefined> {}
-
-  _eventCallback = new Map<String, any[]>()
-
-  on(eventName: string, callback: any) {
-    return () => {}
-  }
-  off(eventName: string, callback?: any) {}
-
-  dispatch(eventName: string, event?: any, ...args: any[]) {}
-
-  dispose() {}
 }

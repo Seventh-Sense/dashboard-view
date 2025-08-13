@@ -18,9 +18,6 @@ import 'animate.css/animate.min.css'
 // 引入标尺
 import 'vue3-sketch-ruler/lib/style.css'
 
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-
 import VueCookies from 'vue-cookies'
 import 'ant-design-vue/dist/reset.css'
 
@@ -81,7 +78,7 @@ async function appInit() {
   app.use(i18n)
 
   //Element 挂载
-  app.use(ElementPlus)
+  //app.use(ElementPlus)
 
   // 配置vue-cookies
   app.use(VueCookies)

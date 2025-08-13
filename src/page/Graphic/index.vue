@@ -73,4 +73,8 @@ const onSave = (data: any, callback?: (success: boolean) => void) => {
 const showPreview = () => { }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.graphic-editor, .graphic-editor::before, .graphic-editor::after {
+    box-sizing: unset !important;
+}
+</style>

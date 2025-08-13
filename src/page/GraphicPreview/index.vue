@@ -68,6 +68,7 @@ const itemclick = (params: any) => {}
 
 
 const handleFloatingIconClick = () => {
+  dataHandleManager.dispose()
   router.replace({
     path: PageEnum.BASE_HOME_ITEMS
   })
