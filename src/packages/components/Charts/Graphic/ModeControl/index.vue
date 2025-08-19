@@ -54,7 +54,8 @@ const {
   title,
   title_size,
   title_color,
-  gap
+  gap,
+  active_value
 } = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -64,7 +65,7 @@ const onClick = throttle(
     try {
       flag.value = true
 
-      let data = value.value ? 0 : 1
+      let data = active_value.value
 
       let tmp = cloneDeep(value.value)
 

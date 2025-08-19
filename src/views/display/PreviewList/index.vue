@@ -157,7 +157,6 @@ let interval: number | null = null
 onMounted(async () => {
   await getPreviewInfoByInfo(props.ProjectData.content)
 
-  //console.log(props.ProjectNum, chartData.editCanvasConfig)
   readPointValue(chartData.componentList)
 })
 
@@ -216,6 +215,14 @@ onUnmounted(() => {
     window.clearInterval(interval)
   }
 })
+
+const scaleX = computed(() => {
+  return window.innerWidth / chartData.editCanvasConfig.width
+})
+
+const scaleY = computed(() => {
+  return window.innerHeight / chartData.editCanvasConfig.height
+})
 </script>
 
 <style lang="scss" scoped>
@@ -232,6 +239,7 @@ onUnmounted(() => {
     overflow: hidden;
     .go-preview-scale {
       transform-origin: center center;
+      transform: scale(v-bind('scaleX'), v-bind('scaleY')) !important;
     }
   }
   &.scrollY {

@@ -9,8 +9,9 @@ export default {
 
     //gauge
     gauge_msg_1: 'The component modified successfully!',
-    gauge_msg_2: 'The component modified failed!',
+    gauge_msg_2: 'Data update failed!',
     gauge_msg_3: 'The component has no binding object!',
+    gauge_msg_4: 'Data update failed. No write permission!',
 
     //login
     login_msg_1: 'Login successful!',
