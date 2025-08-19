@@ -4,22 +4,12 @@
   </div>
   <div v-else class="tabs-container">
     <div class="tabs-bar">
-      <div
-        v-for="(slide, index) in slides"
-        :key="index"
-        class="tabs-item"
-        :class="{ active: currentIndex === index }"
-        @click="switchTab(index)"
-      >
+      <div v-for="(slide, index) in slides" :key="index" class="tabs-item" :class="{ active: currentIndex === index }"
+        @click="switchTab(index)">
         {{ slide.name }}
       </div>
     </div>
-    <div
-      class="content-container"
-      @touchstart="onTouchStart"
-      @touchmove="onTouchMove"
-      @touchend="onTouchEnd"
-    >
+    <div class="content-container" @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
       <div class="content-wrapper" :style="{ transform: `translateX(${offsetX}px)` }">
         <div v-for="(slide, index) in slides" :key="index" class="content-item">
           <PreviewList :ProjectData="slide" :ProjectNum="index" />
@@ -31,14 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { ref } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { readProjectList } from '@/api/http'
 import { PreviewList } from '../display/PreviewList'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { useRouter } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
+import { setLocalStorage, cryptoEncode } from '@/utils'
+import { StorageEnum } from '@/enums/storageEnum'
 
+const { GO_LOGIN_INFO_STORE } = StorageEnum
 const flag = ref(false)
 const currentIndex = ref(0)
 const slides = ref<any[]>([])
@@ -50,7 +42,24 @@ const isAnimating = ref(false)
 
 const router = useRouter()
 
+const formInline = reactive({
+  username: 'user',
+  password: '123456'
+})
+
 onMounted(() => {
+  const { username, password } = formInline
+
+  setLocalStorage(
+    GO_LOGIN_INFO_STORE,
+    cryptoEncode(
+      JSON.stringify({
+        username,
+        password
+      })
+    )
+  )
+
   initTabs()
 })
 

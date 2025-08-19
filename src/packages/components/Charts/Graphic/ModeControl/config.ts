@@ -6,11 +6,11 @@ import { chartInitConfig } from '@/settings/designSetting'
 
 export const option: any = {
   dataset: 0,
-  active_value: '1',
+  active_value: 0,
   inactive_value: '0',
   inactive_bgColor: '#FFFFFF12',
   active_bgColor: '#6666FFFF',
-  icon: 'meeting',
+  icon: 'shutdown',
   icon_size: 140,
   radius: 6,
   filter: 32,
