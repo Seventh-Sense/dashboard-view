@@ -4,7 +4,7 @@
     :style="{
       width: w + 'px',
       height: h + 'px',
-      background: value ? active_bgColor : inactive_bgColor,
+      background: inactive_bgColor,
       borderRadius: radius + 'px',
       backdropFilter: 'blur(' + filter + 'px)',
       gap: gap + 'px'
@@ -41,7 +41,7 @@ const props = defineProps({
 })
 
 const t = window['$t']
-const value = ref<boolean>(false)
+const value = ref<any>(0)
 const flag = ref(false)
 
 const {
@@ -69,7 +69,7 @@ const onClick = throttle(
 
       let tmp = cloneDeep(value.value)
 
-      value.value = parseData(data, 'boolean')
+      value.value = parseData(data, 'number')
 
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
@@ -93,7 +93,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      value.value = parseData(newVal, 'boolean')
+      value.value = parseData(newVal, 'number')
     }
   },
   {

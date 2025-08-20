@@ -32,9 +32,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, inject } from 'vue'
+import { ref, watch, inject, onMounted } from 'vue'
 import { icon } from '@/plugins'
-import { updateProject } from '@/api/http'
+import { readProject, updateProject } from '@/api/http'
+import { JSONParse } from '@/utils'
 
 const { CloseOutlineIcon } = icon.ionicons5
 
@@ -56,26 +57,46 @@ const t = window['$t']
 const showRef = ref(false)
 const project_name = ref<string>(props.cardData.title)
 
+const data = ref<any>(null)
+
 watch(
   () => props.show,
   newValue => {
     showRef.value = newValue
+
+    if (newValue) {
+      readData()
+    }
   }
 )
 
+const readData = () => {
+  readProject(props.cardData.id)
+    .then((res: any) => {
+      if (res.status === 'OK' && res.data && res.data.content !== '') {
+        data.value = JSONParse(res.data.content)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
 const onPositiveClick = async () => {
   if (project_name.value !== '') {
+    data.value.editCanvasConfig.projectName = project_name.value
     try {
       const res: any = await updateProject(props.cardData.id, {
-        name: project_name.value
+        name: project_name.value,
+        content: JSON.stringify(data.value)
       })
       if (res.status !== 'OK') {
         console.warn('Non-OK response status:', res.status)
         return
       }
-      //initTable()
-      props.cardData.title = project_name.value
-      props.cardData.label = project_name.value
+      initTable()
+      //props.cardData.title = project_name.value
+      //props.cardData.label = project_name.value
     } catch (e) {
       console.error('onChange:', e)
     } finally {
