@@ -2,16 +2,11 @@
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
-        <n-input-number
-          v-model:value="optionData.dataset"
-          :min="0"
-          :max="1"
-          size="small"
-        ></n-input-number>
+        <n-input-number v-model:value="optionData.dataset" size="small"></n-input-number>
       </SettingItem>
-      <!-- <SettingItem :name="t('dashboard.on_value')">
-        <n-input v-model:value="optionData.active_value" size="small"></n-input>
-      </SettingItem> -->
+      <SettingItem :name="t('dashboard.on_value')">
+        <n-input-number v-model:value="optionData.active_value" size="small"></n-input-number>
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.icon')">
       <setting-item :name="t('dashboard.contant')">
@@ -29,27 +24,15 @@
         <n-input-number v-model:value="optionData.title_size" :min="0" size="small" />
       </SettingItem>
       <SettingItem :name="t('dashboard.title_color')">
-        <n-color-picker
-          size="small"
-          :modes="['hex']"
-          v-model:value="optionData.title_color"
-        ></n-color-picker>
+        <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.title_color"></n-color-picker>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')">
       <SettingItem :name="t('dashboard.off_bg_color')">
-        <n-color-picker
-          size="small"
-          :modes="['hex']"
-          v-model:value="optionData.inactive_bgColor"
-        ></n-color-picker>
+        <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.inactive_bgColor"></n-color-picker>
       </SettingItem>
       <SettingItem :name="t('dashboard.on_bg_color')">
-        <n-color-picker
-          size="small"
-          :modes="['hex']"
-          v-model:value="optionData.active_bgColor"
-        ></n-color-picker>
+        <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.active_bgColor"></n-color-picker>
       </SettingItem>
       <SettingItem :name="t('dashboard.radius')">
         <n-input-number v-model:value="optionData.radius" :min="0" size="small" />

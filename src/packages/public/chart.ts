@@ -7,6 +7,7 @@ import { updatePoint } from '@/api/http'
 import i18n from '@/i18n/index'
 import { ref, onUnmounted } from 'vue'
 import { debounce } from 'lodash-es'
+import { includes } from './../../views/chart/ContentConfigurations/components/CanvasPage/components/CreateColorRenderChart/lineOptions'
 
 //动画闪烁时间
 export const animationTime = 3000
@@ -66,7 +67,7 @@ export const clickCyclicData = (value: string, options: string[]): string => {
   let nextIndex = index + 1
 
   // 核心逻辑调整：确保索引有效且符合业务规则
-  nextIndex = nextIndex > (options.length - 1) || nextIndex >= options.length ? 0 : nextIndex
+  nextIndex = nextIndex > options.length - 1 || nextIndex >= options.length ? 0 : nextIndex
 
   return options[nextIndex]
 }
@@ -89,7 +90,12 @@ export const updateNodeData = async (bindInfo: any, data: any) => {
 
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.data)
-      window['$message'].warning(i18n.global.t('msg.gauge_msg_2'))
+      if (res.data.includes('write-access-denied')) {
+        window['$message'].warning(i18n.global.t('msg.gauge_msg_4'))
+      } else {
+        window['$message'].warning(i18n.global.t('msg.gauge_msg_2'))
+      }
+
       flag = false
     }
   } catch (e) {
