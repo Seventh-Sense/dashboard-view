@@ -91,21 +91,39 @@ const sendHandle = async () => {
 
   //console.log(storageInfo)
 
-  const range = document.querySelector('.go-edit-range') as HTMLElement
-  html2canvas(range, {
-    backgroundColor: null,
-    allowTaint: true,
-    useCORS: true
-    // svg: {
-    //   // 处理SVG
-    //   xmlns: true,
-    //   renderer: (svg: any) => {
-    //     // 将SVG转换为PNG
-    //     return `data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svg)))}`
-    //   }
-    // }
-  }).then((canvas: HTMLCanvasElement) => {
-    updateProject(previewId, {
+  //const range = document.querySelector('.go-edit-range') as HTMLElement
+  // html2canvas(range, {
+  //   backgroundColor: null,
+  //   allowTaint: true,
+  //   useCORS: true
+  //   // svg: {
+  //   //   // 处理SVG
+  //   //   xmlns: true,
+  //   //   renderer: (svg: any) => {
+  //   //     // 将SVG转换为PNG
+  //   //     return `data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svg)))}`
+  //   //   }
+  //   // }
+  // }).then((canvas: HTMLCanvasElement) => {
+  //   updateProject(previewId, {
+  //     name: storageInfo.editCanvasConfig.projectName,
+  //     content: JSONStringify(storageInfo),
+  //     //画布缩图
+  //     //cover: canvas.toDataURL()
+  //     cover: ''
+  //   })
+  //     .then(res => {
+  //       if (res) {
+  //         window['$message'].success(t('message.save_success'))
+  //       }
+  //       //console.log(res)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // })
+
+  updateProject(previewId, {
       name: storageInfo.editCanvasConfig.projectName,
       content: JSONStringify(storageInfo),
       //画布缩图
@@ -121,7 +139,6 @@ const sendHandle = async () => {
       .catch(err => {
         console.log(err)
       })
-  })
 }
 
 const saveLocalStorage = (id: any, storageInfo: any) => {

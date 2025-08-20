@@ -53,6 +53,8 @@ export default {
   msg_add_device_fail: 'Device addition failed!',
   msg_add_device_success: 'Device added successfully!',
   msg_enter_params: 'Please enter the parameters!',
+  msg_no_network_card: 'No available network card currently!',
+  msg_no_select_card: 'Please select a network card first!',
 
   //bacnet
   point_list: 'Points List',
@@ -115,4 +117,23 @@ export default {
   even: 'Even',
   online: 'Online',
   offline: 'Offline',
+  address_format: 'Address Format',
+  connection_type: 'Connection Type',
+  gateway_ip: 'Gateway IP',
+  gateway_port: 'Gateway Port',
+  read_address: 'Read Address',
+  write_address: 'Write Address',
+  value_type: 'Value Type',
+  tags: 'Tags',
+  free: 'Free',
+  short: 'Short',
+  long: 'Long',
+  automatic: 'Automatic',
+  routing: 'Routing',
+  routing_secure: 'Routing Secure',
+  tunneling: 'Tunneling',
+  tunneling_tcp: 'Tunneling TCP',
+  bool: 'Boolean',
+  percent: 'Percent',
+
 }

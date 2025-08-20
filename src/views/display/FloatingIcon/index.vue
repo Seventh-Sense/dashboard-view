@@ -8,13 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import { Icon } from '@/icon/index'
-import SVG_ICON from '@/svg/SVG_ICON'
-
 const emit = defineEmits(['click'])
 
 const handleIconClick = () => {
-  console.log('悬浮图标被点击')
   emit('click')
 }
 </script>

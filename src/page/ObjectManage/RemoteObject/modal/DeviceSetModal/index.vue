@@ -71,6 +71,7 @@ import {
   DataType,
   ModbusRTUData,
   ModbusTCPData,
+  KNXData,
   TypeOptions,
   pollOptions,
   isEmptyObject,
@@ -103,6 +104,7 @@ const content = shallowRef(null)
 const BACnet = loadAsyncComponent(() => import('../BACnet/index.vue'))
 const ModbusRTU = loadAsyncComponent(() => import('../ModbusRTU/index.vue'))
 const ModbusTCP = loadAsyncComponent(() => import('../ModbusTCP/index.vue'))
+const KNX = loadAsyncComponent(() => import('../KNX/index.vue'))
 
 const data = ref<DataType>({
   id: '',
@@ -116,34 +118,44 @@ const data = ref<DataType>({
 
 const onSubmit = () => {
   //console.log('data', data.value)
-  if (data.value.type === DeviceTypeEnum.BACnet) {
-    handleBACnet()
-  } else if (data.value.type === DeviceTypeEnum.ModbusRTU) {
-    if (props.isEdit) {
-      //clear
-      handleBACnet()
-    } else {
-      //参数校验
-      if (dataCheck(data.value)) return
+  switch (data.value.type) {
+    case DeviceTypeEnum.BACnet:
+      onClose()
+      break
+    case DeviceTypeEnum.ModbusRTU:
+      if (props.isEdit) {
+        onClear()
+        emit('update:isShowModal', false)
+      } else {
+        //参数校验
+        if (dataCheck(data.value)) return
 
-      handleModbusRtu(data.value)
-    }
-  } else if (data.value.type === DeviceTypeEnum.ModbusTCP) {
-    if (props.isEdit) {
-      //clear
-      handleBACnet()
-    } else {
-      if (dataCheck(data.value)) return
+        handleModbusRtu(data.value)
+      }
+      break
+    case DeviceTypeEnum.ModbusTCP:
+      if (props.isEdit) {
+        onClear()
+        emit('update:isShowModal', false)
+      } else {
+        if (dataCheck(data.value)) return
 
-      handleModbusTCP(data.value)
-    }
+        handleModbusTCP(data.value)
+      }
+      break
+    case DeviceTypeEnum.KNX:
+      if (props.isEdit) {
+        onClear()
+        emit('update:isShowModal', false)
+      } else {
+        if (dataCheck(data.value)) return
+
+        handleKNX(data.value)
+      }
+      break
+    default:
+      break
   }
-}
-
-const handleBACnet = () => {
-  onClear()
-  refreshFunc()
-  emit('update:isShowModal', false)
 }
 
 const handleModbusTCP = async (load: DataType) => {
@@ -172,9 +184,7 @@ const handleModbusTCP = async (load: DataType) => {
   } catch (error) {
     console.error('handle ModbusRtu:', error)
   } finally {
-    onClear()
-    refreshFunc()
-    emit('update:isShowModal', false)
+    onClose()
   }
 }
 
@@ -210,9 +220,38 @@ const handleModbusRtu = async (load: DataType) => {
   } catch (error) {
     console.error('handle ModbusRtu:', error)
   } finally {
-    onClear()
-    refreshFunc()
-    emit('update:isShowModal', false)
+    onClose()
+  }
+}
+
+const handleKNX = async (load: DataType) => {
+  try {
+    const res: any = await addDevice({
+      uid: 'KNX' + ',' + load.property.gateway_ip + ':' + load.property.gateway_port,
+      name: load.name,
+      address: load.property.gateway_ip,
+      protocol: DeviceTypeEnum.KNX,
+      enabled: true,
+      status: '',
+      description: '',
+      property: {
+        address_format: load.property.address_format,
+        connection_type: load.property.connection_type,
+        gateway_ip: load.property.gateway_ip,
+        gateway_port: load.property.gateway_port
+      },
+      tags: ''
+    })
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      window['$message'].warning(res.status)
+      return
+    }
+  } catch (error) {
+    console.error('handle KNX:', error)
+  } finally {
+    onClose()
   }
 }
 
@@ -263,6 +302,18 @@ const dataCheck = (load: DataType) => {
     }
   }
 
+  if (load.type === DeviceTypeEnum.KNX) {
+    if (load.name === '' || load.property.gateway_port === null) {
+      window['$message'].error(t('device.msg_enter_params'))
+      return true
+    }
+
+    if (!validateIPv4(load.property.gateway_ip)) {
+      window['$message'].error(t('msg.msg_error_5'))
+      return true
+    }
+  }
+
   return flag
 }
 
@@ -282,6 +333,12 @@ const insertContent = (type: string, edit: boolean) => {
 
     if (!edit) {
       data.value.property = cloneDeep(ModbusTCPData)
+    }
+  } else if (type === DeviceTypeEnum.KNX) {
+    content.value = KNX
+
+    if (!edit) {
+      data.value.property = cloneDeep(KNXData)
     }
   } else {
     content.value = null
@@ -312,9 +369,13 @@ watch(
           type: props.deviceData.device_type,
           polling: 3,
           enabled: true,
-          address: Number(props.deviceData.address),
+          address:
+            props.deviceData.device_type === DeviceTypeEnum.KNX
+              ? props.deviceData.address
+              : Number(props.deviceData.address),
           property: props.deviceData.properties
         }
+        //console.log('deviceData', data.value)
       } else {
         insertContent(DeviceTypeEnum.BACnet, false)
       }

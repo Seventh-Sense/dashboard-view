@@ -34,6 +34,22 @@ export const MODBUS_ID_MAP = (key: string) => {
   return ID_MAP[key] ? ID_MAP[key] : key
 }
 
+export const KNX_ID_MAP = (key: string) => {
+  const t = window['$t']
+
+  const ID_MAP: { [key: string]: string } = {
+    name: t('device.name'),
+    description: t('device.desc'),
+    read_address: t('device.read_address'),
+    write_address: t('device.write_address'),
+    value_type: t('device.value_type'),
+    tags: t('device.tags'),
+    value: t('device.value')
+  }
+
+  return ID_MAP[key] ? ID_MAP[key] : key
+}
+
 export const PROPERTY_TYPE_MAP = (key: string) => {
   const t = window['$t']
 

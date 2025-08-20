@@ -1,5 +1,5 @@
 import { TypeEnum } from './propertyMap'
-
+import * as XLSX from 'xlsx'
 export interface DeviceTableData {
   key: string
   device_id: string
@@ -35,6 +35,7 @@ export interface PointData {
   properties: any
   tags: string
   device_id: string
+  timestamp?: any
 }
 
 export interface DataType {
@@ -151,7 +152,8 @@ export function isBACnet(x: any): x is BACnetType {
 export enum DeviceTypeEnum {
   BACnet = 'bacnet',
   ModbusRTU = 'ModbusRTU',
-  ModbusTCP = 'ModbusTCP'
+  ModbusTCP = 'ModbusTCP',
+  KNX = 'KNX'
 }
 
 export const TypeOptions = [
@@ -165,12 +167,12 @@ export const TypeOptions = [
   },
   {
     label: 'ModbusTCP',
-    value: 'ModbusTCP'
+    value: DeviceTypeEnum.ModbusTCP
+  },
+  {
+    label: 'KNX',
+    value: DeviceTypeEnum.KNX
   }
-  // {
-  //   label: 'EthernetIP',
-  //   value: 'EthernetIP'
-  // }
 ]
 
 export const ModbusRTUData = {
@@ -183,11 +185,11 @@ export const ModbusRTUData = {
   parity: 'N'
 }
 
-export const BACnetData = {
-  interface: '127.0.0.1',
-  port: '47808',
-  broadcast: '127.0.0.255',
-  adpuTimeout: 6000
+export const KNXData = {
+  address_format: 3,
+  connection_type: 1,
+  gateway_ip: '127.0.0.255',
+  gateway_port: 3671
 }
 
 export const ModbusTCPData = {
@@ -351,6 +353,55 @@ export const DatatypeOptions = [
   value: v
 }))
 
+export const addrFormatOptions = [
+  {
+    label: () => window['$t']('device.free'),
+    value: 0
+  },
+  {
+    label: () => window['$t']('device.short'),
+    value: 2
+  },
+  {
+    label: () => window['$t']('device.long'),
+    value: 3
+  }
+]
+
+export const connectTypeOptions = [
+  {
+    label: () => window['$t']('device.automatic'),
+    value: 1
+  },
+  {
+    label: () => window['$t']('device.routing'),
+    value: 2
+  },
+  {
+    label: () => window['$t']('device.routing_secure'),
+    value: 3
+  },
+  {
+    label: () => window['$t']('device.tunneling'),
+    value: 4
+  },
+  {
+    label: () => window['$t']('device.tunneling_tcp'),
+    value: 5
+  }
+]
+
+export const KNXValueTypeOptions = [
+  {
+    label: () => window['$t']('device.bool'),
+    value: 'bool'
+  },
+  {
+    label: () => window['$t']('device.percent'),
+    value: 'percent'
+  }
+]
+
 export function formatTimestamp(timestamp: any) {
   // 将时间戳转为毫秒并创建Date对象
   const date = new Date(timestamp * 1000)
@@ -435,8 +486,97 @@ export const sortByString = (a: string, b: string, emptyLast = false) => {
   return a.localeCompare(b, 'zh-CN')
 }
 
-
 //msg handle
-const msgHandle = (msg: string) => {
+const msgHandle = (msg: string) => {}
 
+/**
+ * 导出Excel文件
+ * @param jsonData 要导出的JSON数据
+ * @param fileName 文件名（不含扩展名）
+ * @param sheetName 工作表名称（默认'Sheet1'）
+ */
+export function exportJsonToExcel<T extends object>(
+  devicesData: T[],
+  pointsData: T[],
+  fileName: string
+): void {
+  // 1. 创建工作簿
+  const workbook = XLSX.utils.book_new()
+
+  // 2. 转换JSON数据为工作表
+  const worksheet1 = XLSX.utils.json_to_sheet(formatString(devicesData))
+  const worksheet2 = XLSX.utils.json_to_sheet(formatString(pointsData))
+
+  // 3. 将工作表添加到工作簿
+  XLSX.utils.book_append_sheet(workbook, worksheet1, 'Device')
+  XLSX.utils.book_append_sheet(workbook, worksheet2, 'Point')
+
+  // 4. 生成Excel文件并下载
+  XLSX.writeFile(workbook, `${fileName}.xlsx`, {
+    bookType: 'xlsx', // 文件类型
+    type: 'buffer' // 输出类型
+  })
+}
+
+function formatString(data: any) {
+  return data.map((item: any) => ({
+    ...item,
+    property: JSON.stringify(item.property) // 对象转JSON字符串
+  }))
+}
+
+function formatStringT(data: any) {
+  return data.map((item: any) => ({
+    ...item,
+    property: JSON.parse(item.property) // 对象转JSON字符串
+  }))
+}
+
+// 定义设备类型
+interface Device {
+  [key: string]: string | number // 根据实际Excel列名调整
+}
+
+// 定义点位类型
+interface Point {
+  [key: string]: string | number // 根据实际Excel列名调整
+}
+
+export const processExcel = (data: ArrayBuffer): { devices: Device[]; metrics: Point[] } => {
+  try {
+    // 1. 读取Excel工作簿（添加异常处理）
+    const workbook = XLSX.read(data, {
+      type: 'array',
+      cellDates: true, // 正确处理日期格式
+      sheetStubs: true // 保留空单元格
+    })
+
+    // 2. 验证Sheet数量
+    if (workbook.SheetNames.length < 2) {
+      throw new Error('Excel必须包含至少2个工作表')
+    }
+
+    // 3. 获取工作表（添加索引安全访问）
+    const [firstSheetName, secondSheetName] = workbook.SheetNames
+    const deviceSheet = workbook.Sheets[firstSheetName]
+    const pointSheet = workbook.Sheets[secondSheetName]
+
+    // 4. 数据转换（添加空值处理）
+    const deviceData: Device[] = deviceSheet
+      ? XLSX.utils.sheet_to_json<Device>(deviceSheet, { defval: null })
+      : []
+
+    const pointData: Point[] = pointSheet
+      ? XLSX.utils.sheet_to_json<Point>(pointSheet, { defval: null })
+      : []
+
+    return {
+      devices: formatStringT(deviceData),
+      metrics: formatStringT(pointData)
+    }
+  } catch (error) {
+    console.error('Excel处理失败:', error)
+    // 可根据需要在此处添加错误上报逻辑
+    return { devices: [], metrics: [] }
+  }
 }

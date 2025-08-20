@@ -2,9 +2,9 @@
   <div class="content">
     <div class="content-title">
       <span class="content-porperty">{{ t('device.device_list') }}</span>
-      <div style="display: flex; align-items: center; justify-content: flex-end; gap: 16px">
+      <div style="display: flex; align-items: center; justify-content: flex-end; gap: 32px">
         <!-- <div>
-          <n-select v-model:value="networkCard" :options="[]" style="width: 200px;"/>
+          <n-select v-model:value="networkCard" :options="options" style="width: 200px" />
         </div> -->
         <div class="content-button" @click="onDiscovery">{{ $t('device.search') }}</div>
       </div>
@@ -36,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { discoveryDevices, addDevice } from '@/api/http'
-import { ref, inject } from 'vue'
+import { discoveryDevices, addDevice, getNetWorkCards } from '@/api/http'
+import { ref, inject, onMounted, onUnmounted } from 'vue'
 import { icon } from '@/plugins'
 import { DeviceTypeEnum } from '../../utils/utils'
 
@@ -81,7 +81,47 @@ const columns = [
   { title: '', dataIndex: 'actions', width: 80, align: 'center' }
 ]
 
+//NetWork
+const options = ref<any[]>([])
+
+onMounted(() => {
+  // 初始化时获取网卡
+  getNetWorks()
+})
+
+onUnmounted(() => {
+  // 清理数据
+  data.value = []
+  options.value = []
+  networkCard.value = ''
+})
+
+const getNetWorks = async () => {
+  try {
+    const res: any = await getNetWorkCards()
+
+    if (res.status !== 'OK' || res.data.length === 0) {
+      window['$message'].warning(t('device.msg_no_network_card'))
+      return
+    }
+
+    res.data.forEach((item: any) => {
+      options.value.push({
+        label: item.name,
+        value: item.addr
+      })
+    })
+  } catch (e) {
+    console.error('Failed to fetch network cards:', e)
+  }
+}
+
 const onDiscovery = async () => {
+  // if (networkCard.value === '') {
+  //   window['$message'].warning(t('device.msg_no_select_card'))
+  //   return
+  // }
+
   loading.value = true
 
   try {

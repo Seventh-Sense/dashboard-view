@@ -1,13 +1,7 @@
 <template>
   <n-modal v-model:show="showRef" class="go-create-modal" :mask-closable="false">
-    <n-card
-      :bordered="true"
-      role="dialog"
-      aria-modal="true"
-      size="small"
-      :mask-closable="false"
-      style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px"
-    >
+    <n-card :bordered="true" role="dialog" aria-modal="true" size="small" :mask-closable="false"
+      style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px">
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="go-create-modal-title">
@@ -22,7 +16,7 @@
         <div class="card-box-title">{{ $t('device.project_name') }}</div>
         <n-input v-model:value="project_name" type="text" />
         <div class="card-box-title">{{ $t('device.project_type') }}</div>
-        <n-select v-model:value="decs" :options="options" disabled/>
+        <n-select v-model:value="decs" :options="options" />
       </div>
       <template #footer>
         <n-space justify="end">
@@ -37,6 +31,7 @@
 import { ref, watch, inject, onMounted } from 'vue'
 import { icon } from '@/plugins'
 import { createProject } from '@/api/http'
+import { JSONStringify } from '@/utils'
 
 const { CloseOutlineIcon } = icon.ionicons5
 const showRef = ref(false)
@@ -69,10 +64,28 @@ watch(props, newValue => {
 const onPositiveClick = async () => {
   if (paramCheck()) {
     try {
+      let load: any = ''
+
+      if (decs.value === 'graphic') {
+        load = {
+          useTemplate: false,
+          templateRef: '',
+          data: '',
+          previewImage: '',
+          options: '',
+          reference: '',
+          name: project_name.value,
+          description: null,
+          type: 'graphic',
+          digitalTags: [],
+          lastUpdateTime: '',
+        }
+      }
+
       const res: any = await createProject({
         name: project_name.value,
         cover: '',
-        content: '',
+        content: JSONStringify(load),
         description: decs.value
       })
 
@@ -131,16 +144,20 @@ $cardWidth: 570px;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0);
     @extend .go-transition;
+
     &:hover {
       @include hover-border-color('hover-border-color');
     }
+
     &-content {
       padding: 0px 10px;
       width: 100%;
     }
+
     &-con {
       width: 100%;
     }
+
     &-title {
       font-size: 16px;
       font-weight: bold;

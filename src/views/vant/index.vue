@@ -75,7 +75,12 @@ const initTabs = async () => {
     }
 
     if (Array.isArray(res.data) && res.data.length > 0) {
-      slides.value = [...res.data]
+      console.log(res.data)
+      res.data.forEach( (item: any) => {
+        if (item.description === "dashboard") {
+          slides.value.push(item)
+        }
+      })
     }
   } catch (e) {
     console.error('onChange:', e)
@@ -214,7 +219,6 @@ const handleFloatingIconClick = () => {
 }
 
 .tabs-item {
-  height: 100%;
   padding: 12px 16px;
   font-size: 16px;
   line-height: 24px;
