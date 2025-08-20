@@ -2,10 +2,10 @@
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
-        <n-input-number v-model:value="optionData.dataset" :min="0" :max="1" size="small"></n-input-number>
+        <n-input-number v-model:value="optionData.dataset" size="small"></n-input-number>
       </SettingItem>
       <SettingItem :name="t('dashboard.on_value')">
-        <n-input-number v-model:value="optionData.active_value" :min="0" :max="1" size="small"></n-input-number>
+        <n-input-number v-model:value="optionData.active_value" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.icon')">
