@@ -438,6 +438,16 @@ export const readProjectList = async () => {
   }
 }
 
+export const importProjects = async (data: any) => {
+  try {
+    const response = await post2(`/projects`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const createProject = async (data: any) => {
   try {
     const response = await post2(`/project`, data)

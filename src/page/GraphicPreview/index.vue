@@ -62,7 +62,9 @@ const parsedGraphics = computed(() => {
 })
 
 //控制图层的显示
-const graphicLoaded = () => {}
+const graphicLoaded = () => {
+  //graphicRenderItem.value?.zoomFit()
+}
 
 const itemclick = (params: any) => {}
 

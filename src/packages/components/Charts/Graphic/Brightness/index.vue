@@ -4,7 +4,6 @@
     ref="container"
     @click="handleClick"
     @touchstart.passive="handleClick"
-    
     :style="{
       height: h + 'px'
     }"
