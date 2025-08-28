@@ -23,7 +23,6 @@
     "presentValue",
     "statusFlags",
     "eventState",
-    "outOfService",
     "units",
     "objectType",
     "objectIdentifier",
@@ -35,7 +34,6 @@
     "relinquishDefault",
     "statusFlags",
     "eventState",
-    "outOfService",
     "units",
     "priorityArray",
     "relinquishDefault",
@@ -46,12 +44,8 @@
   ],
   "Analog Value": [
     "presentValue",
-    "relinquishDefault",
     "statusFlags",
-    "eventState",
-    "outOfService",
     "units",
-    "priorityArray",
     "objectType",
     "objectIdentifier",
     "objectName",
@@ -61,7 +55,6 @@
     "presentValue",
     "statusFlags",
     "eventState",
-    "outOfService",
     "polarity",
     "objectType",
     "objectIdentifier",
@@ -75,7 +68,6 @@
     "relinquishDefault",
     "statusFlags",
     "eventState",
-    "outOfService",
     "polarity",
     "priorityArray",
     "relinquishDefault",
@@ -88,17 +80,11 @@
   ],
   "Binary Value": [
     "presentValue",
-    "relinquishDefault",
     "statusFlags",
-    "eventState",
-    "outOfService",
-    "priorityArray",
     "objectType",
     "objectIdentifier",
     "objectName",
-    "description",
-    "inactiveText",
-    "activeText"
+    "description"
   ],
   "Multi-state Value": [
     "alarmValues",
@@ -106,7 +92,6 @@
     "relinquishDefault",
     "statusFlags",
     "eventState",
-    "outOfService",
     "numberOfStates",
     "objectType",
     "objectIdentifier",
@@ -122,7 +107,6 @@
     "presentValue",
     "statusFlags",
     "eventState",
-    "outOfService",
     "numberOfStates"
   ],
   "Multi-state Output": [
@@ -132,7 +116,6 @@
     "presentValue",
     "statusFlags",
     "eventState",
-    "outOfService",
     "numberOfStates",
     "priorityArray",
     "relinquishDefault"
@@ -145,7 +128,6 @@
     "presentValue",
     "statusFlags",
     "eventState",
-    "outOfService",
     "units",
     "maxPresValue"
   ],

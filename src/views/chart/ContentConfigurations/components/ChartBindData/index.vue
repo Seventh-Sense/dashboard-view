@@ -48,7 +48,7 @@ const bindValue = (value: any) => {
   // 读取选取点位的"priorityArray"
   
   if (deviceType.value === 'bacnet') {
-    let defaultPriority = 16 // 默认优先级
+    let defaultPriority = 8 // 默认优先级
     
     const fetchPriority = async () => {
       try {
