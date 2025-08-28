@@ -199,10 +199,14 @@ export interface RequestConfigType extends RequestPublicConfigType {
   }
   //
   bindParams: {
-    deviceName: any,
-    deviceID: any,
-    objectName: any,
-    objectID: any,
+    deviceName: string,
+    deviceID: string,
+    deviceType: string,
+    deviceAddress?: string,
+    objectName: string,
+    objectID: string,
+    objectPriority: any,
+    objectUid?: string
   },
   bindDatas: any[]
 }
