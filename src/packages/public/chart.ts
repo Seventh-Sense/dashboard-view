@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import { EchartsDataType } from '../index.d'
 import { globalThemeJson } from '@/settings/chartThemes/index'
 import type VChart from 'vue-echarts'
-import { updatePoint } from '@/api/http'
+import { readIotPoints, updatePoint } from '@/api/http'
 import i18n from '@/i18n/index'
 import { ref, onUnmounted } from 'vue'
 import { debounce } from 'lodash-es'
@@ -74,35 +74,49 @@ export const clickCyclicData = (value: string, options: string[]): string => {
 
 //数据处理
 export const updateNodeData = async (bindInfo: any, data: any) => {
-  const t = window['$t']
-  let flag = true
-
-  if (bindInfo.objectID === '') {
+  if (!bindInfo.objectID) {
     window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
-    console.warn(i18n.global.t('msg.gauge_msg_3'))
     return false
   }
 
+  console.log('bindInfo', bindInfo)
   try {
-    const res: any = await updatePoint(bindInfo.objectID, {
-      value: data
-    })
+    let response: any
 
-    if (res.status !== 'OK') {
-      console.warn('Non-OK response status:', res.data)
-      if (res.data.includes('write-access-denied')) {
-        window['$message'].warning(i18n.global.t('msg.gauge_msg_4'))
-      } else {
-        window['$message'].warning(i18n.global.t('msg.gauge_msg_2'))
-      }
-
-      flag = false
+    if (bindInfo.deviceType === 'bacnet') {
+      // BACnet设备特殊处理
+      response = await readIotPoints(bindInfo.deviceID, {
+        function: 'write_property',
+        parms: {
+          address: bindInfo.deviceAddress,
+          objid: bindInfo.objectUid,
+          prop: 'present-value',
+          value: data,
+          priority: bindInfo.objectPriority
+        }
+      })
+    } else {
+      // 其他设备类型
+      response = await updatePoint(bindInfo.objectID, { value: data })
     }
-  } catch (e) {
-    console.warn('Update Node Data failed', e)
+
+    // 统一处理响应
+    if (response.status !== 'OK') {
+      console.warn('Non-OK response status:', response.data)
+
+      const warningMsg = response.data.includes('write-access-denied')
+        ? i18n.global.t('msg.gauge_msg_4')
+        : i18n.global.t('msg.gauge_msg_2')
+
+      window['$message'].warning(warningMsg)
+      return false
+    }
+
+    return true
+  } catch (error) {
+    // 统一错误处理
+    console.warn('Update Node Data failed', error)
     window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
-    flag = false
-  } finally {
-    return flag
+    return false
   }
 }
