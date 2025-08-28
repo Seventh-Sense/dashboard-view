@@ -1,7 +1,13 @@
 <template>
   <n-modal v-model:show="showRef" class="go-create-modal" :mask-closable="false">
-    <n-card :bordered="true" role="dialog" aria-modal="true" size="small" :mask-closable="false"
-      style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px">
+    <n-card
+      :bordered="true"
+      role="dialog"
+      aria-modal="true"
+      size="small"
+      :mask-closable="false"
+      style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px"
+    >
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="go-create-modal-title">
@@ -16,7 +22,7 @@
         <div class="card-box-title">{{ $t('device.project_name') }}</div>
         <n-input v-model:value="project_name" type="text" />
         <div class="card-box-title">{{ $t('device.project_type') }}</div>
-        <n-select v-model:value="decs" :options="options" />
+        <n-select v-model:value="decs" :options="options" :disabled="isGraphic" />
       </div>
       <template #footer>
         <n-space justify="end">
@@ -28,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, inject, onMounted } from 'vue'
+import { ref, watch, inject, onMounted, computed } from 'vue'
 import { icon } from '@/plugins'
 import { createProject } from '@/api/http'
 import { JSONStringify } from '@/utils'
@@ -42,6 +48,16 @@ const emit = defineEmits(['close'])
 const props = defineProps({
   show: Boolean
 })
+
+const isGraphic = computed(() => {
+  if (import.meta.env.VITE_APP_IS_GRAPHIC === 'true') {
+    return true
+  } else {
+    return false
+  }
+})
+
+console.log(typeof isGraphic.value, isGraphic.value)
 
 const project_name = ref('')
 const decs = ref('dashboard')
@@ -78,7 +94,7 @@ const onPositiveClick = async () => {
           description: null,
           type: 'graphic',
           digitalTags: [],
-          lastUpdateTime: '',
+          lastUpdateTime: ''
         }
       }
 
