@@ -184,7 +184,8 @@ const columns = [
     dataIndex: 'address',
     sorter: (a: any, b: any) => sortByString(a.address, b.address)
   },
-  // { title: () => t('device.status'), dataIndex: 'status' },
+  { title: () => t('device.tags'), dataIndex: 'tags' },
+  { title: () => t('device.desc'), dataIndex: 'description' },
   { title: () => t('device.enabled'), dataIndex: 'enabled' },
   { title: '', dataIndex: 'actions', width: 120 }
 ]
@@ -221,7 +222,8 @@ const initData = async () => {
       status: item.status || '',
       enabled: item.enabled, // 确保数字类型
       properties: item.property || {},
-      tags: item.tags || []
+      tags: item.tags || '',
+      description: item.description || ''
     }))
   } catch (e) {
     console.error('Failed to fetch devices:', e)
