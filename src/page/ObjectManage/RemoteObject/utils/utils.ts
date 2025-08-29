@@ -11,6 +11,7 @@ export interface DeviceTableData {
   enabled: boolean
   properties: any
   tags?: any
+  description?: any
 }
 
 export interface tagDataType {

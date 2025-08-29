@@ -153,6 +153,7 @@ const columns: DataTableColumns<PointData> = [
   },
   { title: () => t('device.status'), key: 'status' },
   { title: () => t('device.value'), key: 'value' },
+  { title: () => t('device.tags'), key: 'tags' },
   { title: () => t('device.desc'), key: 'description' },
   { title: () => t('dashboard.time'), key: 'timestamp' },
   {
@@ -280,7 +281,7 @@ const periodicFunc = async () => {
         ...originalItem,
         value: getProcessedValue(point, originalItem.metric_type),
         properties: mergeProperties(point.property, originalItem.properties),
-        description: getDescription(point, originalItem),
+        //description: getDescription(point, originalItem),
         status: point.status === 0 ? t('device.offline') : t('device.online'),
         timestamp: formatTimestamp(point.timestamp)
       }
