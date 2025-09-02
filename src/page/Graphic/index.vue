@@ -9,6 +9,9 @@ import { onMounted, ref } from 'vue'
 import { goDialog, goHome, JSONParse, JSONStringify } from '@/utils'
 import { useRoute } from 'vue-router'
 import { readProject, updateProject } from '@/api/http'
+import { getLocalStorage } from '@/utils'
+import { StorageEnum }from '@/enums/storageEnum'
+import { LangStateType } from '@/store/modules/langStore/langStore.d'
 
 const graphicData = ref<any | null>(null)
 
@@ -21,6 +24,8 @@ const { id } = routerParamsInfo.params
 const previewId = typeof id === 'string' ? id : id[0]
 
 onMounted(() => {
+  setLang()
+  
   readProject(previewId)
     .then((res: any) => {
       if (res.status === 'OK' && res.data && res.data.content !== '') {
@@ -32,6 +37,16 @@ onMounted(() => {
       graphicData.value = JSONParse('{}')
     })
 })
+
+const setLang = () => {
+  const langStorage: LangStateType = getLocalStorage(StorageEnum.GO_LANG_STORE)
+  
+  if (langStorage.lang === 'EN') {
+    window.graphicItemManager.switchLanguage('en-US');
+  } else {
+    window.graphicItemManager.switchLanguage('zh-CN');
+  }
+}
 
 const onExit = () => {
   goDialog({

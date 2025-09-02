@@ -66,6 +66,8 @@ export default {
   air: '空调',
   more: '更多',
   line: '折线图',
+  pie: '饼状图',
+  bar: '柱状图',
   device: '设备',
   devices: '设备',
   text: '文本',
