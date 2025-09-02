@@ -9,6 +9,7 @@
       @itemClick="itemclick"
     ></GraphicRender>
     <FloatingIcon @click="handleFloatingIconClick" />
+    <SetValueModal v-model:isShowModal="isShowModal" :data="clickParam"/>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
 import { FloatingIcon } from '@/views/display/FloatingIcon'
 import DataHandleManager from './DataHandleManager'
+import { SetValueModal } from './SetValueModal'
 
 const graphicData = ref<any | null>(null)
 const graphicRenderItem = ref<InstanceType<typeof GraphicRender> | null>(null);
@@ -30,6 +32,8 @@ const dataHandleManager = new DataHandleManager()
 const routerParamsInfo = useRoute()
 const router = useRouter()
 
+const isShowModal = ref(false)
+const clickParam = ref({})
 //提示保存成功
 const { id } = routerParamsInfo.params
 // id 标识
@@ -66,7 +70,11 @@ const graphicLoaded = () => {
   //graphicRenderItem.value?.zoomFit()
 }
 
-const itemclick = (params: any) => {}
+const itemclick = (params: any) => {
+  console.log('itemclick', params)
+  //clickParam.value = params
+  //isShowModal.value = true
+}
 
 
 const handleFloatingIconClick = () => {

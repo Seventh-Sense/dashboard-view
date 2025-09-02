@@ -10,7 +10,10 @@ interface Window {
   onKeySpacePressHold?: Function
 
   // 编辑 JSON 的存储对象
-  opener: any
+  opener: any,
+  graphicItemManager: any
 }
 
 declare type Recordable<T = any> = Record<string, T>
+
+

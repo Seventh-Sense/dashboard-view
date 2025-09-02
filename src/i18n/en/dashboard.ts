@@ -67,6 +67,8 @@ export default {
   air: 'Air',
   more: 'More',
   line: 'Line',
+  pie: 'Pie',
+  bar: 'Bar',
   device: 'Devices',
   devices: 'Device',
   text: 'Texts',
