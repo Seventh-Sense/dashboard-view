@@ -10,7 +10,13 @@
         <n-input-number v-model:value="optionData.on_value" :min="0" size="small"></n-input-number>
       </SettingItem>
       <SettingItem>
-        <n-switch v-model:value="optionData.iswrite" size="small" />
+        <n-space>
+          <n-switch v-model:value="optionData.iswrite" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.writeable') }}</n-text>
+          </n-text>
+        </n-space>
       </SettingItem>
     </SettingItemBox>
   </CollapseItem>
