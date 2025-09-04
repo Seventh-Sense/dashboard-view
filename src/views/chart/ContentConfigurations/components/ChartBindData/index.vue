@@ -46,10 +46,10 @@ const isShow = ref(false)
 
 const bindValue = (value: any) => {
   // 读取选取点位的"priorityArray"
-  
+
   if (deviceType.value === 'bacnet') {
     let defaultPriority = 16 // 默认优先级
-    
+
     const fetchPriority = async () => {
       try {
         const res = await readPointValue(deviceID.value)
@@ -180,9 +180,9 @@ watch(
     //debugger
     if (newVal !== '' && newVal !== null) {
       //set type
-      deviceType.value = deviceOptions.value.find((item: any) => item.value === newVal)?.type || ''
-      deviceAddress.value =
-        deviceOptions.value.find((item: any) => item.value === newVal)?.address || ''
+      const foundItem = deviceOptions.value.find((item: any) => item.value === newVal)
+      deviceType.value = foundItem?.type || ''
+      deviceAddress.value = foundItem?.address || ''
 
       pointOptions.value = []
       readSubscribePoints(newVal)

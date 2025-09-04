@@ -84,25 +84,38 @@ const readData = () => {
 
 const onPositiveClick = async () => {
   if (project_name.value !== '') {
-    data.value.editCanvasConfig.projectName = project_name.value
-    try {
-      const res: any = await updateProject(props.cardData.id, {
-        name: project_name.value,
-        content: JSON.stringify(data.value)
-      })
-      if (res.status !== 'OK') {
-        console.warn('Non-OK response status:', res.status)
-        return
-      }
-      initTable()
+    if (data.value === '') {
+      //空项目
+      //window['$message'].warn(t('msg.modbus_msg_3'))
       //props.cardData.title = project_name.value
       //props.cardData.label = project_name.value
-    } catch (e) {
-      console.error('onChange:', e)
-    } finally {
-      project_name.value = ''
-      emit('close', false)
+      setName(false)
+    } else {
+      setName(true)
     }
+  }
+}
+
+const setName = async (flag: boolean) => {
+  if (flag) {
+    data.value.editCanvasConfig.projectName = project_name.value
+  }
+
+  try {
+    const res: any = await updateProject(props.cardData.id, {
+      name: project_name.value,
+      content: JSON.stringify(data.value)
+    })
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+    initTable()
+  } catch (e) {
+    console.error('onChange:', e)
+  } finally {
+    project_name.value = ''
+    emit('close', false)
   }
 }
 
