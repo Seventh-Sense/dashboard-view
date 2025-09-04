@@ -36,6 +36,10 @@ export const units = [
   {
     label: 'Pa',
     value: 'Pa'
+  },
+  {
+    label: '%RH',
+    value: '%RH'
   }
 ]
 

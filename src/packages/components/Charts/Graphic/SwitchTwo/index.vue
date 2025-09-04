@@ -48,7 +48,8 @@ const onClick = throttle(
   async () => {
     try {
       flag.value = true
-      let data = option.dataset ? 0 : 1
+      
+      let data = value.value ? 0 : 1
 
       let tmp = cloneDeep(value.value)
       value.value = parseData(data, 'boolean')
