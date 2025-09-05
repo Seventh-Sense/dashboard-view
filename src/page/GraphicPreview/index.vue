@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh;">
+  <div style="height: 100vh">
     <GraphicRender
       ref="graphicRenderItem"
       v-if="graphicData != null"
@@ -9,7 +9,7 @@
       @itemClick="itemclick"
     ></GraphicRender>
     <FloatingIcon @click="handleFloatingIconClick" />
-    <SetValueModal v-model:isShowModal="isShowModal" :data="clickParam"/>
+    <SetValueModal v-model:isShowModal="isShowModal" :data="clickParam" />
   </div>
 </template>
 
@@ -25,7 +25,7 @@ import DataHandleManager from './DataHandleManager'
 import { SetValueModal } from './SetValueModal'
 
 const graphicData = ref<any | null>(null)
-const graphicRenderItem = ref<InstanceType<typeof GraphicRender> | null>(null);
+const graphicRenderItem = ref<InstanceType<typeof GraphicRender> | null>(null)
 
 const dataHandleManager = new DataHandleManager()
 
@@ -71,11 +71,12 @@ const graphicLoaded = () => {
 }
 
 const itemclick = (params: any) => {
-  console.log('itemclick', params)
-  //clickParam.value = params
-  //isShowModal.value = true
+  if (params.action === 'setValue') {
+    console.log('itemclick', params)
+    clickParam.value = params
+    isShowModal.value = true
+  }
 }
-
 
 const handleFloatingIconClick = () => {
   dataHandleManager.dispose()
