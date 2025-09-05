@@ -86,7 +86,7 @@ const options = ref<any[]>([])
 
 onMounted(() => {
   // 初始化时获取网卡
-  getNetWorks()
+  //getNetWorks()
 })
 
 onUnmounted(() => {
@@ -172,7 +172,7 @@ const onDownload = async (record: DataType) => {
       name: record.object_name,
       address: record.address,
       protocol: DeviceTypeEnum.BACnet,
-      enabled: false,
+      enabled: true,
       status: '',
       description: '',
       property: {
