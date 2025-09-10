@@ -57,6 +57,8 @@ const t = window['$t']
 const showRef = ref(false)
 const project_name = ref<string>(props.cardData.title)
 
+const project_type = ref<string>('dashboard')
+
 const data = ref<any>(null)
 
 watch(
@@ -75,6 +77,8 @@ const readData = () => {
     .then((res: any) => {
       if (res.status === 'OK' && res.data && res.data.content !== '') {
         data.value = JSONParse(res.data.content)
+        console.log('res.data', res.data, data.value)
+        project_type.value = res.data.description
       }
     })
     .catch(err => {
@@ -83,34 +87,36 @@ const readData = () => {
 }
 
 const onPositiveClick = async () => {
-  if (project_name.value !== '') {
-    if (data.value === '') {
-      //空项目
-      //window['$message'].warn(t('msg.modbus_msg_3'))
-      //props.cardData.title = project_name.value
-      //props.cardData.label = project_name.value
-      setName(false)
-    } else {
-      setName(true)
-    }
-  }
+  if (!project_name.value) return // 空项目名直接返回
+
+  const shouldSetName = data.value !== '' // 统一判断条件
+  await setName(shouldSetName)
 }
 
-const setName = async (flag: boolean) => {
-  if (flag) {
-    data.value.editCanvasConfig.projectName = project_name.value
-  }
-
+const setName = async (shouldUpdateContent: boolean) => {
   try {
-    const res: any = await updateProject(props.cardData.id, {
+    // 需要更新内容时才设置名称
+    if (shouldUpdateContent) {
+      if (project_type.value === 'graphic') {
+        data.value.name = project_name.value
+      } else {
+        data.value.editCanvasConfig.projectName = project_name.value
+      }
+    }
+
+    const updateData = {
       name: project_name.value,
-      content: JSON.stringify(data.value)
-    })
+      ...(shouldUpdateContent && { content: JSON.stringify(data.value) })
+    }
+
+    const res: any = await updateProject(props.cardData.id, updateData)
+
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
       return
     }
-    initTable()
+
+    await initTable()
   } catch (e) {
     console.error('onChange:', e)
   } finally {
