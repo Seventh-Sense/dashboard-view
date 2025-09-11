@@ -19,6 +19,7 @@ export const option: any = {
   bottomTextColor: '#AAAAAA',
   isUnit: true,
   isStatus: false,
+  decimal: 0
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

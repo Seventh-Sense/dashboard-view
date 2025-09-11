@@ -23,14 +23,14 @@
     </div>
 
     <div class="container-bottom">
-      <div
+      <div class="container-value"
         :style="{
           fontSize: dataSize + 'px',
           color: dataColor,
           lineHeight: dataSize + 'px'
         }"
       >
-        {{ value }}
+        {{ fixedByDecimal(value) }}
       </div>
       <div
         v-if="isUnit"
@@ -90,10 +90,20 @@ const {
   bottomTextSize,
   bottomTextColor,
   isUnit,
-  isStatus
+  isStatus,
+  decimal
 } = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
+
+
+function fixedByDecimal(num: any) {
+  if (decimal.value === 0) {
+    return Number(num).toFixed()
+  } else {
+    return Number(num).toFixed(decimal.value)
+  }
+}
 
 watch(
   () => props.chartConfig.option.dataset,
@@ -132,6 +142,10 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
     gap: 8px;
     justify-content: flex-start;
     align-items: flex-end;
+  }
+
+  &-value {
+    font-weight: bold;
   }
 }
 </style>

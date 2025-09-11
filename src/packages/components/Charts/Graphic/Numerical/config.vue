@@ -14,6 +14,16 @@
           v-model:value="optionData.dataColor"
         ></n-color-picker>
       </SettingItem>
+      <SettingItem :name="t('dashboard.decimal_place')">
+        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.background_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.backgroundColor"
+        ></n-color-picker>
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.top_title')" :alone="false">
       <setting-item :name="t('dashboard.title')">
@@ -120,6 +130,24 @@ const titles = [
   {
     label: t('dashboard.humidity'),
     value: 2
+  }
+]
+const decimals = [
+  {
+    label: '0',
+    value: 0
+  },
+  {
+    label: '1',
+    value: 1
+  },
+  {
+    label: '2',
+    value: 2
+  },
+  {
+    label: '3',
+    value: 3
   }
 ]
 </script>

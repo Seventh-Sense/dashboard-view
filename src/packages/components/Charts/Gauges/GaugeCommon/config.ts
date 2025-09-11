@@ -37,6 +37,10 @@ export const units = [
   {
     label: 'Pa',
     value: 'Pa'
+  },
+  {
+    label: 'KW',
+    value: 'KW'
   }
 ]
 
