@@ -504,3 +504,17 @@ export const validateIPv4 = (ip: string): boolean => {
   const ipv4Regex = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/
   return ipv4Regex.test(ip)
 }
+
+export function getRandomInt(min: number, max: number): number {
+    if (min > max) {
+        throw new Error("最小值不能大于最大值");
+    }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandomNumber(min: number, max: number): number {
+    if (min > max) {
+        throw new Error("最小值不能大于最大值");
+    }
+    return Math.random() * (max - min) + min;
+}

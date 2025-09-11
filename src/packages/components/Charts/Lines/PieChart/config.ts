@@ -3,6 +3,7 @@ import { PieChartConfig } from './index'
 import { CreateComponentType } from '@/packages/index.d'
 import cloneDeep from 'lodash/cloneDeep'
 import dataJson from './data.json'
+import { chartInitConfig } from '@/settings/designSetting'
 
 export const includes = ['legend', 'xAxis', 'yAxis', 'grid']
 export const seriesItem = {
@@ -47,6 +48,7 @@ export const option = {
 
 export default class Config extends PublicConfigClass implements CreateComponentType {
   public key: string = PieChartConfig.key
+  public attr = { ...chartInitConfig, w: 600, h: 300, zIndex: 1 }
   public chartConfig = cloneDeep(PieChartConfig)
   // 图表配置项
   public option = echartOptionProfixHandle(option, includes)

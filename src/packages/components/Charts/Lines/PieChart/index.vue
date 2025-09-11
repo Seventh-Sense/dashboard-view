@@ -3,8 +3,31 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { getRandomInt } from '@/utils'
+import { computed, onMounted, ref } from 'vue'
 import VChart from 'vue-echarts'
+
+const data = ref<any>([])
+const names = ref(['用电', '可回收物', '固体废弃物', '污水', '饮用水', '燃气'])
+
+onMounted(() => {
+  madeData()
+  window.setInterval(() => {
+    madeData()
+  }, 3000)
+})
+
+const madeData = () => {
+  let tmp: any[] = []
+  names.value.forEach((name: string) => {
+    tmp.push({
+      name: name,
+      value: getRandomInt(500, 1000)
+    })
+  })
+
+  data.value = tmp
+}
 
 const option = computed(() => {
   return {
@@ -12,14 +35,20 @@ const option = computed(() => {
       trigger: 'item'
     },
     legend: {
+      right: '20%',
+      top: 'center',
       orient: 'vertical',
-      left: 'right'
+      textStyle: {
+        color: 'rgba(255,255,255,1)',
+        
+      }
     },
     series: [
       {
         name: '访问来源',
         type: 'pie',
         radius: ['60%', '70%'],
+        center: ['28%', '50%'],
         avoidLabelOverlap: false,
         padAngle: 3,
         itemStyle: {
@@ -29,14 +58,7 @@ const option = computed(() => {
           show: false,
           position: 'center'
         },
-        data: [
-          { value: 1048, name: '用电' },
-          { value: 735, name: '可回收物' },
-          { value: 580, name: '固体废弃物' },
-          { value: 484, name: '污水' },
-          { value: 300, name: '饮用水' },
-          { value: 300, name: '燃气' }
-        ]
+        data: data.value
       }
     ]
   }

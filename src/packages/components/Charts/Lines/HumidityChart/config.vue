@@ -1,0 +1,139 @@
+<template>
+  <CollapseItem :name="t('dashboard.effect')" :expanded="true">
+    <SettingItemBox :name="t('dashboard.contant')">
+      <SettingItem :name="t('dashboard.value')">
+        <n-input-number v-model:value="optionData.dataset" size="small"></n-input-number>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.font_size')">
+        <n-input-number v-model:value="optionData.dataSize" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.value_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.dataColor"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.decimal_place')">
+        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.min')">
+        <n-input-number v-model:value="optionData.min" size="small"></n-input-number>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.max')">
+        <n-input-number v-model:value="optionData.max" size="small"></n-input-number>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.background_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.backgroundColor"
+        ></n-color-picker>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.unit')" :alone="false">
+      <setting-item :name="t('dashboard.unit')">
+        <n-select v-model:value="optionData.unitText" :options="units" size="small" />
+      </setting-item>
+      <SettingItem :name="t('dashboard.font_size')">
+        <n-input-number v-model:value="optionData.bottomTextSize" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.bottomTextColor"
+        ></n-color-picker>
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.top_title')" :alone="false">
+      <setting-item :name="t('dashboard.title')">
+        <n-input v-model:value="optionData.title" size="small" />
+      </setting-item>
+      <SettingItem :name="t('dashboard.font_size')">
+        <n-input-number v-model:value="optionData.fontSize" size="small" />
+      </SettingItem>
+      <SettingItem :name="t('dashboard.color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.textColor"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.icon_size')">
+        <n-input-number v-model:value="optionData.rightIconSize" size="small" />
+      </SettingItem>
+    </SettingItemBox>
+  </CollapseItem>
+</template>
+
+<script setup lang="ts">
+import { PropType } from 'vue'
+import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
+import { option } from './config'
+
+const t = window['$t']
+
+const props = defineProps({
+  optionData: {
+    type: Object as PropType<typeof option>,
+    required: true
+  }
+})
+
+const units = [
+  {
+    label: 'None',
+    value: ''
+  },
+  {
+    label: '℃',
+    value: '℃'
+  },
+  {
+    label: '%',
+    value: '%'
+  },
+  {
+    label: '%Rh',
+    value: '%Rh'
+  },
+  {
+    label: 'mg/m3',
+    value: 'mg/m3'
+  },
+  {
+    label: 'μg/m3',
+    value: 'μg/m3'
+  },
+  {
+    label: 'ppm',
+    value: 'ppm'
+  },
+  {
+    label: 'Pa',
+    value: 'Pa'
+  }
+]
+
+const decimals = [
+  {
+    label: '0',
+    value: 0
+  },
+  {
+    label: '1',
+    value: 1
+  },
+  {
+    label: '2',
+    value: 2
+  },
+  {
+    label: '3',
+    value: 3
+  }
+]
+</script>
+
+<style lang="scss" scoped></style>

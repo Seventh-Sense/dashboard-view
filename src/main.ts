@@ -28,17 +28,17 @@ import './icon/x-icon-color.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 
 //解决重复命名的问题
-// const lastDefine = customElements.define
-// customElements.define = function (
-//   name: string,
-//   constructor: CustomElementConstructor,
-//   options?: ElementDefinitionOptions
-// ) {
-//   const eleType = customElements.get(name)
-//   if (!eleType) {
-//     lastDefine.call(customElements, name, constructor, options)
-//   }
-// }
+const lastDefine = customElements.define
+customElements.define = function (
+  name: string,
+  constructor: CustomElementConstructor,
+  options?: ElementDefinitionOptions
+) {
+  const eleType = customElements.get(name)
+  if (!eleType) {
+    lastDefine.call(customElements, name, constructor, options)
+  }
+}
 
 // 注册图标
 addCollection(uimIcons)

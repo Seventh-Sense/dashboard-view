@@ -80,9 +80,6 @@ importers:
       echarts-wordcloud:
         specifier: ^2.0.0
         version: 2.0.0(echarts@5.6.0)
-      element-plus:
-        specifier: ^2.5.6
-        version: 2.5.6(vue@3.2.37)
       gsap:
         specifier: ^3.11.3
         version: 3.11.3
@@ -2448,11 +2445,6 @@ packages:
 
   electron-to-chromium@1.4.396:
     resolution: {integrity: sha512-pqKTdqp/c5vsrc0xUPYXTDBo9ixZuGY8es4ZOjjd6HD6bFYbu5QA09VoW3fkY4LF1T0zYk86lN6bZnNlBuOpdQ==}
-
-  element-plus@2.5.6:
-    resolution: {integrity: sha512-zctKTiyIDmcnMp3K5WG1hglgraW9EbiCLiIDVtaMCS5mPMl2fRKdS0vOFGnECIq9taFoxnyoDwxHD81nv0B4RA==}
-    peerDependencies:
-      vue: ^3.2.0
 
   element-plus@2.9.11:
     resolution: {integrity: sha512-x4L/6YC8de4JtuE3vpaEugJdQIeHQaHtIYKyk67IeF6dTIiVax45aX4nWOygnh+xX+0gTvL6xO+9BZhPA3G82w==}
@@ -5419,8 +5411,8 @@ packages:
     peerDependencies:
       vue: ^3.0.1
 
-  vueuc@0.4.58:
-    resolution: {integrity: sha512-Wnj/N8WbPRSxSt+9ji1jtDHPzda5h2OH/0sFBhvdxDRuyCZbjGg3/cKMaKqEoe+dErTexG2R+i6Q8S/Toq1MYg==}
+  vueuc@0.4.64:
+    resolution: {integrity: sha512-wlJQj7fIwKK2pOEoOq4Aro8JdPOGpX8aWQhV8YkTW9OgWD2uj2O8ANzvSsIGjx7LTOc7QbS7sXdxHi6XvRnHPA==}
     peerDependencies:
       vue: ^3.0.11
 
@@ -6292,10 +6284,6 @@ snapshots:
 
   '@ctrl/tinycolor@3.6.1': {}
 
-  '@element-plus/icons-vue@2.3.1(vue@3.2.37)':
-    dependencies:
-      vue: 3.2.37
-
   '@element-plus/icons-vue@2.3.1(vue@3.3.13(typescript@4.6.3))':
     dependencies:
       vue: 3.3.13(typescript@4.6.3)
@@ -7113,16 +7101,6 @@ snapshots:
     optionalDependencies:
       vue: 3.2.37
 
-  '@vueuse/core@9.13.0(vue@3.2.37)':
-    dependencies:
-      '@types/web-bluetooth': 0.0.16
-      '@vueuse/metadata': 9.13.0
-      '@vueuse/shared': 9.13.0(vue@3.2.37)
-      vue-demi: 0.13.1(vue@3.2.37)
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-
   '@vueuse/core@9.13.0(vue@3.3.13(typescript@4.6.3))':
     dependencies:
       '@types/web-bluetooth': 0.0.16
@@ -7148,13 +7126,6 @@ snapshots:
       vue-demi: 0.13.1(vue@3.2.37)
     optionalDependencies:
       vue: 3.2.37
-
-  '@vueuse/shared@9.13.0(vue@3.2.37)':
-    dependencies:
-      vue-demi: 0.13.1(vue@3.2.37)
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
 
   '@vueuse/shared@9.13.0(vue@3.3.13(typescript@4.6.3))':
     dependencies:
@@ -8416,27 +8387,6 @@ snapshots:
   ee-first@1.1.1: {}
 
   electron-to-chromium@1.4.396: {}
-
-  element-plus@2.5.6(vue@3.2.37):
-    dependencies:
-      '@ctrl/tinycolor': 3.6.1
-      '@element-plus/icons-vue': 2.3.1(vue@3.2.37)
-      '@floating-ui/dom': 1.6.3
-      '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
-      '@types/lodash': 4.14.185
-      '@types/lodash-es': 4.17.12
-      '@vueuse/core': 9.13.0(vue@3.2.37)
-      async-validator: 4.2.5
-      dayjs: 1.11.7
-      escape-html: 1.0.3
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      lodash-unified: 1.0.3(@types/lodash-es@4.17.12)(lodash-es@4.17.21)(lodash@4.17.21)
-      memoize-one: 6.0.0
-      normalize-wheel-es: 1.2.0
-      vue: 3.2.37
-    transitivePeerDependencies:
-      - '@vue/composition-api'
 
   element-plus@2.9.11(vue@3.3.13(typescript@4.6.3)):
     dependencies:
@@ -10051,7 +10001,7 @@ snapshots:
       vdirs: 0.1.8(vue@3.2.37)
       vooks: 0.2.12(vue@3.2.37)
       vue: 3.2.37
-      vueuc: 0.4.58(vue@3.2.37)
+      vueuc: 0.4.64(vue@3.2.37)
 
   nan@2.22.2: {}
 
@@ -11739,7 +11689,7 @@ snapshots:
       sortablejs: 1.14.0
       vue: 3.2.37
 
-  vueuc@0.4.58(vue@3.2.37):
+  vueuc@0.4.64(vue@3.2.37):
     dependencies:
       '@css-render/vue3-ssr': 0.15.14(vue@3.2.37)
       '@juggle/resize-observer': 3.3.1
