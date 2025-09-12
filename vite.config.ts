@@ -26,7 +26,7 @@ export default ({ mode }) => {
 
   return defineConfig({
     base: '/',
-    publicDir: env.VITE_APP_IS_GRAPHIC === 'true' ? resolve(__dirname, 'public/included') : resolve(__dirname, 'public'),
+    publicDir: env.VITE_APP_IS_GRAPHIC === 'true' ? 'public/included' : 'public',
     // 路径重定向
     resolve: {
       alias: [

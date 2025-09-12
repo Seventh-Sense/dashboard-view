@@ -47,7 +47,7 @@
         type="line"
         :percentage="p_value"
         :show-indicator="false"
-        
+        :color="'rgba(111,110,250,1)'"
         processing
       />
       <div style="display: flex; justify-content: space-between; width: 100%">

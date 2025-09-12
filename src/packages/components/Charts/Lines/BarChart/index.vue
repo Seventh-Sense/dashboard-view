@@ -50,9 +50,9 @@ const option = computed(() => {
         },
         axisLabel: {
           show: true,
-          color: 'rgba(136,140,143,1)',
+          color: 'rgba(255,255,255,0.6)',
           hideOverlap: true,
-          
+
         }
       }
     ],
@@ -88,9 +88,12 @@ const option = computed(() => {
         stack: 0,
         stackStrategy: 0,
         barGap: 0,
+        itemStyle: {
+          borderRadius: [10, 10, 0, 0]
+        },
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: '#6666FF' },
-          
+
           { offset: 1, color: 'rgba(109,87,163,1)' }
         ]),
         lineStyle: {
