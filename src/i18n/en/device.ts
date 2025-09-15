@@ -135,5 +135,9 @@ export default {
   tunneling_tcp: 'Tunneling TCP',
   bool: 'Boolean',
   percent: 'Percent',
-
+  set_value_title: 'Set Present Value',
+  set_value: 'Set Value',
+  release: 'Release',
+  compulsion: 'Force',
+  advance_option: 'Advanced Options',
 }

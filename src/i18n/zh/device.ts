@@ -136,4 +136,9 @@ export default {
   tunneling_tcp: '隧道TCP',
   bool: '布尔值',
   percent: '百分比',
+  set_value_title: '设置当前值',
+  set_value: '设置值',
+  release: '释放',
+  compulsion: '强制',
+  advance_option: '高级选项',
 }

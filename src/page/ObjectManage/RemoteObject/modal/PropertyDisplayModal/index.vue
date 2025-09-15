@@ -167,6 +167,13 @@
             </div>
           </div>
         </div>
+        <SetPresentValueModal
+          v-if="isShow"
+          v-model:isShow="isShow"
+          :deviceData="deviceData"
+          :displayData="displayData"
+          :options="options"
+        />
       </div>
 
       <template #footer>
@@ -180,7 +187,7 @@
 
 <script setup lang="ts">
 import SVG_ICON from '@/svg/SVG_ICON'
-import { onMounted, computed, ref, reactive, inject, watch } from 'vue'
+import { onMounted, computed, ref, reactive, inject, watch, onUnmounted } from 'vue'
 import {
   PROPERTY_TYPE_MAP,
   objIDTrans,
@@ -193,8 +200,9 @@ import {
 } from '../../utils/propertyMap'
 import { getDeviceTypeName } from '../../utils/utils'
 import { icon } from '@/plugins'
-import { readIotPoints } from '@/api/http'
+import { readIotPoints, readMetricById } from '@/api/http'
 import { msghandle } from '@/utils'
+import { SetPresentValueModal } from '../SetPresentValueModal'
 
 const { EditIcon } = icon.carbon
 const { CloseIcon, CheckmarkIcon } = icon.ionicons5
@@ -220,6 +228,9 @@ const t = window['$t']
 interface EditState {
   [key: string]: boolean
 }
+
+const isShow = ref(false)
+const options = ref([])
 
 const priority = ref(null)
 
@@ -247,8 +258,23 @@ const type = ref(props.displayData.metric_type)
 const BinaryOption = ref<any>([])
 const MVOption = ref<any>([])
 
+let interval: any = null
+
 onMounted(() => {
   initializeStates()
+
+  //当未做修改时，周期性更新值
+  interval = setInterval(() => {
+    if (!isShow.value && Object.values(editStates).every(value => value === false)) {
+      updateInfo()
+    }
+  }, 3000)
+})
+
+onUnmounted(() => {
+  if (interval) {
+    clearInterval(interval)
+  }
 })
 
 watch(
@@ -310,8 +336,17 @@ const initializeStates = () => {
 
 // 进入编辑模式
 const enterEditMode = (key: string) => {
-  editStates[key] = true
-  tempValues[key] = sortedEntries.value.find(([k]) => k === key)?.[1]
+  if (key === 'present-value' && isPriority(type.value)) {
+    if (type.value === TypeEnum.BI || type.value === TypeEnum.BV || type.value === TypeEnum.BO) {
+      options.value = BinaryOption.value
+    } else if (type.value === TypeEnum.MV) {
+      options.value = MVOption.value
+    } 
+    isShow.value = true
+  } else {
+    editStates[key] = true
+    tempValues[key] = sortedEntries.value.find(([k]) => k === key)?.[1]
+  }
 }
 
 // 保存修改
@@ -322,10 +357,10 @@ const handleSave = async (key: string) => {
       address: props.deviceData.address,
       objid: props.displayData.metric_uid,
       prop: key,
-      value: tempValues[key],
-      ...(isPriority(type.value) &&
-        key === 'present-value' &&
-        priority.value !== null && { priority: priority.value })
+      value: tempValues[key]
+      // ...(isPriority(type.value) &&
+      //   key === 'present-value' &&
+      //   priority.value !== null && { priority: priority.value })
     }
   }
 
@@ -366,6 +401,30 @@ const onSubmit = () => {
   //refreshObjTable()
 
   emit('update:isShowModal', false)
+}
+
+const updateInfo = async () => {
+  try {
+    const res: any = await readMetricById(props.displayData.key)
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+
+    if (
+      Array.isArray(res.data) &&
+      res.data.length === 1 &&
+      res.data[0].property &&
+      res.data[0].property['object-name']
+    ) {
+      obj.value = res.data[0].property
+      props.displayData.properties = res.data[0].property
+      //console.log('sadasd', res.data[0].property['present-value'])
+    }
+  } catch (error) {
+    console.error('Error saving value:', error)
+  }
 }
 </script>
 

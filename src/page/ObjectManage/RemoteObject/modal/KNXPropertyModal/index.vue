@@ -381,6 +381,14 @@ watch(
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
+  &-title {
+    font-size: 20px;
+    color: #{$--color-dark-font};
+    font-style: normal;
+    text-transform: none;
+    font-weight: bold;
+  }
+
   &-porperty {
     font-size: 12px;
     color: #{$--color-dark-modal-title};

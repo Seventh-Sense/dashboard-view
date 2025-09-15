@@ -207,14 +207,14 @@ const handleFloatingIconClick = () => {
 
 .tabs-bar {
   position: absolute;
-  top: 32px;
+  top: 16px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: row;
   z-index: 100;
   background: rgba(0, 0, 0, 0.53);
-  border-radius: 25px;
+  border-radius: 16px;
   height: 48px;
 }
 

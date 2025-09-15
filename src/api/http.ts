@@ -620,6 +620,16 @@ export const readPointValue = async (deviceId: any) => {
   }
 }
 
+export const readMetricById = async (deviceId: any) => {
+  try {
+    const response = await get2(`/point/latest?metric_id=${deviceId}`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 export const readIotPoints = async (deviceId: any, data: any) => {
   try {
     const response = await post2(`/request?device_id=${deviceId}`, data)

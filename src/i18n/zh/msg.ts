@@ -29,4 +29,6 @@ export default {
     msg_error_4: '点位离线状态，无法执行操作！',
     msg_error_5: 'IP地址格式不正确！',
     msg_error_6: '数据校验失败！',
+
+    msg_error_7: '请选择要释放的优先级！',
 }
