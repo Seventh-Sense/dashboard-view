@@ -75,9 +75,9 @@ const initTabs = async () => {
     }
 
     if (Array.isArray(res.data) && res.data.length > 0) {
-      console.log(res.data)
       res.data.forEach( (item: any) => {
-        if (item.description === "dashboard") {
+        if (item.description === "dashboard" && item.content !== '""') {
+          //console.log('item', res.data, item)
           slides.value.push(item)
         }
       })

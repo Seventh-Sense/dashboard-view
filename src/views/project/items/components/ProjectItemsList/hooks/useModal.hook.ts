@@ -45,6 +45,7 @@ export const useModalDataInit = () => {
 
   // 预览
   const previewHandle = (cardData: Chartype) => {
+    const t = window['$t']
     if (!cardData) return
 
     let path: string
@@ -58,8 +59,9 @@ export const useModalDataInit = () => {
     //读取数据并写入sessionStorageInfo
     readProject(cardData.id)
       .then((res: any) => {
-        if (res.status === 'OK' && res.data.content !== '') {
+        if (res.status === 'OK' && res.data.content !== '""') {
           let data = JSONParse(res.data.content)
+          console.log('asdasd', res.data)
 
           const sessionStorageInfo = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
           if (sessionStorageInfo?.length) {
@@ -78,14 +80,16 @@ export const useModalDataInit = () => {
           } else {
             setSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST, [{ id: id, ...data }])
           }
+
+          routerTurnByPath(path, [cardData.id], undefined, false)
+        } else {
+          window['$message'].success(t('msg.msg_error_8'))
         }
       })
       .catch(err => {
         console.log(err)
       })
-      .finally(() => {
-        routerTurnByPath(path, [cardData.id], undefined, false)
-      })
+      
   }
 
   return {

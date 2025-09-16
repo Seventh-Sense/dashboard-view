@@ -31,4 +31,5 @@ export default {
     msg_error_6: '数据校验失败！',
 
     msg_error_7: '请选择要释放的优先级！',
+    msg_error_8: '项目为空，无法预览！',
 }
