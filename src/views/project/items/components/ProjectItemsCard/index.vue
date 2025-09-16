@@ -5,7 +5,7 @@
         <div class="list-content-title-top">
           <div class="list-content-title-avatar"></div>
           <span style="color: rgba(255, 255, 255, 0.93); font-size: 12px; line-height: 17px">
-            admin
+            {{ capitalizeFirstLetter(cardData.type) }}
           </span>
         </div>
         <img width="24" height="24" :src="SVG_ICON.card_icons.template" @click="previewHandle()" />
@@ -38,7 +38,7 @@ import { onMounted, PropType, ref } from 'vue'
 import { Icon } from '@/icon/index'
 import { Chartype } from '../../index.d'
 import SVG_ICON from '@/svg/SVG_ICON'
-import { getLoginUser } from '@/utils'
+import { getLoginUser, capitalizeFirstLetter } from '@/utils'
 import { RenameModal } from './RenameModal'
 
 const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'rename'])

@@ -138,6 +138,7 @@ export default {
   set_value_title: 'Set Present Value',
   set_value: 'Set Value',
   release: 'Release',
+  release_all: 'Release All Values',
   compulsion: 'Force',
   advance_option: 'Advanced Options',
 }

@@ -139,6 +139,7 @@ export default {
   set_value_title: '设置当前值',
   set_value: '设置值',
   release: '释放',
+  release_all: '释放所有值',
   compulsion: '强制',
   advance_option: '高级选项',
 }

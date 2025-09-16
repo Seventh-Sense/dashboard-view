@@ -53,12 +53,17 @@
         <div class="modal-porperty">
           {{ $t('device.priority') }}
         </div>
-        <n-select
-          :placeholder="t('device.priority')"
-          v-model:value="priority"
-          :options="PriorityOption"
-          :style="{ width: '300px' }"
-        />
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <n-select
+            :placeholder="t('device.priority')"
+            v-model:value="priority"
+            :options="PriorityOption"
+            :style="{ width: '300px' }"
+          />
+          <div class="modal-button modal-button-color2" style="width: 160px" @click="onReleaseALL">
+            {{ $t('device.release_all') }}
+          </div>
+        </div>
       </div>
 
       <div class="modal-advance" @click="onClick">
@@ -158,18 +163,61 @@ const onSubmit = async () => {
   sendOrder(load)
 }
 
-const sendOrder = async (load: any) => {
+const onReleaseALL = async () => {
+  const requests = Array.from({ length: 16 }, (_, i) => {
+    const priority = i + 1 // 1-16
+    return sendOrder(
+      {
+        function: 'write_property',
+        parms: {
+          address: props.deviceData.address,
+          objid: props.displayData.metric_uid,
+          prop: 'present-value',
+          value: null,
+          priority: priority
+        }
+      },
+      false
+    )
+  })
+
+  try {
+    const results = await Promise.allSettled(requests)
+
+    const successCount = results.filter(
+      r => r.status === 'fulfilled' && (r as PromiseFulfilledResult<any>).value.status === 'OK'
+    ).length
+
+    const totalCount = results.length;
+
+    if (successCount === totalCount) {
+      window['$message'].success(t('device.msg_mod_success'))
+    } else {
+      window['$message'].warning(t('device.msg_error_2'))
+    }
+    
+  } catch (error) {
+    console.error('Batch release error:', error)
+  }
+}
+
+const sendOrder = async (load: any, flag: boolean = true) => {
   try {
     const res: any = await readIotPoints(props.deviceData.key, load)
 
     if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
-      msghandle(res)
+      if (flag) {
+        msghandle(res)
+      }
       return
     }
 
-    refreshObjTable()
-    window['$message'].success(t('device.msg_mod_success'))
+    if (flag) {
+      window['$message'].success(t('device.msg_mod_success'))
+    }
+
+    return res
   } catch (error) {
     console.error('Error saving value:', error)
   }

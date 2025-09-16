@@ -505,6 +505,11 @@ export const validateIPv4 = (ip: string): boolean => {
   return ipv4Regex.test(ip)
 }
 
+export function capitalizeFirstLetter(str: any): string {
+    if (!str) return str; // 处理空字符串情况
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function getRandomInt(min: number, max: number): number {
     if (min > max) {
         throw new Error("最小值不能大于最大值");

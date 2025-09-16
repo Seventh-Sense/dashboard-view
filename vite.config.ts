@@ -12,21 +12,23 @@ import viteCompression from 'vite-plugin-compression'
 import { viteMockServe } from 'vite-plugin-mock'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import svgLoader from 'vite-svg-loader'
-import zipPack, { Options as ZipPickOptions } from 'vite-plugin-zip-pack'
+import zipPack from 'vite-plugin-zip-pack'
 import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
+import copy from 'rollup-plugin-copy';
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
 }
 
 export default ({ mode }) => {
-
   const env = loadEnv(mode, process.cwd())
+
+  const isGraphic = env.VITE_APP_IS_GRAPHIC === 'false';
 
   return defineConfig({
     base: '/',
-    publicDir: env.VITE_APP_IS_GRAPHIC === 'true' ? 'public/included' : 'public',
+    publicDir: isGraphic ? 'public' : false,
     // 路径重定向
     resolve: {
       alias: [
@@ -65,6 +67,16 @@ export default ({ mode }) => {
       }
     },
     plugins: [
+      copy({
+        targets: [
+          {
+            src: 'version.txt',
+            dest: 'dist' // 明确指定复制到dist目录
+          }
+        ],
+        hook: 'writeBundle', // 确保在打包完成后复制
+        overwrite: true
+      }),
       vue({
         template: {
           compilerOptions: {
@@ -91,7 +103,7 @@ export default ({ mode }) => {
         supportTs: true,
         // 监视文件更改
         watchFiles: true
-      })
+      }),
       // 压缩
       // viteCompression({
       //   verbose: true,
@@ -103,7 +115,7 @@ export default ({ mode }) => {
       // zipPack({
       //   inDir: `dist`,
       //   outDir: './',
-      //   outFileName: `dist.zip`
+      //   outFileName: `dist.zip`,
       // })
     ],
     build: {

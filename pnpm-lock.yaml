@@ -231,6 +231,9 @@ importers:
       prettier:
         specifier: ^2.6.2
         version: 2.7.0
+      rollup-plugin-copy:
+        specifier: ^3.5.0
+        version: 3.5.0
       sass:
         specifier: ^1.32.13
         version: 1.52.3
@@ -1091,8 +1094,14 @@ packages:
   '@types/fined@1.1.3':
     resolution: {integrity: sha512-CWYnSRnun3CGbt6taXeVo2lCbuaj4mchVJ4UF/BdU5TSuIn3AmS13pGMwCsBUoehGbhZrBrpNJZSZI5EVilXww==}
 
+  '@types/fs-extra@8.1.5':
+    resolution: {integrity: sha512-0dzKcwO+S8s2kuF5Z9oUWatQJj5Uq/iqphEtE3GQJVRRYm/tD1LglU2UnXi2A8jLq5umkGouOXOR9y0n613ZwQ==}
+
   '@types/geojson@7946.0.16':
     resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
+
+  '@types/glob@7.2.0':
+    resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
 
   '@types/inquirer@8.2.1':
     resolution: {integrity: sha512-wKW3SKIUMmltbykg4I5JzCVzUhkuD9trD6efAmYgN2MrSntY0SMRQzEnD3mkyJ/rv9NLbTC7g3hKKE86YwEDLw==}
@@ -1123,6 +1132,10 @@ packages:
 
   '@types/lodash@4.17.7':
     resolution: {integrity: sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==}
+
+  '@types/minimatch@6.0.0':
+    resolution: {integrity: sha512-zmPitbQ8+6zNutpwgcQuLcsEpn/Cj54Kbn7L5pX0Os5kdWplB7xPgEh/g+SWOB/qmows2gpuCaPyduq8ZZRnxA==}
+    deprecated: This is a stub types definition. minimatch provides its own type definitions, so you do not need this installed.
 
   '@types/minimist@1.2.2':
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
@@ -1969,6 +1982,9 @@ packages:
   color@4.2.3:
     resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
     engines: {node: '>=12.5.0'}
+
+  colorette@1.4.0:
+    resolution: {integrity: sha512-Y2oEozpomLn7Q3HFP7dpww7AtMJplbM9lGZP6RDfHqmbeRjiwRg4n6VM6j4KLmRke85uWEI7JqF17f3pqdRA0g==}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -2861,6 +2877,10 @@ packages:
     resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
     engines: {node: '>=12'}
 
+  fs-extra@8.1.0:
+    resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
+    engines: {node: '>=6 <7 || >=8'}
+
   fs-minipass@2.1.0:
     resolution: {integrity: sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==}
     engines: {node: '>= 8'}
@@ -2954,6 +2974,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
@@ -2983,6 +3004,10 @@ packages:
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
     engines: {node: '>= 0.4'}
+
+  globby@10.0.1:
+    resolution: {integrity: sha512-sSs4inE1FB2YQiymcmTv6NWENryABjUNPeWhOvmn4SjtKybglsyPZxFB3U1/+L1bYi0rNZDqCLlHyLYDl1Pq5A==}
+    engines: {node: '>=8'}
 
   globby@11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
@@ -3170,6 +3195,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -3533,6 +3559,9 @@ packages:
 
   jsonc-parser@3.0.0:
     resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
+
+  jsonfile@4.0.0:
+    resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
@@ -4476,6 +4505,10 @@ packages:
     peerDependencies:
       rollup: '>=1.12.0'
 
+  rollup-plugin-copy@3.5.0:
+    resolution: {integrity: sha512-wI8D5dvYovRMx/YYKtUNt3Yxaw4ORC9xo6Gt9t22kveWz1enG9QrhVlagzwrxSC455xD1dHMKhIJkbsQ7d48BA==}
+    engines: {node: '>=8.3'}
+
   rollup-plugin-dts@6.2.1:
     resolution: {integrity: sha512-sR3CxYUl7i2CHa0O7bA45mCrgADyAQ0tVtGSqi3yvH28M+eg1+g5d7kQ9hLvEz5dorK3XVsH5L2jwHLQf72DzA==}
     engines: {node: '>=16'}
@@ -5085,6 +5118,10 @@ packages:
   unique-slug@3.0.0:
     resolution: {integrity: sha512-8EyMynh679x/0gqE9fT9oilG+qEt+ibFyqjuVTsZn1+CMxH+XLlpvr2UZx4nVcCwTpx81nICr2JQFkM+HPLq4w==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+
+  universalify@0.1.2:
+    resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
+    engines: {node: '>= 4.0.0'}
 
   universalify@0.2.0:
     resolution: {integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==}
@@ -6657,7 +6694,16 @@ snapshots:
 
   '@types/fined@1.1.3': {}
 
+  '@types/fs-extra@8.1.5':
+    dependencies:
+      '@types/node': 16.11.40
+
   '@types/geojson@7946.0.16': {}
+
+  '@types/glob@7.2.0':
+    dependencies:
+      '@types/minimatch': 6.0.0
+      '@types/node': 16.11.40
 
   '@types/inquirer@8.2.1':
     dependencies:
@@ -6686,6 +6732,10 @@ snapshots:
   '@types/lodash@4.14.185': {}
 
   '@types/lodash@4.17.7': {}
+
+  '@types/minimatch@6.0.0':
+    dependencies:
+      minimatch: 9.0.5
 
   '@types/minimist@1.2.2': {}
 
@@ -6719,7 +6769,7 @@ snapshots:
 
   '@types/through@0.0.30':
     dependencies:
-      '@types/node': 17.0.43
+      '@types/node': 16.11.40
 
   '@types/trusted-types@2.0.7': {}
 
@@ -7906,6 +7956,8 @@ snapshots:
       color-convert: 2.0.1
       color-string: 1.9.1
 
+  colorette@1.4.0: {}
+
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
@@ -8261,7 +8313,7 @@ snapshots:
   del@6.1.1:
     dependencies:
       globby: 11.1.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       is-glob: 4.0.3
       is-path-cwd: 2.2.0
       is-path-inside: 3.0.3
@@ -8944,6 +8996,12 @@ snapshots:
       jsonfile: 6.1.0
       universalify: 2.0.0
 
+  fs-extra@8.1.0:
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 4.0.0
+      universalify: 0.1.2
+
   fs-minipass@2.1.0:
     dependencies:
       minipass: 3.3.6
@@ -9103,6 +9161,17 @@ snapshots:
     dependencies:
       define-properties: 1.2.1
       gopd: 1.2.0
+
+  globby@10.0.1:
+    dependencies:
+      '@types/glob': 7.2.0
+      array-union: 2.1.0
+      dir-glob: 3.0.1
+      fast-glob: 3.2.11
+      glob: 7.2.3
+      ignore: 5.2.0
+      merge2: 1.4.1
+      slash: 3.0.0
 
   globby@11.1.0:
     dependencies:
@@ -9631,6 +9700,10 @@ snapshots:
   jsonc-parser@2.3.1: {}
 
   jsonc-parser@3.0.0: {}
+
+  jsonfile@4.0.0:
+    optionalDependencies:
+      graceful-fs: 4.2.11
 
   jsonfile@6.1.0:
     dependencies:
@@ -10691,6 +10764,14 @@ snapshots:
       rollup: 3.29.5
       rollup-pluginutils: 2.8.2
 
+  rollup-plugin-copy@3.5.0:
+    dependencies:
+      '@types/fs-extra': 8.1.5
+      colorette: 1.4.0
+      fs-extra: 8.1.0
+      globby: 10.0.1
+      is-plain-object: 3.0.1
+
   rollup-plugin-dts@6.2.1(rollup@3.29.5)(typescript@4.6.3):
     dependencies:
       magic-string: 0.30.17
@@ -11334,6 +11415,8 @@ snapshots:
   unique-slug@3.0.0:
     dependencies:
       imurmurhash: 0.1.4
+
+  universalify@0.1.2: {}
 
   universalify@0.2.0: {}
 
