@@ -9,7 +9,8 @@
     }"
   >
     <div class="slider-track" :style="trackStyle">
-      <div class="slider-percent">{{ value }}%</div>
+      <!-- 显示时保留一位小数，避免过长小数 -->
+      <div class="slider-percent">{{ displayValue }}%</div>
     </div>
     <div
       class="slider-thumb"
@@ -38,22 +39,31 @@ const props = defineProps({
 
 const flag = ref(false)
 const t = window['$t']
-const value = ref<any>(50)
+const value = ref<number>(50) // 精确值，用于计算位置
+const finalValue = ref<number>(50) // 最终确认值，用于下发
+const previousValue = ref<number | null>(null) // 新增：记录上一次的值
+
+// 显示用的值，保留一位小数
+const displayValue = computed(() => {
+  return Number(value.value.toFixed(0))
+})
 
 const { w, h } = toRefs(props.chartConfig.attr)
+const { background_color, thumb_color, track_color, percent_color } = toRefs(props.chartConfig.option)
 
 const container = ref<any>(null)
 const isDragging = ref(false)
+const lastSentValue = ref<number | null>(null) // 记录最后一次下发的值
 
 const trackStyle = computed(() => ({
   width: `${value.value}%`,
-  background: `#6666FF`,
-  '--theme-color': `#6666FF`
+  background: `${track_color.value}`,
+  '--theme-color': `${track_color.value}`
 }))
 
 const thumbStyle = computed(() => ({
   left: `${value.value}%`,
-  height: `${h}px`
+  height: `${h.value}px`
 }))
 
 const startDrag = (e: any) => {
@@ -82,17 +92,13 @@ const handleDrag = (e: any) => {
     offsetX = e.clientX - rect.left
   }
 
+  // 计算精确值但限制小数位数
   const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
-  value.value = Math.round(newProgress)
-  onClick(Math.round(newProgress))
-}
-
-const handleInput = (e: Event) => {
-  e.stopPropagation() // 确保阻止冒泡
+  value.value = Number(newProgress.toFixed(2)) // 限制为两位小数用于计算
 }
 
 const handleClick = (e: any) => {
-  if (!container.value) return
+  if (!container.value || isDragging.value) return
 
   const rect = container.value.getBoundingClientRect()
   const containerWidth = rect.width
@@ -101,12 +107,25 @@ const handleClick = (e: any) => {
     : e.clientX - rect.left
 
   const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
+  const roundedProgress = Math.round(newProgress)
 
-  value.value = Math.round(newProgress)
-  onClick(Math.round(newProgress))
+  value.value = roundedProgress
+  finalValue.value = roundedProgress
+  sendValue(roundedProgress)
 }
 
 const stopDrag = () => {
+  if (!isDragging.value) return
+
+  if (container.value) {
+    // 拖动结束时计算最终值
+    const roundedProgress = Math.round(value.value)
+
+    value.value = roundedProgress
+    finalValue.value = roundedProgress
+    sendValue(roundedProgress) // 只在结束时发送一次
+  }
+
   isDragging.value = false
   removeDragListeners()
 }
@@ -122,16 +141,25 @@ onUnmounted(() => {
   removeDragListeners()
 })
 
+// 发送值的函数，增加值变化检查
+const sendValue = (data: number) => {
+  // 只有当值发生变化时才发送
+  if (data !== lastSentValue.value) {
+    lastSentValue.value = data
+    onClick(data)
+  }
+}
+
+// 优化节流设置，避免重复下发
 const onClick = throttle(
   async (data: number) => {
     try {
       flag.value = true
-
       let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
       if (!result) {
+        // 失败处理
       }
     } catch (error) {
-      // 错误已由 updateNodeData 处理，此处可补充额外逻辑
       console.error('操作失败:', error)
     } finally {
       flag.value = false
@@ -139,8 +167,8 @@ const onClick = throttle(
   },
   throttleTime,
   {
-    leading: true,
-    trailing: false
+    leading: false, // 关闭首触发
+    trailing: true // 只在结束时触发一次
   }
 )
 
@@ -148,7 +176,17 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      value.value = parseData(newVal, 'number')
+      const parsedValue = parseData(newVal, 'number')
+      // 新增：检查当前值与上一次值是否一致
+      if (parsedValue === previousValue.value) {
+        // 连续两次值一致，才更新
+        value.value = parsedValue
+        finalValue.value = parsedValue
+        lastSentValue.value = parsedValue
+      } else {
+        // 不一致时，只更新上一次值的记录，不更新实际值
+        previousValue.value = parsedValue
+      }
     }
   },
   {
@@ -159,8 +197,9 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+/* 样式保持不变 */
 .slider-container {
-  background: rgba(255, 255, 255, 0.2);
+  background: v-bind('background_color');
   height: 100%;
   border-radius: 4px;
   position: relative;
@@ -173,7 +212,7 @@ watch(
   top: 0;
   left: 0;
   height: 100%;
-  background: rgba(102, 102, 255, 1);
+  background: v-bind('track_color');
   border-radius: 4px 0 0 4px;
   transition: width 0.2s ease;
   display: flex;
@@ -183,7 +222,7 @@ watch(
 }
 
 .slider-percent {
-  color: rgba(255, 255, 255, 1);
+  color: v-bind('thumb_color');
   font-weight: bold;
   font-size: 1.1rem;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
@@ -194,6 +233,7 @@ watch(
   font-weight: 800;
   min-width: 0px;
   text-align: center;
+  padding-right: 8px;
 }
 
 .slider-thumb {
@@ -202,7 +242,7 @@ watch(
   transform: translate(-50%, -50%);
   width: 8px;
   height: 100%;
-  background: white;
+  background: v-bind('thumb_color');
   border-radius: 4px;
   z-index: 10;
   transition: all 0.2s ease;
@@ -212,5 +252,6 @@ watch(
 .slider-thumb.active {
   transform: translate(-50%, -50%) scaleX(2.2);
   border-radius: 4px;
+  cursor: grabbing;
 }
 </style>

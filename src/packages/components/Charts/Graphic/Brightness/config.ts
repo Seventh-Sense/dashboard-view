@@ -6,9 +6,10 @@ import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
   dataset: 30,
-  thumb_color: 'white',
-  track_color: 'rgba(102, 102, 255, 1)',
-  percent_color: 'white',
+  background_color: '#FFFFFF33',
+  thumb_color: '#FFFFFFFF',
+  track_color: '#6666FFFF',
+  percent_color: '#FFFFFFFF',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

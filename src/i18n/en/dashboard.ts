@@ -327,4 +327,5 @@ export default {
   opacity: 'Opacity',
   custom_icon: 'Custom Icon',
   coolOrHeat: 'Cool/Heat Mode',
+  thumb: 'Thumb',
 }
