@@ -4,10 +4,10 @@
   </div>
   <div v-else class="tabs-container">
     <div class="tabs-bar">
-      <div 
-        v-for="(slide, index) in slides" 
-        :key="index" 
-        class="tabs-item" 
+      <div
+        v-for="(slide, index) in slides"
+        :key="index"
+        class="tabs-item"
         :class="{ active: currentIndex === index }"
         @click="switchTab(index)"
       >
@@ -15,30 +15,30 @@
       </div>
     </div>
 
-    <div 
-      class="content-container" 
-      @touchstart.passive="onTouchStart" 
-      @touchmove.passive="onTouchMove" 
+    <div
+      class="content-container"
+      @touchstart.passive="onTouchStart"
+      @touchmove.passive="onTouchMove"
       @touchend="onTouchEnd"
       @touchcancel="onTouchCancel"
     >
-      <div 
-        class="content-wrapper" 
-        :style="{ 
+      <div
+        class="content-wrapper"
+        :style="{
           transform: `translateX(${offsetX}px)`,
           transition: isAnimating ? 'transform 0.3s ease-out' : 'none'
         }"
       >
         <!-- 只渲染当前页和相邻页面 -->
-        <div 
-          v-for="(slide, index) in slides" 
-          :key="index" 
+        <div
+          v-for="(slide, index) in slides"
+          :key="index"
           class="content-item"
           :style="{ width: `${screenWidth}px` }"
         >
-          <PreviewList 
-            :ProjectData="slide" 
-            :ProjectNum="index" 
+          <PreviewList
+            :ProjectData="slide"
+            :ProjectNum="index"
             :key="`preview-${index}`"
             v-if="shouldRender(index)"
           />
@@ -90,7 +90,7 @@ const formInline = reactive({
 // 计算属性：判断是否应该渲染某个页面
 const shouldRender = computed(() => (index: number) => {
   if (slides.value.length <= 1) return true
-  
+
   // 只渲染当前页和相邻页面
   return Math.abs(index - currentIndex.value) <= RENDER_RANGE
 })
@@ -102,16 +102,18 @@ onMounted(() => {
   // 存储登录信息
   setLocalStorage(
     GO_LOGIN_INFO_STORE,
-    cryptoEncode(JSON.stringify({
-      username: formInline.username,
-      password: formInline.password
-    }))
+    cryptoEncode(
+      JSON.stringify({
+        username: formInline.username,
+        password: formInline.password
+      })
+    )
   )
 
   // 初始化屏幕宽度
   screenWidth.value = window.innerWidth
   window.addEventListener('resize', handleResize)
-  
+
   // 初始化数据
   initTabs()
 
@@ -129,9 +131,9 @@ const initTabs = async () => {
 
     // 过滤数据
     slides.value = res.data.filter(
-      (item: any) => item.description === "dashboard" && item.content !== '""'
+      (item: any) => item.description === 'dashboard' && item.content !== '""'
     )
-    
+
     // 预解析内容
     slides.value.forEach(item => {
       try {
@@ -187,13 +189,13 @@ const onTouchMove = (e: TouchEvent) => {
 
   // 计算基础偏移量
   let newOffset = -currentIndex.value * screenWidth.value + diffX
-  
+
   // 严格的第一页右滑限制
   if (currentIndex.value === 0) {
     // 第一页不允许向右滑动超过自身边界（偏移量不能大于0）
     const maxRightOffset = 0
     newOffset = Math.min(newOffset, maxRightOffset)
-    
+
     // 增加右滑边缘阻力效果
     if (diffX > 0) {
       const excess = newOffset - maxRightOffset
@@ -207,7 +209,7 @@ const onTouchMove = (e: TouchEvent) => {
     // 最后一页向左滑动有阻力
     const maxLeftOffset = -lastPageIndex.value * screenWidth.value
     newOffset = Math.max(newOffset, maxLeftOffset)
-    
+
     const excess = maxLeftOffset - newOffset
     if (excess > 0) {
       newOffset = maxLeftOffset + excess * EDGE_RESISTANCE
@@ -233,7 +235,7 @@ const onTouchEnd = (e: TouchEvent) => {
       newIndex = currentIndex.value - 1
     }
   }
-  
+
   // 向左滑动逻辑（非最后一页）
   if (diffX < -SWIPE_THRESHOLD && currentIndex.value < lastPageIndex.value) {
     newIndex = currentIndex.value + 1

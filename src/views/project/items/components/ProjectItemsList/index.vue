@@ -1,9 +1,9 @@
 <template>
   <div class="go-items-list">
     <div class="list-pagination">
-      <div class="list-preview" @click="onPreview">{{ $t('dashboard.preview') }}</div>
+      <div v-if="!isShow" class="list-preview" @click="onPreview">{{ $t('dashboard.preview') }}</div>
       <project-layout-create v-if="isShow" :collapsed="true"></project-layout-create>
-      <n-dropdown trigger="hover" :options="options" placement="bottom-end" @select="handleSelect">
+      <n-dropdown v-if="isShow" trigger="hover" :options="options" placement="bottom-end" @select="handleSelect">
         <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
       </n-dropdown>
     </div>

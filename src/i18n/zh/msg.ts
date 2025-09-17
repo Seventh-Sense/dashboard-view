@@ -32,4 +32,5 @@ export default {
 
     msg_error_7: '请选择要释放的优先级！',
     msg_error_8: '项目为空，无法预览！',
+    msg_error_9: '暂未搜索到设备！',
 }

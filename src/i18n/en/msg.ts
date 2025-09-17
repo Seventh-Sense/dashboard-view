@@ -29,4 +29,5 @@ export default {
 
     msg_error_7: 'Please select the priority to release!',
     msg_error_8: 'The project is empty and cannot be previewed!',
+    msg_error_9: 'No device found yet!',
 }

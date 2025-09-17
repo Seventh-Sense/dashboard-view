@@ -127,9 +127,15 @@ const onDiscovery = async () => {
   try {
     const res: any = await discoveryDevices()
 
-    if (res.status !== 'OK' || res.data.length === 0) {
+    if (res.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
       window['$message'].warning(t('device.msg_read_fail'))
+      return
+    }
+
+    if (res.data.length === 0) {
+      console.log('Non-OK response status:', res.data)
+      window['$message'].success(t('msg.msg_error_9'))
       return
     }
 
