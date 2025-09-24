@@ -73,6 +73,21 @@
         :deviceData="deviceData"
         :editData="displayData"
       />
+      <OPCUAPropertyModal
+        v-if="isOPCUA"
+        v-model:isShowModal="isOPCUA"
+        :isEdit="isOPCUAEdit"
+        :deviceData="deviceData"
+        :editData="displayData"
+        :dataList="data"
+      />
+      <OPCUAWriteModal
+        v-if="isOPCUAWrite"
+        v-model:isShowModal="isOPCUAWrite"
+        :isEdit="isOPCUAEdit"
+        :deviceData="deviceData"
+        :editData="displayData"
+      />
     </div>
   </div>
 </template>
@@ -95,6 +110,8 @@ import { TypeEnum } from '../../utils/propertyMap'
 import { cloneDeep } from 'lodash'
 import type { DataTableColumns } from 'naive-ui'
 import { KNXPropertyModal } from '../../modal/KNXPropertyModal'
+import { OPCUAPropertyModal } from '../../modal/OPCUAPropertyModal'
+import { OPCUAWriteModal } from '../../modal/OPCUAWriteModal'
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
@@ -118,6 +135,11 @@ const isModbusEdit = ref(false)
 const isKNX = ref(false)
 
 const isKNXEdit = ref(false)
+
+//OPCUA
+const isOPCUA = ref(false)
+const isOPCUAWrite = ref(false)
+const isOPCUAEdit = ref(false)
 
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 60 - 90)
 
@@ -146,9 +168,9 @@ const columns: DataTableColumns<PointData> = [
     render(row, index) {
       if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
         return row.metric_type + ',' + row.metric_id
-      } else  {
+      } else {
         return row.metric_uid
-      } 
+      }
     }
   },
   { title: () => t('device.status'), key: 'status' },
@@ -255,7 +277,14 @@ const periodicReading = () => {
   periodicFunc()
   //周期读取值
   interval = window.setInterval(async () => {
-    if (!isShowModal.value && !isDisplay.value && !isModbus.value) {
+    if (
+      !isShowModal.value &&
+      !isDisplay.value &&
+      !isModbus.value &&
+      !isKNX.value &&
+      !isOPCUA.value &&
+      !isOPCUAWrite.value
+    ) {
       periodicFunc()
     }
   }, 3000)
@@ -360,6 +389,9 @@ const onDiscovery = () => {
   } else if (props.deviceData.device_type === DeviceTypeEnum.KNX) {
     isKNX.value = true
     isKNXEdit.value = false
+  } else if (props.deviceData.device_type === DeviceTypeEnum.OPCUA) {
+    isOPCUA.value = true
+    isOPCUAEdit.value = false
   }
 }
 
@@ -384,6 +416,9 @@ const onEdit = (row: PointData) => {
   } else if (props.deviceData.device_type === DeviceTypeEnum.KNX) {
     isKNXEdit.value = true
     isKNX.value = true
+  } else if (props.deviceData.device_type === DeviceTypeEnum.OPCUA) {
+    isOPCUAEdit.value = true
+    isOPCUAWrite.value = true
   }
 }
 

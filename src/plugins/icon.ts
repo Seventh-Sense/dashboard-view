@@ -112,6 +112,7 @@ import {
   Edit as EditIcon,
   ChevronLeft as ChevronLeftIcon,
   AddFilled as AddFilledIcon,
+  DocumentImport as DocumentImportIcon,
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -318,6 +319,7 @@ const carbon = {
   EditIcon,
   ChevronLeftIcon,
   AddFilledIcon,
+  DocumentImportIcon,
 }
 
 // https://www.xicons.org/#/ 还有很多

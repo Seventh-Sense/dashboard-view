@@ -596,9 +596,9 @@ watch(
 //   border-bottom: 1px solid #{$--color-dark-modal-title};
 // }
 
-::v-deep(.n-select) {
-  //border-bottom: 1px solid #{$--color-dark-modal-title};
-}
+// ::v-deep(.n-select) {
+//   border-bottom: 1px solid #{$--color-dark-modal-title};
+// }
 
 ::v-deep(.n-base-selection) {
   --n-border: 0 !important;

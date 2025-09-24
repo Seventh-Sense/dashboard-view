@@ -142,4 +142,13 @@ export default {
   release_all: '释放所有值',
   compulsion: '强制',
   advance_option: '高级选项',
+  security_policy: '安全政策',
+  message_security_mode: '消息安全模式',
+  sign: '签名',
+  encrypt: '加密',
+  account: '账号',
+  certificate: '证书',
+  user: '用户名',
+  password: '密码',
+  private_key: '私钥',
 }

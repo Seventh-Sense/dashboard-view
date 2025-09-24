@@ -72,6 +72,18 @@ export interface BACnetType {
   adpuTimeout: number
 }
 
+// 定义节点类型接口，增强类型安全
+export interface OPCUATreeNode {
+  node_id: string;
+  display_name: string
+  node_class?: string;
+  browse_name?: string;
+  children?: OPCUATreeNode[];
+  isLeaf: boolean;
+  checkboxDisabled: boolean;
+  [key: string]: any; // 允许其他属性存在
+}
+
 export const DEVICE_TYPE_MAP: { [key: number]: string } = {
   0: TypeEnum.AI,
   1: TypeEnum.AO,
@@ -154,7 +166,8 @@ export enum DeviceTypeEnum {
   BACnet = 'bacnet',
   ModbusRTU = 'ModbusRTU',
   ModbusTCP = 'ModbusTCP',
-  KNX = 'KNX'
+  KNX = 'KNX',
+  OPCUA = 'OPCUA',
 }
 
 export const TypeOptions = [
@@ -173,6 +186,10 @@ export const TypeOptions = [
   {
     label: 'KNX',
     value: DeviceTypeEnum.KNX
+  },
+  {
+    label: 'OPCUA',
+    value: DeviceTypeEnum.OPCUA
   }
 ]
 
@@ -198,6 +215,17 @@ export const ModbusTCPData = {
   host: '127.0.0.1',
   port: 5020,
   connectionOption: 'tcp'
+}
+
+export const OPCUAData = {
+  url: '',
+  security_policy: '',
+  security_mode: '',
+  auth_mode: 1,
+  username: '',
+  password: '',
+  user_cert: '',
+  user_key: ''
 }
 
 export const baudOptions = [
@@ -322,6 +350,44 @@ export const functionOptions = [
     label: '04 Input Register',
     value: '04'
   }
+]
+
+export const SecurityPolicyOptions = [
+  {
+    label: () => window['$t']('device.none'),
+    value: 'http://opcfoundation.org/UA/SecurityPolicy#None'
+  },
+  {
+    label: 'Basic256Sha256',
+    value: 'http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256'
+  },
+  {
+    label: 'Aes256_Sha256_RsaPss',
+    value: 'http://opcfoundation.org/UA/SecurityPolicy#Aes256_Sha256_RsaPss'
+  },
+  {
+    label: 'Aes128_Sha256_RsaOaep',
+    value: 'http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep'
+  },
+  {
+    label: 'Basic256',
+    value: 'http://opcfoundation.org/UA/SecurityPolicy#Basic256'
+  },
+]
+
+export const MessageSecurityOptions = [
+  {
+    label: () => window['$t']('device.none'),
+    value: 1
+  },
+  {
+    label: () => window['$t']('device.sign'),
+    value: 2
+  },
+  {
+    label: () => window['$t']('device.encrypt'),
+    value: 3
+  },
 ]
 
 export const OrderOptions = [

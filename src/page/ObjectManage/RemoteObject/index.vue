@@ -270,6 +270,7 @@ const onEdit = (row: DeviceTableData) => {
     case DeviceTypeEnum.ModbusRTU:
     case DeviceTypeEnum.ModbusTCP:
     case DeviceTypeEnum.KNX:
+    case DeviceTypeEnum.OPCUA:
       isEdit.value = true
       isShowModal.value = true
       break

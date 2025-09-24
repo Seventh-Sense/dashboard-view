@@ -141,4 +141,13 @@ export default {
   release_all: 'Release All Values',
   compulsion: 'Force',
   advance_option: 'Advanced Options',
+  security_policy: 'Security Policy',
+  message_security_mode: 'Message Security Mode',
+  sign: 'Sign',
+  encrypt: 'Encrypt',
+  account: 'Account',
+  certificate: 'Certificate',
+  user: 'User Name',
+  password: 'Password',
+  private_key: 'Private Key',
 }

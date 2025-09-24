@@ -86,6 +86,11 @@ export const useThemeOverridesHook = () => {
         boxShadowFocus: 0,
         paddingMedium: '0',
       },
+      Tree: {
+        fontSize: '16px',
+        nodeHeight: '32px',
+        lineHeight: '1.7',
+      }
     }
     return designStore.getDarkTheme ? dartObject : lightObject
   })
