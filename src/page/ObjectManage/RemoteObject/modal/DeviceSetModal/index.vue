@@ -167,7 +167,7 @@ const handleSubmitByType = async (deviceData: DataType) => {
     const res: any = await addDevice(params)
 
     if (res.status !== 'OK') {
-      console.warn('Non-OK response status:', res.status)
+      console.warn('Non-OK response status:', res.data)
       window['$message'].warning(res.status)
       return
     }
@@ -245,8 +245,8 @@ const createOPCUAParams = (data: DataType) => {
 
   // 提取认证信息
   const { auth_mode, username, password, user_cert, user_key } = data.property
-  const isUserAuth = auth_mode === 1
-  const isCertAuth = auth_mode === 2
+  //const isUserAuth = auth_mode === 1
+  //const isCertAuth = auth_mode === 2
 
   return {
     uid: `OPCUA,${data.property.url}`,
@@ -260,10 +260,10 @@ const createOPCUAParams = (data: DataType) => {
       url: data.property.url,
       security_policy: data.property.security_policy,
       security_mode: data.property.security_mode,
-      username: isUserAuth ? username : '',
-      password: isUserAuth ? password : '',
-      user_cert: isCertAuth ? user_cert : null,
-      user_key: isCertAuth ? user_key : null,
+      username: username,
+      password: password,
+      user_cert: user_cert === '' ? null : user_cert,
+      user_key: user_key === '' ? null : user_key,
       auth_mode: data.property.auth_mode
     },
     tags: ''

@@ -71,6 +71,7 @@ const t = window['$t']
 
 let emit = defineEmits(['update:isShowModal'])
 const refreshObjTable: any = inject('refreshObjTable')
+
 const props = defineProps({
   isShowModal: {
     type: Boolean,

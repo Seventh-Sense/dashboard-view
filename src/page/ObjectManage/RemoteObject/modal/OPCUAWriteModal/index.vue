@@ -26,7 +26,7 @@
       <div>
         <n-input
           type="text"
-          v-model:value="editData.value"
+          v-model:value="value"
           style="width: 100%; margin-top: 20px"
         ></n-input>
       </div>
@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { readIotPoints } from '@/api/http'
 import SVG_ICON from '@/svg/SVG_ICON'
-import { ref } from 'vue'
+import { onMounted, ref, inject } from 'vue'
 
 let emit = defineEmits(['update:isShowModal'])
 
@@ -69,7 +69,16 @@ const props = defineProps({
   }
 })
 
+const refreshObjTable: any = inject('refreshObjTable')
+
+const value = ref('')
 const loading = ref(false)
+
+onMounted(() => {
+  if (props.editData && props.editData.value) {
+    value.value = String(props.editData.value)
+  }
+})
 
 const onSubmit = async () => {
   console.log('editData.value:', props.editData)
@@ -79,7 +88,7 @@ const onSubmit = async () => {
       function: 'write',
       parms: {
         nodeid: props.editData.metric_id,
-        value: String(props.editData.value)
+        value: String(value.value)
       }
     })
 
@@ -92,6 +101,8 @@ const onSubmit = async () => {
     if (res.data === false) {
         window['$message'].warning(window['$t']('msg.msg_error_2'))
     }
+
+    //refreshObjTable()
   } catch (e) {
     console.error('onSubmit:', e)
   } finally {

@@ -95,9 +95,10 @@ const props = defineProps({
   }
 })
 
-type UploadCompletedEventType = {
+type UploadResult  = {
   fileName: string
   url: string
+  pureBase64: string
 }
 
 const disabled = ref(false)
@@ -122,17 +123,17 @@ const ModeOptions = [
 //setting false
 const setOptions = computed(() => {
   // 提取安全策略判断条件
-  const isNoneSecurityPolicy = props.data.property.security_policy === 
-    'http://opcfoundation.org/UA/SecurityPolicy#None';
-  
+  const isNoneSecurityPolicy =
+    props.data.property.security_policy === 'http://opcfoundation.org/UA/SecurityPolicy#None'
+
   // 统一处理映射逻辑，通过条件判断确定禁用规则
   return MessageSecurityOptions.map(item => ({
     ...item, // 直接扩展原始属性，减少重复书写
-    disabled: isNoneSecurityPolicy 
-      ? item.value !== 1  // 当安全策略为None时，禁用值不等于1的选项
-      : item.value === 1  // 其他安全策略时，禁用值等于1的选项
-  }));
-});
+    disabled: isNoneSecurityPolicy
+      ? item.value !== 1 // 当安全策略为None时，禁用值不等于1的选项
+      : item.value === 1 // 其他安全策略时，禁用值等于1的选项
+  }))
+})
 
 const onDeleteFile = (type: string) => {
   if (type === 'certificate') {
@@ -144,7 +145,7 @@ const onDeleteFile = (type: string) => {
   }
 }
 
-const uploadFile = (callback: Function | null = null) => {
+const uploadFile = (callback: Function | null = null, type: string) => {
   const input = document.createElement('input')
 
   input.type = 'file'
@@ -155,31 +156,55 @@ const uploadFile = (callback: Function | null = null) => {
 
     const file = input.files[0]
 
-    const { name, size, type } = file
+    const { name } = file
 
     const reader = new FileReader()
 
     reader.onload = () => {
-      const eventObj: UploadCompletedEventType = { fileName: name, url: reader.result as string }
+      // 完整的DataURL，包含前缀
+      const dataUrl = reader.result as string
+
+      let pureBase64 = ''
+
+      if (type === 'certificate') {
+        // 提取纯Base64部分（移除data:xxx;base64,前缀）
+        const base64Index = dataUrl.indexOf('base64,')
+        pureBase64 = base64Index !== -1 ? dataUrl.substring(base64Index + 7) : ''
+      } else {
+        pureBase64 = dataUrl
+      }
+
+      const eventObj = {
+        fileName: name,
+        url: dataUrl, // 保留完整的DataURL
+        pureBase64: pureBase64 // 新增：纯Base64编码内容
+      }
+
       callback && callback(eventObj)
     }
-    reader.readAsDataURL(file)
+
+    if (type === 'certificate') {
+      reader.readAsDataURL(file)
+    } else {
+      //读取为二进制数据
+      reader.readAsText(file)
+    }
   }
 
   input.click()
 }
 
 const onUploadFile = (type: string) => {
-  uploadFile((e: UploadCompletedEventType) => {
-    console.log('file', e)
+  uploadFile((result: UploadResult ) => {
+    //console.log('file', result)
     if (type === 'certificate') {
-      certificate_name.value = e.fileName
-      props.data.property.user_cert = e.url
+      certificate_name.value = result.fileName
+      props.data.property.user_cert = result.pureBase64
     } else if (type === 'private_key') {
-      private_key_name.value = e.fileName
-      props.data.property.user_key = e.url
+      private_key_name.value = result.fileName
+      props.data.property.user_key = result.pureBase64
     }
-  })
+  }, type)
 }
 
 watch(
@@ -196,8 +221,6 @@ watch(
   },
   { deep: true, immediate: true }
 )
-
-
 </script>
 
 <style lang="scss" scoped>
