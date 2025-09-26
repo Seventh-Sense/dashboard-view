@@ -788,3 +788,25 @@ export const importData = async (data: any) => {
     throw error
   }
 }
+
+//licence
+export const getLicenceStatus = async () => {
+  try {
+    const response = await get2(`/license`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const submitLicence = async (data: any) => {
+  try {
+    const response = await post2(`/license/submit`, data)
+
+    return response
+
+  } catch (error) {
+    throw error
+  }
+}

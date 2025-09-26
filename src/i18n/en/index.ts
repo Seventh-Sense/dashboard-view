@@ -35,6 +35,7 @@ const global = {
   r_save: 'Save',
   r_create: 'Create',
   r_search: 'Search',
+  r_clone: 'Copy',
 }
 
 export default {

@@ -35,7 +35,9 @@ const global = {
   r_save: '保存',
   r_create: '创建',
   r_search: '搜索',
+  r_clone: '复制',
 }
+
 
 export default {
   global,

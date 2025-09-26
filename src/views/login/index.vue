@@ -93,6 +93,7 @@
     </div>
     <VersionModal v-model:showModal="showModal" />
     <ContactModal v-model:showModal="showCModal" />
+    <LicenceModal v-model:isShowModal="showLModal" :machine_id="machine_id"/>
   </div>
 </template>
 
@@ -105,7 +106,9 @@ import { routerTurnByName, cryptoEncode, setLocalStorage } from '@/utils'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { VersionModal } from './modal/VersionModal'
 import { ContactModal } from './modal/ContactModal'
+import { LicenceModal } from './modal/LicenceModal'
 import { GoLang } from '@/components/GoLang'
+import { getLicenceStatus } from '@/api/http'
 
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 const t = window['$t']
@@ -116,6 +119,9 @@ const loading = ref(false)
 const autoLogin = ref(true)
 const showModal = ref(false)
 const showCModal = ref(false)
+const showLModal = ref(false)
+
+const machine_id = ref('')
 
 const formInline = reactive({
   username: 'user',
@@ -141,30 +147,40 @@ const handleSubmit = (e: Event) => {
   formRef.value.validate(async (errors: any) => {
     if (!errors) {
       const { username, password } = formInline
-      if (
-        (username === 'admin' && password === '123456') ||
-        (username === 'user' && password === '123456')
-      ) {
-        loading.value = true
-        //get cookies
-        // onLogin(formInline).then(data => {
-        //   console.log(data)
-        // })
 
-        setLocalStorage(
-          GO_LOGIN_INFO_STORE,
-          cryptoEncode(
-            JSON.stringify({
-              username,
-              password
-            })
-          )
-        )
-        window['$message'].success(t('msg.login_msg_1'))
-        routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
-      } else {
-        window['$message'].error(t('msg.login_msg_2'))
-      }
+      getLicenceStatus()
+        .then((res: any) => {
+          if (res.status === 'FAIL') {
+            machine_id.value = res.result
+            showLModal.value = true
+          } else {
+            if (
+              (username === 'admin' && password === '123456') ||
+              (username === 'user' && password === '123456')
+            ) {
+              loading.value = true
+              
+
+              setLocalStorage(
+                GO_LOGIN_INFO_STORE,
+                cryptoEncode(
+                  JSON.stringify({
+                    username,
+                    password
+                  })
+                )
+              )
+              window['$message'].success(t('msg.login_msg_1'))
+
+              routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
+            } else {
+              window['$message'].error(t('msg.login_msg_2'))
+            }
+          }
+        })
+        .catch(() => {
+          console.warn('getLicenceStatus error')
+        })
     }
   })
 }

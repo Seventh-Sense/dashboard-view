@@ -8,4 +8,11 @@ export default {
   about_us: "About us",
   contact_us: "Contact us",
   version: 'Version',
+
+  accredit: 'Accredit',
+  machine: 'Machine ID',
+  copy_msg: 'Content copied!',
+  accredit_msg: 'Please contact the administrator to obtain a license',
+  accredit_msg1: 'Authorization successful. Please log in again!',
+  accredit_msg2: 'Authorization failed. Please provide a valid certificate!',
 }
