@@ -93,7 +93,7 @@
     </div>
     <VersionModal v-model:showModal="showModal" />
     <ContactModal v-model:showModal="showCModal" />
-    <LicenceModal v-model:isShowModal="showLModal" :machine_id="machine_id"/>
+    <LicenceModal v-model:isShowModal="showLModal" :machine_id="machine_id" />
   </div>
 </template>
 
@@ -148,41 +148,48 @@ const handleSubmit = (e: Event) => {
     if (!errors) {
       const { username, password } = formInline
 
-      getLicenceStatus()
-        .then((res: any) => {
-          if (res.status === 'FAIL') {
-            machine_id.value = res.result
-            showLModal.value = true
-          } else {
-            if (
-              (username === 'admin' && password === '123456') ||
-              (username === 'user' && password === '123456')
-            ) {
-              loading.value = true
-              
-
-              setLocalStorage(
-                GO_LOGIN_INFO_STORE,
-                cryptoEncode(
-                  JSON.stringify({
-                    username,
-                    password
-                  })
-                )
-              )
-              window['$message'].success(t('msg.login_msg_1'))
-
-              routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
+      if (import.meta.env.VITE_APP_IS_LICENCE === 'true') {
+        getLicenceStatus()
+          .then((res: any) => {
+            if (res.status === 'FAIL') {
+              machine_id.value = res.result
+              showLModal.value = true
             } else {
-              window['$message'].error(t('msg.login_msg_2'))
+              loginInto(username, password)
             }
-          }
-        })
-        .catch(() => {
-          console.warn('getLicenceStatus error')
-        })
+          })
+          .catch(() => {
+            console.warn('getLicenceStatus error')
+          })
+      } else {
+        loginInto(username, password)
+      }
     }
   })
+}
+
+const loginInto = (username: string, password: string) => {
+  if (
+    (username === 'admin' && password === '123456') ||
+    (username === 'user' && password === '123456')
+  ) {
+    loading.value = true
+
+    setLocalStorage(
+      GO_LOGIN_INFO_STORE,
+      cryptoEncode(
+        JSON.stringify({
+          username,
+          password
+        })
+      )
+    )
+    window['$message'].success(t('msg.login_msg_1'))
+
+    routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
+  } else {
+    window['$message'].error(t('msg.login_msg_2'))
+  }
 }
 
 const onVersionClick = () => {

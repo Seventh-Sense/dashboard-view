@@ -1,6 +1,6 @@
 <template>
   <div v-if="isShow" class="container">
-    <n-input-number v-model:value="input_value" size="large" :show-button="showbutton" clearable />
+    <n-input-number v-model:value="input_value" size="large" :precision="decimal" :show-button="showbutton" clearable />
     <Icon
       name="checkmark"
       type="mono-line"

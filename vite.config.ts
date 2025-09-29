@@ -24,7 +24,7 @@ function pathResolve(dir: string) {
 export default ({ mode }) => {
   const env = loadEnv(mode, process.cwd())
 
-  const isGraphic = env.VITE_APP_IS_GRAPHIC === 'false';
+  const isGraphic = env.VITE_APP_IS_GRAPHIC === 'true';
 
   return defineConfig({
     base: '/',

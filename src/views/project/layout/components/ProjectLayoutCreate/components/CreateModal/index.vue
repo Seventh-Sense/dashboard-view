@@ -51,13 +51,11 @@ const props = defineProps({
 
 const isGraphic = computed(() => {
   if (import.meta.env.VITE_APP_IS_GRAPHIC === 'true') {
-    return true
-  } else {
     return false
+  } else {
+    return true
   }
 })
-
-console.log(typeof isGraphic.value, isGraphic.value)
 
 const project_name = ref('')
 const decs = ref('dashboard')

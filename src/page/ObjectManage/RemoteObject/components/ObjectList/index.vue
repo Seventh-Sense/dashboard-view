@@ -1,12 +1,10 @@
 <template>
   <div>
-    <n-space class="top" justify="space-between" align="center">
-      <n-space>
+    <n-space class="top" align="center">
         <n-icon size="20" class="top-icon" @click="onBack">
           <ChevronBackOutlineIcon />
         </n-icon>
         <span class="top-title">{{ deviceData.device_name }}</span>
-      </n-space>
     </n-space>
 
     <div class="content">
