@@ -27,16 +27,16 @@
         <n-color-picker size="small" :modes="['hex']" v-model:value="optionData.fontColor"></n-color-picker>
       </setting-item>
       <setting-item :name="t('dashboard.font_size')">
-        <n-input-number v-model:value="optionData.fontSize" size="small" placeholder="字体大小"></n-input-number>
+        <n-input-number v-model:value="optionData.fontSize" size="small" :min="0" ></n-input-number>
       </setting-item>
       <setting-item :name="t('dashboard.font_thickness')">
         <n-select v-model:value="optionData.fontWeight" size="small" :options="fontWeightOptions" />
       </setting-item>
       <setting-item :name="t('dashboard.x_inner_margin')">
-        <n-input-number v-model:value="optionData.paddingX" size="small" placeholder="输入内边距"></n-input-number>
+        <n-input-number v-model:value="optionData.paddingX" size="small" :min="0" ></n-input-number>
       </setting-item>
       <setting-item :name="t('dashboard.y_inner_margin')">
-        <n-input-number v-model:value="optionData.paddingY" size="small" placeholder="输入内边距"></n-input-number>
+        <n-input-number v-model:value="optionData.paddingY" size="small" :min="0" ></n-input-number>
       </setting-item>
 
       <setting-item :name="t('dashboard.horizontal_alignment')">
@@ -47,7 +47,7 @@
       </setting-item>
 
       <setting-item :name="t('dashboard.word_spacing')">
-        <n-input-number v-model:value="optionData.letterSpacing" size="small" placeholder="输入字间距"></n-input-number>
+        <n-input-number v-model:value="optionData.letterSpacing" size="small" :min="0"></n-input-number>
       </setting-item>
     </setting-item-box>
 

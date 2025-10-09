@@ -299,7 +299,7 @@ const addNewPoint = async () => {
 
   try {
     const res: any = await createModbusPoint({
-      uid: data.value.name,
+      uid: data.value.read_address + ',' + data.value.write_address,
       name: data.value.name,
       property: {
         read_address: data.value.read_address,
