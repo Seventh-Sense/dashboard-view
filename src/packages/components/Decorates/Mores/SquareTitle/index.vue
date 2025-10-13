@@ -42,5 +42,6 @@ const { radius, backgroundColor, filter, isTitle, title_color, title_content, ti
 <style lang="scss" scoped>
 .container {
     padding: 12px;
+    box-sizing: border-box;
 }
 </style>

@@ -142,6 +142,7 @@ watch(
   border-radius: 16px;
   padding: 12px;
   position: relative;
+  box-sizing: border-box;
 
   &-top {
     display: flex;

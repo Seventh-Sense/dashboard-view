@@ -140,6 +140,7 @@ watch(
   border: 1px solid transparent;
   border-radius: 12px;
   padding: 12px 12px 0 12px;
+  box-sizing: border-box;
 
   &-top {
     display: flex;

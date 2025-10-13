@@ -138,6 +138,7 @@ watch(
   background-position: center;
   background-repeat: no-repeat;
   padding: 16px 16px 0 16px;
+  box-sizing: border-box;
 
   &-top {
     width: 100%;

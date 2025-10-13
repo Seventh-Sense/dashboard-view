@@ -130,6 +130,7 @@ useChartDataFetch(props.chartConfig, useChartEditStore, (newVal: string | number
   border: 1px solid transparent;
   border-radius: 16px;
   padding: 12px 0 12px 12px;
+  box-sizing: border-box;
 
   &-top {
     display: flex;

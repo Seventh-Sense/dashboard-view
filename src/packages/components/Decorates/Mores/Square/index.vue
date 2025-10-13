@@ -36,5 +36,6 @@ svg {
   cursor: pointer;
   backdrop-filter: blur(32px);
   background-color: transparent;
+  box-sizing: border-box;
 }
 </style>

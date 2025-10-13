@@ -19,7 +19,7 @@ import 'animate.css/animate.min.css'
 import 'vue3-sketch-ruler/lib/style.css'
 
 import VueCookies from 'vue-cookies'
-import 'ant-design-vue/dist/reset.css'
+//import 'ant-design-vue/dist/reset.css'
 
 import Antd from 'ant-design-vue'
 
