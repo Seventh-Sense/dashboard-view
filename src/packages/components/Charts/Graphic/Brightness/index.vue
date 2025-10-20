@@ -49,7 +49,9 @@ const displayValue = computed(() => {
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { background_color, thumb_color, track_color, percent_color } = toRefs(props.chartConfig.option)
+const { background_color, thumb_color, track_color, percent_color } = toRefs(
+  props.chartConfig.option
+)
 
 const container = ref<any>(null)
 const isDragging = ref(false)
