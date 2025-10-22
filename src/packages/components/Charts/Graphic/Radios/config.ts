@@ -19,17 +19,17 @@ export const option: any = {
     },
     {
       key: 'Option 2',
-      label: '低',
+      label: window['$t']('dashboard.low_title'),
       value: 1,
     },
     {
       key: 'Option 3',
-      label: '中',
+      label: window['$t']('dashboard.middle_title'),
       value: 2,
     },
     {
       key: 'Option 4',
-      label: '高',
+      label: window['$t']('dashboard.high_title'),
       value: 3,
     }
   ],

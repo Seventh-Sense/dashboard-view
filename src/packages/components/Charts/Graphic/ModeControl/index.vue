@@ -4,7 +4,7 @@
     :style="{
       width: w + 'px',
       height: h + 'px',
-      background: inactive_bgColor,
+      backgroundColor: value === active_value ? active_bgColor : inactive_bgColor,
       borderRadius: radius + 'px',
       backdropFilter: 'blur(' + filter + 'px)',
       gap: gap + 'px'

@@ -8,10 +8,13 @@
       height: h + 'px'
     }"
   >
-    <div class="slider-track" :style="trackStyle">
-      <!-- 显示时保留一位小数，避免过长小数 -->
-      <div class="slider-percent">{{ displayValue }}%</div>
-    </div>
+    <!-- 轨道容器 -->
+    <div class="slider-track" :style="trackStyle"></div>
+    
+    <!-- 百分比显示（移到轨道外部右侧） -->
+    <div class="slider-percent">{{ displayValue }}%</div>
+    
+    <!-- 滑块 -->
     <div
       class="slider-thumb"
       :class="{ active: isDragging }"
@@ -23,6 +26,7 @@
 </template>
 
 <script setup lang="ts">
+// 脚本部分保持不变
 import { PropType, watch, toRefs, ref, computed, onUnmounted } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
@@ -177,6 +181,7 @@ const onClick = throttle(
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
+    console.log('监听到数据集变化:', newVal)
     if (!flag.value) {
       const parsedValue = parseData(newVal, 'number')
       // 新增：检查当前值与上一次值是否一致
@@ -199,7 +204,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-/* 样式保持不变 */
 .slider-container {
   background: v-bind('background_color');
   height: 100%;
@@ -207,6 +211,8 @@ watch(
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  padding-right: 40px; /* 给右侧百分比预留空间 */
+  box-sizing: border-box;
 }
 
 .slider-track {
@@ -217,25 +223,23 @@ watch(
   background: v-bind('track_color');
   border-radius: 4px 0 0 4px;
   transition: width 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  overflow: hidden;
 }
 
+// 调整百分比样式，固定在右侧
 .slider-percent {
-  color: v-bind('thumb_color');
+  color: v-bind('percent_color');
   font-weight: bold;
   font-size: 1.1rem;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  position: relative;
+  position: absolute;
+  right: 8px; /* 固定在右侧 */
+  top: 50%;
+  transform: translateY(-50%); /* 垂直居中 */
   z-index: 2;
   font-family: 'Courier New', monospace;
   font-weight: 800;
-  min-width: 0px;
-  text-align: center;
-  padding-right: 8px;
+  min-width: 30px;
+  text-align: right;
 }
 
 .slider-thumb {
