@@ -236,15 +236,24 @@ const createKNXParams = (data: DataType) => ({
 const createOPCUAParams = (data: DataType) => {
   // 解析主机地址
   const parseHostFromUrl = (url: string): string | undefined => {
-    const [protocol, address] = url.split('://');
-    if (!address) return undefined;
-    
-    const [host] = address.split(':');
-    return host;
-  };
+    const [protocol, address] = url.split('://')
+    if (!address) return undefined
+
+    const [host] = address.split(':')
+    return host
+  }
 
   // 提取认证信息
-  const { auth_mode, username, password, user_cert, user_key } = data.property
+  const {
+    auth_mode,
+    username,
+    password,
+    user_cert,
+    user_key,
+    cert_url,
+    user_cert_name,
+    user_key_name
+  } = data.property
   //const isUserAuth = auth_mode === 1
   //const isCertAuth = auth_mode === 2
 
@@ -262,8 +271,11 @@ const createOPCUAParams = (data: DataType) => {
       security_mode: data.property.security_mode,
       username: username,
       password: password,
+      user_cert_name: user_cert_name,
+      user_key_name: user_key_name,
       user_cert: user_cert === '' ? null : user_cert,
       user_key: user_key === '' ? null : user_key,
+      cert_url: cert_url,
       auth_mode: data.property.auth_mode
     },
     tags: ''
@@ -299,7 +311,7 @@ const resetForm = () => {
 
 // 数据校验
 const dataCheck = (deviceData: DataType): boolean => {
-  //console.log('Validating device data:', deviceData)
+  console.log('Validating device data:', deviceData)
   switch (deviceData.type) {
     case DeviceTypeEnum.ModbusTCP:
       return validateModbusTCP(deviceData)
@@ -367,36 +379,36 @@ const validateOPCUA = (data: DataType): boolean => {
   // ^opc\.tcp:// - 必须以opc.tcp://开头
   // (\d{1,3}\.){3}\d{1,3} - 匹配IP地址（如192.168.0.3）
   // :\d{1,5}$ - 匹配端口号（1-5位数字）
-  const urlPattern = /^opc\.tcp:\/\/(\d{1,3}\.){3}\d{1,3}:\d{1,5}$/;
+  const urlPattern = /^opc\.tcp:\/\/(\d{1,3}\.){3}\d{1,3}:\d{1,5}$/
   if (!urlPattern.test(data.property.url)) {
-    window['$message'].error(t('msg.msg_error_5'));
-    return true;
+    window['$message'].error(t('msg.msg_error_5'))
+    return true
   }
 
   // 额外的IP地址范围校验（可选）
   // 确保每个IP段的值在0-255之间
-  const ipPart = data.property.url.split('://')[1]?.split(':')[0];
+  const ipPart = data.property.url.split('://')[1]?.split(':')[0]
   if (ipPart) {
-    const ipSegments = ipPart.split('.');
+    const ipSegments = ipPart.split('.')
     const isValidIp = ipSegments.every((segment: any) => {
-      const num = parseInt(segment, 10);
-      return !isNaN(num) && num >= 0 && num <= 255;
-    });
-    
+      const num = parseInt(segment, 10)
+      return !isNaN(num) && num >= 0 && num <= 255
+    })
+
     if (!isValidIp) {
-      window['$message'].error(t('msg.msg_error_5'));
-      return true;
+      window['$message'].error(t('msg.msg_error_5'))
+      return true
     }
   }
 
   // 额外的端口范围校验（可选）
   // 确保端口号在1-65535之间
-  const portPart = data.property.url.split(':').pop();
+  const portPart = data.property.url.split(':').pop()
   if (portPart) {
-    const port = parseInt(portPart, 10);
+    const port = parseInt(portPart, 10)
     if (isNaN(port) || port < 1 || port > 65535) {
-      window['$message'].error(t('msg.msg_error_5'));
-      return true;
+      window['$message'].error(t('msg.msg_error_5'))
+      return true
     }
   }
 

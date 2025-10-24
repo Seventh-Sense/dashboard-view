@@ -19,10 +19,13 @@ export const writeValue = (componentList: any, data: any) => {
 
     //console.log(matchedData.property?.['present-value'])
     if (component.key === 'Online') {
+      component.option.timestamp = Date.now()
       component.option.dataset = matchedData.status
     } else if (component.key === 'Image') {
+      component.option.timestamp = Date.now()
       component.option.datavalue = matchedData.value
     } else {
+      component.option.timestamp = Date.now()
       component.option.dataset = matchedData.value
     }
   })

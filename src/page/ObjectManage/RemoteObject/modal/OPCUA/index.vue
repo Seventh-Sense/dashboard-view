@@ -14,18 +14,8 @@
       :options="setOptions"
       :disabled="isEdit"
     />
-    <n-radio-group
-      v-model:value="data.property.auth_mode"
-      name="radiogroup"
-      style="margin-top: 22px"
-      :disabled="isEdit"
-    >
-      <n-space>
-        <n-radio v-for="mode in ModeOptions" :key="mode.value" :value="mode.value">
-          {{ mode.label }}
-        </n-radio>
-      </n-space>
-    </n-radio-group>
+    <div class="content-porperty">{{ $t('device.auth_type') }}</div>
+    <n-select v-model:value="data.property.auth_mode" :options="ModeOptions" :disabled="isEdit" />
     <div v-if="data.property.auth_mode === 1">
       <div class="content-porperty" style="margin-top: 16px">{{ $t('device.user') }}</div>
       <n-input v-model:value="data.property.username" :disabled="isEdit" />
@@ -37,45 +27,46 @@
         :disabled="isEdit"
       />
     </div>
-    <div v-else-if="data.property.auth_mode === 2">
-      <div class="content-porperty" style="margin-top: 16px">{{ $t('device.certificate') }}</div>
-      <div class="content-file">
-        <n-input v-model:value="certificate_name" disabled />
-        <Icon
-          name="folderOpen"
-          type="mono-line"
-          :color="{ normal: '#ffffff' }"
-          :size="24"
-          @click="onUploadFile('certificate')"
-        />
-        <Icon
-          name="delete"
-          type="mono-line"
-          :color="{ normal: '#ffffff' }"
-          :size="24"
-          @click="onDeleteFile('certificate')"
-        />
-      </div>
 
-      <div class="content-porperty">{{ $t('device.private_key') }}</div>
-      <div class="content-file">
-        <n-input v-model:value="private_key_name" disabled />
-        <Icon
-          name="folderOpen"
-          type="mono-line"
-          :color="{ normal: '#ffffff' }"
-          :size="24"
-          @click="onUploadFile('private_key')"
-        />
-        <Icon
-          name="delete"
-          type="mono-line"
-          :color="{ normal: '#ffffff' }"
-          :size="24"
-          @click="onDeleteFile('private_key')"
-        />
-      </div>
+    <div class="content-porperty" style="margin-top: 16px">{{ $t('device.certificate') }}</div>
+    <div class="content-file">
+      <n-input v-model:value="props.data.property.user_cert_name" disabled />
+      <Icon
+        name="folderOpen"
+        type="mono-line"
+        :color="{ normal: '#ffffff' }"
+        :size="24"
+        @click="onUploadFile('certificate')"
+      />
+      <Icon
+        name="delete"
+        type="mono-line"
+        :color="{ normal: '#ffffff' }"
+        :size="24"
+        @click="onDeleteFile('certificate')"
+      />
     </div>
+
+    <div class="content-porperty">{{ $t('device.private_key') }}</div>
+    <div class="content-file">
+      <n-input v-model:value="props.data.property.user_key_name" disabled />
+      <Icon
+        name="folderOpen"
+        type="mono-line"
+        :color="{ normal: '#ffffff' }"
+        :size="24"
+        @click="onUploadFile('private_key')"
+      />
+      <Icon
+        name="delete"
+        type="mono-line"
+        :color="{ normal: '#ffffff' }"
+        :size="24"
+        @click="onDeleteFile('private_key')"
+      />
+    </div>
+    <div class="content-porperty">{{ $t('device.cert_url') }}</div>
+    <n-input v-model:value="data.property.cert_url" :disabled="isEdit" />
   </div>
 </template>
 
@@ -95,7 +86,7 @@ const props = defineProps({
   }
 })
 
-type UploadResult  = {
+type UploadResult = {
   fileName: string
   url: string
   pureBase64: string
@@ -110,6 +101,10 @@ const private_key_name = ref('')
 const t = window['$t']
 
 const ModeOptions = [
+  {
+    label: t('device.anonymous'),
+    value: 0
+  },
   {
     label: t('device.account'),
     value: 1
@@ -137,15 +132,17 @@ const setOptions = computed(() => {
 
 const onDeleteFile = (type: string) => {
   if (type === 'certificate') {
+    props.data.property.user_cert_name = ''
     certificate_name.value = ''
     props.data.property.user_cert = ''
   } else if (type === 'private_key') {
+    props.data.property.user_key_name = ''
     private_key_name.value = ''
     props.data.property.user_key = ''
   }
 }
 
-const uploadFile = (callback: Function | null = null, type: string) => {
+const uploadFile = (callback: Function | null = null, ptype: string) => {
   const input = document.createElement('input')
 
   input.type = 'file'
@@ -158,6 +155,14 @@ const uploadFile = (callback: Function | null = null, type: string) => {
 
     const { name } = file
 
+    if (ptype === 'private_key') {
+      //console.log('Uploading certificate file:', name)
+      if (!name.endsWith('.pem')) {
+        window['$message'].warning(t('dashboard.upload_msg_err1'))
+        return false
+      }
+    }
+
     const reader = new FileReader()
 
     reader.onload = () => {
@@ -166,7 +171,7 @@ const uploadFile = (callback: Function | null = null, type: string) => {
 
       let pureBase64 = ''
 
-      if (type === 'certificate') {
+      if (ptype === 'certificate') {
         // 提取纯Base64部分（移除data:xxx;base64,前缀）
         const base64Index = dataUrl.indexOf('base64,')
         pureBase64 = base64Index !== -1 ? dataUrl.substring(base64Index + 7) : ''
@@ -183,7 +188,7 @@ const uploadFile = (callback: Function | null = null, type: string) => {
       callback && callback(eventObj)
     }
 
-    if (type === 'certificate') {
+    if (ptype === 'certificate') {
       reader.readAsDataURL(file)
     } else {
       //读取为二进制数据
@@ -195,12 +200,14 @@ const uploadFile = (callback: Function | null = null, type: string) => {
 }
 
 const onUploadFile = (type: string) => {
-  uploadFile((result: UploadResult ) => {
+  uploadFile((result: UploadResult) => {
     //console.log('file', result)
     if (type === 'certificate') {
+      props.data.property.user_cert_name = result.fileName
       certificate_name.value = result.fileName
       props.data.property.user_cert = result.pureBase64
     } else if (type === 'private_key') {
+      props.data.property.user_key_name = result.fileName
       private_key_name.value = result.fileName
       props.data.property.user_key = result.pureBase64
     }
@@ -211,6 +218,24 @@ watch(
   () => props.data.property.security_policy,
   newData => {
     props.data.property.security_mode = null
+  }
+)
+
+watch(
+  () => props.data.property.auth_mode,
+  newData => {
+    // if (newData === 0) {
+    //   props.data.property.user_cert = ''
+    //   props.data.property.user_key = ''
+    //   props.data.property.cert_url = ''
+    //   certificate_name.value = ''
+    //   private_key_name.value = ''
+    // }
+
+    if (newData !== 1) {
+      props.data.property.username = ''
+      props.data.property.password = ''
+    }
   }
 )
 
@@ -227,6 +252,9 @@ watch(
 .content {
   margin-top: 0;
   margin-bottom: 32px;
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   &-porperty {
     font-size: 12px;

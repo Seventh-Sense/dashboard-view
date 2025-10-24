@@ -224,8 +224,11 @@ export const OPCUAData = {
   auth_mode: 1,
   username: '',
   password: '',
+  user_cert_name: '',
+  user_key_name: '',
   user_cert: '',
-  user_key: ''
+  user_key: '',
+  cert_url: ''
 }
 
 export const baudOptions = [

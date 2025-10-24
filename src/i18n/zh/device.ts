@@ -151,4 +151,7 @@ export default {
   user: '用户名',
   password: '密码',
   private_key: '私钥',
+  auth_type: '认证类型',
+  cert_url: '证书URL',
+  anonymous: '匿名',
 }

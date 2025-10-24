@@ -150,4 +150,7 @@ export default {
   user: 'User Name',
   password: 'Password',
   private_key: 'Private Key',
+  auth_type: 'Authentication Type',
+  cert_url: 'Certificate URL',
+  anonymous: 'Anonymous',
 }

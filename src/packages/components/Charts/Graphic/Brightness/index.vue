@@ -185,15 +185,7 @@ watch(
     if (!flag.value) {
       const parsedValue = parseData(newVal, 'number')
       // 新增：检查当前值与上一次值是否一致
-      if (parsedValue === previousValue.value) {
-        // 连续两次值一致，才更新
-        value.value = parsedValue
-        finalValue.value = parsedValue
-        lastSentValue.value = parsedValue
-      } else {
-        // 不一致时，只更新上一次值的记录，不更新实际值
-        previousValue.value = parsedValue
-      }
+      value.value = parsedValue
     }
   },
   {
@@ -201,6 +193,30 @@ watch(
     deep: true
   }
 )
+
+// watch(
+//   () => props.chartConfig.option.timestamp,
+//   newVal => {
+//     //console.log('监听到时间戳变化:', newVal, props.chartConfig.option.dataset)
+//     if (!flag.value) {
+//       const parsedValue = parseData(props.chartConfig.option.dataset, 'number')
+//       // 新增：检查当前值与上一次值是否一致
+//       if (parsedValue === previousValue.value) {
+//         // 连续两次值一致，才更新
+//         value.value = parsedValue
+//         finalValue.value = parsedValue
+//         lastSentValue.value = parsedValue
+//       } else {
+//         // 不一致时，只更新上一次值的记录，不更新实际值
+//         previousValue.value = parsedValue
+//       }
+//     }
+//   },
+//   {
+//     immediate: true,
+//     deep: true
+//   }
+// )
 </script>
 
 <style lang="scss" scoped>
