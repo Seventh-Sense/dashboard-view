@@ -82,7 +82,7 @@
       <div v-if="isEdit">
         <div class="modal-porperty">{{ $t('device.value') }}</div>
         <div v-if="!editStates['vvalue']" class="modal-editvalue modal-editstyle">
-          <span>{{ value }}</span>
+          <span>{{ valueTrans(value) }}</span>
           <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode('vvalue')">
             <EditIcon />
           </n-icon>
@@ -203,6 +203,14 @@ const writeValue = async (key: any) => {
     return
   }
 
+  let load: any
+
+  if (data.value.value_type === 'bool') {
+    load = tempValues[key] === 'true' ? true : false
+  } else {
+    load = tempValues[key]
+  }
+
   //console.log('Writing value:', tempValues[key])
   try {
     const res: any = await readIotPoints(props.deviceData.key, {
@@ -210,7 +218,7 @@ const writeValue = async (key: any) => {
       parms: {
         address: data.value.write_address,
         value_type: data.value.value_type,
-        value: tempValues[key]
+        value: load
       }
     })
 
@@ -219,6 +227,8 @@ const writeValue = async (key: any) => {
       window['$message'].warning(res.data)
       return
     }
+
+    window['$message'].success(t('device.msg_mod_success'))
 
     value.value = tempValues[key]
     editStates[key] = false
@@ -299,7 +309,7 @@ const addNewPoint = async () => {
 
   try {
     const res: any = await createModbusPoint({
-      uid: data.value.read_address + ',' + data.value.write_address,
+      uid: data.value.read_address + '|' + data.value.write_address,
       name: data.value.name,
       property: {
         read_address: data.value.read_address,
@@ -346,9 +356,19 @@ const valueTypeTrans = (value: any) => {
 }
 
 const BooleanOption = [
-  { label: 'True', value: 1 },
-  { label: 'False', value: 0 }
+  { label: 'true', value: 'true' },
+  { label: 'false', value: 'false' }
 ]
+
+const valueTrans = (value: any) => {
+  if (data.value.value_type !== 'bool') {
+    return value
+  }
+
+  const option = BooleanOption.find(opt => opt.value === value)
+
+  return option?.label || value // 严格遵循找不到返回空字符串
+}
 
 watch(
   () => props.isEdit,
@@ -364,10 +384,14 @@ watch(
       }
 
       if (props.editData.value) {
-        value.value = props.editData.value
+        if (props.editData.properties.value_type === 'bool') {
+          value.value = props.editData.value
+        } else {
+          value.value = Number(props.editData.value)
+        }
       }
 
-      //console.log('asda', props.editData)
+      //console.log('asda', props.editData, value.value)
     }
   },
   { immediate: true }

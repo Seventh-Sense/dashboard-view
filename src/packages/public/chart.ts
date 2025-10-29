@@ -73,7 +73,7 @@ export const clickCyclicData = (value: string, options: string[]): string => {
 }
 
 //数据处理
-export const updateNodeData = async (bindInfo: any, data: any) => {
+export const updateNodeData2 = async (bindInfo: any, data: any) => {
   if (!bindInfo.objectID) {
     window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
     return false
@@ -109,6 +109,54 @@ export const updateNodeData = async (bindInfo: any, data: any) => {
         : i18n.global.t('msg.gauge_msg_2')
 
       window['$message'].warning(warningMsg)
+      return false
+    }
+
+    return true
+  } catch (error) {
+    // 统一错误处理
+    console.warn('Update Node Data failed', error)
+    window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
+    return false
+  }
+}
+
+export const updateNodeData = async (load: any, data: any) => {
+  if (!load.bindInfo.object_id) {
+    window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
+    return false
+  }
+
+  console.log('bindInfo', load.bindInfo)
+  try {
+    let response: any
+
+    if (load.bindInfo.device_type === 'bacnet') {
+      // BACnet设备特殊处理
+      response = await readIotPoints(load.bindInfo.device_id, {
+        function: 'write_property',
+        parms: {
+          address: load.bindInfo.address,
+          objid: load.bindInfo.property.uid,
+          prop: 'present-value',
+          value: data,
+          priority: load.bindInfo.property.priority
+        }
+      })
+    } else {
+      // 其他设备类型
+      response = await updatePoint(load.bindInfo.object_id, { value: data })
+    }
+
+    // 统一处理响应
+    if (response.status !== 'OK') {
+      console.warn('Non-OK response status:', response.data)
+
+      const warningMsg = response.data.includes('write-access-denied')
+        ? i18n.global.t('msg.gauge_msg_4')
+        : i18n.global.t('msg.gauge_msg_2')
+
+      window['$message'].warning(warningMsg + '  ' + `${response.data}`)
       return false
     }
 

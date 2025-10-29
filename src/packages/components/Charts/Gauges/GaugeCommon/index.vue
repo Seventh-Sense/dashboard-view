@@ -139,9 +139,9 @@ const submitValue = debounce(async () => {
   try {
     flag.value = true
 
-    let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(value.value))
+    let result = await updateNodeData(props.chartConfig?.request, Number(value.value))
     if (!result) {
-      option.dataset = tmp.value
+      dataHandle(tmp.value)
     }
   } catch (error) {
     console.error('操作失败:', error)

@@ -265,7 +265,8 @@ onMounted(() => {
 
   //当未做修改时，周期性更新值
   interval = setInterval(() => {
-    if (!isShow.value && Object.values(editStates).every(value => value === false)) {
+    //console.log('check edit state...', type.value, props.displayData)
+    if (type.value && !isShow.value && Object.values(editStates).every(value => value === false)) {
       updateInfo()
     }
   }, 3000)

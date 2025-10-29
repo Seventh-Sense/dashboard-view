@@ -8,13 +8,8 @@
       height: h + 'px'
     }"
   >
-    <!-- 轨道容器 -->
     <div class="slider-track" :style="trackStyle"></div>
-    
-    <!-- 百分比显示（移到轨道外部右侧） -->
     <div class="slider-percent">{{ displayValue }}%</div>
-    
-    <!-- 滑块 -->
     <div
       class="slider-thumb"
       :class="{ active: isDragging }"
@@ -26,12 +21,10 @@
 </template>
 
 <script setup lang="ts">
-// 脚本部分保持不变
 import { PropType, watch, toRefs, ref, computed, onUnmounted } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
 import { throttleTime, updateNodeData } from '@/packages/public'
-import { cloneDeep } from 'lodash'
 import throttle from 'lodash/throttle'
 
 const props = defineProps({
@@ -45,9 +38,10 @@ const flag = ref(false)
 const t = window['$t']
 const value = ref<number>(50) // 精确值，用于计算位置
 const finalValue = ref<number>(50) // 最终确认值，用于下发
-const previousValue = ref<number | null>(null) // 新增：记录上一次的值
+const previousValue = ref<number | null>(null) // 记录上一次的值
+const originalValue = ref<number>(50) // 记录操作前的原始值，用于失败回退
 
-// 显示用的值，保留一位小数
+// 显示用的值，保留整数
 const displayValue = computed(() => {
   return Number(value.value.toFixed(0))
 })
@@ -75,6 +69,8 @@ const thumbStyle = computed(() => ({
 const startDrag = (e: any) => {
   e.preventDefault()
   isDragging.value = true
+  // 记录开始拖动时的原始值（关键：确保拖动前的值被保存）
+  originalValue.value = value.value
   addDragListeners()
 }
 
@@ -98,9 +94,8 @@ const handleDrag = (e: any) => {
     offsetX = e.clientX - rect.left
   }
 
-  // 计算精确值但限制小数位数
   const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
-  value.value = Number(newProgress.toFixed(2)) // 限制为两位小数用于计算
+  value.value = Number(newProgress.toFixed(2))
 }
 
 const handleClick = (e: any) => {
@@ -114,7 +109,9 @@ const handleClick = (e: any) => {
 
   const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
   const roundedProgress = Math.round(newProgress)
-
+  
+  // 记录点击前的原始值
+  originalValue.value = value.value
   value.value = roundedProgress
   finalValue.value = roundedProgress
   sendValue(roundedProgress)
@@ -124,12 +121,11 @@ const stopDrag = () => {
   if (!isDragging.value) return
 
   if (container.value) {
-    // 拖动结束时计算最终值
     const roundedProgress = Math.round(value.value)
-
+    // 拖动结束时记录当前值作为可能的提交值，但保留原始值用于回退
     value.value = roundedProgress
     finalValue.value = roundedProgress
-    sendValue(roundedProgress) // 只在结束时发送一次
+    sendValue(roundedProgress)
   }
 
   isDragging.value = false
@@ -147,34 +143,42 @@ onUnmounted(() => {
   removeDragListeners()
 })
 
-// 发送值的函数，增加值变化检查
 const sendValue = (data: number) => {
-  // 只有当值发生变化时才发送
   if (data !== lastSentValue.value) {
     lastSentValue.value = data
     onClick(data)
   }
 }
 
-// 优化节流设置，避免重复下发
 const onClick = throttle(
   async (data: number) => {
     try {
       flag.value = true
-      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      // 保存当前要提交的值，用于回退检查
+      const pendingValue = data
+      const result = await updateNodeData(props.chartConfig?.request, Number(data))
+      
       if (!result) {
-        // 失败处理
+        console.log('更新失败，回退到原始值:', originalValue.value)
+        // 回退所有相关值
+        value.value = originalValue.value
+        finalValue.value = originalValue.value
+        lastSentValue.value = originalValue.value
       }
     } catch (error) {
       console.error('操作失败:', error)
+      // 异常时同样回退
+      value.value = originalValue.value
+      finalValue.value = originalValue.value
+      lastSentValue.value = originalValue.value
     } finally {
       flag.value = false
     }
   },
   throttleTime,
   {
-    leading: false, // 关闭首触发
-    trailing: true // 只在结束时触发一次
+    leading: false,
+    trailing: true
   }
 )
 
@@ -184,8 +188,9 @@ watch(
     console.log('监听到数据集变化:', newVal)
     if (!flag.value) {
       const parsedValue = parseData(newVal, 'number')
-      // 新增：检查当前值与上一次值是否一致
       value.value = parsedValue
+      // 同步更新原始值为最新的数据集值
+      originalValue.value = parsedValue
     }
   },
   {
@@ -193,30 +198,6 @@ watch(
     deep: true
   }
 )
-
-// watch(
-//   () => props.chartConfig.option.timestamp,
-//   newVal => {
-//     //console.log('监听到时间戳变化:', newVal, props.chartConfig.option.dataset)
-//     if (!flag.value) {
-//       const parsedValue = parseData(props.chartConfig.option.dataset, 'number')
-//       // 新增：检查当前值与上一次值是否一致
-//       if (parsedValue === previousValue.value) {
-//         // 连续两次值一致，才更新
-//         value.value = parsedValue
-//         finalValue.value = parsedValue
-//         lastSentValue.value = parsedValue
-//       } else {
-//         // 不一致时，只更新上一次值的记录，不更新实际值
-//         previousValue.value = parsedValue
-//       }
-//     }
-//   },
-//   {
-//     immediate: true,
-//     deep: true
-//   }
-// )
 </script>
 
 <style lang="scss" scoped>
@@ -227,7 +208,7 @@ watch(
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  padding-right: 40px; /* 给右侧百分比预留空间 */
+  padding-right: 40px;
   box-sizing: border-box;
 }
 
@@ -241,16 +222,15 @@ watch(
   transition: width 0.2s ease;
 }
 
-// 调整百分比样式，固定在右侧
 .slider-percent {
   color: v-bind('percent_color');
   font-weight: bold;
   font-size: 1.1rem;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
   position: absolute;
-  right: 8px; /* 固定在右侧 */
+  right: 8px;
   top: 50%;
-  transform: translateY(-50%); /* 垂直居中 */
+  transform: translateY(-50%);
   z-index: 2;
   font-family: 'Courier New', monospace;
   font-weight: 800;

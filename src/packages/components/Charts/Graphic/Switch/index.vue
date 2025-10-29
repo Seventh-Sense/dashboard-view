@@ -56,7 +56,7 @@ const onClick = throttle(
       let tmp = cloneDeep(option.dataset)
       option.dataset = parseData(data, 'boolean')
 
-      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      let result = await updateNodeData(props.chartConfig?.request, Number(data))
       if (!result) {
         option.dataset = tmp
       }

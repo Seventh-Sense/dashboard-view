@@ -153,4 +153,6 @@ export default {
   auth_type: 'Authentication Type',
   cert_url: 'Certificate URL',
   anonymous: 'Anonymous',
+  true: 'True',
+  false: 'False',
 }

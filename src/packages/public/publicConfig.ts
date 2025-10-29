@@ -46,7 +46,8 @@ export const requestConfig: RequestConfigType = {
     objectName: '',
     objectID: ''
   },
-  bindDatas: []
+  bindDatas: [],
+  bindInfo: {}
 }
 
 // 单实例类

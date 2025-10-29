@@ -47,58 +47,66 @@ const isShow = ref(false)
 const bindValue = (value: any) => {
   // 读取选取点位的"priorityArray"
 
-  if (deviceType.value === 'bacnet') {
-    let defaultPriority = 16 // 默认优先级
+  // if (deviceType.value === 'bacnet') {
+  //   let defaultPriority = 16 // 默认优先级
 
-    const fetchPriority = async () => {
-      try {
-        const res = await readPointValue(deviceID.value)
+  //   const fetchPriority = async () => {
+  //     try {
+  //       const res = await readPointValue(deviceID.value)
 
-        if (!res.data?.length) return defaultPriority
+  //       if (!res.data?.length) return defaultPriority
 
-        const point = res.data.find((item: any) => item.metric_id === value)
-        if (!point) return defaultPriority
+  //       const point = res.data.find((item: any) => item.metric_id === value)
+  //       if (!point) return defaultPriority
 
-        const priorityArray = point.property['priority-array']
-        if (!priorityArray) return defaultPriority
+  //       const priorityArray = point.property['priority-array']
+  //       if (!priorityArray) return defaultPriority
 
-        // 使用Object.entries简化查找逻辑
-        const validPriority = Object.entries(priorityArray).find(([_, val]) => val !== null)
+  //       // 使用Object.entries简化查找逻辑
+  //       const validPriority = Object.entries(priorityArray).find(([_, val]) => val !== null)
 
-        return validPriority ? Number(validPriority[0]) : defaultPriority
-      } catch (error) {
-        console.error('Error fetching priority:', error)
-        return defaultPriority
-      }
-    }
+  //       return validPriority ? Number(validPriority[0]) : defaultPriority
+  //     } catch (error) {
+  //       console.error('Error fetching priority:', error)
+  //       return defaultPriority
+  //     }
+  //   }
 
-    // 立即执行异步函数
-    fetchPriority().then(priority => {
-      //console.log('priority', priority)
-      let uid = pointOptions.value.find((item: any) => item.value === value)?.uid || ''
+  //   // 立即执行异步函数
+  //   fetchPriority().then(priority => {
+  //     //console.log('priority', priority)
+  //     let uid = pointOptions.value.find((item: any) => item.value === value)?.uid || ''
 
-      targetData.value.request.bindParams = {
-        deviceID: deviceID.value,
-        deviceName: '',
-        deviceType: deviceType.value,
-        deviceAddress: deviceAddress.value,
-        objectID: value,
-        objectName: '',
-        objectPriority: priority,
-        objectUid: uid
-      }
-    })
-  } else {
-    // 非bacnet情况的设置
-    targetData.value.request.bindParams = {
+  //     targetData.value.request.bindParams = {
+  //       deviceID: deviceID.value,
+  //       deviceName: '',
+  //       deviceType: deviceType.value,
+  //       deviceAddress: deviceAddress.value,
+  //       objectID: value,
+  //       objectName: '',
+  //       objectPriority: priority,
+  //       objectUid: uid
+  //     }
+  //   })
+  // } else {
+  //   // 非bacnet情况的设置
+  //   targetData.value.request.bindParams = {
+  //     deviceID: deviceID.value,
+  //     deviceName: '',
+  //     deviceType: deviceType.value,
+  //     objectID: value,
+  //     objectName: '',
+  //     objectPriority: 16
+  //   }
+  // }
+
+  targetData.value.request.bindParams = {
       deviceID: deviceID.value,
       deviceName: '',
       deviceType: deviceType.value,
       objectID: value,
       objectName: '',
-      objectPriority: 16
     }
-  }
 }
 
 const renderLabel = (option: any) => {

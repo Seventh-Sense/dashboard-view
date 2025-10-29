@@ -154,4 +154,6 @@ export default {
   auth_type: '认证类型',
   cert_url: '证书URL',
   anonymous: '匿名',
+  true: '开',
+  false: '关',
 }

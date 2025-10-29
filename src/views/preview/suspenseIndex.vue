@@ -49,7 +49,7 @@ import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { readPointsDataById } from '@/api/http'
 import { useRouter } from 'vue-router'
-import { IntervalTimeOut, getAllDataIdsSafe, writeValue } from '../display/util/util'
+import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../display/util/util'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { PageEnum } from '@/enums/pageEnum'
 
@@ -85,9 +85,19 @@ const { show } = useComInstall(chartEditStore)
 // 开启键盘监听
 keyRecordHandle()
 
-onMounted(() => {
-  //console.log('chartEditStore', chartEditStore.editCanvasConfig)
-  readPointValue(chartEditStore.componentList)
+onMounted(async () => {
+  try {
+    //获取各种类型额外属性
+    const params = await getBindParams(chartEditStore.componentList)
+    if (params) {
+      chartEditStore.componentList = params
+    }
+
+    console.log('chartEditStore', params)
+    readPointValue(chartEditStore.componentList)
+  } catch (error) {
+    console.error('Error during onMounted:', error)
+  }
 })
 
 onUnmounted(() => {

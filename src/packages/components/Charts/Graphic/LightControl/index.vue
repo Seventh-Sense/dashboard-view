@@ -123,7 +123,7 @@ const onClick = throttle(
       }
       //option.dataset = parseData(data, 'string')
 
-      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      let result = await updateNodeData(props.chartConfig?.request, Number(data))
       if (!result) {
         value.value = tmp
       }

@@ -67,7 +67,7 @@ const onClick = throttle(
 
       //console.log(value.value, data, speeds.value)
 
-      let result = await updateNodeData(props.chartConfig?.request?.bindParams, Number(data))
+      let result = await updateNodeData(props.chartConfig?.request, Number(data))
       if (!result) {
         value.value = tmp
       }

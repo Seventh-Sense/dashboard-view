@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { updateNodeData } from '@/packages/public'
+import { updateNodeData, updateNodeData2 } from '@/packages/public'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { ref } from 'vue'
 
@@ -84,7 +84,7 @@ const onSubmit = async () => {
       }
     }
 
-    await updateNodeData(bindinfo, value.value)
+    await updateNodeData2(bindinfo, value.value)
 
     emit('update:isShowModal', false)
   } else {

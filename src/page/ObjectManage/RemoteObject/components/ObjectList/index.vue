@@ -1,10 +1,10 @@
 <template>
   <div>
     <n-space class="top" align="center">
-        <n-icon size="20" class="top-icon" @click="onBack">
-          <ChevronBackOutlineIcon />
-        </n-icon>
-        <span class="top-title">{{ deviceData.device_name }}</span>
+      <n-icon size="20" class="top-icon" @click="onBack">
+        <ChevronBackOutlineIcon />
+      </n-icon>
+      <span class="top-title">{{ deviceData.device_name }}</span>
     </n-space>
 
     <div class="content">
@@ -304,6 +304,7 @@ const periodicFunc = async () => {
       const point: any = metricPoints.get(originalItem.key)
       if (!point) return originalItem
 
+      //console.log('point', point, originalItem)
       return {
         ...originalItem,
         value: getProcessedValue(point, originalItem.metric_type),
@@ -339,34 +340,38 @@ const getDescription = (point: any, origin: any) => {
 }
 
 const getProcessedValue = (point: any, metricType: any) => {
-  const deviceType = metricType
+  if (props.deviceData.device_type === DeviceTypeEnum.BACnet) {
+    const deviceType = metricType
 
-  switch (deviceType) {
-    case TypeEnum.BI:
-    case TypeEnum.BV:
-    case TypeEnum.BO: {
-      const status = point.value === 0 ? 'inactive-text' : 'active-text'
+    switch (deviceType) {
+      case TypeEnum.BI:
+      case TypeEnum.BV:
+      case TypeEnum.BO: {
+        const status = point.value === 0 ? 'inactive-text' : 'active-text'
 
-      if (!point.property?.[status] || point.property?.[status] === 'unknown-property') {
+        if (!point.property?.[status] || point.property?.[status] === 'unknown-property') {
+          return point.value
+        } else {
+          return point.property?.[status]
+        }
+      }
+
+      case TypeEnum.MV: {
+        const states = point.property?.['state-text'] || []
+        const index = point.value - 1
+
+        if (index >= 0 && index < states.length) {
+          return states[index]
+        }
+
         return point.value
-      } else {
-        return point.property?.[status]
-      }
-    }
-
-    case TypeEnum.MV: {
-      const states = point.property?.['state-text'] || []
-      const index = point.value - 1
-
-      if (index >= 0 && index < states.length) {
-        return states[index]
       }
 
-      return point.value
+      default:
+        return point.value.toString() ?? ''
     }
-
-    default:
-      return point.value?.toString() ?? ''
+  } else {
+    return point.value.toString() ?? ''
   }
 }
 

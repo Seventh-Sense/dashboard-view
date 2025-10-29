@@ -198,17 +198,9 @@ export interface RequestConfigType extends RequestPublicConfigType {
     sql: string
   }
   //
-  bindParams: {
-    deviceName: string,
-    deviceID: string,
-    deviceType: string,
-    deviceAddress?: string,
-    objectName: string,
-    objectID: string,
-    objectPriority: any,
-    objectUid?: string
-  },
-  bindDatas: any[]
+  bindParams: any,
+  bindDatas: any[],
+  bindInfo: any
 }
 
 // Store 类型
