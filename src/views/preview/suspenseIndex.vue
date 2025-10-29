@@ -49,7 +49,7 @@ import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore
 import { setOption } from '@/packages/public'
 import { readPoints } from '@/api/http'
 
-await getSessionStorageInfo()
+await getPreviewInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
