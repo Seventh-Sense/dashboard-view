@@ -154,9 +154,9 @@ export const updateNodeData = async (load: any, data: any) => {
 
       const warningMsg = response.data.includes('write-access-denied')
         ? i18n.global.t('msg.gauge_msg_4')
-        : i18n.global.t('msg.gauge_msg_2')
+        : i18n.global.t('msg.gauge_msg_2') + '  ' + `${response.data}`
 
-      window['$message'].warning(warningMsg + '  ' + `${response.data}`)
+      window['$message'].warning(warningMsg)
       return false
     }
 

@@ -174,7 +174,23 @@ const handleClick = (direction: string) => {
 const dataHandle = (newData: any) => {
   value.value = newData
   let range = maxValue.value - minValue.value
-  process.value = (Math.abs(minValue.value - newData) * 100) / range
+  if (range <= 0) {
+    process.value = 0
+    return
+  }
+
+  const validMin = Math.min(minValue.value, maxValue.value)
+  const validMax = Math.max(minValue.value, maxValue.value)
+
+  // 调整当前值，使其在新的范围内
+  let currentValue = newData
+  if (currentValue < validMin) {
+    currentValue = validMin
+  } else if (currentValue > validMax) {
+    currentValue = validMax
+  }
+
+  process.value = (Math.abs(minValue.value - currentValue) * 100) / range
 }
 
 function fixedByDecimal(num: any) {
@@ -204,6 +220,10 @@ watch(
     deep: false
   }
 )
+
+watch([minValue, maxValue], ([newMin, newMax], [oldMin, oldMax]) => {
+  dataHandle(value.value)
+})
 
 // 预览更新
 useChartDataFetch(props.chartConfig, useChartEditStore, (newData: number) => {
