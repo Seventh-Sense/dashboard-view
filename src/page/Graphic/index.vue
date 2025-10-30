@@ -36,6 +36,7 @@ onMounted(() => {
     .then((res: any) => {
       if (res.status === 'OK' && res.data && res.data.content !== '') {
         graphicData.value = JSONParse(res.data.content)
+        //graphicData.value = JSONParse('{}')
       }
     })
     .catch(err => {

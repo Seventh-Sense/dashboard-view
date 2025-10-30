@@ -368,10 +368,10 @@ const getProcessedValue = (point: any, metricType: any) => {
       }
 
       default:
-        return point.value.toString() ?? ''
+        return point.value?.toString() ?? ''
     }
   } else {
-    return point.value.toString() ?? ''
+    return point.value?.toString() ?? ''
   }
 }
 

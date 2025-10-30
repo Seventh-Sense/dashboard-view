@@ -2,8 +2,9 @@
   <div
     class="slider-container"
     ref="container"
-    @click="handleClick"
-    @touchstart.passive="handleClick"
+    @click="handleContainerClick"
+    @touchstart="handleContainerTouchStart"
+    @touchend="handleContainerTouchEnd"
     :style="{
       height: h + 'px'
     }"
@@ -36,12 +37,14 @@ const props = defineProps({
 
 const flag = ref(false)
 const t = window['$t']
-const value = ref<number>(50) // 精确值，用于计算位置
-const finalValue = ref<number>(50) // 最终确认值，用于下发
-const previousValue = ref<number | null>(null) // 记录上一次的值
-const originalValue = ref<number>(50) // 记录操作前的原始值，用于失败回退
+const value = ref<number>(50)
+const finalValue = ref<number>(50)
+const originalValue = ref<number>(50)
+const isDragging = ref(false)
+const touchStartTime = ref(0) // 记录触摸开始时间
+const touchStartX = ref(0) // 记录触摸开始X坐标
+const isTouchFromThumb = ref(false) // 标记触摸是否来自滑块
 
-// 显示用的值，保留整数
 const displayValue = computed(() => {
   return Number(value.value.toFixed(0))
 })
@@ -52,8 +55,7 @@ const { background_color, thumb_color, track_color, percent_color } = toRefs(
 )
 
 const container = ref<any>(null)
-const isDragging = ref(false)
-const lastSentValue = ref<number | null>(null) // 记录最后一次下发的值
+const lastSentValue = ref<number | null>(null)
 
 const trackStyle = computed(() => ({
   width: `${value.value}%`,
@@ -66,16 +68,17 @@ const thumbStyle = computed(() => ({
   height: `${h.value}px`
 }))
 
+// 开始拖动（滑块上的事件）
 const startDrag = (e: any) => {
-  e.preventDefault()
+  e.stopPropagation() // 阻止事件冒泡到容器
   isDragging.value = true
-  // 记录开始拖动时的原始值（关键：确保拖动前的值被保存）
+  isTouchFromThumb.value = true // 标记此触摸来自滑块
   originalValue.value = value.value
   addDragListeners()
 }
 
 const addDragListeners = () => {
-  document.addEventListener('touchmove', handleDrag)
+  document.addEventListener('touchmove', handleDrag, { passive: false })
   document.addEventListener('touchend', stopDrag)
   document.addEventListener('mousemove', handleDrag)
   document.addEventListener('mouseup', stopDrag)
@@ -98,35 +101,78 @@ const handleDrag = (e: any) => {
   value.value = Number(newProgress.toFixed(2))
 }
 
-const handleClick = (e: any) => {
-  if (!container.value || isDragging.value) return
+// 容器触摸开始（轨道点击相关）
+const handleContainerTouchStart = (e: any) => {
+  // 只有非拖动状态且触摸不来自滑块时才记录
+  if (!isDragging.value && !isTouchFromThumb.value) {
+    touchStartTime.value = Date.now()
+    touchStartX.value = e.touches[0].clientX
+  }
+}
+
+// 容器触摸结束（轨道点击相关）
+const handleContainerTouchEnd = (e: any) => {
+  // 重置滑块触摸标记
+  isTouchFromThumb.value = false
+  
+  // 如果是拖动状态，不处理点击
+  if (isDragging.value) return
+
+  // 判断是否是点击（触摸时间短且移动距离小）
+  const touchTime = Date.now() - touchStartTime.value
+  const touchEndX = e.changedTouches[0].clientX
+  const touchDistance = Math.abs(touchEndX - touchStartX.value)
+  
+  if (touchTime < 300 && touchDistance < 5) {
+    handleTrackClick(e)
+  }
+}
+
+// 容器点击事件（鼠标点击轨道）
+const handleContainerClick = (e: any) => {
+  // 拖动状态不处理点击
+  if (isDragging.value) return
+
+  // 点击滑块不处理（只处理轨道点击）
+  const thumb = container.value?.querySelector('.slider-thumb')
+  if (thumb && thumb.contains(e.target)) return
+
+  handleTrackClick(e)
+}
+
+// 处理轨道点击（实际修改值的逻辑）
+const handleTrackClick = (e: any) => {
+  if (!container.value) return
 
   const rect = container.value.getBoundingClientRect()
   const containerWidth = rect.width
-  const offsetX = e.type.includes('touch')
-    ? e.touches[0].clientX - rect.left
-    : e.clientX - rect.left
+  let offsetX = 0
+
+  if (e.type.includes('touch')) {
+    offsetX = e.changedTouches[0].clientX - rect.left
+  } else {
+    offsetX = e.clientX - rect.left
+  }
 
   const newProgress = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100))
   const roundedProgress = Math.round(newProgress)
   
-  // 记录点击前的原始值
-  originalValue.value = value.value
-  value.value = roundedProgress
-  finalValue.value = roundedProgress
-  sendValue(roundedProgress)
+  // 只有当值发生变化时才处理
+  if (roundedProgress !== value.value) {
+    originalValue.value = value.value
+    value.value = roundedProgress
+    finalValue.value = roundedProgress
+    sendValue(roundedProgress)
+  }
 }
 
 const stopDrag = () => {
   if (!isDragging.value) return
 
-  if (container.value) {
-    const roundedProgress = Math.round(value.value)
-    // 拖动结束时记录当前值作为可能的提交值，但保留原始值用于回退
-    value.value = roundedProgress
-    finalValue.value = roundedProgress
-    sendValue(roundedProgress)
-  }
+  const roundedProgress = Math.round(value.value)
+  value.value = roundedProgress
+  finalValue.value = roundedProgress
+  sendValue(roundedProgress)
 
   isDragging.value = false
   removeDragListeners()
@@ -154,20 +200,16 @@ const onClick = throttle(
   async (data: number) => {
     try {
       flag.value = true
-      // 保存当前要提交的值，用于回退检查
-      const pendingValue = data
       const result = await updateNodeData(props.chartConfig?.request, Number(data))
       
       if (!result) {
         console.log('更新失败，回退到原始值:', originalValue.value)
-        // 回退所有相关值
         value.value = originalValue.value
         finalValue.value = originalValue.value
         lastSentValue.value = originalValue.value
       }
     } catch (error) {
       console.error('操作失败:', error)
-      // 异常时同样回退
       value.value = originalValue.value
       finalValue.value = originalValue.value
       lastSentValue.value = originalValue.value
@@ -185,11 +227,9 @@ const onClick = throttle(
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    console.log('监听到数据集变化:', newVal)
     if (!flag.value) {
       const parsedValue = parseData(newVal, 'number')
       value.value = parsedValue
-      // 同步更新原始值为最新的数据集值
       originalValue.value = parsedValue
     }
   },
@@ -242,7 +282,7 @@ watch(
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 8px;
+  width: 8px; /* 增大滑块尺寸便于点击 */
   height: 100%;
   background: v-bind('thumb_color');
   border-radius: 4px;

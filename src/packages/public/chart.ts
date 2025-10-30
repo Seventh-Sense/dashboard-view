@@ -127,7 +127,7 @@ export const updateNodeData = async (load: any, data: any) => {
     return false
   }
 
-  console.log('bindInfo', load.bindInfo)
+  //console.log('bindInfo', load.bindInfo)
   try {
     let response: any
 
