@@ -26,13 +26,14 @@
         </div>
       </div>
     </template>
+    <FloatingIcon @click="handleFloatingIconClick()" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted } from 'vue'
 import { PreviewRenderList } from './components/PreviewRenderList'
-import { getFilterStyle, setTitle } from '@/utils'
+import { getFilterStyle, JSONParse, setTitle } from '@/utils'
 import {
   getEditCanvasConfigStyle,
   getSessionStorageInfo,
@@ -48,11 +49,54 @@ import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { setOption } from '@/packages/public'
 import { readPoints } from '@/api/http'
+import { FloatingIcon } from './components/FloatingIcon'
+import { useRouter } from 'vue-router'
+import { PageEnum } from '@/enums/pageEnum'
 
-await getPreviewInfo()
+const props = defineProps({
+  ProjectData: {
+    type: Object,
+    required: true
+  },
+})
+
+//await getPreviewInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
-setTitle(`预览-${chartEditStore.editCanvasConfig.projectName}`)
+let interval: number | null = null
+
+onMounted(async () => {
+  await getPreviewInfoByInfo(props.ProjectData.content)
+
+  interval = window.setInterval(() => {
+    readPoints()
+      .then(data => {
+        if (data) {
+          writeValue(data)
+        } else {
+          console.log('no data!')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, 1500)
+})
+
+const getPreviewInfoByInfo = (load: string) => {
+  //console.log('load', load)
+  if (load === '') {
+    return
+  }
+
+  let data = JSONParse(load)
+  chartEditStore.editCanvasConfig = data.editCanvasConfig
+  chartEditStore.requestGlobalConfig = data.requestGlobalConfig
+  chartEditStore.componentList = data.componentList
+
+
+  setTitle(`预览-${data.editCanvasConfig.projectName}`)
+}
 
 const previewRefStyle = computed(() => {
   return {
@@ -62,7 +106,7 @@ const previewRefStyle = computed(() => {
   }
 })
 
-let interval: number | null = null
+
 
 //适配方式的配置
 const showEntity = computed(() => {
@@ -100,28 +144,27 @@ const writeValue = (data: any) => {
   })
 }
 
-onMounted(() => {
-  //console.log(chartEditStore.componentList)
-  interval = window.setInterval(() => {
-    readPoints()
-      .then(data => {
-        if (data) {
-          writeValue(data)
-        } else {
-          console.log('no data!')
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, 1500)
-})
-
 onUnmounted(() => {
   if (interval) {
     window.clearInterval(interval)
   }
 })
+
+const scale = computed(() => {
+  const scaleX = window.innerWidth / chartEditStore.editCanvasConfig.width;
+  const scaleY = window.innerHeight / chartEditStore.editCanvasConfig.height;
+  // 取最小值保证内容完整显示，若需填满容器可改为 Math.max()
+  return Math.min(scaleX, scaleY);
+});
+
+const router = useRouter()
+
+const handleFloatingIconClick = () => {
+  router.replace({
+    path: PageEnum.BASE_HOME_ITEMS
+  })
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -138,6 +181,7 @@ onUnmounted(() => {
     overflow: hidden;
     .go-preview-scale {
       transform-origin: center center;
+      transform: scale(v-bind('scale'), v-bind('scale')) !important;
     }
   }
   &.scrollY {
