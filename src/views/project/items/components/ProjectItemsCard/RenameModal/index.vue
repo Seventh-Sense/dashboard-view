@@ -89,6 +89,11 @@ const readData = () => {
 const onPositiveClick = async () => {
   if (!project_name.value) return // 空项目名直接返回
 
+  if (project_name.value.length > 12) {
+    window['$message'].error(t('msg.msg_error_10'))
+    return
+  }
+
   const shouldSetName = data.value !== '' // 统一判断条件
   await setName(shouldSetName)
 }

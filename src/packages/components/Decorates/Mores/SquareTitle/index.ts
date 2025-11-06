@@ -11,5 +11,5 @@ export const SquareTitleConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.MORE,
   package: PackagesCategoryEnum.DECORATES,
   chartFrame: ChartFrameEnum.STATIC,
-  image: 'block_breviary.png'
+  image: 'panel.png'
 }

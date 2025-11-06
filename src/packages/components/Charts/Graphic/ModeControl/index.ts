@@ -11,5 +11,5 @@ export const ModeControlConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'numerical.png'
+  image: 'scene1.png'
 }

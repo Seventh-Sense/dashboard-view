@@ -11,5 +11,5 @@ export const AirComponentConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'numerical.png'
+  image: 'environment.png'
 }

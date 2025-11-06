@@ -126,6 +126,11 @@ const paramCheck = () => {
     window['$message'].error(t('msg.modbus_msg_1'))
   }
 
+  if (project_name.value.length > 12) {
+    flag = false
+    window['$message'].error(t('msg.msg_error_10'))
+  }
+
   return flag
 }
 

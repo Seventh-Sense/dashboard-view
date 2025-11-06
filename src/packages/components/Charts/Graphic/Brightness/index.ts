@@ -11,5 +11,5 @@ export const BrightnessConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'switch.png'
+  image: 'bar.png'
 }

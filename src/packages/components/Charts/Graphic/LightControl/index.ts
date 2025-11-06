@@ -11,5 +11,5 @@ export const LightControlConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'ledControl.png'
+  image: 'light1.png'
 }

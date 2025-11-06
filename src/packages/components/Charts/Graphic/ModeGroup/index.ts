@@ -11,5 +11,5 @@ export const ModeGroupConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'mode.png'
+  image: 'ACMode2.png'
 }

@@ -17,7 +17,16 @@
 
     <n-space justify="space-between" align="center" class="list-footer" :wrap="false">
       <div style="display: flex; flex-direction: column; justify-content: center">
-        <span style="color: rgba(255, 255, 255, 1); font-size: 14px">
+        <span
+          style="
+            color: rgba(255, 255, 255, 1);
+            font-size: 14px;
+            width: 50%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          "
+        >
           {{ cardData.title }}
         </span>
         <span class="list-footer-title">{{ formatTime(cardData.time) }}</span>
@@ -29,7 +38,7 @@
         <Icon name="delete" :size="26" :color="{ normal: '#ffffff' }" @click="deleteHanlde()" />
       </n-space>
     </n-space>
-    <RenameModal :show="modalShow" :cardData="cardData" @close="closeHandle"/>
+    <RenameModal :show="modalShow" :cardData="cardData" @close="closeHandle" />
   </div>
 </template>
 

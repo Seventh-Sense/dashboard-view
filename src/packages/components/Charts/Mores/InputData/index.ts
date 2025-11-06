@@ -11,5 +11,5 @@ export const InputDataConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.MORE,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'value.png'
+  image: 'input.png'
 }

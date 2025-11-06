@@ -11,5 +11,5 @@ export const ConferenceSceneConfig: ConfigType = {
   categoryName: ChatCategoryEnumName.Graphic,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.COMMON,
-  image: 'numerical.png'
+  image: 'scene2.png'
 }
