@@ -104,7 +104,7 @@ export default {
   host: 'Host',
   port: 'Port',
 
-  addr_example: 'Enter a number or a number range (10-20)',
+  addr_example: 'Enter a number or a range of numbers (example: 10-20)',
   tip_search: 'Please enter the search content',
   total: 'A total of',
   total_num:'records',

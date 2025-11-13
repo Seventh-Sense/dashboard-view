@@ -105,7 +105,7 @@ export default {
   host: '主机地址',
   port: '端口',
 
-  addr_example: '输入数字或数字范围(10-20)',
+  addr_example: '输入数字或数字范围(示例：10-20)',
   tip_search: '请输入搜索内容',
   total: '共',
   total_num:'条记录',

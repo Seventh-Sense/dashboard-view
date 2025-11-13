@@ -32,4 +32,10 @@ export default {
     msg_error_9: 'No device found yet!',
 
     msg_error_10: 'The system only allows input of up to 12 characters.',
+
+    msg_error_11: 'Component import failed. Please check the file integrity!',
+    msg_error_12: 'Only JSON format files are supported for upload. Please upload again!',
+    msg_error_13: 'Import failed. Please check the data or contact the administrator!',
+
+    msg_success_1: 'Import successful!',
 }

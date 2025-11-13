@@ -35,5 +35,10 @@ export default {
     msg_error_9: '暂未搜索到设备！',
 
     msg_error_10: '系统仅允许输入 12 个字符',
+    msg_error_11: '组件导入失败，请检查文件完整性!',
+    msg_error_12: '仅支持上传 【JSON】 格式文件，请重新上传！',
+    msg_error_13: '导入失败，请检查数据或联系管理员！',
+
+    msg_success_1: '导入成功！',
 
 }
