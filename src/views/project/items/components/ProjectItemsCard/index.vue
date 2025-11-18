@@ -15,13 +15,15 @@
       </div>
     </div>
 
-    <n-space justify="space-between" align="center" class="list-footer" :wrap="false">
-      <div style="display: flex; flex-direction: column; justify-content: center">
+    <div
+      class="list-footer"
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <div style="display: flex; flex-direction: column; justify-content: center;flex: 1;min-width: 0;">
         <span
           style="
             color: rgba(255, 255, 255, 1);
             font-size: 14px;
-            width: 50%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -32,12 +34,12 @@
         <span class="list-footer-title">{{ formatTime(cardData.time) }}</span>
       </div>
 
-      <n-space v-if="isShow" size="large" justify="end" align="center" :wrap="false">
+      <div v-if="isShow" style="display: flex; min-width: 130px;;align-items: center; justify-content: flex-end;gap: 16px;">
         <Icon name="input" :size="26" :color="{ normal: '#ffffff' }" @click="renameHandle()" />
         <Icon name="edit" :size="26" :color="{ normal: '#ffffff' }" @click="editHandle()" />
         <Icon name="delete" :size="26" :color="{ normal: '#ffffff' }" @click="deleteHanlde()" />
-      </n-space>
-    </n-space>
+      </div>
+    </div>
     <RenameModal :show="modalShow" :cardData="cardData" @close="closeHandle" />
   </div>
 </template>

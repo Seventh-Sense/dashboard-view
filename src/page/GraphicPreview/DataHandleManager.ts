@@ -111,7 +111,7 @@ export default class DataHandleManager extends DataManager {
         if (!callbackInfos) return
         
         callbackInfos.forEach(({ callback, pointType }) => {
-          try {
+          try {  
             callback(item.value, pointType)
           } catch (err) {
             console.error(`Error executing callback for point ${item.metric_id}`, err)

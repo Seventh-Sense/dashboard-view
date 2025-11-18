@@ -1,12 +1,11 @@
 <template>
-  <Icon v-if="option.dataset === on_value" name="fan2" :size="w" @click="onClick" />
+  <Icon v-if="option.dataset === on_value" name="fan2" :size="w" />
   <Icon
     v-else
     name="fan2"
     :size="w"
     type="mono-line"
     :color="{ normal: '#ffffffff' }"
-    @click="onClick"
   />
 </template>
 

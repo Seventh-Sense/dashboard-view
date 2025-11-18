@@ -2,7 +2,7 @@
   <CollapseItem :name="t('dashboard.effect')" :expanded="true">
     <SettingItemBox :name="t('dashboard.contant')">
       <SettingItem :name="t('dashboard.value')">
-        <n-input-number v-model:value="optionData.dataset" size="small" :min="0"></n-input-number>
+        <n-input-number v-model:value="optionData.dataset" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.title')" :alone="false">

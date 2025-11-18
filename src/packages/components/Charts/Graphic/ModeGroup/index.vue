@@ -13,7 +13,7 @@
           width: icon_size + 'px',
           height: icon_size + 'px',
           background: icon_bottom_color,
-          borderColor: border_color
+          borderColor: value !== mode.value ? border_color : '#6666FFFF'
         }"
         @click="onClick(mode.value)"
       >
@@ -105,7 +105,6 @@ const onClick = throttle(
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
-  padding: 0 12px;
 
   &-item {
     display: flex;
