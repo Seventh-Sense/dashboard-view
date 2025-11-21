@@ -115,7 +115,7 @@ const chartMode = ref<ChartModeEnum>(chartLayoutStore.getChartType)
 
 const chartModeList = [
   { label: window['$t']('dashboard.single_row'), icon: AlbumsIcon, value: ChartModeEnum.SINGLE },
-  { label: window['$t']('dashboard.biserial'), icon: GridIcon, value: ChartModeEnum.DOUBLE }
+  // { label: window['$t']('dashboard.biserial'), icon: GridIcon, value: ChartModeEnum.DOUBLE }
 ]
 
 // 组件数组提取

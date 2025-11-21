@@ -5,8 +5,8 @@ export default {
   password_placeholder: 'Please enter password',
   login_auto: "Auto Login",
   login_button: "Login",
-  about_us: "About us",
-  contact_us: "Contact us",
+  about_us: "About Us",
+  contact_us: "Contact Us",
   version: 'Version',
 
   accredit: 'Accredit',
