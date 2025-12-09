@@ -64,8 +64,8 @@ import { StorageEnum } from '@/enums/storageEnum'
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 const SWIPE_THRESHOLD = 50
 const ANIMATION_DURATION = 300
-const RENDER_RANGE = 1 // 渲染范围：当前页前后各1页
-const EDGE_RESISTANCE = 0.2 // 边缘阻力系数，值越小阻力越大
+const RENDER_RANGE = 1
+const EDGE_RESISTANCE = 0.05 // 进一步降低边缘阻力
 
 // 状态管理
 const flag = ref(false)
@@ -78,7 +78,7 @@ const isSwiping = ref(false)
 const isAnimating = ref(false)
 const isHorizontal = ref<boolean | null>(null)
 const screenWidth = ref(window.innerWidth)
-const containerBgColor = ref('#fff') // 容器背景色
+const containerBgColor = ref('#fff')
 
 const router = useRouter()
 
@@ -90,16 +90,17 @@ const formInline = reactive({
 // 计算属性：判断是否应该渲染某个页面
 const shouldRender = computed(() => (index: number) => {
   if (slides.value.length <= 1) return true
-
-  // 只渲染当前页和相邻页面
   return Math.abs(index - currentIndex.value) <= RENDER_RANGE
 })
 
 // 计算最后一页索引
-const lastPageIndex = computed(() => slides.value.length - 1)
+const lastPageIndex = computed(() => Math.max(0, slides.value.length - 1))
+
+// 检查是否在边界
+const isAtFirstPage = computed(() => currentIndex.value === 0)
+const isAtLastPage = computed(() => currentIndex.value === lastPageIndex.value)
 
 onMounted(() => {
-  // 存储登录信息
   setLocalStorage(
     GO_LOGIN_INFO_STORE,
     cryptoEncode(
@@ -110,11 +111,8 @@ onMounted(() => {
     )
   )
 
-  // 初始化屏幕宽度
   screenWidth.value = window.innerWidth
   window.addEventListener('resize', handleResize)
-
-  // 初始化数据
   initTabs()
 
   return () => {
@@ -129,12 +127,10 @@ const initTabs = async () => {
     const res: any = await readProjectList()
     if (res.status !== 'OK') return
 
-    // 过滤数据
     slides.value = res.data.filter(
       (item: any) => item.description === 'dashboard' && item.content !== '""'
     )
 
-    // 预解析内容
     slides.value.forEach(item => {
       try {
         item.parsedContent = JSON.parse(item.content)
@@ -152,8 +148,13 @@ const initTabs = async () => {
 // 窗口大小变化处理
 const handleResize = () => {
   if (isSwiping.value || isAnimating.value) return
+  const oldWidth = screenWidth.value
   screenWidth.value = window.innerWidth
-  offsetX.value = -currentIndex.value * screenWidth.value
+  
+  // 重新计算偏移量，保持当前页面位置
+  if (oldWidth !== screenWidth.value) {
+    offsetX.value = -currentIndex.value * screenWidth.value
+  }
 }
 
 // 切换标签
@@ -173,7 +174,7 @@ const onTouchStart = (e: TouchEvent) => {
   isHorizontal.value = null
 }
 
-// 触摸移动 - 增强第一页右滑边界限制
+// 触摸移动 - 完全禁止边界滑动
 const onTouchMove = (e: TouchEvent) => {
   if (!isSwiping.value || isAnimating.value || slides.value.length <= 1) return
 
@@ -183,62 +184,67 @@ const onTouchMove = (e: TouchEvent) => {
 
   // 确定滑动方向
   if (isHorizontal.value === null) {
-    isHorizontal.value = Math.abs(diffX) > Math.abs(diffY)
+    const isHorizontalMove = Math.abs(diffX) > Math.abs(diffY)
+    const moveThreshold = 10 // 最小移动阈值
+    
+    if (Math.abs(diffX) > moveThreshold || Math.abs(diffY) > moveThreshold) {
+      isHorizontal.value = isHorizontalMove
+    }
   }
+  
   if (!isHorizontal.value) return
 
-  // 计算基础偏移量
-  let newOffset = -currentIndex.value * screenWidth.value + diffX
+  // 阻止默认行为，防止页面滚动
+  e.preventDefault()
 
-  // 严格的第一页右滑限制
-  if (currentIndex.value === 0) {
-    // 第一页不允许向右滑动超过自身边界（偏移量不能大于0）
-    const maxRightOffset = 0
-    newOffset = Math.min(newOffset, maxRightOffset)
+  const isSwipingRight = diffX > 0 // 向右滑动（显示上一页）
+  const isSwipingLeft = diffX < 0  // 向左滑动（显示下一页）
 
-    // 增加右滑边缘阻力效果
-    if (diffX > 0) {
-      const excess = newOffset - maxRightOffset
-      if (excess > 0) {
-        newOffset = maxRightOffset + excess * EDGE_RESISTANCE
-      }
-    }
-  }
-  // 最后一页左滑限制
-  else if (currentIndex.value === lastPageIndex.value && diffX < 0) {
-    // 最后一页向左滑动有阻力
-    const maxLeftOffset = -lastPageIndex.value * screenWidth.value
-    newOffset = Math.max(newOffset, maxLeftOffset)
-
-    const excess = maxLeftOffset - newOffset
-    if (excess > 0) {
-      newOffset = maxLeftOffset + excess * EDGE_RESISTANCE
-    }
+  // 严格的边界检查
+  if (isAtFirstPage.value && isSwipingRight) {
+    // 第一页禁止右滑，只允许极小的视觉反馈
+    const maxMove = 5
+    const resistanceMove = Math.min(diffX * EDGE_RESISTANCE, maxMove)
+    offsetX.value = -currentIndex.value * screenWidth.value + resistanceMove
+    return
   }
 
-  // 应用计算后的偏移量
-  offsetX.value = newOffset
+  if (isAtLastPage.value && isSwipingLeft) {
+    // 最后一页禁止左滑，只允许极小的视觉反馈
+    const maxMove = -5
+    const resistanceMove = Math.max(diffX * EDGE_RESISTANCE, maxMove)
+    offsetX.value = -currentIndex.value * screenWidth.value + resistanceMove
+    return
+  }
+
+  // 正常情况下的滑动
+  offsetX.value = -currentIndex.value * screenWidth.value + diffX
 }
 
-// 触摸结束 - 确保边界限制
+// 触摸结束 - 确保严格的边界检查
 const onTouchEnd = (e: TouchEvent) => {
   if (!isSwiping.value || isAnimating.value || slides.value.length <= 1) return
 
   const touch = e.changedTouches[0]
   const diffX = touch.clientX - startX.value
+  const absDiffX = Math.abs(diffX)
+
   let newIndex = currentIndex.value
 
-  // 严格限制第一页不能向右滑动到上一页
-  if (currentIndex.value > 0) {
-    // 非第一页可以正常向右滑动
-    if (diffX > SWIPE_THRESHOLD) {
-      newIndex = currentIndex.value - 1
-    }
-  }
+  // 只有在水平滑动时才处理切换逻辑
+  if (isHorizontal.value && absDiffX > SWIPE_THRESHOLD) {
+    const isSwipingRight = diffX > 0
+    const isSwipingLeft = diffX < 0
 
-  // 向左滑动逻辑（非最后一页）
-  if (diffX < -SWIPE_THRESHOLD && currentIndex.value < lastPageIndex.value) {
-    newIndex = currentIndex.value + 1
+    // 严格的边界检查
+    if (isSwipingRight && !isAtFirstPage.value) {
+      // 向右滑动且不在第一页，切换到上一页
+      newIndex = currentIndex.value - 1
+    } else if (isSwipingLeft && !isAtLastPage.value) {
+      // 向左滑动且不在最后一页，切换到下一页
+      newIndex = currentIndex.value + 1
+    }
+    // 在边界情况下，newIndex 保持为 currentIndex.value，不会切换
   }
 
   animateToIndex(newIndex)
@@ -261,11 +267,14 @@ const resetSwipeState = () => {
 
 // 动画切换到指定索引
 const animateToIndex = (index: number) => {
-  if (isAnimating.value || index === currentIndex.value) return
+  if (isAnimating.value) return
 
+  // 确保索引在有效范围内
+  const validIndex = Math.max(0, Math.min(index, lastPageIndex.value))
+  
   isAnimating.value = true
-  currentIndex.value = index
-  offsetX.value = -index * screenWidth.value
+  currentIndex.value = validIndex
+  offsetX.value = -validIndex * screenWidth.value
 
   setTimeout(() => {
     isAnimating.value = false
@@ -291,7 +300,7 @@ const handleFloatingIconClick = () => {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: none; /* 完全禁用默认触摸行为 */
   background-color: v-bind(containerBgColor);
 }
 
@@ -338,20 +347,31 @@ const handleFloatingIconClick = () => {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  touch-action: none; /* 禁用默认触摸行为 */
   background-color: v-bind(containerBgColor);
 }
 
 .content-wrapper {
   display: flex;
   height: 100%;
+  width: fit-content; /* 确保宽度正确 */
   will-change: transform;
 }
 
 .content-item {
   flex: 0 0 auto;
   height: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden; /* 临时禁用滚动，避免冲突 */
+  position: relative;
   background-color: v-bind(containerBgColor);
+}
+
+/* 为 PreviewList 组件提供独立的滚动容器 */
+.content-item :deep(.preview-list-container) {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y; /* 只允许垂直滚动 */
 }
 </style>
