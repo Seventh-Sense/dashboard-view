@@ -101,12 +101,12 @@ const bindValue = (value: any) => {
   // }
 
   targetData.value.request.bindParams = {
-      deviceID: deviceID.value,
-      deviceName: '',
-      deviceType: deviceType.value,
-      objectID: value,
-      objectName: '',
-    }
+    deviceID: deviceID.value,
+    deviceName: '',
+    deviceType: deviceType.value,
+    objectID: value,
+    objectName: ''
+  }
 }
 
 const renderLabel = (option: any) => {

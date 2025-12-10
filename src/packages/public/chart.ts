@@ -123,6 +123,7 @@ export const updateNodeData2 = async (bindInfo: any, data: any) => {
 
 export const updateNodeData = async (load: any, data: any) => {
   if (!load.bindInfo.object_id) {
+    //console.log('no object_id', load.bindInfo)
     window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
     return false
   }

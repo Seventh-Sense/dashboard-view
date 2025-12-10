@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, type ConfigEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import {
@@ -21,7 +21,7 @@ function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
 }
 
-export default ({ mode }) => {
+export default ({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd())
 
   const isGraphic = env.VITE_APP_IS_GRAPHIC === 'true';

@@ -82,6 +82,8 @@ const containerBgColor = ref('#fff')
 
 const router = useRouter()
 
+const enableSwipe = ref(true) // 默认启用滑动功能
+
 const formInline = reactive({
   username: 'user',
   password: '123456'
@@ -165,6 +167,9 @@ const switchTab = (index: number) => {
 
 // 触摸开始
 const onTouchStart = (e: TouchEvent) => {
+  // 检查是否启用滑动功能
+  if (!enableSwipe.value) return
+
   if (isAnimating.value || slides.value.length <= 1) return
 
   const touch = e.touches[0]
@@ -176,6 +181,9 @@ const onTouchStart = (e: TouchEvent) => {
 
 // 触摸移动 - 完全禁止边界滑动
 const onTouchMove = (e: TouchEvent) => {
+  // 检查是否启用滑动功能
+  if (!enableSwipe.value) return
+
   if (!isSwiping.value || isAnimating.value || slides.value.length <= 1) return
 
   const touch = e.touches[0]
@@ -223,6 +231,9 @@ const onTouchMove = (e: TouchEvent) => {
 
 // 触摸结束 - 确保严格的边界检查
 const onTouchEnd = (e: TouchEvent) => {
+  // 检查是否启用滑动功能
+  if (!enableSwipe.value) return
+
   if (!isSwiping.value || isAnimating.value || slides.value.length <= 1) return
 
   const touch = e.changedTouches[0]
@@ -253,6 +264,9 @@ const onTouchEnd = (e: TouchEvent) => {
 
 // 触摸取消
 const onTouchCancel = () => {
+  // 检查是否启用滑动功能
+  if (!enableSwipe.value) return
+
   if (isSwiping.value && !isAnimating.value) {
     animateToIndex(currentIndex.value)
     resetSwipeState()

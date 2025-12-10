@@ -40,7 +40,7 @@ import { defaultTheme, globalThemeJson } from '@/settings/chartThemes/index'
 import { PreviewListRender } from './PreviewListRender'
 
 import { readPointsDataById } from '@/api/http'
-import { IntervalTimeOut, getAllDataIdsSafe, writeValue } from '../util/util'
+import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../util/util'
 
 const props = defineProps({
   ProjectData: {
@@ -181,7 +181,7 @@ const { show } = useComInstall(chartData)
 // 开启键盘监听
 keyRecordHandle()
 
-const getPreviewInfoByInfo = (load: string) => {
+const getPreviewInfoByInfo = async (load: string) => {
   //console.log('load', load)
   if (load === '') {
     return
@@ -190,7 +190,15 @@ const getPreviewInfoByInfo = (load: string) => {
   let data = JSONParse(load)
   chartData.editCanvasConfig = data.editCanvasConfig
   chartData.requestGlobalConfig = data.requestGlobalConfig
-  chartData.componentList = data.componentList
+
+  try {
+    const params = await getBindParams(data.componentList)
+    if (params) {
+      chartData.componentList = params
+    }
+  } catch (error) {
+    console.error('Error during onMounted:', error)
+  }
 }
 
 const readPointValue = (dataList: any[]) => {
