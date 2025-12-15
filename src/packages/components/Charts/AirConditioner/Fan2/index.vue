@@ -1,11 +1,12 @@
 <template>
-  <Icon v-if="option.dataset === on_value" name="fan2" :size="w" />
+  <Icon v-if="option.dataset === on_value" name="fan2" :size="w" @click="onClick" />
   <Icon
     v-else
     name="fan2"
     :size="w"
     type="mono-line"
     :color="{ normal: '#ffffffff' }"
+    @click="onClick"
   />
 </template>
 
@@ -31,14 +32,10 @@ const option = shallowReactive({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { on_value, iswrite } = toRefs(props.chartConfig.option)
+const { on_value } = toRefs(props.chartConfig.option)
 
 const onClick = throttle(
   async () => {
-    if (iswrite && !iswrite.value) {
-      return
-    }
-
     try {
       flag.value = true
       let data = on_value.value
