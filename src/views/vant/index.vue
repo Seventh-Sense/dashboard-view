@@ -57,7 +57,7 @@ import { PreviewList } from '../display/PreviewList'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { useRouter } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
-import { setLocalStorage, cryptoEncode } from '@/utils'
+import { setLocalStorage, cryptoEncode, routerTurnByName } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 
 // 常量设置
@@ -129,9 +129,16 @@ const initTabs = async () => {
     const res: any = await readProjectList()
     if (res.status !== 'OK') return
 
+    
+
     slides.value = res.data.filter(
       (item: any) => item.description === 'dashboard' && item.content !== '""'
     )
+
+    if (slides.value.length === 0) {
+      routerTurnByName(PageEnum.BASE_LOGIN_NAME, true)
+      return
+    }
 
     slides.value.forEach(item => {
       try {
@@ -152,7 +159,7 @@ const handleResize = () => {
   if (isSwiping.value || isAnimating.value) return
   const oldWidth = screenWidth.value
   screenWidth.value = window.innerWidth
-  
+
   // 重新计算偏移量，保持当前页面位置
   if (oldWidth !== screenWidth.value) {
     offsetX.value = -currentIndex.value * screenWidth.value
@@ -194,19 +201,19 @@ const onTouchMove = (e: TouchEvent) => {
   if (isHorizontal.value === null) {
     const isHorizontalMove = Math.abs(diffX) > Math.abs(diffY)
     const moveThreshold = 10 // 最小移动阈值
-    
+
     if (Math.abs(diffX) > moveThreshold || Math.abs(diffY) > moveThreshold) {
       isHorizontal.value = isHorizontalMove
     }
   }
-  
+
   if (!isHorizontal.value) return
 
   // 阻止默认行为，防止页面滚动
   e.preventDefault()
 
   const isSwipingRight = diffX > 0 // 向右滑动（显示上一页）
-  const isSwipingLeft = diffX < 0  // 向左滑动（显示下一页）
+  const isSwipingLeft = diffX < 0 // 向左滑动（显示下一页）
 
   // 严格的边界检查
   if (isAtFirstPage.value && isSwipingRight) {
@@ -285,7 +292,7 @@ const animateToIndex = (index: number) => {
 
   // 确保索引在有效范围内
   const validIndex = Math.max(0, Math.min(index, lastPageIndex.value))
-  
+
   isAnimating.value = true
   currentIndex.value = validIndex
   offsetX.value = -validIndex * screenWidth.value
