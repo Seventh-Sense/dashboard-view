@@ -2,6 +2,7 @@
 import { IntervalTimeOut } from '@/views/display/util/util'
 import DataManager from './DataManager'
 import { readPointsDataById } from '@/api/http'
+import cloneDeep from 'lodash/cloneDeep'
 
 export enum PointAttrValueType {
   Analog = 'Analog',
@@ -111,8 +112,14 @@ export default class DataHandleManager extends DataManager {
         if (!callbackInfos) return
         
         callbackInfos.forEach(({ callback, pointType }) => {
-          try {  
-            callback(item.value, pointType)
+          try { 
+            let load = cloneDeep(item.value)
+            if (item.value === true || item.value === 'true') {
+              load = 1
+            } else if (item.value === false || item.value === 'false') {
+              load = 0
+            }
+            callback(load, pointType)
           } catch (err) {
             console.error(`Error executing callback for point ${item.metric_id}`, err)
           }
