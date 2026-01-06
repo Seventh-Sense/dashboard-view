@@ -57,7 +57,7 @@ import { PreviewList } from '../display/PreviewList'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { useRouter } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
-import { setLocalStorage, cryptoEncode, routerTurnByName } from '@/utils'
+import { setLocalStorage, cryptoEncode, routerTurnByName, getLocalStorage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 
 // 常量设置
@@ -83,6 +83,7 @@ const containerBgColor = ref('#fff')
 const router = useRouter()
 
 const enableSwipe = ref(true) // 默认启用滑动功能
+const limit = ref(3) //预览限制
 
 const formInline = reactive({
   username: 'user',
@@ -113,6 +114,13 @@ onMounted(() => {
     )
   )
 
+  //读取配置
+  const config = getLocalStorage('SettingData')
+  if (config) {
+    limit.value = config.limit || 3
+    enableSwipe.value = config.enableSwipe || true
+  }
+
   screenWidth.value = window.innerWidth
   window.addEventListener('resize', handleResize)
   initTabs()
@@ -129,8 +137,6 @@ const initTabs = async () => {
     const res: any = await readProjectList()
     if (res.status !== 'OK') return
 
-    
-
     slides.value = res.data.filter(
       (item: any) => item.description === 'dashboard' && item.content !== '""'
     )
@@ -140,6 +146,8 @@ const initTabs = async () => {
       return
     }
 
+    // 应用预览限制
+    slides.value = slides.value.slice(0, limit.value)
     slides.value.forEach(item => {
       try {
         item.parsedContent = JSON.parse(item.content)

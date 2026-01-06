@@ -14,7 +14,8 @@
   </n-dropdown>
 
   <!-- 系统设置 model -->
-  <go-system-set v-model:modelShow="modelShow"></go-system-set>
+  <!-- <go-system-set v-model:modelShow="modelShow"></go-system-set> -->
+  <SystemSetting v-if="modelShow" v-model:modelShow="modelShow" />
   <!-- 关于软件 model -->
   <!-- <go-system-info v-model:modelShow="modelShowInfo"></go-system-info> -->
   <VersionModal v-model:showModal="modelShowInfo" />
@@ -33,13 +34,16 @@ import Person from './person.png'
 import { icon } from '@/plugins'
 import { VersionModal } from '@/views/login/modal/VersionModal'
 import { GoJob } from '@/components/GoJob/index'
-const { ChatboxEllipsesIcon, PersonIcon, LogOutOutlineIcon, TvOutlineIcon } = icon.ionicons5
+import { SystemSetting } from '../SystemSetting'
+
+const { ChatboxEllipsesIcon, PersonIcon, LogOutOutlineIcon, TvOutlineIcon, SettingsSharpIcon } = icon.ionicons5
 
 const t = window['$t']
 
 const modelShowInfo = ref(false)
 const modelShow = ref(false)
 const jobShow = ref(false)
+const settingShow = ref(false)
 
 // 是否失败
 const fallback = ref(false)
@@ -75,6 +79,15 @@ const option = ref([
     key: 'd1'
   },
   {
+    label: renderLang('global.sys_set'),
+    key: 'sysSet',
+    icon: renderIcon(SettingsSharpIcon)
+  },
+  {
+    type: 'divider',
+    key: 'd3'
+  },
+  {
     label: renderLang('global.logout'),
     key: 'logout',
     icon: renderIcon(LogOutOutlineIcon)
@@ -91,11 +104,11 @@ const options = ref([
     type: 'divider',
     key: 'd1'
   },
-  // {
-  //   label: renderLang('global.sys_set'),
-  //   key: 'sysSet',
-  //   icon: renderIcon(SettingsSharpIcon)
-  // },
+  {
+    label: renderLang('global.sys_set'),
+    key: 'sysSet',
+    icon: renderIcon(SettingsSharpIcon)
+  },
   {
     label: renderLang('project.task'),
     key: 'job',
@@ -132,6 +145,7 @@ const errorHandle = (e: Event) => {
 // 系统设置
 const sysSetHandle = () => {
   modelShow.value = true
+  //settingShow.value = true
 }
 
 const sysInfoHandle = () => {

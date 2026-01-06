@@ -58,7 +58,7 @@ export const getBindParams = async (dataList: any[]) => {
         object_id: objectID
       })
     } else {
-      console.log(`跳过重复绑定点: device_id=${deviceID}, object_id=${objectID}`)
+      //console.log(`跳过重复绑定点: device_id=${deviceID}, object_id=${objectID}`)
     }
   }
 

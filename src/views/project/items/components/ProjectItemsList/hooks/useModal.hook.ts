@@ -61,7 +61,6 @@ export const useModalDataInit = () => {
       .then((res: any) => {
         if (res.status === 'OK' && res.data.content !== '""') {
           let data = JSONParse(res.data.content)
-          console.log('asdasd', res.data)
 
           const sessionStorageInfo = getSessionStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
           if (sessionStorageInfo?.length) {

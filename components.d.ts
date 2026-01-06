@@ -45,6 +45,7 @@ declare module 'vue' {
     SettingItemBox: typeof import('./src/components/Pages/ChartItemSetting/SettingItemBox.vue')['default']
     SizeSetting: typeof import('./src/components/Pages/ChartItemSetting/SizeSetting.vue')['default']
     StylesSetting: typeof import('./src/components/Pages/ChartItemSetting/StylesSetting.vue')['default']
+    SystemSetting: typeof import('./src/components/SystemSetting/index.vue')['default']
     ThemeColorSelect: typeof import('./src/components/Pages/ThemeColorSelect/index.vue')['default']
   }
 }
