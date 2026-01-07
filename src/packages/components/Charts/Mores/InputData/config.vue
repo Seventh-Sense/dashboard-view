@@ -4,6 +4,11 @@
       <SettingItem :name="t('dashboard.value')">
         <n-input-number v-model:value="optionData.dataset" size="small" :min="0"></n-input-number>
       </SettingItem>
+      <SettingItem :name="t('dashboard.mode')">
+        <n-space>
+          <n-switch v-model:value="optionData.is_edit" size="small"></n-switch>
+        </n-space>
+      </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')">
       <SettingItem :name="t('dashboard.color')">
@@ -24,6 +29,16 @@
           size="small"
           :modes="['hex']"
           v-model:value="optionData.icon_color"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.font_size')">
+        <n-input-number v-model:value="optionData.border_width" size="small" :min="0"></n-input-number>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.icon_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.border_color"
         ></n-color-picker>
       </SettingItem>
     </SettingItemBox>

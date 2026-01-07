@@ -6,11 +6,14 @@ import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
   dataset: 40,
+  is_edit: false,
   showbutton: false,
   icon_color: '#fff',
   color: '#fff',
   size: 26,
   decimal: 0,
+  border_width: 1,
+  border_color: '#666',
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

@@ -25,14 +25,24 @@
 
       <div class="modal-content">
         <div class="modal-class">{{ $t('project.dashboard') }}</div>
-        <div class="modal-caption">{{ $t('project.preview_limit') }}</div>
-        <div class="modal-item">
-          <n-input-number v-model:value="setData.preview.limit" :min="1" :max="10" />
-        </div>
-        <div class="modal-caption">{{ $t('project.enable_swipe') }}</div>
-        <div class="modal-item">
-          <n-switch v-model:value="setData.preview.enableSwipe" />
-        </div>
+        <n-grid x-gap="12" :cols="2">
+          <n-gi>
+            <div class="modal-caption">{{ $t('project.preview_limit') }}</div>
+            <div class="modal-item">
+              <n-input-number v-model:value="setData.preview.limit" :min="1" :max="10" />
+            </div>
+            <div class="modal-caption">{{ $t('project.enable_swipe') }}</div>
+            <div class="modal-item">
+              <n-switch v-model:value="setData.preview.enableSwipe" />
+            </div>
+          </n-gi>
+          <n-gi>
+            <div class="modal-caption">{{ $t('project.is_dark') }}</div>
+            <div class="modal-item">
+              <n-switch v-model:value="setData.preview.isDark" />
+            </div>
+          </n-gi>
+        </n-grid>
       </div>
     </n-card>
   </n-modal>
@@ -55,7 +65,8 @@ const props = defineProps({
 const setData = reactive<any>({
   preview: {
     limit: 3,
-    enableSwipe: true
+    enableSwipe: true,
+    isDark: true
   }
 })
 
@@ -73,7 +84,6 @@ const onClose = () => {
 watch(
   () => setData.preview,
   newValue => {
-
     if (newValue !== undefined) {
       setLocalStorage('SettingData', setData.preview)
     }

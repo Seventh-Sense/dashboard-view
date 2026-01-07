@@ -5,9 +5,10 @@ import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 
 export const option = {
-  backgroundColor: '#FFFFFF21',
+  background_0: '#00CED1FF',
+  background_100: '#6666FFFF',
   borderColor: '#FFFFFF21',
-  text: 'asdasda',
+  text: 'Hyperlink',
   href: 'https://www.baidu.com',
   fontSize: 20,
   fontColor: '#ffffff',

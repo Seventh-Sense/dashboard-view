@@ -3,7 +3,14 @@
     <SettingItemBox :name="t('dashboard.style')">
       <SettingItem>
         <n-color-picker
-          v-model:value="optionData.backgroundColor"
+          v-model:value="optionData.background_0"
+          size="small"
+          :modes="['hex']"
+        ></n-color-picker>
+      </SettingItem>
+      <SettingItem>
+        <n-color-picker
+          v-model:value="optionData.background_100"
           size="small"
           :modes="['hex']"
         ></n-color-picker>
