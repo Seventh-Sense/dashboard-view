@@ -50,22 +50,27 @@ export const clearStorage = () => {
 
 //预览 读取后端数据
 export const getPreviewInfo = () => {
-  const urlHash = document.location.hash
-  const toPathArray = urlHash.split('/')
-  const id = toPathArray && toPathArray[toPathArray.length - 1]
+  return new Promise((resolve, reject) => {
+    const urlHash = document.location.hash
+    const toPathArray = urlHash.split('/')
+    const id = toPathArray && toPathArray[toPathArray.length - 1]
 
-  readProject(id)
-    .then((res: any) => {
-      if (res.status === 'OK' && res.data.content !== '') {
-        let data = JSONParse(res.data.content)
-        chartEditStore.editCanvasConfig = data.editCanvasConfig
-        chartEditStore.requestGlobalConfig = data.requestGlobalConfig
-        chartEditStore.componentList = data.componentList
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    readProject(id)
+      .then((res: any) => {
+        if (res.status === 'OK' && res.data.content !== '') {
+          let data = JSONParse(res.data.content)
+          chartEditStore.editCanvasConfig = data.editCanvasConfig
+          chartEditStore.requestGlobalConfig = data.requestGlobalConfig
+          chartEditStore.componentList = data.componentList
+
+          resolve(data)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        reject(err)
+      })
+  })
 }
 
 //传入参数，获取数据

@@ -21,4 +21,8 @@ export default {
   msg_is_delete: '是否删除此数据?',
   msg_del_success: '删除成功!',
   msg_ack_save: '请确认是否保存!',
+
+  dashboard: 'Dashboard',
+  preview_limit: 'Dashboard 预览限制',
+  enable_swipe: '是否支持手指滑动',
 }

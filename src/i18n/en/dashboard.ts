@@ -331,4 +331,7 @@ export default {
   custom_icon: 'Custom Icon',
   coolOrHeat: 'Cool/Heat Mode',
   thumb: 'Thumb',
+  hyperlink: 'Hyperlink',
+  project: 'Project',
+  defined: 'Defined',
 }

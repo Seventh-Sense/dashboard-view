@@ -4,6 +4,7 @@ import { SquareConfig } from './Square/index'
 import { CircleConfig } from './Circle/index'
 import { ExitConfig } from './Exit/index'
 import { SquareTitleConfig } from './SquareTitle/index'
+import { HyperlinkConfig } from './Hyperlink/index'
 
 export default [
   SquareConfig,
@@ -11,5 +12,6 @@ export default [
   CircleConfig,
   TimeCommonConfig,
   FullScreenConfig,
-  ExitConfig
+  ExitConfig,
+  HyperlinkConfig
 ]

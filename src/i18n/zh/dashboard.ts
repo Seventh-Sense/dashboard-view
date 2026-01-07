@@ -329,5 +329,7 @@ export default {
   custom_icon: '自定义图标',
   coolOrHeat: '冷暖模式',
   thumb: '滑块',
-
+  hyperlink: '超链接',
+  project: '项目',
+  defined: '自定义',
 }

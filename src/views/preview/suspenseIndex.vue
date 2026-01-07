@@ -39,7 +39,8 @@ import {
   getSessionStorageInfo,
   clearStorage,
   keyRecordHandle,
-  dragCanvas
+  dragCanvas,
+  getPreviewInfo
 } from './utils'
 import { useComInstall } from './hooks/useComInstall.hook'
 import { useScale } from './hooks/useScale.hook'
@@ -56,7 +57,8 @@ import { PageEnum } from '@/enums/pageEnum'
 const t = window['$t']
 const router = useRouter()
 
-await getSessionStorageInfo()
+//await getSessionStorageInfo()
+await getPreviewInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
 setTitle(`${t('global.r_preview')}-${chartEditStore.editCanvasConfig?.projectName}`)
@@ -87,6 +89,9 @@ keyRecordHandle()
 
 onMounted(async () => {
   try {
+    //const previewResult = await getPreviewInfo()
+    //console.log('getPreviewInfo 执行完成', previewResult)
+
     //获取各种类型额外属性
     const params = await getBindParams(chartEditStore.componentList)
     if (params) {

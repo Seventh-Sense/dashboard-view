@@ -1,3 +1,6 @@
+import { preview } from "vite";
+import dashboard from "../zh/dashboard";
+
 export default {
   create_btn: 'Create',
   create_tip: 'Chart Creation',
@@ -20,4 +23,8 @@ export default {
   msg_is_delete: 'Should this data be deleted?',
   msg_del_success: 'Delete success!',
   msg_ack_save: 'Please confirm has been saved!',
+
+  dashboard: 'Dashboard',
+  preview_limit: 'Dashboard Preview Limit',
+  enable_swipe: 'Enable Finger Swipe',
 }
