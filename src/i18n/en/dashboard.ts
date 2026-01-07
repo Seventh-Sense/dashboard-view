@@ -334,4 +334,5 @@ export default {
   hyperlink: 'Hyperlink',
   project: 'Project',
   defined: 'Defined',
+  lucency: 'Lucency',
 }

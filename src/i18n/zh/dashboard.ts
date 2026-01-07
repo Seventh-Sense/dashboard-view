@@ -332,4 +332,5 @@ export default {
   hyperlink: '超链接',
   project: '项目',
   defined: '自定义',
+  lucency: '透明',
 }
