@@ -9,6 +9,7 @@ export const option = {
   background_100: '#6666FFFF',
   borderColor: '#FFFFFF21',
   text: 'Hyperlink',
+  mode: 3,
   href: 'https://www.baidu.com',
   fontSize: 20,
   fontColor: '#ffffff',

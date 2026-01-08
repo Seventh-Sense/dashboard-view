@@ -36,7 +36,7 @@
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.hyperlink')" :alone="true">
       <SettingItem name=" ">
-        <n-radio-group v-model:value="mode" name="radiogroup">
+        <n-radio-group v-model:value="optionData.mode" name="radiogroup">
           <n-space>
             <n-radio v-for="song in songs" :key="song.value" :value="song.value">
               {{ song.label }}
@@ -46,13 +46,14 @@
       </SettingItem>
 
       <SettingItem name=" ">
-        <n-input v-if="mode === 1" v-model:value="optionData.href"/>
+        <n-input v-if="optionData.mode === 1" v-model:value="optionData.href" />
         <n-select
-          v-else-if="mode === 2"
+          v-else-if="optionData.mode === 2"
           v-model:value="optionData.href"
           :options="options"
           :style="{ width: '100%' }"
         />
+        <n-input v-if="optionData.mode === 3" v-model:value="optionData.href" disabled/>
       </SettingItem>
     </SettingItemBox>
   </CollapseItem>
@@ -75,11 +76,10 @@ const t = window['$t']
 
 const options: any[] = []
 
-const mode = ref(1)
-
 const songs = [
-  { label: t('dashboard.defined'), value: 1 },
-  { label: t('dashboard.project'), value: 2 }
+  { label: t('dashboard.homepage'), value: 3 },
+  { label: t('dashboard.project'), value: 2 },
+  { label: t('dashboard.defined'), value: 1 }
 ]
 
 onMounted(() => {
@@ -109,10 +109,12 @@ const readProjects = async () => {
 }
 
 watch(
-  () => mode.value,
+  () => props.optionData.mode,
   newVal => {
-    props.optionData.href = ''
-  }
+    if (newVal === 3) {
+      props.optionData.href = window.location.origin + '/#/vant'
+    } 
+  }, {immediate: true}
 )
 </script>
 

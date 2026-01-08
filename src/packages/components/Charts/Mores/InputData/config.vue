@@ -4,14 +4,30 @@
       <SettingItem :name="t('dashboard.value')">
         <n-input-number v-model:value="optionData.dataset" size="small" :min="0"></n-input-number>
       </SettingItem>
-      <SettingItem :name="t('dashboard.mode')">
+      <SettingItem :name="t('dashboard.decimal_place')">
+        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+      </SettingItem>
+    </SettingItemBox>
+    <SettingItemBox :name="t('dashboard.mode')">
+      <SettingItem>
         <n-space>
           <n-switch v-model:value="optionData.is_edit" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.edit_mode') }}</n-text>
+          </n-text>
         </n-space>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.icon_color')">
+        <n-color-picker
+          size="small"
+          :modes="['hex']"
+          v-model:value="optionData.icon_color"
+        ></n-color-picker>
       </SettingItem>
     </SettingItemBox>
     <SettingItemBox :name="t('dashboard.style')">
-      <SettingItem :name="t('dashboard.color')">
+      <SettingItem :name="t('dashboard.value_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
@@ -21,25 +37,38 @@
       <SettingItem :name="t('dashboard.font_size')">
         <n-input-number v-model:value="optionData.size" size="small" :min="0"></n-input-number>
       </SettingItem>
-      <SettingItem :name="t('dashboard.decimal_place')">
-        <n-select v-model:value="optionData.decimal" :options="decimals" size="small" />
+
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.is_border" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.border') }}</n-text>
+          </n-text>
+        </n-space>
       </SettingItem>
-      <SettingItem :name="t('dashboard.icon_color')">
-        <n-color-picker
+      <SettingItem :name="t('dashboard.border_size')">
+        <n-input-number
+          v-model:value="optionData.border_width"
           size="small"
-          :modes="['hex']"
-          v-model:value="optionData.icon_color"
-        ></n-color-picker>
+          :min="0"
+        ></n-input-number>
       </SettingItem>
-      <SettingItem :name="t('dashboard.font_size')">
-        <n-input-number v-model:value="optionData.border_width" size="small" :min="0"></n-input-number>
-      </SettingItem>
-      <SettingItem :name="t('dashboard.icon_color')">
+      <SettingItem :name="t('dashboard.border_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
           v-model:value="optionData.border_color"
         ></n-color-picker>
+      </SettingItem>
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.is_dark" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.light_theme') }}</n-text>
+          </n-text>
+        </n-space>
       </SettingItem>
     </SettingItemBox>
   </CollapseItem>

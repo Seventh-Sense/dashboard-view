@@ -1,13 +1,15 @@
 <template>
-  <div v-if="isShow" class="container" style="width: 200px;height: 32px;">
-    <n-input-number
-      v-model:value="input_value"
-      size="large"
-      style="width: 100px;"
-      :precision="decimal"
-      :show-button="showbutton"
-    
-    />
+  <div v-if="isShow" class="container" style="width: 200px; height: 32px">
+    <n-config-provider :theme="is_dark ? darkTheme : lightTheme">
+      <n-input-number
+        v-model:value="input_value"
+        size="large"
+        style="width: 100px"
+        :precision="decimal"
+        :show-button="showbutton"
+      />
+    </n-config-provider>
+
     <div class="icon-group">
       <Icon
         name="checkmark"
@@ -34,6 +36,7 @@
       height: h + 'px',
       color: color,
       fontSize: size + 'px',
+      borderStyle: is_border ? 'solid' : 'none',
       borderWidth: border_width + 'px',
       borderColor: border_color
     }"
@@ -49,6 +52,7 @@ import { parseData } from '@/utils'
 import { Icon } from '@/icon/index'
 import { updateNodeData } from '@/packages/public'
 import { cloneDeep } from 'lodash'
+import { darkTheme, lightTheme } from 'naive-ui'
 
 const props = defineProps({
   chartConfig: {
@@ -59,8 +63,18 @@ const props = defineProps({
 
 const { w, h } = toRefs(props.chartConfig.attr)
 
-const { is_edit, showbutton, icon_color, color, size, decimal, border_width, border_color } =
-  toRefs(props.chartConfig.option)
+const {
+  is_edit,
+  is_dark,
+  is_border,
+  showbutton,
+  icon_color,
+  color,
+  size,
+  decimal,
+  border_width,
+  border_color
+} = toRefs(props.chartConfig.option)
 
 const isShow = ref(false)
 const flag = ref(false)
@@ -83,7 +97,6 @@ const onSubmit = async () => {
   } catch (error) {
     console.error('操作失败:', error)
   } finally {
-   
     flag.value = false
   }
 }
@@ -141,7 +154,7 @@ watch(
   align-items: center;
   gap: 8px;
   position: relative;
-  padding-right:0;
+  padding-right: 0;
 }
 
 .icon-group {
@@ -149,7 +162,7 @@ watch(
   /* 核心调整：紧贴输入框右侧外沿（0px是贴边，正数是远离，负数是重叠） */
   right: 0;
   /* 向右偏移的距离（控制图标在框外的距离，可自定义） */
- 
+
   /* 垂直居中，和输入框完全对齐 */
   top: 50%;
   transform: translateY(-50%) translateX(v-bind(' (-w + 170) + "px" '));
@@ -166,7 +179,6 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
-  border-style: solid;
   cursor: pointer;
 }
 </style>

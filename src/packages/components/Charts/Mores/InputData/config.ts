@@ -7,11 +7,13 @@ import { chartInitConfig } from '@/settings/designSetting'
 export const option = {
   dataset: 40,
   is_edit: false,
+  is_dark: true,
   showbutton: false,
   icon_color: '#fff',
   color: '#fff',
   size: 26,
   decimal: 0,
+  is_border: true,
   border_width: 1,
   border_color: '#666',
 }

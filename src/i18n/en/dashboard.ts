@@ -335,4 +335,7 @@ export default {
   project: 'Project',
   defined: 'Defined',
   lucency: 'Lucency',
+  homepage: 'Homepage',
+  edit_mode: 'Edit Mode',
+  light_theme: 'Light Theme',
 }

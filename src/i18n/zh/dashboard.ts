@@ -333,4 +333,7 @@ export default {
   project: '项目',
   defined: '自定义',
   lucency: '透明',
+  homepage: '主页',
+  edit_mode: '编辑模式',
+  light_theme: '亮色主题',
 }

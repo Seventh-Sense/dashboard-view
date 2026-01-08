@@ -5,12 +5,16 @@
   <div v-else class="tabs-container">
     <div class="tabs-bar" :style="{
       backgroundColor: is_dark ? 'rgba(0, 0, 0, 0.53)' : 'rgba(255, 255, 255, 1)',
-      color: is_dark ? '#FFFFFF' : '#FFFFFF'
     }">
       <div
         v-for="(slide, index) in slides"
         :key="index"
         class="tabs-item"
+        :style="{
+          color: currentIndex === index 
+           ? 'rgba(255, 255, 255, 1)' 
+           :is_dark ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0.53)'
+        }"
         :class="{ active: currentIndex === index }"
         @click="switchTab(index)"
       >
@@ -379,7 +383,7 @@ const handleFloatingIconClick = () => {
   z-index: 100;
   border-radius: 16px;
   height: 48px;
-  padding: 0 8px;
+  padding: 0 0px;
   overflow-x: auto;
   overflow-y: hidden;
 }
