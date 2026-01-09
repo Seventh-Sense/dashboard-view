@@ -78,9 +78,9 @@ const {
 
 const isShow = ref(false)
 const flag = ref(false)
-const value = ref<number>(35)
+const value = ref<number>(0)
 
-const input_value = ref(35)
+const input_value = ref(0)
 
 const onSubmit = async () => {
   try {
@@ -123,7 +123,9 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      value.value = parseData(newVal, 'number')
+      if (newVal !== null) {
+        value.value = parseData(newVal, 'number')
+      }
     }
   },
   {

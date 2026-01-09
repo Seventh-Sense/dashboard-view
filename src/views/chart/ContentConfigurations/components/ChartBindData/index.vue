@@ -195,7 +195,7 @@ watch(
       pointOptions.value = []
       readSubscribePoints(newVal)
         .then((res: any) => {
-          console.log('readSubscribePoints', res.data)
+          //console.log('readSubscribePoints', res.data)
           if (res.status && res.status === 'OK') {
             res.data.map((point: any) => {
               pointOptions.value.push({
