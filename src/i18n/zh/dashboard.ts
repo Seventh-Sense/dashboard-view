@@ -336,4 +336,5 @@ export default {
   homepage: '主页',
   edit_mode: '编辑模式',
   light_theme: '亮色主题',
+  enumerate: '枚举',
 }

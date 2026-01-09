@@ -97,7 +97,7 @@ const readProjects = async () => {
 
     //http://localhost:5173/#/chart/preview/bd3b8164-da5f-4252-a14f-3b185cdcbb19
     res.data.forEach((item: any) => {
-      let href = window.location.origin + '/#/chart/preview/' + item.id
+      let href = '/#/chart/preview/' + item.id
       options.push({
         label: item.name,
         value: href
@@ -112,7 +112,7 @@ watch(
   () => props.optionData.mode,
   newVal => {
     if (newVal === 3) {
-      props.optionData.href = window.location.origin + '/#/vant'
+      props.optionData.href = '/#/vant'
     } 
   }, {immediate: true}
 )

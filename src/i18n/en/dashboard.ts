@@ -338,4 +338,5 @@ export default {
   homepage: 'Homepage',
   edit_mode: 'Edit Mode',
   light_theme: 'Light Theme',
+  enumerate: 'Enumerate',
 }

@@ -33,13 +33,18 @@ const props = defineProps({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { background_0, background_100, href, text, fontSize, fontColor, radius } = toRefs(
+const { background_0, background_100, href, text, fontSize, fontColor, radius, mode } = toRefs(
   props.chartConfig.option
 )
 
 const onClick = () => {
   if (href.value !== '') {
-    window.location.href = href.value
+    if (mode.value === 1) {
+      window.location.href = href.value
+    } else {
+      window.location.href = window.location.origin + href.value
+    }
+    
   }
 }
 </script>
