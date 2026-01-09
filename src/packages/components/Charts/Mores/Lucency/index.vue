@@ -24,14 +24,15 @@ const props = defineProps({
 })
 
 const { w, h } = toRefs(props.chartConfig.attr)
-const { backgroundColor, radius, dataset } = toRefs(props.chartConfig.option)
+const { backgroundColor, radius, active_value } = toRefs(props.chartConfig.option)
 
 const onClick = throttle(
   async () => {
+    //console.log('点击事件触发', props.chartConfig.option.active_value)
     try {
       let result = await updateNodeData(
         props.chartConfig?.request,
-        Number(props.chartConfig.option.dataset)
+        Number(props.chartConfig.option.active_value)
       )
     } catch (error) {
       // 错误已由 updateNodeData 处理，此处可补充额外逻辑

@@ -1,6 +1,30 @@
 import { getDeviceList, readPointValue } from '@/api/http'
+import { getLocalStorage } from '@/utils'
 
-export const IntervalTimeOut = 3000
+export const IntervalTimeOut = () => {
+  let pollingTime = 3000
+
+  try {
+    let config = getLocalStorage('SettingData')
+
+    if (
+      config !== null &&
+      config !== undefined &&
+      typeof config === 'object' &&
+      !Array.isArray(config)
+    ) {
+      if (config.polling_time !== undefined) {
+        pollingTime = config.polling_time
+
+        return pollingTime
+      }
+    }
+  } catch (e) {
+    console.error('加载配置时出错，未修改任何配置:', e)
+  }
+
+  return pollingTime
+}
 
 //获取所有需要读取数据的点位
 export const getAllDataIdsSafe = (points: any[]): string[] => {
@@ -42,7 +66,7 @@ export const writeValue = (componentList: any, data: any) => {
  * @returns 处理后的数槐列表
  */
 export const getBindParams = async (dataList: any[]) => {
-  console.log('原始数据列表:', dataList)
+  //console.log('原始数据列表:', dataList)
 
   const bindPoints: any[] = []
   const uniqueKeys = new Set<string>()

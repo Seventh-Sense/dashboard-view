@@ -8,6 +8,7 @@ export const option = {
   backgroundColor: 'transparent',
   radius: 0,
   dataset: 0,
+  active_value: 0,
 }
 
 export default class Config extends PublicConfigClass implements CreateComponentType {

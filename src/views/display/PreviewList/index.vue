@@ -157,7 +157,7 @@ let interval: number | null = null
 onMounted(async () => {
   await getPreviewInfoByInfo(props.ProjectData.content)
 
-  readPointValue(chartData.componentList)
+  readValues(chartData.componentList)
 })
 
 const previewRefStyle = computed(() => {
@@ -201,10 +201,17 @@ const getPreviewInfoByInfo = async (load: string) => {
   }
 }
 
-const readPointValue = (dataList: any[]) => {
+const readValues = (dataList: any[]) => {
   let load = getAllDataIdsSafe(dataList)
+  readPointValue(load)
+
   interval = window.setInterval(() => {
-    readPointsDataById(load)
+    readPointValue(load)
+  }, IntervalTimeOut())
+}
+
+const readPointValue = (load: any) => {
+  readPointsDataById(load)
       .then((res: any) => {
         if (res.status === 'OK') {
           chartData.componentList = writeValue(chartData.componentList, res.data)
@@ -215,7 +222,6 @@ const readPointValue = (dataList: any[]) => {
       .catch(err => {
         console.log(err)
       })
-  }, IntervalTimeOut)
 }
 
 onUnmounted(() => {

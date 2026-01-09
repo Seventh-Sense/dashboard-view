@@ -3,17 +3,23 @@
     <n-spin size="small" />
   </div>
   <div v-else class="tabs-container">
-    <div class="tabs-bar" :style="{
-      backgroundColor: is_dark ? 'rgba(0, 0, 0, 0.53)' : 'rgba(255, 255, 255, 1)',
-    }">
+    <div
+      class="tabs-bar"
+      :style="{
+        backgroundColor: is_dark ? 'rgba(0, 0, 0, 0.53)' : 'rgba(255, 255, 255, 1)'
+      }"
+    >
       <div
         v-for="(slide, index) in slides"
         :key="index"
         class="tabs-item"
         :style="{
-          color: currentIndex === index 
-           ? 'rgba(255, 255, 255, 1)' 
-           :is_dark ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 0.53)'
+          color:
+            currentIndex === index
+              ? 'rgba(255, 255, 255, 1)'
+              : is_dark
+              ? 'rgba(255, 255, 255, 1)'
+              : 'rgba(0, 0, 0, 0.53)'
         }"
         :class="{ active: currentIndex === index }"
         @click="switchTab(index)"
@@ -64,9 +70,15 @@ import { PreviewList } from '../display/PreviewList'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { useRouter } from 'vue-router'
 import { PageEnum } from '@/enums/pageEnum'
-import { setLocalStorage, cryptoEncode, routerTurnByName, getLocalStorage } from '@/utils'
+import {
+  setLocalStorage,
+  cryptoEncode,
+  routerTurnByName,
+  getLocalStorage,
+  getLoginInfo
+} from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
-import { backgroundClip } from 'html2canvas/dist/types/css/property-descriptors/background-clip'
+import { JSONParse } from '@/utils'
 
 // 常量设置
 const { GO_LOGIN_INFO_STORE } = StorageEnum
@@ -113,15 +125,8 @@ const isAtFirstPage = computed(() => currentIndex.value === 0)
 const isAtLastPage = computed(() => currentIndex.value === lastPageIndex.value)
 
 onMounted(() => {
-  setLocalStorage(
-    GO_LOGIN_INFO_STORE,
-    cryptoEncode(
-      JSON.stringify({
-        username: formInline.username,
-        password: formInline.password
-      })
-    )
-  )
+  //保存登录信息
+  loadLogoInfo()
 
   //读取配置
   loadConfig()
@@ -135,41 +140,66 @@ onMounted(() => {
   }
 })
 
+const loadLogoInfo = () => {
+  let info = getLoginInfo()
+
+  if (info !== null) {
+    setLocalStorage(
+      GO_LOGIN_INFO_STORE,
+      cryptoEncode(
+        info
+      )
+    )
+  } else {
+    setLocalStorage(
+      GO_LOGIN_INFO_STORE,
+      cryptoEncode(
+        JSON.stringify({
+          username: formInline.username,
+          password: formInline.password
+        })
+      )
+    )
+  }
+
+  console.log('读取到登录信息:', info)
+}
+
 //
 const loadConfig = () => {
   try {
     // 直接获取已解析的配置对象（无需再次JSON.parse）
-    let config = getLocalStorage('SettingData');
+    let config = getLocalStorage('SettingData')
 
     // 严格校验配置的有效性：仅当为非空对象时才处理
     // 排除 null/undefined/数组/字符串/数字等非对象类型
-    if (config !== null && config !== undefined && typeof config === 'object' && !Array.isArray(config)) {
+    if (
+      config !== null &&
+      config !== undefined &&
+      typeof config === 'object' &&
+      !Array.isArray(config)
+    ) {
       // 仅当字段存在时才更新，无默认值，不存在则保持原值
       if (config.limit !== undefined) {
-        limit.value = config.limit;
+        limit.value = config.limit
       }
       if (config.enableSwipe !== undefined) {
-        enableSwipe.value = config.enableSwipe;
+        enableSwipe.value = config.enableSwipe
       }
       if (config.isDark !== undefined) {
-        is_dark.value = config.isDark;
+        is_dark.value = config.isDark
       }
     } else {
       // 配置无效/为空时，重置为null，保持“不处理”逻辑
-      config = null;
+      config = null
     }
 
-    console.log('读取到配置:', config);
-    console.log('配置加载完成:', {
-      limit: limit.value,
-      enableSwipe: enableSwipe.value,
-      is_dark: is_dark.value
-    });
+    console.log('读取到配置:', config)
   } catch (error) {
     // 捕获可能的意外错误（如getLocalStorage内部异常），不修改任何值
-    console.error('加载配置时出错，未修改任何配置:', error);
+    console.error('加载配置时出错，未修改任何配置:', error)
   }
-};
+}
 
 // 初始化标签数据
 const initTabs = async () => {

@@ -28,4 +28,5 @@ export default {
   preview_limit: 'Dashboard Preview Limit',
   enable_swipe: 'Enable Finger Swipe',
   is_dark: 'Enable Dark Mode',
+  polling_time: 'Polling Time (ms)'
 }

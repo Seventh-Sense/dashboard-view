@@ -37,6 +37,10 @@
             </div>
           </n-gi>
           <n-gi>
+            <div class="modal-caption">{{ $t('project.polling_time') }}</div>
+            <div class="modal-item">
+              <n-input-number v-model:value="setData.preview.polling_time" :min="2000" />
+            </div>
             <div class="modal-caption">{{ $t('project.is_dark') }}</div>
             <div class="modal-item">
               <n-switch v-model:value="setData.preview.isDark" />
@@ -66,7 +70,8 @@ const setData = reactive<any>({
   preview: {
     limit: 3,
     enableSwipe: true,
-    isDark: true
+    isDark: true,
+    polling_time: 3000,
   }
 })
 

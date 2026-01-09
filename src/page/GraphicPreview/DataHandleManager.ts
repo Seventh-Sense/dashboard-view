@@ -90,7 +90,7 @@ export default class DataHandleManager extends DataManager {
       () => {
         this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
       },
-      IntervalTimeOut
+      IntervalTimeOut()
     )
 
     return []

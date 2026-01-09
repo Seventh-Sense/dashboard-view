@@ -97,6 +97,7 @@ const onSubmit = async () => {
   } catch (error) {
     console.error('操作失败:', error)
   } finally {
+    isShow.value = false
     flag.value = false
   }
 }
@@ -180,5 +181,9 @@ watch(
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+::v-deep(.n-input) {
+  border: 1px solid #222222FF !important;
 }
 </style>

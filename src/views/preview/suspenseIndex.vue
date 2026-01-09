@@ -98,8 +98,8 @@ onMounted(async () => {
       chartEditStore.componentList = params
     }
 
-    console.log('chartEditStore', params)
-    readPointValue(chartEditStore.componentList)
+    //console.log('chartEditStore', params)
+    readValues(chartEditStore.componentList)
   } catch (error) {
     console.error('Error during onMounted:', error)
   }
@@ -118,10 +118,18 @@ const handleFloatingIconClick = () => {
   })
 }
 
-const readPointValue = (dataList: any[]) => {
-  let load = getAllDataIdsSafe(dataList)
+const readValues = (dataList: any[]) => {
+  let load: any = getAllDataIdsSafe(dataList)
+  readPointValue(load)
+
   interval = window.setInterval(() => {
-    readPointsDataById(load)
+    readPointValue(load)
+  }, IntervalTimeOut())
+
+}
+
+const readPointValue = (load: any) => {
+  readPointsDataById(load)
       .then((res: any) => {
         if (res.status === 'OK') {
           chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
@@ -132,8 +140,8 @@ const readPointValue = (dataList: any[]) => {
       .catch(err => {
         console.log(err)
       })
-  }, IntervalTimeOut)
 }
+
 </script>
 
 <style lang="scss" scoped>

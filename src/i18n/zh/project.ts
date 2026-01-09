@@ -26,4 +26,6 @@ export default {
   preview_limit: 'Dashboard 预览限制',
   enable_swipe: '是否支持手指滑动',
   is_dark: '是否深色模式',
+  polling_time: '轮询时间（毫秒）'
+
 }
