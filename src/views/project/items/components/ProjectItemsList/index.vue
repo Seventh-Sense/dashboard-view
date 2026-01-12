@@ -4,7 +4,13 @@
       <div class="list-preview" @click="onPreview">{{ $t('dashboard.preview') }}</div>
       <!-- <div v-if="!isShow" class="list-preview" @click="onPreview">{{ $t('dashboard.preview') }}</div> -->
       <project-layout-create v-if="isShow" :collapsed="true"></project-layout-create>
-      <n-dropdown v-if="isShow" trigger="hover" :options="options" placement="bottom-end" @select="handleSelect">
+      <n-dropdown
+        v-if="isShow"
+        trigger="hover"
+        :options="options"
+        placement="bottom-end"
+        @select="handleSelect"
+      >
         <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
       </n-dropdown>
     </div>
@@ -52,7 +58,7 @@ import { useModalDataInit } from './hooks/useModal.hook'
 import { useDataListInit } from './hooks/useData.hook'
 import { ProjectLayoutCreate } from '../../../layout/components/ProjectLayoutCreate/index'
 import { provide, onMounted, ref, watch } from 'vue'
-import { importProjects, readProjectList } from '@/api/http'
+import { deleteProject, importProjects, readProjectList } from '@/api/http'
 import {
   setLocalStorage,
   getLoginUser,
@@ -93,6 +99,11 @@ const options: any[] = [
     label: () => t('device.refresh'),
     key: '3',
     icon: renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
+  },
+  {
+    label: () => t('device.delete_all'),
+    key: '4',
+    icon: renderImage(SVG_ICON.card_icons.delete_red, '', 24, 24)
   }
 ]
 
@@ -157,8 +168,42 @@ const handleSelect = (key: string | number, option: DropdownOption, event: Mouse
     case '3':
       initTable()
       break
+    case '4':
+      clearAll()
+      break
     default:
       console.warn('Unknown menu option selected:', key)
+  }
+}
+
+const clearAll = async () => {
+  if (list.value.length === 0) return
+
+  console.log('clearAll called', list.value)
+
+  try {
+    const validPromiseList = list.value
+      .filter(item => item?.id)
+      .map(async item => {
+        try {
+          const res: any = await deleteProject(item.id)
+          // 双重校验：接口返回存在 + 状态为OK
+          if (!res || res.status !== 'OK') {
+            console.warn(`删除项目失败[id:${item.id}]，状态:`, res?.status)
+            // 抛出错误，会被外层catch捕获，但不影响其他请求
+            throw new Error(`项目${item.id}删除失败`)
+          }
+        } catch (error) {
+          console.error(`删除项目异常[id:${item.id}]`, error)
+          return Promise.resolve(false)
+        }
+      })
+
+    await Promise.all(validPromiseList)
+
+    list.value = []
+  } catch (error) {
+    console.error('Error deleting project:', error)
   }
 }
 
@@ -221,7 +266,7 @@ const parseArrayBufferToJson = (arrayBuffer: ArrayBuffer): Promise<any> => {
       // 将ArrayBuffer转换为字符串
       const decoder = new TextDecoder('utf-8')
       const jsonString = decoder.decode(arrayBuffer)
-      
+
       // 将字符串解析为JSON对象
       const jsonData = JSON.parse(jsonString)
       resolve(jsonData)
