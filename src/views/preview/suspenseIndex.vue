@@ -109,6 +109,7 @@ onUnmounted(() => {
   clearStorage()
   if (interval) {
     window.clearInterval(interval)
+    interval = null
   }
 })
 
@@ -119,29 +120,34 @@ const handleFloatingIconClick = () => {
 }
 
 const readValues = (dataList: any[]) => {
-  let load: any = getAllDataIdsSafe(dataList)
+  const safeDataList = Array.isArray(dataList) ? dataList : []
+  let load: any = getAllDataIdsSafe(safeDataList)
+
+  if (interval) {
+    window.clearInterval(interval)
+    interval = null
+  }
+
   readPointValue(load)
 
   interval = window.setInterval(() => {
     readPointValue(load)
   }, IntervalTimeOut())
-
 }
 
 const readPointValue = (load: any) => {
   readPointsDataById(load)
-      .then((res: any) => {
-        if (res.status === 'OK') {
-          chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
-        } else {
-          console.log('no data!')
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    .then((res: any) => {
+      if (res.status === 'OK') {
+        chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
+      } else {
+        console.log('no data!')
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
-
 </script>
 
 <style lang="scss" scoped>

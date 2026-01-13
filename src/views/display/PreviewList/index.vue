@@ -154,8 +154,15 @@ const chartData: ChartEditStorageType = reactive({
   componentList: []
 })
 let interval: number | null = null
+
 onMounted(async () => {
-  await getPreviewInfoByInfo(props.ProjectData.content)
+  const content = props.ProjectData?.content
+  if (!content) {
+    console.warn('onMounted: ProjectData.content 为空，无预览数据')
+    return
+  }
+
+  await getPreviewInfoByInfo(content)
 
   readValues(chartData.componentList)
 })
@@ -183,26 +190,35 @@ keyRecordHandle()
 
 const getPreviewInfoByInfo = async (load: string) => {
   //console.log('load', load)
-  if (load === '') {
+  if (!load || load === '') {
+    console.warn('getPreviewInfoByInfo: 入参load为空，终止执行')
     return
   }
 
-  let data = JSONParse(load)
-  chartData.editCanvasConfig = data.editCanvasConfig
-  chartData.requestGlobalConfig = data.requestGlobalConfig
-
   try {
+    let data = JSONParse(load)
+    chartData.editCanvasConfig = data.editCanvasConfig || {}
+    chartData.requestGlobalConfig = data.requestGlobalConfig || {}
+
     const params = await getBindParams(data.componentList)
     if (params) {
-      chartData.componentList = params
+      chartData.componentList = params || []
     }
   } catch (error) {
-    console.error('Error during onMounted:', error)
+    console.error('getPreviewInfoByInfo 执行失败：', error)
+    chartData.componentList = []
   }
 }
 
 const readValues = (dataList: any[]) => {
-  let load = getAllDataIdsSafe(dataList)
+  const safeDataList = Array.isArray(dataList) ? dataList : []
+  let load = getAllDataIdsSafe(safeDataList)
+
+  if (interval) {
+    window.clearInterval(interval)
+    interval = null
+  }
+
   readPointValue(load)
 
   interval = window.setInterval(() => {
@@ -212,21 +228,22 @@ const readValues = (dataList: any[]) => {
 
 const readPointValue = (load: any) => {
   readPointsDataById(load)
-      .then((res: any) => {
-        if (res.status === 'OK') {
-          chartData.componentList = writeValue(chartData.componentList, res.data)
-        } else {
-          console.log('no data!')
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    .then((res: any) => {
+      if (res.status === 'OK') {
+        chartData.componentList = writeValue(chartData.componentList, res.data)
+      } else {
+        console.log('no data!')
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 onUnmounted(() => {
   if (interval) {
     window.clearInterval(interval)
+    interval = null
   }
 })
 
