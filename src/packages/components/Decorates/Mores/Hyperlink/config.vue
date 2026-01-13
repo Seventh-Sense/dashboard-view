@@ -53,7 +53,7 @@
           :options="options"
           :style="{ width: '100%' }"
         />
-        <n-input v-if="optionData.mode === 3" v-model:value="optionData.href" disabled/>
+        <n-input v-if="optionData.mode === 3" v-model:value="optionData.href" disabled />
       </SettingItem>
     </SettingItemBox>
   </CollapseItem>
@@ -64,6 +64,7 @@ import { onMounted, PropType, ref, watch } from 'vue'
 import { option } from './config'
 import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
 import { readProjectList } from '@/api/http'
+import { getLocalStorage } from '@/utils'
 
 const props = defineProps({
   optionData: {
@@ -74,7 +75,7 @@ const props = defineProps({
 
 const t = window['$t']
 
-const options: any[] = []
+const options = ref<any>([])
 
 const songs = [
   { label: t('dashboard.homepage'), value: 3 },
@@ -83,7 +84,16 @@ const songs = [
 ]
 
 onMounted(() => {
-  readProjects()
+  let config = getLocalStorage('ProjectInfo')
+
+  if (config && Array.isArray(config)) {
+    config.forEach(item => {
+      const href = `/#/chart/preview/${item.id}`
+      options.value.push({ label: item.name, value: href })
+    })
+  } else {
+    readProjects()
+  }
 })
 
 const readProjects = async () => {
@@ -98,7 +108,7 @@ const readProjects = async () => {
     //http://localhost:5173/#/chart/preview/bd3b8164-da5f-4252-a14f-3b185cdcbb19
     res.data.forEach((item: any) => {
       let href = '/#/chart/preview/' + item.id
-      options.push({
+      options.value.push({
         label: item.name,
         value: href
       })
@@ -113,8 +123,9 @@ watch(
   newVal => {
     if (newVal === 3) {
       props.optionData.href = '/#/vant'
-    } 
-  }, {immediate: true}
+    }
+  },
+  { immediate: true }
 )
 </script>
 

@@ -1,1 +1,1 @@
-xplayui:3.4.0
+xplayui:3.5.0
