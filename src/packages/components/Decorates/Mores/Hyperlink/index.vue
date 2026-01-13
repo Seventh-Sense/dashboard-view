@@ -24,6 +24,8 @@
 <script setup lang="ts">
 import { PropType, toRefs } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
+import { routerTurnByName, routerTurnByPath } from '@/utils'
+import { PageEnum } from '@/enums/pageEnum'
 
 const props = defineProps({
   chartConfig: {
@@ -40,11 +42,18 @@ const { background_0, background_100, href, text, fontSize, fontColor, radius, m
 const onClick = () => {
   if (href.value !== '') {
     if (mode.value === 1) {
+     //自定义
       window.location.href = href.value
-    } else {
-      window.location.href = window.location.origin + href.value
-    }
-    
+    } else if (mode.value === 2) {
+      //项目内
+      console.log('跳转链接', href.value)
+      routerTurnByPath('/chart/preview', [href.value], true, false)
+    } else if (mode.value === 3) {
+      //主页
+      routerTurnByName(PageEnum.BASE_VANT_NAME, true)
+      //window.location.href = window.location.origin + href.value
+    } 
+   
   }
 }
 </script>

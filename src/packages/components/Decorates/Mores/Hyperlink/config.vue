@@ -88,8 +88,8 @@ onMounted(() => {
 
   if (config && Array.isArray(config)) {
     config.forEach(item => {
-      const href = `/#/chart/preview/${item.id}`
-      options.value.push({ label: item.name, value: href })
+      //const href = `/#/chart/preview/${item.id}`
+      options.value.push({ label: item.name, value: item.id })
     })
   } else {
     readProjects()
@@ -107,10 +107,10 @@ const readProjects = async () => {
 
     //http://localhost:5173/#/chart/preview/bd3b8164-da5f-4252-a14f-3b185cdcbb19
     res.data.forEach((item: any) => {
-      let href = '/#/chart/preview/' + item.id
+      //let href = '/#/chart/preview/' + item.id
       options.value.push({
         label: item.name,
-        value: href
+        value: item.id
       })
     })
   } catch (error) {
