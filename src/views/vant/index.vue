@@ -78,7 +78,6 @@ import {
   getLoginInfo
 } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
-import { JSONParse } from '@/utils'
 
 // 常量设置
 const { GO_LOGIN_INFO_STORE } = StorageEnum

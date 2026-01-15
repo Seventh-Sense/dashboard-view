@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { PropType, watch, toRefs, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
-import { parseData } from '@/utils'
+import { isRealValue, parseData } from '@/utils'
 import { Icon } from '@/icon/index'
 import { updateNodeData } from '@/packages/public'
 import { cloneDeep } from 'lodash'
@@ -123,7 +123,7 @@ watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     if (!flag.value) {
-      if (newVal !== null) {
+      if (isRealValue(newVal)) {
         value.value = parseData(newVal, 'number')
       }
     }

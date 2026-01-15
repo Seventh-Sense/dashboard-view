@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { PropType, toRefs, watch, ref } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
-import { parseData } from '@/utils'
+import { isRealValue, parseData } from '@/utils'
 
 const props = defineProps({
   chartConfig: {
@@ -47,7 +47,10 @@ const transalteText = (data: string) => {
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-    value.value = parseData(newVal, 'string')
+    if (isRealValue(newVal)) {
+      value.value = parseData(newVal, 'string')
+    }
+    
   },
   {
     immediate: true,
