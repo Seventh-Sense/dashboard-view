@@ -30,7 +30,7 @@ const { size, color, unit, decimal, title_switch, title_text, textAlign } = toRe
 const { w, h } = toRefs(props.chartConfig.attr)
 
 const option = shallowReactive({
-  dataset: 40
+  dataset: 0
 })
 
 function fixedByDecimal(num: any) {

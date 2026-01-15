@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { ChartEditStorageType } from '@/views/preview'
 import { getEditCanvasConfigStyle, dragCanvas, keyRecordHandle } from '@/views/preview/utils'
 import { getFilterStyle, JSONParse, setTitle } from '@/utils'
@@ -41,6 +41,7 @@ import { PreviewListRender } from './PreviewListRender'
 
 import { readPointsDataById } from '@/api/http'
 import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../util/util'
+import { fetchChartComponent } from '@/packages/index'
 
 const props = defineProps({
   ProjectData: {
@@ -155,18 +156,6 @@ const chartData: ChartEditStorageType = reactive({
 })
 let interval: number | null = null
 
-onMounted(async () => {
-  const content = props.ProjectData?.content
-  if (!content) {
-    console.warn('onMounted: ProjectData.content 为空，无预览数据')
-    return
-  }
-
-  await getPreviewInfoByInfo(content)
-
-  readValues(chartData.componentList)
-})
-
 const previewRefStyle = computed(() => {
   return {
     overflow: 'hidden',
@@ -183,10 +172,23 @@ const showEntity = computed(() => {
 useStore(chartData)
 const { entityRef, previewRef } = useScale(chartData)
 //加载显示的组件
-const { show } = useComInstall(chartData)
+//const { show } = useComInstall(chartData)
+const show = ref(false)
 
 // 开启键盘监听
 keyRecordHandle()
+
+// onMounted(async () => {
+//   const content = props.ProjectData?.content
+//   if (!content) {
+//     console.warn('onMounted: ProjectData.content 为空，无预览数据')
+//     return
+//   }
+
+//   await getPreviewInfoByInfo(content)
+
+//   //readValues(chartData.componentList)
+// })
 
 const getPreviewInfoByInfo = async (load: string) => {
   //console.log('load', load)
@@ -201,13 +203,59 @@ const getPreviewInfoByInfo = async (load: string) => {
     chartData.requestGlobalConfig = data.requestGlobalConfig || {}
 
     const params = await getBindParams(data.componentList)
-    if (params) {
-      chartData.componentList = params || []
+    if (params && params.length > 0) {
+      chartData.componentList = params
+
+      readValues(params)
+    } else {
+      console.log('当前项目无组件')
     }
+
+    installCom(chartData)
   } catch (error) {
     console.error('getPreviewInfoByInfo 执行失败：', error)
     chartData.componentList = []
   }
+}
+
+watch(
+  () => props.ProjectData?.content,
+  newVal => {
+    getPreviewInfoByInfo(newVal)
+  },
+  { immediate: true }
+)
+
+const installCom = (data: any) => {
+  show.value = false
+
+  const intervalTiming = setInterval(() => {
+    if (window['$vue'].component) {
+      clearInterval(intervalTiming)
+
+      const intComponent = (target: any) => {
+        if (!window['$vue'].component(target.chartConfig.chartKey)) {
+          window['$vue'].component(
+            target.chartConfig.chartKey,
+            fetchChartComponent(target.chartConfig)
+          )
+        }
+      }
+
+      chartData.componentList.forEach(
+        async (e: any) => {
+          if (e.isGroup) {
+            ;(e).groupList.forEach((groupItem: any) => {
+              intComponent(groupItem)
+            })
+          } else {
+            intComponent(e)
+          }
+        }
+      )
+      show.value = true
+    }
+  }, 200)
 }
 
 const readValues = (dataList: any[]) => {

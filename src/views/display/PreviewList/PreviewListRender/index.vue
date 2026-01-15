@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, onMounted } from 'vue'
+import { PropType, computed, onMounted, watch } from 'vue'
 import { animationsClass, getFilterStyle, getTransformStyle, getBlendModeStyle, colorCustomMerge } from '@/utils'
 import { getSizeStyle, getComponentAttrStyle, getStatusStyle, getPreviewConfigStyle } from '@/views/preview/utils'
 import { CreateComponentGroupType } from '@/packages/index.d'

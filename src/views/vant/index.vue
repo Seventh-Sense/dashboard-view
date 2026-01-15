@@ -188,9 +188,6 @@ const loadConfig = () => {
       if (config.isDark !== undefined) {
         is_dark.value = config.isDark
       }
-    } else {
-      // 配置无效/为空时，重置为null，保持“不处理”逻辑
-      config = null
     }
 
     console.log('读取到配置:', config)
