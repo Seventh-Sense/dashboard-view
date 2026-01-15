@@ -15,12 +15,15 @@
     </template>
     <template v-else>
       <!-- 缩放层 -->
-      <div ref="previewRef" class="go-preview-scale">
+      <div ref="previewRef" class="go-preview-scale" v-if="show">
         <!-- 展示层 -->
-        <div :style="previewRefStyle" v-if="show">
+        <div :style="previewRefStyle">
           <!-- 渲染层 -->
           <PreviewListRender :chartData="chartData" />
         </div>
+      </div>
+      <div v-else class="spin-page">
+        <n-spin size="small" />
       </div>
     </template>
   </div>
@@ -192,6 +195,7 @@ keyRecordHandle()
 
 const getPreviewInfoByInfo = async (load: string) => {
   //console.log('load', load)
+  console.log('【开始执行】', new Date().getTime())
   if (!load || load === '') {
     console.warn('getPreviewInfoByInfo: 入参load为空，终止执行')
     return
@@ -205,13 +209,13 @@ const getPreviewInfoByInfo = async (load: string) => {
     const params = await getBindParams(data.componentList)
     if (params && params.length > 0) {
       chartData.componentList = params
-
-      readValues(params)
     } else {
       console.log('当前项目无组件')
     }
 
     installCom(chartData)
+
+    readValues(params)
   } catch (error) {
     console.error('getPreviewInfoByInfo 执行失败：', error)
     chartData.componentList = []
@@ -242,18 +246,17 @@ const installCom = (data: any) => {
         }
       }
 
-      chartData.componentList.forEach(
-        async (e: any) => {
-          if (e.isGroup) {
-            ;(e).groupList.forEach((groupItem: any) => {
-              intComponent(groupItem)
-            })
-          } else {
-            intComponent(e)
-          }
+      chartData.componentList.forEach(async (e: any) => {
+        if (e.isGroup) {
+          e.groupList.forEach((groupItem: any) => {
+            intComponent(groupItem)
+          })
+        } else {
+          intComponent(e)
         }
-      )
+      })
       show.value = true
+      console.log('【执行】', new Date().getTime())
     }
   }, 200)
 }
@@ -336,5 +339,14 @@ const scaleY = computed(() => {
   .go-preview-entity {
     overflow: hidden;
   }
+}
+
+.spin-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff;
 }
 </style>

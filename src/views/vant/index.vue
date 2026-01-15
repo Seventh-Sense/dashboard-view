@@ -112,7 +112,7 @@ const formInline = reactive({
 
 // 计算属性：判断是否应该渲染某个页面
 const shouldRender = computed(() => (index: number) => {
-  if (slides.value.length <= 1) return true
+  if (slides.value.length <= 5) return true
   return Math.abs(index - currentIndex.value) <= RENDER_RANGE
 })
 
