@@ -71,7 +71,7 @@
               </n-form>
             </div>
             <div class="go-login-form-footer">
-              <span>Adveco © 2024</span>
+              <span>Adveco © {{ new Date().getFullYear() }}</span>
               <span @click="onVersionClick" style="cursor: pointer">
                 {{ $t('login.about_us') }}
               </span>

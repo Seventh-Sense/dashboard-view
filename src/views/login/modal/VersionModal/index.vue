@@ -21,13 +21,12 @@
       <div class="modal-content">
         <img width="80" height="80" :src="SVG_ICON.card_icons.logo" />
         <div class="modal-content-title">XPlay by LUBANX</div>
-        <div class="modal-content-tip">{{$t('login.version')}}: {{ version }}</div>
+        <div class="modal-content-tip">{{ $t('login.version') }}: {{ version }}</div>
         <div class="modal-content-b">Core: {{ core }}, UI: {{ ui }}</div>
-      
       </div>
       <template #footer>
         <div class="modal-content-foot">
-          XPlay © 2024 Adveco Technology Co., Ltd. All rights reserved.
+          XPlay © {{ new Date().getFullYear() }} Adveco Technology Co., Ltd. All rights reserved.
         </div>
       </template>
     </n-card>
@@ -67,9 +66,9 @@ watch(
       getVersion()
         .then((res: any) => {
           //console.log('Version:', res.Version)
-          version.value = res.Version 
-          core.value = res.info.xplay_core 
-          ui.value = res.info.xplay_ui 
+          version.value = res.Version
+          core.value = res.info.xplay_core
+          ui.value = res.info.xplay_ui
         })
         .catch((e: any) => {
           console.error('Get version error:', e)
