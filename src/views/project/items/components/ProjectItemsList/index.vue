@@ -108,8 +108,6 @@ const options: any[] = [
   }
 ]
 
-const projectList = ref([])
-
 onMounted(() => {
   isShow.value = getLoginUser()
 
@@ -158,9 +156,11 @@ const storageInfo = (res: any[]) => {
 }
 
 const onPreview = async () => {
-  //routerTurnByName(PageEnum.BASE_DISPLAY_NAME, true)
+  const list: any = await localforage.getItem('ProjectList')
 
-  routerTurnByName(PageEnum.BASE_VANT_NAME, true)
+  if (list.length > 0) {
+    routerTurnByName(PageEnum.BASE_VANT_NAME, true)
+  }
 }
 
 const handleSelect = (key: string | number, option: DropdownOption, event: MouseEvent) => {

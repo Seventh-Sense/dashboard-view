@@ -205,7 +205,7 @@ const initTabs = async () => {
       (item: any) => item.description === 'dashboard' && item.content !== '""'
     )
 
-    if (slides.value.length === 0) {
+    if (list.length === 0) {
       routerTurnByName(PageEnum.BASE_LOGIN_NAME, true)
       return
     }
