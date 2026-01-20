@@ -44,7 +44,6 @@ import { PreviewListRender } from './PreviewListRender'
 
 import { readPointsDataById } from '@/api/http'
 import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../util/util'
-import { fetchChartComponent } from '@/packages/index'
 
 const props = defineProps({
   ProjectData: {
@@ -159,6 +158,38 @@ const chartData: ChartEditStorageType = reactive({
 })
 let interval: number | null = null
 
+//获取当前加载的项目组件
+const getProjectInfo = () => {
+  return new Promise((resolve, reject) => {
+    const content = props.ProjectData?.content
+    if (!content) {
+      console.warn('getProjectInfo: ProjectData.content 为空，无预览数据')
+      return
+    }
+
+    try {
+      let data = JSONParse(content)
+
+      if (data.editCanvasConfig) {
+        Object.assign(chartData.editCanvasConfig, data.editCanvasConfig)
+      }
+      if (data.requestGlobalConfig) {
+        Object.assign(chartData.requestGlobalConfig, data.requestGlobalConfig)
+      }
+      if (data.componentList) {
+        chartData.componentList = [...data.componentList]
+      }
+
+      resolve(chartData)
+    } catch (error) {
+      console.error('getProjectInfo 执行失败：', error)
+      reject(error)
+    }
+  })
+}
+
+await getProjectInfo()
+
 const previewRefStyle = computed(() => {
   return {
     overflow: 'hidden',
@@ -175,91 +206,28 @@ const showEntity = computed(() => {
 useStore(chartData)
 const { entityRef, previewRef } = useScale(chartData)
 //加载显示的组件
-//const { show } = useComInstall(chartData)
-const show = ref(false)
+const { show } = useComInstall(chartData)
 
 // 开启键盘监听
 keyRecordHandle()
 
-// onMounted(async () => {
-//   const content = props.ProjectData?.content
-//   if (!content) {
-//     console.warn('onMounted: ProjectData.content 为空，无预览数据')
-//     return
-//   }
-
-//   await getPreviewInfoByInfo(content)
-
-//   //readValues(chartData.componentList)
-// })
-
-const getPreviewInfoByInfo = async (load: string) => {
-  //console.log('load', load)
-  console.log('【开始执行】', new Date().getTime())
-  if (!load || load === '') {
-    console.warn('getPreviewInfoByInfo: 入参load为空，终止执行')
-    return
-  }
-
+onMounted(async () => {
   try {
-    let data = JSONParse(load)
-    chartData.editCanvasConfig = data.editCanvasConfig || {}
-    chartData.requestGlobalConfig = data.requestGlobalConfig || {}
-
-    const params = await getBindParams(data.componentList)
+    if(chartData.componentList.length === 0) {
+      console.warn('onMounted: 组件列表为空，跳过数据绑定')
+      return
+    }
+    
+    const params = await getBindParams(chartData.componentList)
     if (params && params.length > 0) {
       chartData.componentList = params
-    } else {
-      console.log('当前项目无组件')
     }
 
-    installCom(chartData)
-
-    readValues(params)
+    readValues(chartData.componentList)
   } catch (error) {
-    console.error('getPreviewInfoByInfo 执行失败：', error)
-    chartData.componentList = []
+    console.error('Error during onMounted:', error)
   }
-}
-
-watch(
-  () => props.ProjectData?.content,
-  newVal => {
-    getPreviewInfoByInfo(newVal)
-  },
-  { immediate: true }
-)
-
-const installCom = (data: any) => {
-  show.value = false
-
-  const intervalTiming = setInterval(() => {
-    if (window['$vue'].component) {
-      clearInterval(intervalTiming)
-
-      const intComponent = (target: any) => {
-        if (!window['$vue'].component(target.chartConfig.chartKey)) {
-          window['$vue'].component(
-            target.chartConfig.chartKey,
-            fetchChartComponent(target.chartConfig)
-          )
-        }
-      }
-
-      chartData.componentList.forEach(async (e: any) => {
-        if (e.isGroup) {
-          e.groupList.forEach((groupItem: any) => {
-            intComponent(groupItem)
-          })
-        } else {
-          intComponent(e)
-        }
-      })
-      show.value = true
-      console.log('【执行】', new Date().getTime())
-    }
-  }, 200)
-}
+})
 
 const readValues = (dataList: any[]) => {
   const safeDataList = Array.isArray(dataList) ? dataList : []
@@ -272,9 +240,11 @@ const readValues = (dataList: any[]) => {
 
   readPointValue(load)
 
-  interval = window.setInterval(() => {
-    readPointValue(load)
-  }, IntervalTimeOut())
+  if (!interval) {
+    interval = window.setInterval(() => {
+      readPointValue(load)
+    }, IntervalTimeOut())
+  }
 }
 
 const readPointValue = (load: any) => {

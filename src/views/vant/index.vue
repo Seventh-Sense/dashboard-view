@@ -49,12 +49,14 @@
           class="content-item"
           :style="{ width: `${screenWidth}px` }"
         >
-          <PreviewList
-            :ProjectData="slide"
-            :ProjectNum="index"
-            :key="`preview-${index}`"
-            v-if="shouldRender(index)"
-          />
+          <suspense>
+            <PreviewList
+              :ProjectData="slide"
+              :ProjectNum="index"
+              :key="`preview-${index}`"
+              v-if="shouldRender(index)"
+            />
+          </suspense>
         </div>
       </div>
     </div>
@@ -78,6 +80,7 @@ import {
   getLoginInfo
 } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
+import localforage from '@/utils/localforage'
 
 // 常量设置
 const { GO_LOGIN_INFO_STORE } = StorageEnum
@@ -143,12 +146,7 @@ const loadLogoInfo = () => {
   let info = getLoginInfo()
 
   if (info !== null) {
-    setLocalStorage(
-      GO_LOGIN_INFO_STORE,
-      cryptoEncode(
-        info
-      )
-    )
+    setLocalStorage(GO_LOGIN_INFO_STORE, cryptoEncode(info))
   } else {
     setLocalStorage(
       GO_LOGIN_INFO_STORE,
@@ -199,12 +197,11 @@ const loadConfig = () => {
 
 // 初始化标签数据
 const initTabs = async () => {
-  flag.value = true
+  flag.value = false
   try {
-    const res: any = await readProjectList()
-    if (res.status !== 'OK') return
+    const list: any = await localforage.getItem('ProjectList')
 
-    slides.value = res.data.filter(
+    slides.value = list.filter(
       (item: any) => item.description === 'dashboard' && item.content !== '""'
     )
 

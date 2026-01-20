@@ -71,6 +71,7 @@ import {
 import { PageEnum } from '@/enums/pageEnum'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { DropdownOption } from 'naive-ui'
+import localforage from '@/utils/localforage'
 
 const { list, deleteHandle, addProject, deleteAll, renameHandle } = useDataListInit()
 const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } =
@@ -107,6 +108,8 @@ const options: any[] = [
   }
 ]
 
+const projectList = ref([])
+
 onMounted(() => {
   isShow.value = getLoginUser()
 
@@ -125,6 +128,9 @@ const initTable = async () => {
       console.warn('Non-OK response status:', res.status)
       return
     }
+
+    //存储projectList
+    await localforage.setItem('ProjectList', res.data)
 
     res.data.forEach((item: any) => {
       addProject(item)
@@ -151,7 +157,7 @@ const storageInfo = (res: any[]) => {
   setLocalStorage('ProjectInfo', array)
 }
 
-const onPreview = () => {
+const onPreview = async () => {
   //routerTurnByName(PageEnum.BASE_DISPLAY_NAME, true)
 
   routerTurnByName(PageEnum.BASE_VANT_NAME, true)

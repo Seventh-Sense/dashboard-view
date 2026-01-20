@@ -3,6 +3,7 @@ import { StorageEnum } from '@/enums/storageEnum'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { readProject } from '@/api/http'
+import localforage from '@/utils/localforage'
 
 const chartEditStore = useChartEditStore()
 
@@ -50,26 +51,38 @@ export const clearStorage = () => {
 
 //预览 读取后端数据
 export const getPreviewInfo = () => {
-  return new Promise((resolve, reject) => {
-    const urlHash = document.location.hash
-    const toPathArray = urlHash.split('/')
-    const id = toPathArray && toPathArray[toPathArray.length - 1]
+  return new Promise(async (resolve, reject) => {
+    try {
+      const urlHash = document.location.hash
+      const toPathArray = urlHash.split('/')
+      const id = toPathArray && toPathArray[toPathArray.length - 1]
 
-    readProject(id)
-      .then((res: any) => {
-        if (res.status === 'OK' && res.data.content !== '') {
-          let data = JSONParse(res.data.content)
-          chartEditStore.editCanvasConfig = data.editCanvasConfig
-          chartEditStore.requestGlobalConfig = data.requestGlobalConfig
-          chartEditStore.componentList = data.componentList
+      if (!id) {
+        return reject(new Error('获取预览信息失败：URL哈希中未解析到有效ID'))
+      }
 
-          resolve(data)
-        }
-      })
-      .catch(err => {
-        console.log(err)
-        reject(err)
-      })
+      const list: any = await localforage.getItem('ProjectList')
+
+      if (!Array.isArray(list) || list.length === 0) {
+        return reject(new Error('获取预览信息失败：本地无项目列表数据'))
+      }
+
+      const matchItem = list.find(element => element?.id === id)
+      if (!matchItem) {
+        return reject(new Error(`获取预览信息失败：未找到ID为【${id}】的项目`))
+      }
+
+      let data = JSONParse(matchItem.content)
+
+      chartEditStore.editCanvasConfig = data.editCanvasConfig || {}
+      chartEditStore.requestGlobalConfig = data.requestGlobalConfig || {}
+      chartEditStore.componentList = data.componentList || []
+
+      resolve(data)
+    } catch (error) {
+      console.error('获取预览信息异常：', error)
+      reject(error)
+    }
   })
 }
 
