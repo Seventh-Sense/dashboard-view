@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, reactive} from 'vue'
 import { ChartEditStorageType } from '@/views/preview'
 import { getEditCanvasConfigStyle, dragCanvas, keyRecordHandle } from '@/views/preview/utils'
-import { getFilterStyle, JSONParse, setTitle } from '@/utils'
+import { getFilterStyle, JSONParse } from '@/utils'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import { useStore } from '@/views/preview/hooks/useStore.hook'
 import { useScale } from '@/views/preview/hooks/useScale.hook'

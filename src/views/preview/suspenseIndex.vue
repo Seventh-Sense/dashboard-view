@@ -114,9 +114,13 @@ onUnmounted(() => {
 })
 
 const handleFloatingIconClick = () => {
-  router.replace({
-    path: PageEnum.BASE_HOME_ITEMS
-  })
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.replace({
+      path: PageEnum.BASE_HOME_ITEMS
+    })
+  }
 }
 
 const readValues = (dataList: any[]) => {

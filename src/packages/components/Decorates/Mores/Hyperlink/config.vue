@@ -63,7 +63,6 @@
 import { onMounted, PropType, ref, watch } from 'vue'
 import { option } from './config'
 import { CollapseItem, SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
-import { readProjectList } from '@/api/http'
 import { getLocalStorage } from '@/utils'
 
 const props = defineProps({
@@ -89,34 +88,10 @@ onMounted(() => {
   if (config && Array.isArray(config)) {
     config.forEach(item => {
       //const href = `/#/chart/preview/${item.id}`
-      options.value.push({ label: item.name, value: item.id })
+      options.value.push({ label: item.name, value: item.id})
     })
-  } else {
-    readProjects()
   }
 })
-
-const readProjects = async () => {
-  try {
-    const res: any = await readProjectList()
-
-    if (res.status !== 'OK') {
-      console.warn('Non-OK response status:', res.status)
-      return
-    }
-
-    //http://localhost:5173/#/chart/preview/bd3b8164-da5f-4252-a14f-3b185cdcbb19
-    res.data.forEach((item: any) => {
-      //let href = '/#/chart/preview/' + item.id
-      options.value.push({
-        label: item.name,
-        value: item.id
-      })
-    })
-  } catch (error) {
-    console.error('Error read all projects:', error)
-  }
-}
 
 watch(
   () => props.optionData.mode,

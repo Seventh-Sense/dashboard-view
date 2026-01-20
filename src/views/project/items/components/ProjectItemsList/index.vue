@@ -66,7 +66,6 @@ import {
   renderImage,
   downloadTextFile,
   JSONStringify,
-  JSONParse
 } from '@/utils'
 import { PageEnum } from '@/enums/pageEnum'
 import SVG_ICON from '@/svg/SVG_ICON'
@@ -148,7 +147,8 @@ const storageInfo = (res: any[]) => {
   res.forEach(item => {
     array.push({
       name: item.name,
-      id: item.id
+      id: item.id,
+      type: item.description
     })
   })
 

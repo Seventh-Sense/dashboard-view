@@ -8,17 +8,13 @@
       @graphicLoaded="graphicLoaded"
       @itemClick="itemclick"
     ></GraphicRender>
-    <FloatingIcon @click="handleFloatingIconClick" />
     <SetValueModal v-model:isShowModal="isShowModal" :data="clickParam" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { GraphicRender } from '@x-plateform/graphic-editor'
-import { ref, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
-import { PageEnum } from '@/enums/pageEnum'
-import { FloatingIcon } from '@/views/display/FloatingIcon'
+import { ref, computed, watch, onUnmounted } from 'vue'
 import DataHandleManager from '../DataHandleManager'
 import { SetValueModal } from '../SetValueModal'
 
@@ -34,10 +30,12 @@ const graphicRenderItem = ref<InstanceType<typeof GraphicRender> | null>(null)
 
 const dataHandleManager = new DataHandleManager()
 
-const router = useRouter()
-
 const isShowModal = ref(false)
 const clickParam = ref({})
+
+onUnmounted(() => {
+  dataHandleManager.dispose()
+})
 
 watch(
   () => props.ProjectData,
@@ -71,13 +69,6 @@ const itemclick = (params: any) => {
     clickParam.value = params
     isShowModal.value = true
   }
-}
-
-const handleFloatingIconClick = () => {
-  dataHandleManager.dispose()
-  router.replace({
-    path: PageEnum.BASE_HOME_ITEMS
-  })
 }
 </script>
 

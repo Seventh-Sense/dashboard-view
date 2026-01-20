@@ -1,16 +1,22 @@
 <template>
-  <suspense>
-    <GraphicSingle :ProjectData="projectInfo"/>
-  </suspense>
+  <div>
+    <suspense>
+      <GraphicSingle :ProjectData="projectInfo" />
+    </suspense>
+    <FloatingIcon @click="handleFloatingIconClick" />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { GraphicSingle } from './GraphicSingle'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import localforage from '@/utils/localforage'
 import { JSONParse } from '@/utils'
+import { FloatingIcon } from '@/views/display/FloatingIcon'
+import { PageEnum } from '@/enums/pageEnum'
 
+const router = useRouter()
 const routerParamsInfo = useRoute()
 
 const { id } = routerParamsInfo.params
@@ -37,6 +43,16 @@ onMounted(async () => {
     console.error('Error during GraphicPreview onMounted:', error)
   }
 })
+
+const handleFloatingIconClick = () => {
+  if (window.history.length > 1) {
+    router.back()
+  } else {
+    router.replace({
+      path: PageEnum.BASE_HOME_ITEMS
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
