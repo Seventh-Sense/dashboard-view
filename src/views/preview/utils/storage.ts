@@ -2,7 +2,6 @@ import { JSONParse, JSONStringify, getSessionStorage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { readProject } from '@/api/http'
 import localforage from '@/utils/localforage'
 
 const chartEditStore = useChartEditStore()

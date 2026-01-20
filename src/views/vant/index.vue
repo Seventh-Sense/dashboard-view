@@ -49,10 +49,17 @@
           class="content-item"
           :style="{ width: `${screenWidth}px` }"
         >
-          <suspense>
+          <suspense v-if="slide.description === 'dashboard'">
             <PreviewList
               :ProjectData="slide"
               :ProjectNum="index"
+              :key="`preview-${index}`"
+              v-if="shouldRender(index)"
+            />
+          </suspense>
+          <suspense v-else-if="slide.description === 'graphic'">
+            <GraphicSingle
+              :ProjectData="slide.parsedContent"
               :key="`preview-${index}`"
               v-if="shouldRender(index)"
             />
@@ -67,7 +74,6 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
-import { readProjectList } from '@/api/http'
 import { PreviewList } from '../display/PreviewList'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { useRouter } from 'vue-router'
@@ -81,6 +87,7 @@ import {
 } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import localforage from '@/utils/localforage'
+import { GraphicSingle } from '@/page/GraphicPreview/GraphicSingle'
 
 // 常量设置
 const { GO_LOGIN_INFO_STORE } = StorageEnum
@@ -201,9 +208,7 @@ const initTabs = async () => {
   try {
     const list: any = await localforage.getItem('ProjectList')
 
-    slides.value = list.filter(
-      (item: any) => item.description === 'dashboard' && item.content !== '""'
-    )
+    slides.value = list.filter((item: any) => item.content !== '""')
 
     if (list.length === 0) {
       routerTurnByName(PageEnum.BASE_LOGIN_NAME, true)
