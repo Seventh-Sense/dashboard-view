@@ -103,27 +103,39 @@ const {
   unitText,
   bottomTextSize,
   bottomTextColor,
-  decimal,
+  decimal
 } = toRefs(props.chartConfig.option)
 
 function fixedByDecimal(num: any) {
-  if (decimal.value === 0) {
-    return Number(num).toFixed()
+  if (decimal && decimal.value) {
+    if (decimal.value === 0) {
+      return Number(num).toFixed()
+    } else {
+      return Number(num).toFixed(decimal.value)
+    }
   } else {
-    return Number(num).toFixed(decimal.value)
+    return Number(num).toFixed()
   }
 }
 
 const dataHandle = (newData: any) => {
-  let range = max.value - min.value
-  p_value.value = (Math.abs(min.value - newData) * 100) / range
+  if (newData === 'null') {
+    return
+  }
+
+  if (min && max) {
+    let range = max.value - min.value
+    p_value.value = (Math.abs(min.value - newData) * 100) / range
+  } else {
+    p_value.value = newData
+  }
 }
 
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
     value.value = parseData(newVal, 'number')
-    dataHandle(value.value)
+    dataHandle(parseData(newVal, 'number'))
   },
   {
     immediate: true,
@@ -159,5 +171,4 @@ watch(
     font-weight: bold;
   }
 }
-
 </style>

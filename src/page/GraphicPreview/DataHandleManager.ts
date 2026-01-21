@@ -1,4 +1,3 @@
-
 import { IntervalTimeOut } from '@/views/display/util/util'
 import DataManager from './DataManager'
 import { readPointsDataById } from '@/api/http'
@@ -52,21 +51,21 @@ export default class DataHandleManager extends DataManager {
 
     bindingPairs.forEach(([binding, callback]) => {
       if (!binding || !callback) return
-      
+
       const parts = binding.pointRef.split(',')
       if (parts.length < 2) return
-      
+
       const pointId = parts[1]
       if (!pointId) return
-      
+
       // 添加到点ID集合
       pointIds.add(pointId)
-      
+
       // 添加到回调映射
       if (!callbackMap.has(pointId)) {
         callbackMap.set(pointId, [])
       }
-      
+
       callbackMap.get(pointId)!.push({
         callback,
         pointType: binding.pointType
@@ -86,12 +85,9 @@ export default class DataHandleManager extends DataManager {
     }
 
     // 设置定时轮询
-    this.intervalId = window.setInterval(
-      () => {
-        this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
-      },
-      IntervalTimeOut()
-    )
+    this.intervalId = window.setInterval(() => {
+      this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+    }, IntervalTimeOut())
 
     return []
   }
@@ -107,19 +103,22 @@ export default class DataHandleManager extends DataManager {
         return
       }
 
+      //console.log('Fetched points data:', res.data, pointIds)
       res.data.forEach((item: any) => {
         const callbackInfos = callbackMap.get(item.metric_id)
         if (!callbackInfos) return
-        
+
         callbackInfos.forEach(({ callback, pointType }) => {
-          try { 
-            let load = cloneDeep(item.value)
-            if (item.value === true || item.value === 'true') {
-              load = 1
-            } else if (item.value === false || item.value === 'false') {
-              load = 0
+          try {
+            if (item.value) {
+              let load = cloneDeep(item.value)
+              if (item.value === true || item.value === 'true') {
+                load = 1
+              } else if (item.value === false || item.value === 'false') {
+                load = 0
+              }
+              callback(load, pointType)
             }
-            callback(load, pointType)
           } catch (err) {
             console.error(`Error executing callback for point ${item.metric_id}`, err)
           }
@@ -129,7 +128,6 @@ export default class DataHandleManager extends DataManager {
       console.error('Failed to fetch points data', err)
     }
   }
-
 
   private clearInterval() {
     if (this.intervalId !== null) {
