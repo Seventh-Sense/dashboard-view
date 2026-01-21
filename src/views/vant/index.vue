@@ -207,13 +207,12 @@ const initTabs = async () => {
   flag.value = false
   try {
     const list: any = await localforage.getItem('ProjectList')
-
-    slides.value = list.filter((item: any) => item.content !== '""')
-
     if (list.length === 0) {
       routerTurnByName(PageEnum.BASE_LOGIN_NAME, true)
       return
     }
+
+    slides.value = list.filter((item: any) => item.content !== '""')
 
     // 应用预览限制
     slides.value = slides.value.slice(0, limit.value)

@@ -208,6 +208,9 @@ const clearAll = async () => {
     await Promise.all(validPromiseList)
 
     list.value = []
+
+    //同步缓存
+    await localforage.setItem('ProjectList', [])
   } catch (error) {
     console.error('Error deleting project:', error)
   }

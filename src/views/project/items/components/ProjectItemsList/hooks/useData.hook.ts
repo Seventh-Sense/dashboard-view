@@ -3,6 +3,7 @@ import { goDialog } from '@/utils'
 import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList } from '../../..'
 import { deleteProject, readProjectList } from '@/api/http'
+import localforage from '@/utils/localforage'
 // 数据初始化
 export const useDataListInit = () => {
   const list = ref<ChartList>([])
@@ -33,9 +34,15 @@ export const useDataListInit = () => {
       onPositiveCallback: () => new Promise(res => setTimeout(() => res(1), 1000)),
       promiseResCallback: (e: any) => {
         deleteProject(cardData.id)
-          .then((res: any) => {
+          .then(async (res: any) => {
             window.$message.success(t('project.msg_del_success'))
             list.value.splice(index, 1)
+            //同步缓存
+            const data: any = await localforage.getItem('ProjectList')
+            if (Array.isArray(data) && data.length > 0) {
+              const newData = data.filter((item: any) => item.id !== cardData.id)
+              await localforage.setItem('ProjectList', newData)
+            }
           })
           .catch(err => {
             console.log(err)
