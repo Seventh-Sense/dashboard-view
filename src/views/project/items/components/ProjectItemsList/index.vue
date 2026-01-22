@@ -11,7 +11,9 @@
         placement="bottom-end"
         @select="handleSelect"
       >
-        <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
+        <n-icon size="24" :depth="1" style="cursor: pointer">
+          <ListIcon />
+        </n-icon>
       </n-dropdown>
     </div>
     <div
@@ -63,14 +65,17 @@ import {
   setLocalStorage,
   getLoginUser,
   routerTurnByName,
-  renderImage,
   downloadTextFile,
-  JSONStringify,
+  JSONStringify
 } from '@/utils'
 import { PageEnum } from '@/enums/pageEnum'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { DropdownOption } from 'naive-ui'
 import localforage from '@/utils/localforage'
+import { icon } from '@/plugins'
+import { renderIcon } from '@/utils'
+
+const { ListIcon, RefreshIcon } = icon.ionicons5
+const { DocumentExportIcon, DocumentImportIcon, DeleteIcon } = icon.carbon
 
 const { list, deleteHandle, addProject, deleteAll, renameHandle } = useDataListInit()
 const { modalData, modalShow, closeModal, resizeHandle, editHandle, previewHandle } =
@@ -83,27 +88,27 @@ const t = window['$t']
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
-//menu
+//menu  renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
 const options: any[] = [
   {
     label: () => t('device.import_devices'),
     key: '1',
-    icon: renderImage(SVG_ICON.card_icons.import_, '', 24, 24)
+    icon: renderIcon(DocumentImportIcon)
   },
   {
     label: () => t('device.export_devices'),
     key: '2',
-    icon: renderImage(SVG_ICON.card_icons.export_, '', 24, 24)
+    icon: renderIcon(DocumentExportIcon)
   },
   {
     label: () => t('device.refresh'),
     key: '3',
-    icon: renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
+    icon: renderIcon(RefreshIcon)
   },
   {
     label: () => t('device.delete_all'),
     key: '4',
-    icon: renderImage(SVG_ICON.card_icons.delete_red, '', 24, 24)
+    icon: renderIcon(DeleteIcon)
   }
 ]
 
@@ -291,13 +296,15 @@ provide('initTable', initTable)
 <style lang="scss" scoped>
 $contentHeight: 250px;
 @include go('items-list') {
+  @include fetch-bg-color('card-background');
+  @include fetch-theme('box-shadow');
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   min-height: calc(100vh - #{$--header-height} - 32px);
   border-radius: 18px;
   padding: 0 16px;
-  background-color: #{$--color-dark-side};
+
   .list-content {
     position: relative;
     height: $contentHeight;
@@ -311,12 +318,14 @@ $contentHeight: 250px;
   }
 
   .list-preview {
+    @include fetch-theme-custom('border-color', 'button1-border-color');
     height: 34px;
     width: 78px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px #ffffff12 solid;
+    border-style: solid;
+    border-width: 1px;
     border-radius: 4px;
     cursor: pointer;
   }

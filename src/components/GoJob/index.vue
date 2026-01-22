@@ -13,13 +13,9 @@
           <span class="modal-title">
             {{ $t('project.task') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
       <div style="height: 550px; overflow-y: auto; overflow-x: hidden">
@@ -66,13 +62,13 @@
         </n-collapse>
       </div>
 
-      <template #footer>
+      <!-- <template #footer>
         <n-space justify="end">
           <n-button class="modal-button-ok" @click="onSubmit">
             {{ $t('global.r_ok') }}
           </n-button>
         </n-space>
-      </template>
+      </template> -->
     </n-card>
   </n-modal>
   <Job v-if="jobShow" v-model:isShowModal="jobShow" :dataList="jobData" />
@@ -83,6 +79,10 @@ import { deleteJob, readAllJobs } from '@/api/http'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { onMounted, ref, watch } from 'vue'
 import { Job } from './Job'
+import { icon } from '@/plugins'
+import { getLocalStorage } from '@/utils'
+
+const { CloseOutlineIcon } = icon.ionicons5
 
 let emit = defineEmits(['update:isShowModal'])
 
@@ -93,10 +93,14 @@ const props = defineProps({
   }
 })
 
+const theme = ref(getLocalStorage('GO_DESIGN'))
+const listColor = ref('rgba(32, 30, 43, 1)')
+
 const jobShow = ref(false)
 const jobData = ref<any>([])
 
 onMounted(() => {
+  setGlobalCssVar()
   readTasks()
 })
 
@@ -144,12 +148,31 @@ watch(
     }
   }
 )
+
+const setGlobalCssVar = () => {
+  document.documentElement.style.setProperty('--list-color', listColor.value)
+}
+
+watch(
+  () => theme.value,
+  newVal => {
+    if (newVal) {
+      let name = newVal!.themeName
+      if (name === 'light') {
+        listColor.value = 'rgba(255, 255, 255, 0.80)'
+      } else if (name === 'dark') {
+        listColor.value = 'rgba(32, 30, 43, 1)'
+      }
+    }
+  },
+  { deep: true, immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 800px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
@@ -161,8 +184,8 @@ watch(
     align-items: center;
   }
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
@@ -176,14 +199,14 @@ watch(
   }
 
   &-list {
-    background: rgba(255, 255, 255, 0.07);
+    @include fetch-theme-custom('color', 'modal-font-color');
     border-radius: 8px;
     padding: 12px 18px;
 
     &-key {
+      @include fetch-theme-custom('color', 'modal-font-color');
       font-weight: 400;
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
       line-height: 17px;
       text-align: left;
       font-style: normal;
@@ -191,21 +214,24 @@ watch(
     }
 
     &-value {
+      @include fetch-theme-custom('color', 'modal-font-color');
+      @include fetch-theme-custom('border-bottom-color', 'modal-font-color');
       font-weight: 400;
       font-size: 14px;
-      color: #ffffff;
       line-height: 20px;
       text-align: left;
       font-style: normal;
       margin-bottom: 12px;
-      border-bottom: 1px solid #{$--color-dark-modal-title};
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
     }
   }
 }
 
 :deep(.n-collapse-item) {
   border-radius: 8px;
-  background-color: rgba(32, 30, 43, 1);
+  background-color: var(--list-color);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.13);
 }
 
 :deep(.n-collapse-item__header) {

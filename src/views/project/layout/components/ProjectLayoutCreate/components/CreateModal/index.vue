@@ -1,12 +1,12 @@
 <template>
-  <n-modal v-model:show="showRef" class="go-create-modal" :mask-closable="false">
+  <n-modal :show="modelShow" class="go-create-modal">
     <n-card
       :bordered="true"
       role="dialog"
       aria-modal="true"
       size="small"
       :mask-closable="false"
-      style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px"
+      class="modal"
     >
       <template #header>
         <n-space justify="space-between" align="center">
@@ -26,7 +26,7 @@
       </div>
       <template #footer>
         <n-space justify="end">
-          <n-button @click="onPositiveClick">{{ $t('global.r_create') }}</n-button>
+          <n-button @click="onPositiveClick" style="width: 78px;height: 34px;">{{ $t('global.r_create') }}</n-button>
         </n-space>
       </template>
     </n-card>
@@ -40,13 +40,14 @@ import { createProject } from '@/api/http'
 import { JSONStringify } from '@/utils'
 
 const { CloseOutlineIcon } = icon.ionicons5
-const showRef = ref(false)
+
 const t = window['$t']
 const initTable: any = inject('initTable')
-const emit = defineEmits(['close'])
+
+const emit = defineEmits(['update:modelShow'])
 
 const props = defineProps({
-  show: Boolean
+  modelShow: Boolean
 })
 
 const isGraphic = computed(() => {
@@ -70,10 +71,6 @@ const options: any[] = [
     value: 'graphic'
   }
 ]
-
-watch(props, newValue => {
-  showRef.value = newValue.show
-})
 
 const onPositiveClick = async () => {
   if (paramCheck()) {
@@ -113,7 +110,7 @@ const onPositiveClick = async () => {
       console.error('onChange:', e)
     } finally {
       project_name.value = ''
-      emit('close', false)
+      emit('update:modelShow', false)
     }
   }
 }
@@ -137,12 +134,18 @@ const paramCheck = () => {
 // 关闭对话框
 const closeHandle = () => {
   project_name.value = ''
-  emit('close', false)
+  emit('update:modelShow', false)
 }
 </script>
 
 <style lang="scss" scoped>
 $cardWidth: 570px;
+
+.modal {
+  @include fetch-bg-color('modal-content1-background');
+  width: 600px;
+  border-radius: 18px;
+}
 
 @include go('create-modal') {
   position: fixed;
@@ -151,17 +154,20 @@ $cardWidth: 570px;
   transform: translateX(-50%);
 
   &-title {
+    @include fetch-theme-custom('color','modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
   }
 
   .card-box {
+    @include fetch-theme-custom('border-color', 'modal-font-color');
     width: $cardWidth;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 1px;
+
     @extend .go-transition;
 
     &:hover {
@@ -178,9 +184,9 @@ $cardWidth: 570px;
     }
 
     &-title {
+      @include fetch-theme-custom('color','modal-font-color');
       font-size: 16px;
       font-weight: bold;
-      color: $--color-dark-font;
       margin-top: 16px;
       margin-bottom: 12px;
     }

@@ -13,7 +13,7 @@
           <span class="modal-title">
             {{ $t('login.about_us') }}
           </span>
-          <n-icon size="32" :depth="1" @click="onClose" style="cursor: pointer">
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
             <CloseOutlineIcon />
           </n-icon>
         </n-space>
@@ -81,14 +81,14 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 512px;
-  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color','modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
@@ -102,32 +102,32 @@ watch(
     padding-top: 24px;
 
     &-title {
+      @include fetch-theme-custom('color','modal-font-color');
       font-size: 14px;
       line-height: 20px;
-      color: rgba(255, 255, 255, 0.93);
       font-weight: 400;
     }
 
     &-tip {
+      @include fetch-theme-custom('color','modal-font-color');
       font-size: 14px;
       line-height: 20px;
-      color: rgba(255, 255, 255, 0.6);
       font-weight: 400;
     }
 
     &-b {
+      @include fetch-theme-custom('color','modal-font-color');
       font-size: 12px;
       line-height: 16px;
-      color: rgba(255, 255, 255, 0.6);
       font-weight: 400;
     }
 
     &-foot {
+      @include fetch-theme-custom('color','modal-font-color');
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
       font-weight: 400;
     }
   }

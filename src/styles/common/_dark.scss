@@ -40,4 +40,23 @@ $dark: (
   top-background: $--color-dark-top,
   //侧边栏 颜色
   side-background: $--color-dark-side,
+  side-select-image: $--color-dark-menu-title-select,
+
+  //card 颜色
+  card-background: $--color-dark-side,
+  card-background-1: $--color-dark-card,
+  card-background-2: $--color-dark-card-image,
+  card-font-color-1: $--color-dark-card-font,
+
+  //modal
+  modal-content-background: $--color-dark-modal-content,
+  modal-content1-background: $--color-dark-modal1-content,
+  modal-font-color: $--color-dark-font,
+
+  //login
+  login-font-color: $--color-dark-font,
+
+  //button
+  button1-border-color: $--color-dark-border,
+
 );

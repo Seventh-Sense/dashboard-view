@@ -432,11 +432,12 @@ provide('refreshFunc', initData)
 
 <style lang="scss" scoped>
 .project {
-  height: calc(100vh - #{$--header-height});
-  padding: 16px;
+  height: calc(100vh - #{$--header-height} - 36px);
+  padding: 12px;
 
   &-card {
-    background-color: #{$--color-dark-side};
+    @include fetch-bg-color('card-background');
+    @include fetch-theme('box-shadow');
     border-radius: 18px;
     backdrop-filter: blur(50px);
     height: 100%;

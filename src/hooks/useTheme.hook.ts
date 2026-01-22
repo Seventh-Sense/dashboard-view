@@ -25,6 +25,57 @@ export const useThemeOverridesHook = () => {
     const lightObject = {
       common: {
         ...commonObj.common
+      },
+      LoadingBar: {
+        colorLoading: getAppTheme.value
+      },
+      DataTable: {
+        thColor: 'rgba(32, 30, 43, 1)',
+        tdColor: 'rgb(25, 22, 42, 1)',
+        tdColorHover: 'rgb(25, 22, 42, 1)',
+        tdTextColor: 'rgba(255, 255, 255, 0.93)',
+      },
+      Dropdown: {
+        borderRadius: '6px',
+        optionHeightMedium: '48px',
+        padding: '0 0',
+        optionSuffixWidthMedium: '60px',
+      },
+      Button: {
+        color: '#3c7effff',
+        colorHover: '#3c7effff',
+        colorPressed: '#3c7effff',
+        colorFocus: '#3c7effff',
+        textColor: '#ffffffff',
+        textColorHover: '#ffffffff',
+        textColorPressed: '#ffffffff',
+        textColorFocus: '#ffffffff',
+        border: 0,
+        borderHover: 0,
+        borderFocus: 0,
+      },
+      Modal: {
+        color: 'rgba(0, 0, 0, 1)',
+        textColor: 'rgba(255, 255, 255, 0.93)'
+      },
+      Menu: {
+        fontSize: '16px',
+        borderRadius: '8px',
+        itemHeight: '44px',
+        itemTextColorActive: 'rgba(255, 255, 255, 0.93)',
+        itemTextColorActiveHover: 'rgba(255, 255, 255, 0.93)'
+      },
+      Input: {
+        border: 0,
+        borderHover: 0,
+        borderFocus: 0,
+        boxShadowFocus: 0,
+        paddingMedium: '0',
+      },
+      Tree: {
+        fontSize: '16px',
+        nodeHeight: '32px',
+        lineHeight: '1.7',
       }
     }
 

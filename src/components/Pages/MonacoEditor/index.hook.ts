@@ -3,7 +3,7 @@ import { useDesignStore } from '@/store/modules/designStore/designStore'
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
 export const useMonacoEditor = (language = 'javascript') => {
-const designStore = useDesignStore()
+  const designStore = useDesignStore()
 
   let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
   let initReadOnly = false

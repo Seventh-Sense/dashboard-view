@@ -6,7 +6,7 @@
       aria-modal="true"
       size="small"
       :mask-closable="false"
-      style="width: 600px; background: rgba(0, 0, 0, 1); border-radius: 18px"
+      class="modal"
     >
       <template #header>
         <n-space justify="space-between" align="center">
@@ -138,6 +138,12 @@ const closeHandle = () => {
 
 <style lang="scss" scoped>
 $cardWidth: 570px;
+
+.modal {
+  @include fetch-bg-color('modal-content1-background');
+  width: 600px;
+  border-radius: 18px;
+}
 
 @include go('create-modal') {
   position: fixed;

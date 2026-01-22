@@ -135,6 +135,7 @@ $siderHeight: 100vh;
         @include fetch-bg-color('side-background');
         backdrop-filter: blur(50px);
         height: calc(100vh - 32px);
+        @include fetch-theme('box-shadow');
       }
     }
   }

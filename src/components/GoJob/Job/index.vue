@@ -13,13 +13,9 @@
           <span class="modal-title">
             {{ $t('global.r_create') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
       <div>
@@ -45,9 +41,10 @@
 
 <script setup lang="ts">
 import { addJob } from '@/api/http'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { ref, watch } from 'vue'
+import { icon } from '@/plugins'
 
+const { CloseOutlineIcon } = icon.ionicons5
 let emit = defineEmits(['update:isShowModal'])
 const props = defineProps({
   isShowModal: {
@@ -149,8 +146,8 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 500px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
@@ -162,9 +159,9 @@ watch(
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-weight: 400;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
     line-height: 17px;
     text-align: left;
     font-style: normal;
@@ -174,7 +171,8 @@ watch(
 }
 
 ::v-deep(.n-select) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 ::v-deep(.n-base-selection) {
@@ -201,6 +199,7 @@ watch(
 }
 
 ::v-deep(.n-input__input-el) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 </style>

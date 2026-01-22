@@ -54,4 +54,8 @@ import { LayoutTransitionMain } from '@/layout/components/LayoutTransitionMain/i
 .bg-transparent {
   background-color: transparent;
 }
+
+::v-deep(.n-scrollbar-rail--vertical) {
+  display: none !important;
+}
 </style>

@@ -34,5 +34,6 @@ const isChart = computed(() => {
 .top-header {
   @include fetch-bg-color('top-background');
   border: 0;
+  @include fetch-theme('box-shadow');
 }
 </style>

@@ -13,7 +13,7 @@
               <n-text class="go-login-form-account-title">{{ $t('login.title_1') }}</n-text>
               <div class="go-login-form-account-desc">
                 <img width="100" height="32" :src="SVG_ICON.card_icons.XPlay" />
-                <n-text style="color: rgba(255, 255, 255, 0.93)">{{ $t('login.title_2') }}</n-text>
+                <n-text class="title2">{{ $t('login.title_2') }}</n-text>
               </div>
 
               <n-form
@@ -229,9 +229,9 @@ $carousel-image-height: 60vh;
   }
 
   @include go(login) {
+    @include background-image('background-image-new');
     height: $go-login-height;
     width: 100vw;
-    background-image: radial-gradient(farthest-side at 0% 0%, #383477, #19162a);
 
     &-img {
       padding: 0;
@@ -259,12 +259,14 @@ $carousel-image-height: 60vh;
         width: 440px;
 
         &-title {
+          @include fetch-theme-custom('color','login-font-color');
           font-size: 40px;
           font-weight: bold;
-          color: rgba(255, 255, 255, 0.93);
         }
 
         &-desc {
+          display: flex;
+          align-items: center;
           font-size: 24px;
           font-weight: 400;
           margin-bottom: 28px;
@@ -272,6 +274,7 @@ $carousel-image-height: 60vh;
       }
 
       &-footer {
+        @include fetch-theme-custom('color','login-font-color');
         display: flex;
         justify-content: center;
         align-items: center;
@@ -279,11 +282,15 @@ $carousel-image-height: 60vh;
         height: 60px;
         padding-bottom: 12px;
         font-size: 14px;
-        color: rgba(255, 255, 255, 0.93);
       }
     }
   }
 }
+
+.title2 {
+  @include fetch-theme-custom('color','login-font-color');
+}
+
 @media only screen and (max-width: 1200px) {
   .bg-img-box,
   .bg-slot,

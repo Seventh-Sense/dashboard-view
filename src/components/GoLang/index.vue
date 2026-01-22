@@ -7,7 +7,7 @@
   >
     <div style="display: flex; align-items: center">
       <span class="lang-style">{{ text }}</span>
-      <n-icon size="18" color="white">
+      <n-icon size="18" :depth="1" style="cursor: pointer">
         <ChevronDownOutlineIcon />
       </n-icon>
     </div>
@@ -62,7 +62,7 @@ const handleSelect = (key: LangEnum, option: any) => {
 
 <style lang="scss" scoped>
 .lang-style {
-  color: white;
+  @include fetch-theme-custom('color','login-font-color');
   cursor: pointer;
   font-size: 14px;
   margin-right: 6px;

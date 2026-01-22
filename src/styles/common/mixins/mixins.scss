@@ -67,7 +67,7 @@
 //获取背景渐变颜色
 @mixin background-image($target) {
   @include themeify {
-    background-image: themed($target);
+    background-image: themed($target) !important;
   }
 }
 

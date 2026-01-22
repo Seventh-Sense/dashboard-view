@@ -4,7 +4,7 @@
       <div class="list-content-title">
         <div class="list-content-title-top">
           <div class="list-content-title-avatar"></div>
-          <span style="color: rgba(255, 255, 255, 0.93); font-size: 12px; line-height: 17px">
+          <span class="top-title" style="font-size: 12px; line-height: 17px">
             {{ capitalizeFirstLetter(cardData.type) }}
           </span>
         </div>
@@ -19,25 +19,55 @@
       class="list-footer"
       style="display: flex; align-items: center; justify-content: space-between"
     >
-      <div style="display: flex; flex-direction: column; justify-content: center;flex: 1;min-width: 0;">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          flex: 1;
+          min-width: 0;
+        "
+      >
         <span
-          style="
-            color: rgba(255, 255, 255, 1);
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          "
+          class="project-title"
+          style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
         >
           {{ cardData.title }}
         </span>
         <span class="list-footer-title">{{ formatTime(cardData.time) }}</span>
       </div>
 
-      <div v-if="isShow" style="display: flex; min-width: 130px;;align-items: center; justify-content: flex-end;gap: 16px;">
-        <Icon name="input" :size="26" :color="{ normal: '#ffffff' }" @click="renameHandle()" />
-        <Icon name="edit" :size="26" :color="{ normal: '#ffffff' }" @click="editHandle()" />
-        <Icon name="delete" :size="26" :color="{ normal: '#ffffff' }" @click="deleteHanlde()" />
+      <div
+        v-if="isShow"
+        style="
+          display: flex;
+          min-width: 130px;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 16px;
+        "
+      >
+        <Icon
+          type="mono-line"
+          name="input"
+          :size="26"
+          :color="{ normal: listColor }"
+          @click="renameHandle()"
+        />
+        <Icon
+          type="mono-line"
+          name="edit"
+          :size="26"
+          :color="{ normal: listColor }"
+          @click="editHandle()"
+        />
+        <Icon
+          type="mono-line"
+          name="delete"
+          :size="26"
+          :color="{ normal: listColor }"
+          @click="deleteHanlde()"
+        />
       </div>
     </div>
     <RenameModal :show="modalShow" :cardData="cardData" @close="closeHandle" />
@@ -45,18 +75,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, PropType, ref } from 'vue'
+import { onMounted, PropType, ref, watch } from 'vue'
 import { Icon } from '@/icon/index'
 import { Chartype } from '../../index.d'
 import SVG_ICON from '@/svg/SVG_ICON'
-import { getLoginUser, capitalizeFirstLetter } from '@/utils'
+import { getLoginUser, capitalizeFirstLetter, getLocalStorage } from '@/utils'
 import { RenameModal } from './RenameModal'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
 
 const emit = defineEmits(['delete', 'resize', 'edit', 'preview', 'rename'])
 
 const props = defineProps({
   cardData: Object as PropType<Chartype>
 })
+
+const listColor = ref('#ffffff')
 
 const isShow = ref(false)
 const modalShow = ref<boolean>(false)
@@ -98,6 +133,14 @@ const renameHandle = () => {
 const closeHandle = () => {
   modalShow.value = false
 }
+
+watch(
+  () => designStore.darkTheme,
+  isDarkTheme => {
+    listColor.value = isDarkTheme ? '#ffffff' : '#000000'
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -107,17 +150,18 @@ $cardContentHeight: 133px;
 $cardTopHeight: 44px;
 
 @include go('items-list-card') {
+  @include fetch-theme('box-shadow');
+  @include fetch-bg-color('card-background-1');
   position: relative;
   border-radius: $--border-radius-base;
   border: 0;
-  background: $--color-dark-card;
   height: $cardHeight;
 
   .list-content {
+    @include fetch-bg-color('card-background-2');
     cursor: pointer;
     border-radius: $--border-radius-base;
     height: $cardContentHeight;
-    background: $--color-dark-card-image;
 
     &-title {
       padding: 0 10px;
@@ -153,11 +197,11 @@ $cardTopHeight: 44px;
     padding: 0 16px;
 
     &-title {
+      @include fetch-theme-custom('color', 'card-font-color-1');
       width: 100%;
       font-size: 12px;
       font-weight: 400;
       font-style: normal;
-      color: $--color-dark-card-font;
       overflow: hidden; /* 确保超出容器的文本被隐藏 */
       white-space: nowrap; /* 防止文本换行 */
       text-overflow: ellipsis;
@@ -170,5 +214,13 @@ $cardTopHeight: 44px;
       align-items: center;
     }
   }
+}
+
+.top-title {
+  @include fetch-theme-custom('color', 'modal-font-color');
+}
+
+.project-title {
+  @include fetch-theme-custom('color', 'modal-font-color');
 }
 </style>

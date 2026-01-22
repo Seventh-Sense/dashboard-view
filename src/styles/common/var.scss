@@ -16,14 +16,14 @@ $spacing-base-size: 1em;
 
 $spacing-types: (
   m: margin,
-  p: padding,
+  p: padding
 );
 
 $spacing-directions: (
   t: top,
   r: right,
   b: bottom,
-  l: left,
+  l: left
 );
 
 $spacing-sizes: (
@@ -32,7 +32,7 @@ $spacing-sizes: (
   2: 0.5,
   3: 1,
   4: 1.5,
-  5: 2.5,
+  5: 2.5
 );
 
 // 变亮值
@@ -50,6 +50,23 @@ $--color-light-bg-4: #e3e3e4;
 $--color-light-bg-4-shallow: lighten($--color-light-bg-4, $--light-shalow);
 $--color-light-bg-5: #bebebe;
 $--color-light-bg-5-shallow: lighten($--color-light-bg-5, $--light-shalow);
+$--color-light-bg-new-1: #e2e0faff;
+$--color-light-bg-new-2: #f2f2f2ff;
+$--color-light-top: #ffffffcc;
+$--color-light-side: #ffffffcc;
+
+$--color-light-font: rgba(0, 0, 0, 1);
+$--color-light-menu-title-select: radial-gradient(
+  farthest-side at 50% 100%,
+  rgba(138, 23, 249, 1) 0%,
+  rgba(70, 38, 143, 1) 100%
+);
+$--color-light-card: rgba(255, 255, 255, 1);
+$--color-light-card-image: rgba(0, 0, 0, 0.1);
+$--color-light-card-font: rgba(158, 157, 163, 1);
+$--color-light-modal-content: rgba(255, 255, 255, 0.8);
+$--color-light-modal1-content: rgba(255, 255, 255, 0.95);
+$--color-light-border: rgba(0, 0, 0, 0.13);
 
 // 变暗值
 $--dark-shalow: 2%;
@@ -66,18 +83,23 @@ $--color-dark-bg-4: #313132;
 $--color-dark-bg-4-shallow: darken($--color-dark-bg-4, $--dark-shalow);
 $--color-dark-bg-5: #373739;
 $--color-dark-bg-5-shallow: darken($--color-dark-bg-5, $--dark-shalow);
-$--color-dark-bg-new-1: #383477FF;
-$--color-dark-bg-new-2: #19162AFF;
-$--color-dark-top: rgba(0,0,0,0.13);
+$--color-dark-bg-new-1: #383477ff;
+$--color-dark-bg-new-2: #19162aff;
+$--color-dark-top: rgba(0, 0, 0, 0.13);
 $--color-dark-side: rgba(0, 0, 0, 0.53);
 $--color-dark-font: rgba(255, 255, 255, 0.93);
-$--color-dark-modal-title: rgba(255, 255, 255, 0.60);
-$--color-dark-menu-title-select: radial-gradient(farthest-side at 50% 100%, rgba(138, 23, 249, 1) 0%, rgba(70, 38, 143, 1) 100%);
+$--color-dark-modal-title: rgba(255, 255, 255, 0.6);
+$--color-dark-menu-title-select: radial-gradient(
+  farthest-side at 50% 100%,
+  rgba(138, 23, 249, 1) 0%,
+  rgba(70, 38, 143, 1) 100%
+);
 $--color-dark-card: rgba(255, 255, 255, 0.2);
 $--color-dark-card-image: rgba(255, 255, 255, 0.07);
 $--color-dark-card-font: rgba(158, 157, 163, 1);
 $--color-dark-b-card: rgba(34, 32, 49, 1);
 $--color-dark-modal-content: rgba(0, 0, 0, 0.53);
+$--color-dark-modal1-content: rgba(0, 0, 0, 0.95);
 $--color-dark-border: rgba(255, 255, 255, 0.13);
 $--color-dark-button1: rgba(120, 58, 254, 1);
 $--color-dark-button2: rgba(255, 255, 255, 0.07);
@@ -92,8 +114,8 @@ $--footer-height: 50px;
 // 模糊
 $--filter-blur-base: blur(20px);
 // 毛玻璃
-$--filter-color-login-dark: rgba(35,35,36, 0.7);
-$--filter-color-login-dark-shallow: rgba(35,35,36, 0.3);
+$--filter-color-login-dark: rgba(35, 35, 36, 0.7);
+$--filter-color-login-dark-shallow: rgba(35, 35, 36, 0.3);
 $--filter-color-login-light: rgba(240, 240, 240, 0.7);
 $--filter-color-login-light-shallow: rgba(240, 240, 240, 0.3);
 
@@ -101,7 +123,6 @@ $--filter-color-login-light-shallow: rgba(240, 240, 240, 0.3);
 $--border-radius-base: 8px;
 // 阴影
 $--border-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-
 
 //card 标题高度
 $--card-top-height: 72px;

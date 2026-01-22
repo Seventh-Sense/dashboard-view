@@ -75,6 +75,7 @@ import {
   Checkmark as CheckmarkIcon,
   ArrowBackOutline as ArrowBackOutlineIcon,
   AddCircle as AddCircleIcon,
+  Refresh as RefreshIcon,
 } from '@vicons/ionicons5'
 
 import {
@@ -113,6 +114,8 @@ import {
   ChevronLeft as ChevronLeftIcon,
   AddFilled as AddFilledIcon,
   DocumentImport as DocumentImportIcon,
+  DocumentExport as DocumentExportIcon,
+  Export as ExportIcon,
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -262,6 +265,7 @@ const ionicons5 = {
   CheckmarkIcon,
   ArrowBackOutlineIcon,
   AddCircleIcon,
+  RefreshIcon,
 }
 
 const carbon = {
@@ -320,6 +324,8 @@ const carbon = {
   ChevronLeftIcon,
   AddFilledIcon,
   DocumentImportIcon,
+  DocumentExportIcon,
+  ExportIcon,
 }
 
 // https://www.xicons.org/#/ 还有很多

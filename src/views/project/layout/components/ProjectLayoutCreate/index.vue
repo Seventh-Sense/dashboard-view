@@ -3,7 +3,7 @@
     <!-- 创建的图标 -->
     <n-tooltip  placement="right" trigger="hover">
       <template #trigger>
-        <n-button >
+        <n-button class="button">
           {{ $t('global.r_create') }}
         </n-button>
       </template>
@@ -12,28 +12,26 @@
       </span>
     </n-tooltip>
   </div>
-  <CreateModal :show="modalShow" @close="closeHandle"></CreateModal>
+  <CreateModal v-model:modelShow="modelShowInfo"></CreateModal>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDesignStore } from '@/store/modules/designStore/designStore'
 import { CreateModal } from './components/CreateModal/index'
-import { icon } from '@/plugins'
-
-const { DuplicateIcon, DuplicateOutlineIcon } = icon.ionicons5
-const designStore = useDesignStore()
 
 const props = defineProps({
   collapsed: Boolean
 })
 
-const modalShow = ref<boolean>(false)
+const modelShowInfo = ref(false)
 
 const clickHandle = () => {
-  modalShow.value = true
-}
-
-const closeHandle = () => {
-  modalShow.value = false
+  modelShowInfo.value = true
 }
 </script>
+
+<style lang="scss" scoped>
+.button {
+  width: 78px;
+  height: 34px;
+}
+</style>

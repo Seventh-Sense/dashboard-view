@@ -13,13 +13,9 @@
           <span class="modal-title">
             {{ $t('global.sys_set') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
 
@@ -54,11 +50,10 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { icon } from '@/plugins'
 import { setLocalStorage, getLocalStorage } from '@/utils'
 
-const { CloseIcon } = icon.ionicons5
+const { CloseOutlineIcon } = icon.ionicons5
 
 const emit = defineEmits(['update:modelShow'])
 
@@ -99,14 +94,14 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 720px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color','modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
@@ -119,16 +114,16 @@ watch(
   }
 
   &-class {
+    @include fetch-theme-custom('color','modal-font-color');
     font-size: 16px;
     font-weight: 600;
-    color: #{$--color-dark-font};
     margin-bottom: 8px;
   }
 
   &-caption {
+    @include fetch-theme-custom('color','modal-font-color');
     font-size: 14px;
     font-weight: 400;
-    color: #{$--color-dark-font};
   }
 
   &-item {
