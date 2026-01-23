@@ -18,7 +18,9 @@ import { readProject, updateProject } from '@/api/http'
 import { getLocalStorage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import { LangStateType } from '@/store/modules/langStore/langStore.d'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
 
+const designStore = useDesignStore()
 const graphicData = ref<any | null>(null)
 
 const t = window['$t']
@@ -30,6 +32,7 @@ const { id } = routerParamsInfo.params
 const previewId = typeof id === 'string' ? id : id[0]
 
 onMounted(() => {
+  setTheme()
   setLang()
 
   readProject(previewId)
@@ -44,6 +47,17 @@ onMounted(() => {
       graphicData.value = JSONParse('{}')
     })
 })
+
+const setTheme = () => {
+  const body = document.body
+  if (designStore.darkTheme) {
+    body.classList.remove('x-theme-2')
+    body.classList.add('x-theme-1')
+  } else {
+    body.classList.remove('x-theme-1')
+    body.classList.add('x-theme-2')
+  }
+}
 
 const setLang = () => {
   const langStorage: LangStateType = getLocalStorage(StorageEnum.GO_LANG_STORE)
