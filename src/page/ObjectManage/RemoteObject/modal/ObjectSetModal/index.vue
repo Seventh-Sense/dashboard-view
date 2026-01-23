@@ -7,19 +7,16 @@
       size="small"
       :mask-closable="false"
       class="modal"
+      :class="{ 'dark-theme': designStore.darkTheme }"
     >
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="modal-title">
             {{ $t('device.add_point') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
       <div class="modal-top">
@@ -73,14 +70,18 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, inject, onUnmounted } from 'vue'
-import SVG_ICON from '@/svg/SVG_ICON'
+import { icon } from '@/plugins'
 import { readIotPoints, addSubscribePoint } from '@/api/http'
 import { cloneDeep } from 'lodash-es'
 import axiosTwo from '@/api/axiosTwo'
 import jsonList from '@/assets/data/Property.json'
 import { getDeviceTypeName, getDeviceTypeId } from '../../utils/utils'
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui'
-import type { InputInst } from 'naive-ui';
+import type { InputInst } from 'naive-ui'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
+const { CloseOutlineIcon } = icon.ionicons5
 
 interface DataType {
   key: string
@@ -113,23 +114,22 @@ const loading = ref(false)
 const loadingButton = ref(false)
 
 // 搜索关键字
-const inputRef = ref<InputInst | null>(null);
-const isReadonly = ref(true);
+const inputRef = ref<InputInst | null>(null)
+const isReadonly = ref(true)
 const keyword = ref('')
 
-
 const activateInput = async () => {
-  if (!inputRef.value) return;
-  
+  if (!inputRef.value) return
+
   // 移除只读状态
-  isReadonly.value = false;
-  
+  isReadonly.value = false
+
   // 等待 DOM 更新后聚焦
-  await nextTick();
-  
+  await nextTick()
+
   // 调用 Naive UI 的 focus 方法
-  inputRef.value.focus();
-};
+  inputRef.value.focus()
+}
 
 const filteredData = computed(() => {
   if (keyword.value === '') return data.value
@@ -198,7 +198,7 @@ const fetchData = async () => {
       function: 'read_object_list',
       parms: {
         address: props.deviceData.address,
-        objid: props.deviceData.device_id,
+        objid: props.deviceData.device_id
       }
     })
 
@@ -213,7 +213,7 @@ const fetchData = async () => {
       } else {
         window['$message'].warning(t('device.msg_read_fail') + res.data)
       }
-      
+
       loading.value = false
     }
   } catch (e) {
@@ -374,14 +374,14 @@ const onSearch = () => {
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 40vw;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
@@ -402,9 +402,9 @@ const onSearch = () => {
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-weight: 400;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
     line-height: 17px;
     text-align: left;
     font-style: normal;
@@ -458,10 +458,6 @@ const onSearch = () => {
   margin-right: 12px;
 }
 
-::v-deep(.n-input--focus) {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-}
-
 ::v-deep(.n-data-table-table) {
   background-color: transparent !important;
 }
@@ -485,5 +481,11 @@ const onSearch = () => {
 ::v-deep(.n-checkbox--disabled .check-icon) {
   opacity: 1 !important;
   transform: scale(1) !important;
+}
+
+.dark-theme {
+  ::v-deep(.n-input--focus) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
 }
 </style>

@@ -7,19 +7,16 @@
       size="small"
       :mask-closable="false"
       class="modal"
+      :class="{ 'dark-theme': designStore.darkTheme }"
     >
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="modal-title">
             {{ $t('device.set_value_title') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
 
@@ -43,9 +40,9 @@
           <div class="modal-button modal-button-color2" @click="onRelease">
             {{ $t('device.release') }}
           </div>
-          <div class="modal-button modal-button-color1" @click="onSubmit">
+          <n-button class="modal-button" @click="onSubmit">
             {{ $t('device.compulsion') }}
-          </div>
+          </n-button>
         </div>
       </div>
 
@@ -74,23 +71,31 @@
           name="arrowUp"
           type="color-white"
           :size="28"
-          :color="{ normal: 'white' }"
+          :color="{ normal: designStore.darkTheme ? 'white' : 'black' }"
         />
 
-        <Icon v-else name="arrowDown" type="color-white" :size="28" :color="{ normal: 'white' }" />
+        <Icon
+          v-else
+          name="arrowDown"
+          type="color-white"
+          :size="28"
+          :color="{ normal: designStore.darkTheme ? 'white' : 'black' }"
+        />
       </div>
     </n-card>
   </n-modal>
 </template>
 
 <script setup lang="ts">
-import SVG_ICON from '@/svg/SVG_ICON'
 import { ref, watch, inject, onUnmounted, onMounted } from 'vue'
 import { PriorityOption, TypeEnum, isPriority } from '../../utils/propertyMap'
 import { Icon } from '@/icon/index'
 import { msghandle } from '@/utils'
 import { readIotPoints } from '@/api/http'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+import { icon } from '@/plugins'
 
+const designStore = useDesignStore()
 let emit = defineEmits(['update:isShow'])
 
 const t = window['$t']
@@ -113,6 +118,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const { CloseOutlineIcon } = icon.ionicons5
 
 const refreshObjTable: any = inject('refreshObjTable')
 
@@ -188,14 +195,13 @@ const onReleaseALL = async () => {
       r => r.status === 'fulfilled' && (r as PromiseFulfilledResult<any>).value.status === 'OK'
     ).length
 
-    const totalCount = results.length;
+    const totalCount = results.length
 
     if (successCount === totalCount) {
       window['$message'].success(t('device.msg_mod_success'))
     } else {
       window['$message'].warning(t('device.msg_error_2'))
     }
-    
   } catch (error) {
     console.error('Batch release error:', error)
   }
@@ -252,22 +258,22 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 640px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
   }
 
   &-advance {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
@@ -276,16 +282,16 @@ watch(
   }
 
   &-name {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 24px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 12px;
@@ -307,8 +313,8 @@ watch(
   }
 
   &-button {
-    width: 88px;
-    height: 32px;
+    width: 78px;
+    height: 34px;
     border-radius: 2px;
     font-size: 14px;
     display: flex;
@@ -316,43 +322,40 @@ watch(
     align-items: center;
     cursor: pointer;
 
-    &-color1 {
-      background-color: #{$--color-dark-button1};
-    }
-
     &-color2 {
-      background-color: #{$--color-dark-button2};
+      @include fetch-bg-color('card-background-2');
       border: 1px solid #{$--color-dark-button2-border};
     }
   }
 }
 
-::v-deep(.n-input) {
-  background-color: transparent;
-}
+.dark-theme {
+  ::v-deep(.n-input) {
+    background-color: transparent;
+  }
 
-::v-deep(.n-input-wrapper) {
-  background-color: #{$--color-dark-modal-content};
-  border-bottom: 1px solid #{$--color-dark-modal-title};
-}
+  ::v-deep(.n-input-wrapper) {
+    background-color: #{$--color-dark-modal-content};
+    border-bottom: 1px solid #{$--color-dark-modal-title};
+  }
 
-::v-deep(.n-select) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
-}
+  ::v-deep(.n-select) {
+    border-bottom: 1px solid #{$--color-dark-modal-title};
+  }
+  ::v-deep(.n-base-selection-label) {
+    background-color: #{$--color-dark-modal-content};
+  }
 
-::v-deep(.n-base-selection) {
-  --n-border: 0 !important;
-  --n-border-active: 0 !important;
-  --n-border-hover: 0 !important;
-  --n-border-focus: 0 !important;
-  --n-box-shadow-active: 0 !important;
-  --n-box-shadow-focus: 0 !important;
-  --n-color-active: #{$--color-dark-modal-content} !important;
-  --n-color-disabled: #{$--color-dark-modal-content} !important;
-  --n-padding-single: 0 26px 0 0 !important;
-}
-
-::v-deep(.n-base-selection-label) {
-  background-color: #{$--color-dark-modal-content};
+  ::v-deep(.n-base-selection) {
+    --n-border: 0 !important;
+    --n-border-active: 0 !important;
+    --n-border-hover: 0 !important;
+    --n-border-focus: 0 !important;
+    --n-box-shadow-active: 0 !important;
+    --n-box-shadow-focus: 0 !important;
+    --n-color-active: #{$--color-dark-modal-content} !important;
+    --n-color-disabled: #{$--color-dark-modal-content} !important;
+    --n-padding-single: 0 26px 0 0 !important;
+  }
 }
 </style>

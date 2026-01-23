@@ -76,6 +76,7 @@ import {
   ArrowBackOutline as ArrowBackOutlineIcon,
   AddCircle as AddCircleIcon,
   Refresh as RefreshIcon,
+  EnterOutline as EnterOutlineIcon,
 } from '@vicons/ionicons5'
 
 import {
@@ -266,6 +267,7 @@ const ionicons5 = {
   ArrowBackOutlineIcon,
   AddCircleIcon,
   RefreshIcon,
+  EnterOutlineIcon,
 }
 
 const carbon = {

@@ -6,7 +6,7 @@
         <!-- <div>
           <n-select v-model:value="networkCard" :options="options" style="width: 200px" />
         </div> -->
-        <div class="content-button" @click="onDiscovery">{{ $t('device.search') }}</div>
+        <n-button class="content-button" @click="onDiscovery">{{ $t('device.search') }}</n-button>
       </div>
     </div>
     <a-table
@@ -220,21 +220,16 @@ const onDownload = async (record: DataType) => {
   }
 
   &-button {
-    width: 64px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background: #783afe;
+    width: 78px;
+    height: 34px;
     border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    font-size: 14px;
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-weight: bold;
     font-size: 16px;
-    color: #ffffff;
     line-height: 24px;
     text-align: center;
     font-style: normal;

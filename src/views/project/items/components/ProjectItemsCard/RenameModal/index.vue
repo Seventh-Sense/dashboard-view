@@ -152,17 +152,20 @@ $cardWidth: 570px;
   transform: translateX(-50%);
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
   }
 
   .card-box {
+    @include fetch-theme-custom('border-color', 'modal-font-color');
     width: $cardWidth;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0);
+    border-style: solid;
+    border-width: 1px;
+
     @extend .go-transition;
     &:hover {
       @include hover-border-color('hover-border-color');
@@ -175,9 +178,9 @@ $cardWidth: 570px;
       width: 100%;
     }
     &-title {
+      @include fetch-theme-custom('color', 'modal-font-color');
       font-size: 16px;
       font-weight: bold;
-      color: $--color-dark-font;
       margin-top: 16px;
       margin-bottom: 12px;
     }

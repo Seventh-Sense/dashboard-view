@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ 'dark-theme': designStore.darkTheme }">
     <n-space class="top" align="center">
       <n-icon size="20" class="top-icon" @click="onBack">
         <ChevronBackOutlineIcon />
@@ -30,9 +30,9 @@
           <div class="content-button content-button-color2" @click="onDeleteAll">
             {{ $t('device.delete_all') }}
           </div>
-          <div class="content-button content-button-color1" @click="onDiscovery">
+          <n-button class="content-button" @click="onDiscovery">
             {{ $t('global.r_add') }}
-          </div>
+          </n-button>
         </div>
       </div>
       <n-data-table
@@ -110,6 +110,9 @@ import type { DataTableColumns } from 'naive-ui'
 import { KNXPropertyModal } from '../../modal/KNXPropertyModal'
 import { OPCUAPropertyModal } from '../../modal/OPCUAPropertyModal'
 import { OPCUAWriteModal } from '../../modal/OPCUAWriteModal'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
 const { DeleteIcon, EditIcon } = icon.carbon
@@ -497,9 +500,9 @@ watch(
   padding: 0 16px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 16px;
     font-weight: bold;
-    color: #ffffffed;
     font-style: normal;
     text-transform: none;
   }
@@ -536,8 +539,8 @@ watch(
   }
 
   &-button {
-    width: 88px;
-    height: 32px;
+    width: 78px;
+    height: 34px;
     border-radius: 2px;
     font-size: 14px;
     display: flex;
@@ -545,12 +548,8 @@ watch(
     align-items: center;
     cursor: pointer;
 
-    &-color1 {
-      background-color: #{$--color-dark-button1};
-    }
-
     &-color2 {
-      background-color: #{$--color-dark-button2};
+      @include fetch-bg-color('card-background-2');
       border: 1px solid #{$--color-dark-button2-border};
     }
   }

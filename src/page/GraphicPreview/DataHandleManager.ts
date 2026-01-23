@@ -110,15 +110,14 @@ export default class DataHandleManager extends DataManager {
 
         callbackInfos.forEach(({ callback, pointType }) => {
           try {
-            if (item.value) {
-              let load = cloneDeep(item.value)
-              if (item.value === true || item.value === 'true') {
-                load = 1
-              } else if (item.value === false || item.value === 'false') {
-                load = 0
-              }
-              callback(load, pointType)
+            let load = cloneDeep(item.value)
+            if (item.value === true || item.value === 'true') {
+              load = 1
+            } else if (item.value === false || item.value === 'false') {
+              load = 0
             }
+            //console.log(`Updating point ${item.metric_id} with value:`, load, pointType)
+            callback(load, pointType)
           } catch (err) {
             console.error(`Error executing callback for point ${item.metric_id}`, err)
           }

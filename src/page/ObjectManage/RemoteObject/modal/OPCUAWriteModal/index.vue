@@ -13,22 +13,14 @@
           <span class="modal-title">
             {{ $t('device.set_value_title') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
 
       <div>
-        <n-input
-          type="text"
-          v-model:value="value"
-          style="width: 100%; margin-top: 20px"
-        ></n-input>
+        <n-input type="text" v-model:value="value" style="width: 100%; margin-top: 20px"></n-input>
       </div>
 
       <template #footer>
@@ -45,8 +37,10 @@
 
 <script setup lang="ts">
 import { readIotPoints } from '@/api/http'
-import SVG_ICON from '@/svg/SVG_ICON'
+import { icon } from '@/plugins'
 import { onMounted, ref, inject } from 'vue'
+
+const { CloseOutlineIcon } = icon.ionicons5
 
 let emit = defineEmits(['update:isShowModal'])
 
@@ -99,7 +93,7 @@ const onSubmit = async () => {
     }
 
     if (res.data === false) {
-        window['$message'].warning(window['$t']('msg.msg_error_2'))
+      window['$message'].warning(window['$t']('msg.msg_error_2'))
     }
 
     //refreshObjTable()
@@ -118,12 +112,13 @@ const onClose = () => {
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 480px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
     color: #{$--color-dark-font};
     font-style: normal;
@@ -132,8 +127,8 @@ const onClose = () => {
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 20px;

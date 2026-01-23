@@ -7,19 +7,16 @@
       size="small"
       :mask-closable="false"
       class="modal"
+      :class="{ 'dark-theme': designStore.darkTheme }"
     >
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="modal-title">
             {{ $t('device.detail') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
       <div class="modal-content">
@@ -186,7 +183,6 @@
 </template>
 
 <script setup lang="ts">
-import SVG_ICON from '@/svg/SVG_ICON'
 import { onMounted, computed, ref, reactive, inject, watch, onUnmounted } from 'vue'
 import {
   PROPERTY_TYPE_MAP,
@@ -203,9 +199,12 @@ import { icon } from '@/plugins'
 import { readIotPoints, readMetricById } from '@/api/http'
 import { msghandle } from '@/utils'
 import { SetPresentValueModal } from '../SetPresentValueModal'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
 
 const { EditIcon } = icon.carbon
-const { CloseIcon, CheckmarkIcon } = icon.ionicons5
+const { CloseIcon, CheckmarkIcon, CloseOutlineIcon } = icon.ionicons5
 
 const props = defineProps({
   isShowModal: {
@@ -342,7 +341,7 @@ const enterEditMode = (key: string) => {
       options.value = BinaryOption.value
     } else if (type.value === TypeEnum.MV) {
       options.value = MVOption.value
-    } 
+    }
     isShow.value = true
   } else {
     editStates[key] = true
@@ -431,14 +430,16 @@ const updateInfo = async () => {
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 720px;
-  background: #{$--color-dark-modal-content};
+
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
+
     font-style: normal;
     text-transform: none;
     font-weight: bold;
@@ -450,7 +451,9 @@ const updateInfo = async () => {
     overflow-y: auto;
 
     &-editstyle {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      @include fetch-theme-custom('border-bottom-color', 'property-color');
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
     }
 
     &-item {
@@ -459,9 +462,9 @@ const updateInfo = async () => {
     }
 
     &-porperty {
+      @include fetch-theme-custom('color', 'property-color');
       font-weight: 400;
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
       line-height: 17px;
       text-align: left;
       font-style: normal;
@@ -469,8 +472,10 @@ const updateInfo = async () => {
     }
 
     &-value {
-      color: rgba(255, 255, 255, 0.38);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      @include fetch-theme-custom('color', 'value-color');
+      @include fetch-theme-custom('border-bottom-color', 'property-color');
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
     }
 
     &-editvalue {
@@ -486,9 +491,9 @@ const updateInfo = async () => {
       min-height: 32px;
 
       &-item {
+        @include fetch-theme-custom('color', 'property-color');
         height: 32px;
         font-size: 14px;
-        color: rgba(255, 255, 255, 0.6);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -517,7 +522,9 @@ const updateInfo = async () => {
   }
 }
 
-::v-deep(.n-collapse-item__header-main) {
-  color: rgba(255, 255, 255, 0.6) !important;
+.dark-theme {
+  ::v-deep(.n-collapse-item__header-main) {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
 }
 </style>

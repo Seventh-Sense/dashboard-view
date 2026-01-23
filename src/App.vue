@@ -9,7 +9,7 @@
   >
     <a-config-provider :locale="lang.getLang === 'ZH' ? zhCN : enUS"
       :theme="{
-        algorithm: theme.darkAlgorithm
+        algorithm: darkTheme ? theme.darkAlgorithm : theme.defaultAlgorithm
       }"
     >
       <!-- <n-theme-editor> -->

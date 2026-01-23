@@ -7,19 +7,16 @@
       size="small"
       :mask-closable="false"
       class="modal"
+      :class="{ 'dark-theme': designStore.darkTheme }"
     >
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="modal-title">
             {{ $t('device.add_point') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
 
@@ -150,11 +147,13 @@ import { createModbusPoint, readIotPoints, updateIotPoints } from '@/api/http'
 import { MODBUS_ID_MAP } from '../../utils/propertyMap'
 import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash-es'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
 
+const designStore = useDesignStore()
 const t = window['$t']
 
 const { EditIcon } = icon.carbon
-const { CloseIcon, CheckmarkIcon } = icon.ionicons5
+const { CloseIcon, CheckmarkIcon, CloseOutlineIcon } = icon.ionicons5
 
 interface EditState {
   [key: string]: boolean
@@ -544,14 +543,14 @@ watch(
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 640px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 20px;
@@ -577,7 +576,9 @@ watch(
   }
 
   &-editstyle {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    @include fetch-theme-custom('border-bottom-color', 'property-color');
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
   }
 
   &-editvalue {
@@ -588,10 +589,6 @@ watch(
   }
 }
 
-::v-deep(.n-input-wrapper) {
-  background-color: #{$--color-dark-modal-content};
-}
-
 // ::v-deep(.n-input__input-el) {
 //   border-bottom: 1px solid #{$--color-dark-modal-title};
 // }
@@ -600,19 +597,25 @@ watch(
 //   border-bottom: 1px solid #{$--color-dark-modal-title};
 // }
 
-::v-deep(.n-base-selection) {
-  --n-border: 0 !important;
-  --n-border-active: 0 !important;
-  --n-border-hover: 0 !important;
-  --n-border-focus: 0 !important;
-  --n-box-shadow-active: 0 !important;
-  --n-box-shadow-focus: 0 !important;
-  --n-color-active: #{$--color-dark-modal-content} !important;
-  --n-color-disabled: #{$--color-dark-modal-content} !important;
-  --n-padding-single: 0 26px 0 0 !important;
-}
+.dark-theme {
+  ::v-deep(.n-base-selection) {
+    --n-border: 0 !important;
+    --n-border-active: 0 !important;
+    --n-border-hover: 0 !important;
+    --n-border-focus: 0 !important;
+    --n-box-shadow-active: 0 !important;
+    --n-box-shadow-focus: 0 !important;
+    --n-color-active: #{$--color-dark-modal-content} !important;
+    --n-color-disabled: #{$--color-dark-modal-content} !important;
+    --n-padding-single: 0 26px 0 0 !important;
+  }
 
-::v-deep(.n-base-selection-label) {
-  background-color: #{$--color-dark-modal-content};
+  ::v-deep(.n-base-selection-label) {
+    background-color: #{$--color-dark-modal-content};
+  }
+
+  ::v-deep(.n-input-wrapper) {
+    background-color: #{$--color-dark-modal-content};
+  }
 }
 </style>

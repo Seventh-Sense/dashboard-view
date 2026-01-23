@@ -42,8 +42,8 @@ watch(
   margin-bottom: 32px;
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 22px;

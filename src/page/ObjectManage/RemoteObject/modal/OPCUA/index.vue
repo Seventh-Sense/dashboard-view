@@ -34,14 +34,14 @@
       <Icon
         name="folderOpen"
         type="mono-line"
-        :color="{ normal: '#ffffff' }"
+        :color="{ normal: designStore.darkTheme ?'#ffffff': '#000000' }"
         :size="24"
         @click="onUploadFile('certificate')"
       />
       <Icon
         name="delete"
         type="mono-line"
-        :color="{ normal: '#ffffff' }"
+        :color="{ normal: designStore.darkTheme ?'#ffffff': '#000000' }"
         :size="24"
         @click="onDeleteFile('certificate')"
       />
@@ -53,14 +53,14 @@
       <Icon
         name="folderOpen"
         type="mono-line"
-        :color="{ normal: '#ffffff' }"
+        :color="{ normal: designStore.darkTheme ?'#ffffff': '#000000' }"
         :size="24"
         @click="onUploadFile('private_key')"
       />
       <Icon
         name="delete"
         type="mono-line"
-        :color="{ normal: '#ffffff' }"
+        :color="{ normal: designStore.darkTheme ?'#ffffff': '#000000' }"
         :size="24"
         @click="onDeleteFile('private_key')"
       />
@@ -74,6 +74,9 @@
 import { computed, ref, watch } from 'vue'
 import { MessageSecurityOptions, SecurityPolicyOptions } from '../../utils/utils'
 import { Icon } from '@/icon/index'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
 
 const props = defineProps({
   isEdit: {
@@ -257,8 +260,8 @@ watch(
   overflow-x: hidden;
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 22px;

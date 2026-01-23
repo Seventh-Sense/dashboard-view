@@ -30,10 +30,7 @@ export const useThemeOverridesHook = () => {
         colorLoading: getAppTheme.value
       },
       DataTable: {
-        thColor: 'rgba(32, 30, 43, 1)',
-        tdColor: 'rgb(25, 22, 42, 1)',
-        tdColorHover: 'rgb(25, 22, 42, 1)',
-        tdTextColor: 'rgba(255, 255, 255, 0.93)',
+
       },
       Dropdown: {
         borderRadius: '6px',

@@ -7,19 +7,16 @@
       size="small"
       :mask-closable="false"
       class="modal"
+      :class="{ 'dark-theme': designStore.darkTheme }"
     >
       <template #header>
         <n-space justify="space-between" align="center">
           <span class="modal-title">
             {{ $t('device.add_device') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
 
@@ -79,9 +76,14 @@ import {
   OPCUAData
 } from '../../utils/utils'
 import { loadAsyncComponent, validateIPv4 } from '@/utils'
-import SVG_ICON from '@/svg/SVG_ICON'
 import { addDevice } from '@/api/http'
 import { cloneDeep } from 'lodash'
+import { icon } from '@/plugins'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
+
+const { CloseOutlineIcon } = icon.ionicons5
 
 const props = defineProps({
   isShowModal: {
@@ -493,28 +495,29 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 720px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 27px;
   }
 
   &-button-close {
+    @include fetch-bg-color('card-background-2');
     width: 64px;
     height: 32px;
     display: flex;
@@ -522,7 +525,6 @@ onMounted(() => {
     align-items: center;
     border: 1px solid #{$--color-dark-border};
     border-radius: 2px;
-    background-color: #{$--color-dark-card-image};
     cursor: pointer;
   }
 
@@ -534,32 +536,33 @@ onMounted(() => {
   }
 }
 
-::v-deep(.n-input) {
-  background-color: transparent;
-}
+.dark-theme {
+  ::v-deep(.n-input) {
+    background-color: transparent;
+  }
 
-::v-deep(.n-input-wrapper) {
-  background-color: #{$--color-dark-modal-content};
-  border-bottom: 1px solid #{$--color-dark-modal-title};
-}
+  ::v-deep(.n-input-wrapper) {
+    background-color: #{$--color-dark-modal-content};
+    border-bottom: 1px solid #{$--color-dark-modal-title};
+  }
 
-::v-deep(.n-select) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
-}
+  ::v-deep(.n-select) {
+    border-bottom: 1px solid #{$--color-dark-modal-title};
+  }
 
-::v-deep(.n-base-selection) {
-  --n-border: 0 !important;
-  --n-border-active: 0 !important;
-  --n-border-hover: 0 !important;
-  --n-border-focus: 0 !important;
-  --n-box-shadow-active: 0 !important;
-  --n-box-shadow-focus: 0 !important;
-  --n-color-active: #{$--color-dark-modal-content} !important;
-  --n-color-disabled: #{$--color-dark-modal-content} !important;
-  --n-padding-single: 0 26px 0 0 !important;
-}
-
-::v-deep(.n-base-selection-label) {
-  background-color: #{$--color-dark-modal-content};
+  ::v-deep(.n-base-selection) {
+    --n-border: 0 !important;
+    --n-border-active: 0 !important;
+    --n-border-hover: 0 !important;
+    --n-border-focus: 0 !important;
+    --n-box-shadow-active: 0 !important;
+    --n-box-shadow-focus: 0 !important;
+    --n-color-active: #{$--color-dark-modal-content} !important;
+    --n-color-disabled: #{$--color-dark-modal-content} !important;
+    --n-padding-single: 0 26px 0 0 !important;
+  }
+  ::v-deep(.n-base-selection-label) {
+    background-color: #{$--color-dark-modal-content};
+  }
 }
 </style>

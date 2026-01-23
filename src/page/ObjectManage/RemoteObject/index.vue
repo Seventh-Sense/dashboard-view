@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" :class="{ 'dark-theme': designStore.darkTheme }">
     <div v-if="!isToggle" class="project-card">
       <div class="project-card-top">
         <div class="project-card-top-title">{{ $t('device.device_list') }}</div>
@@ -10,17 +10,11 @@
             placement="bottom-end"
             @select="handleSelect"
           >
-            <img width="24" height="24" :src="SVG_ICON.card_icons.list" style="cursor: pointer" />
+            <n-icon size="24" :depth="1" style="cursor: pointer">
+              <ListIcon />
+            </n-icon>
           </n-dropdown>
         </n-space>
-        <!-- <n-space>
-          <div class="content-button" @click="importAllDevices">
-            {{ $t('device.import_devices') }}
-          </div>
-          <div class="content-button" @click="exportAllDevices">
-            {{ $t('device.export_devices') }}
-          </div>
-        </n-space> -->
       </div>
       <div class="project-card-filter">
         <div class="project-card-filter-left">
@@ -54,29 +48,27 @@
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.dataIndex === 'link'">
-              <img
-                width="24"
-                height="24"
-                :src="SVG_ICON.card_icons.file"
+              <n-icon
+                size="26"
+                :depth="1"
                 @click="onEnter(record)"
-                style="cursor: pointer"
-              />
+                style="margin-top: 6px; cursor: pointer"
+              >
+                <EnterOutlineIcon />
+              </n-icon>
             </template>
             <template v-else-if="column.dataIndex === 'actions'">
-              <img
-                width="24"
-                height="24"
-                :src="SVG_ICON.card_icons.edit"
-                style="cursor: pointer; margin-right: 40px"
+              <n-icon
+                size="24"
+                :depth="1"
                 @click="onEdit(record)"
-              />
-              <img
-                width="24"
-                height="24"
-                :src="SVG_ICON.card_icons.delete_red"
-                style="cursor: pointer"
-                @click="deleteRow(record)"
-              />
+                style="margin-right: 40px; cursor: pointer"
+              >
+                <EditIcon />
+              </n-icon>
+              <n-icon size="24" :depth="1" @click="deleteRow(record)" style="cursor: pointer">
+                <DeleteIcon />
+              </n-icon>
             </template>
             <template v-else-if="column.dataIndex === 'enabled'">
               <n-switch v-model:value="record.enabled" @click="onChange(record)" />
@@ -107,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, provide, computed } from 'vue'
+import { ref, onMounted, provide, computed, watch } from 'vue'
 import { NButton, DropdownOption } from 'naive-ui'
 import {
   DeviceTableData,
@@ -119,8 +111,6 @@ import {
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
 import { PropertyDisplayModal } from './modal/PropertyDisplayModal'
-import SVG_ICON from '@/svg/SVG_ICON'
-import { renderImage } from '@/utils'
 import {
   setDeviceEnable,
   getDeviceList,
@@ -131,6 +121,13 @@ import {
 } from '@/api/http'
 import jsonList from '@/assets/data/Property.json'
 import { deviceTrans } from './utils/propertyMap'
+import { icon } from '@/plugins'
+import { renderIcon } from '@/utils'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
+
+const designStore = useDesignStore()
+const { ListIcon, RefreshIcon, EnterOutlineIcon } = icon.ionicons5
+const { DocumentExportIcon, DocumentImportIcon, DeleteIcon, EditIcon } = icon.carbon
 
 const t = window['$t']
 
@@ -190,8 +187,17 @@ const columns = [
   { title: '', dataIndex: 'actions', width: 120 }
 ]
 
+const searchBottom = ref('rgba(255, 255, 255, 0.6)')
+// const cssStyle = ref({
+//   searchBottom: 'rgba(255, 255, 255, 0.6)'
+// })
+
+const setGlobalCssVar = () => {
+  document.documentElement.style.setProperty('--search-bottom', searchBottom.value)
+}
+
 onMounted(() => {
-  //console.log(height.value)
+  setGlobalCssVar()
   initData()
 })
 
@@ -343,17 +349,17 @@ const options: any[] = [
   {
     label: () => t('device.import_devices'),
     key: '1',
-    icon: renderImage(SVG_ICON.card_icons.import_, '', 24, 24)
+    icon: renderIcon(DocumentImportIcon)
   },
   {
     label: () => t('device.export_devices'),
     key: '2',
-    icon: renderImage(SVG_ICON.card_icons.export_, '', 24, 24)
+    icon: renderIcon(DocumentExportIcon)
   },
   {
     label: () => t('device.refresh'),
     key: '3',
-    icon: renderImage(SVG_ICON.card_icons.restart, '', 24, 24)
+    icon: renderIcon(RefreshIcon)
   }
 ]
 
@@ -426,6 +432,16 @@ const handleFileUpload = (event: Event) => {
   reader.readAsArrayBuffer(file)
 }
 
+watch(
+  () => designStore.darkTheme,
+  isDarkTheme => {
+    console.log('isDarkTheme', isDarkTheme)
+    searchBottom.value = isDarkTheme ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)'
+    setGlobalCssVar()
+  },
+  { immediate: true }
+)
+
 provide('deviceList', data)
 provide('refreshFunc', initData)
 </script>
@@ -450,9 +466,9 @@ provide('refreshFunc', initData)
       padding: 0 16px;
 
       &-title {
+        @include fetch-theme-custom('color', 'modal-font-color');
         font-size: 16px;
         font-weight: bold;
-        color: #ffffffed;
         font-style: normal;
         text-transform: none;
         font-family: Source Han Sans SC, Source Han Sans SC;
@@ -460,8 +476,8 @@ provide('refreshFunc', initData)
 
       &-extra {
         &-button {
-          width: 64px;
-          height: 32px;
+          width: 78px;
+          height: 34px;
           border-radius: 2px;
           font-size: 14px;
         }
@@ -487,17 +503,26 @@ provide('refreshFunc', initData)
   }
 }
 
-.content-button {
-  width: 88px;
-  height: 32px;
-  border-radius: 2px;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  background-color: #{$--color-dark-button2};
-  border: 1px solid #{$--color-dark-button2-border};
+.dark-theme {
+  :deep(.ant-table-cell-row-hover) {
+    background: rgba(255, 255, 255, 0.07) !important;
+  }
+
+  .ant-table-striped :deep(.table-striped2) td {
+    background: rgba(255, 255, 255, 0.07) !important;
+  }
+
+  .ant-table-striped :deep(.table-striped2):hover td {
+    background: rgba(255, 255, 255, 0.07) !important;
+  }
+}
+
+::v-deep(.n-input) {
+  background: transparent;
+}
+
+::v-deep(.n-input--focus) {
+  background: transparent !important;
 }
 
 :deep(.ant-table) {
@@ -521,10 +546,6 @@ provide('refreshFunc', initData)
   background: transparent !important;
 }
 
-:deep(.ant-table-cell-row-hover) {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
 :deep(.ant-table-cell) {
   height: 44px !important;
   padding: 0 8px !important;
@@ -540,14 +561,6 @@ provide('refreshFunc', initData)
   background-color: transparent !important;
 }
 
-.ant-table-striped :deep(.table-striped2) td {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
-.ant-table-striped :deep(.table-striped2):hover td {
-  background: rgba(255, 255, 255, 0.07) !important;
-}
-
 .ant-table-striped :deep(.table-striped2) td:first-child {
   border-radius: 8px 0 0 8px !important;
 }
@@ -560,15 +573,7 @@ provide('refreshFunc', initData)
   margin-left: 12px !important;
 }
 
-::v-deep(.n-input) {
-  background: transparent;
-}
-
-::v-deep(.n-input--focus) {
-  background: transparent !important;
-}
-
 ::v-deep(.n-input-wrapper) {
-  border-bottom: 1px solid #{$--color-dark-modal-title};
+  border-bottom: 1px solid var(--search-bottom);
 }
 </style>

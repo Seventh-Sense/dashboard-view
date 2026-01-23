@@ -13,13 +13,9 @@
           <span class="modal-title">
             {{ $t('device.add_point') }}
           </span>
-          <img
-            style="cursor: pointer"
-            @click="onClose"
-            width="24"
-            height="24"
-            :src="SVG_ICON.card_icons.dismiss"
-          />
+          <n-icon size="40" :depth="1" @click="onClose" style="cursor: pointer">
+            <CloseOutlineIcon />
+          </n-icon>
         </n-space>
       </template>
 
@@ -66,6 +62,9 @@ import { NIcon } from 'naive-ui'
 import { ChevronForward, Leaf, LeafOutline } from '@vicons/ionicons5'
 import type { TreeOption } from 'naive-ui'
 import { OPCUATreeNode as TreeNode } from '../../utils/utils'
+import { icon } from '@/plugins'
+
+const { CloseOutlineIcon } = icon.ionicons5
 
 const t = window['$t']
 
@@ -311,22 +310,22 @@ const onClose = () => {
 
 <style lang="scss" scoped>
 .modal {
+  @include fetch-bg-color('modal-content-background');
   width: 800px;
-  background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
 
   &-title {
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
-    color: #{$--color-dark-font};
     font-style: normal;
     text-transform: none;
     font-weight: bold;
   }
 
   &-porperty {
+    @include fetch-theme-custom('color', 'property-color');
     font-size: 12px;
-    color: #{$--color-dark-modal-title};
     font-style: normal;
     font-weight: 400;
     margin-top: 20px;

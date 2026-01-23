@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue'
+import { ref, watch, onMounted, onUnmounted, toRefs } from 'vue'
 import { asideWidth } from '@/settings/designSetting'
 import { useRoute } from 'vue-router'
 import { useSettingStore } from '@/store/modules/settingStore/settingStore'
@@ -60,7 +60,9 @@ import { menuOptionsInit, expandedKeys } from './menu'
 import SVG_ICON from '@/svg/SVG_ICON'
 import { MenuOption } from 'naive-ui'
 import { useRouter } from 'vue-router'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
 
+const designStore = useDesignStore()
 const router = useRouter()
 const collapsed = ref<boolean>(false)
 const { getAsideCollapsedWidth } = toRefs(useSettingStore())
@@ -78,7 +80,12 @@ const watchWidth = () => {
   } else collapsed.value = false
 }
 
+const listColor = ref(
+  'radial-gradient(farthest-side at 50% 100%, rgba(138, 23, 249, 1) 0%, rgba(70, 38, 143, 1) 100%)'
+)
+
 onMounted(() => {
+  setGlobalCssVar()
   window.addEventListener('resize', watchWidth)
 })
 
@@ -100,6 +107,22 @@ const onSelcet = (key: string, item: MenuOption) => {
     name: key
   })
 }
+
+const setGlobalCssVar = () => {
+  document.documentElement.style.setProperty('--list-color', listColor.value)
+}
+
+watch(
+  () => designStore.darkTheme,
+  isDarkTheme => {
+    console.log('isDarkTheme', isDarkTheme)
+    listColor.value = isDarkTheme
+      ? 'radial-gradient(farthest-side at 50% 100%, rgba(138, 23, 249, 1) 0%, rgba(70, 38, 143, 1) 100%)'
+      : 'radial-gradient(farthest-side at 50% 100%, rgba(204, 246, 254, 1) 0%, rgba(4, 152, 254, 1) 100%)'
+    setGlobalCssVar()
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -157,7 +180,7 @@ $siderHeight: 100vh;
 }
 
 :deep(.n-menu-item-content--selected)::before {
-  background-image: #{$--color-dark-menu-title-select};
+  background-image: var(--list-color) !important;
 }
 
 :deep(.n-menu-item-content) {
