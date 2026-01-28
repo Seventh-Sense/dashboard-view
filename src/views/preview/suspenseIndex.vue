@@ -89,16 +89,12 @@ keyRecordHandle()
 
 onMounted(async () => {
   try {
-    //const previewResult = await getPreviewInfo()
-    //console.log('getPreviewInfo 执行完成', previewResult)
-
     //获取各种类型额外属性
     const params = await getBindParams(chartEditStore.componentList)
     if (params) {
       chartEditStore.componentList = params
     }
 
-    //console.log('chartEditStore', params)
     readValues(chartEditStore.componentList)
   } catch (error) {
     console.error('Error during onMounted:', error)
@@ -140,17 +136,19 @@ const readValues = (dataList: any[]) => {
 }
 
 const readPointValue = (load: any) => {
-  readPointsDataById(load)
-    .then((res: any) => {
-      if (res.status === 'OK') {
-        chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
-      } else {
-        console.log('no data!')
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  if (load.length > 0) {
+    readPointsDataById(load)
+      .then((res: any) => {
+        if (res.status === 'OK') {
+          chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
+        } else {
+          console.log('no data!')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 </script>
 

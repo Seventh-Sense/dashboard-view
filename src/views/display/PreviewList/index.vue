@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive} from 'vue'
+import { computed, onMounted, onUnmounted, reactive } from 'vue'
 import { ChartEditStorageType } from '@/views/preview'
 import { getEditCanvasConfigStyle, dragCanvas, keyRecordHandle } from '@/views/preview/utils'
 import { getFilterStyle, JSONParse } from '@/utils'
@@ -213,11 +213,11 @@ keyRecordHandle()
 
 onMounted(async () => {
   try {
-    if(chartData.componentList.length === 0) {
+    if (chartData.componentList.length === 0) {
       console.warn('onMounted: 组件列表为空，跳过数据绑定')
       return
     }
-    
+
     const params = await getBindParams(chartData.componentList)
     if (params && params.length > 0) {
       chartData.componentList = params
@@ -248,17 +248,19 @@ const readValues = (dataList: any[]) => {
 }
 
 const readPointValue = (load: any) => {
-  readPointsDataById(load)
-    .then((res: any) => {
-      if (res.status === 'OK') {
-        chartData.componentList = writeValue(chartData.componentList, res.data)
-      } else {
-        console.log('no data!')
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  if (load.length > 0) {
+    readPointsDataById(load)
+      .then((res: any) => {
+        if (res.status === 'OK') {
+          chartData.componentList = writeValue(chartData.componentList, res.data)
+        } else {
+          console.log('no data!')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 
 onUnmounted(() => {

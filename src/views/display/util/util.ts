@@ -88,8 +88,6 @@ export const getBindParams = async (dataList: any[]) => {
 
   const processedPoints = await handleBinding(bindPoints)
 
-  //console.log('处理后的绑定点:', processedPoints)
-
   return dataList.map(data => {
     const matchPoint = processedPoints.find(
       point =>
@@ -123,7 +121,6 @@ const handleBinding = async (bindPoints: any[]) => {
     // 补充设备类型信息（使用map而非修改原数组）
     const pointsWithDeviceType = bindPoints.map(point => {
       const deviceInfo = res.data.find((device: any) => device.id === point.device_id)
-      //console.log('匹配设备信息:', deviceInfo, res)
       return {
         ...point,
         device_type: deviceInfo?.protocol || 'unknown',
@@ -131,15 +128,39 @@ const handleBinding = async (bindPoints: any[]) => {
       }
     })
 
+    //仅筛选出device_type为bacnet且device_id非空的项
+    const bacnetPoints = pointsWithDeviceType.filter(
+      item => item.device_type === 'bacnet' && item.device_id !== ''
+    )
+
+    // 提取bacnet设备的唯一device_id
+    const uniqueBacnetDeviceIds = [...new Set(bacnetPoints.map(item => item.device_id))]
+
+    let loadData: any = {}
+    if (uniqueBacnetDeviceIds.length > 0) {
+      await Promise.all(
+        uniqueBacnetDeviceIds.map(async deviceId => {
+          const ress: any = await readPointValue(deviceId)
+          if (ress.status === 'OK' && Array.isArray(ress.data) && ress.data.length > 0) {
+            // 以device_id为key，存储对应数据，后续直接取值
+            loadData[deviceId] = ress.data
+          }
+        })
+      )
+    }
+
     // 处理不同协议类型的点位，并行执行异步操作
     const processedPoints = await Promise.all(
-      pointsWithDeviceType.map(async point => {
+      pointsWithDeviceType.map(point => {
         // 根据设备类型补充协议特定属性
         switch (point.device_type) {
           case 'bacnet':
-            const bacnetProperty = await handleBacnetBinding(point)
-            return { ...point, property: bacnetProperty }
+            const deviceData = loadData[point.device_id]
+            const bacnetProperty = deviceData
+              ? handleBacnetBinding(point, deviceData)
+              : { priority: 16 }
 
+            return { ...point, property: bacnetProperty }
           case 'modbus':
             // TODO: modbus协议处理逻辑
             return { ...point, property: {} }
@@ -165,27 +186,18 @@ const handleBinding = async (bindPoints: any[]) => {
   }
 }
 
-/**
- * 处理BACnet点位绑定，获取优先级和标识符
- * @param point 点位信息
- * @returns 包含优先级的Promise对象
- */
-const handleBacnetBinding = async (point: any) => {
+const handleBacnetBinding = (point: any, resData: any) => {
   const DEFAULT_PRIORITY = 16 // 默认优先级
 
   try {
-    const res = await readPointValue(point.device_id)
-
-    if (!res.data?.length) {
+    if (!Array.isArray(resData)) {
       return { priority: DEFAULT_PRIORITY }
     }
 
-    const load = res.data.find((item: any) => item.metric_id === point.object_id)
+    const load = resData.find((item: any) => item.metric_id === point.object_id)
     if (!load) {
       return { priority: DEFAULT_PRIORITY }
     }
-
-    //console.log('Bacnet点位数据:', load)
 
     // 获取优先级数组
     const priorityArray = load.property['priority-array']
