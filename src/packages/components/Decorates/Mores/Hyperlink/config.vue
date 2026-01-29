@@ -88,7 +88,7 @@ onMounted(() => {
   if (config && Array.isArray(config)) {
     config.forEach(item => {
       //const href = `/#/chart/preview/${item.id}`
-      options.value.push({ label: item.name, value: item.id})
+      options.value.push({ label: item.title, value: item.id})
     })
   }
 })

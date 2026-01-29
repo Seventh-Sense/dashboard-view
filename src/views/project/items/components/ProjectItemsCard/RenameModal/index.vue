@@ -36,7 +36,9 @@ import { ref, watch, inject, onMounted } from 'vue'
 import { icon } from '@/plugins'
 import { readProject, updateProject } from '@/api/http'
 import { JSONParse } from '@/utils'
+import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
 
+const { renameHandle } = useDataListInit()
 const { CloseOutlineIcon } = icon.ionicons5
 
 const props = defineProps({
@@ -50,7 +52,6 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['close'])
-const initTable: any = inject('initTable')
 
 const t = window['$t']
 
@@ -77,7 +78,6 @@ const readData = () => {
     .then((res: any) => {
       if (res.status === 'OK' && res.data && res.data.content !== '') {
         data.value = JSONParse(res.data.content)
-        console.log('res.data', res.data, data.value)
         project_type.value = res.data.description
       }
     })
@@ -116,12 +116,12 @@ const setName = async (shouldUpdateContent: boolean) => {
 
     const res: any = await updateProject(props.cardData.id, updateData)
 
-    if (res.status !== 'OK') {
+    if (res?.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
       return
     }
 
-    await initTable()
+    renameHandle(res?.data)
   } catch (e) {
     console.error('onChange:', e)
   } finally {

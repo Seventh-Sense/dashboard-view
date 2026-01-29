@@ -113,6 +113,7 @@ const options: any[] = [
 ]
 
 onMounted(() => {
+  //权限管理
   isShow.value = getLoginUser()
 
   initTable()
@@ -122,11 +123,11 @@ const initTable = async () => {
   flag.value = true
 
   try {
-    deleteAll()
+    list.value = []
 
     const res: any = await readProjectList()
 
-    if (res.status !== 'OK') {
+    if (res?.status !== 'OK') {
       console.warn('Non-OK response status:', res.status)
       return
     }
@@ -134,36 +135,23 @@ const initTable = async () => {
     //存储projectList
     await localforage.setItem('ProjectList', res.data)
 
-    res.data.forEach((item: any) => {
+    res.data.map((item: any) => {
       addProject(item)
     })
-    storageInfo(res.data)
+
+    setLocalStorage('ProjectInfo', list.value)
   } catch (e) {
-    console.error('onChange:', e)
+    console.error('initTable error occurred:', e)
   } finally {
     flag.value = false
   }
 }
 
-//保存项目信息
-const storageInfo = (res: any[]) => {
-  let array: any[] = []
-
-  res.forEach(item => {
-    array.push({
-      name: item.name,
-      id: item.id,
-      type: item.description
-    })
-  })
-
-  setLocalStorage('ProjectInfo', array)
-}
+//重命名项目的回调函数
+const rProjectCallback = () => {}
 
 const onPreview = async () => {
-  const list: any = await localforage.getItem('ProjectList')
-
-  if (list.length > 0) {
+  if (list.value.length > 0) {
     routerTurnByName(PageEnum.BASE_VANT_NAME, true)
   }
 }
@@ -190,8 +178,6 @@ const handleSelect = (key: string | number, option: DropdownOption, event: Mouse
 const clearAll = async () => {
   if (list.value.length === 0) return
 
-  console.log('clearAll called', list.value)
-
   try {
     const validPromiseList = list.value
       .filter(item => item?.id)
@@ -212,10 +198,7 @@ const clearAll = async () => {
 
     await Promise.all(validPromiseList)
 
-    list.value = []
-
-    //同步缓存
-    await localforage.setItem('ProjectList', [])
+    deleteAll()
   } catch (error) {
     console.error('Error deleting project:', error)
   }

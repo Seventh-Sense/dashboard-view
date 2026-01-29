@@ -125,7 +125,6 @@ const previewHandle = () => {
 }
 
 const renameHandle = () => {
-  console.log('renameHandle', props.cardData)
   modalShow.value = true
   //emit('rename', props.cardData)
 }

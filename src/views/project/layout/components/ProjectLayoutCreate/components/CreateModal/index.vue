@@ -26,7 +26,9 @@
       </div>
       <template #footer>
         <n-space justify="end">
-          <n-button @click="onPositiveClick" style="width: 78px;height: 34px;">{{ $t('global.r_create') }}</n-button>
+          <n-button @click="onPositiveClick" style="width: 78px; height: 34px">
+            {{ $t('global.r_create') }}
+          </n-button>
         </n-space>
       </template>
     </n-card>
@@ -34,15 +36,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, inject, onMounted, computed } from 'vue'
+import { ref, inject, computed } from 'vue'
 import { icon } from '@/plugins'
 import { createProject } from '@/api/http'
 import { JSONStringify } from '@/utils'
+import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
 
 const { CloseOutlineIcon } = icon.ionicons5
 
 const t = window['$t']
 const initTable: any = inject('initTable')
+const { addProject } = useDataListInit()
 
 const emit = defineEmits(['update:modelShow'])
 
@@ -73,45 +77,47 @@ const options: any[] = [
 ]
 
 const onPositiveClick = async () => {
-  if (paramCheck()) {
-    try {
-      let load: any = ''
+  if (!paramCheck()) return
 
-      if (decs.value === 'graphic') {
-        load = {
-          useTemplate: false,
-          templateRef: '',
-          data: '',
-          previewImage: '',
-          options: '',
-          reference: '',
-          name: project_name.value,
-          description: null,
-          type: 'graphic',
-          digitalTags: [],
-          lastUpdateTime: ''
-        }
-      }
+  try {
+    let load = {}
 
-      const res: any = await createProject({
+    if (decs.value === 'graphic') {
+      load = {
+        useTemplate: false,
+        templateRef: '',
+        data: '',
+        previewImage: '',
+        options: '',
+        reference: '',
         name: project_name.value,
-        cover: '',
-        content: JSONStringify(load),
-        description: decs.value
-      })
-
-      if (res.status !== 'OK') {
-        console.warn('Non-OK response status:', res.status)
-        return
+        description: null,
+        type: 'graphic',
+        digitalTags: [],
+        lastUpdateTime: ''
       }
-
-      initTable()
-    } catch (e) {
-      console.error('onChange:', e)
-    } finally {
-      project_name.value = ''
-      emit('update:modelShow', false)
     }
+
+    const projectCommonParams = {
+      name: project_name.value,
+      cover: '',
+      content: JSONStringify(load),
+      description: decs.value
+    }
+
+    const res: any = await createProject(projectCommonParams)
+
+    if (res?.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return
+    }
+
+    addProject(res?.data)
+  } catch (e) {
+    console.error('Failed to handle onPositiveClick:', e);
+  } finally {
+    project_name.value = ''
+    emit('update:modelShow', false)
   }
 }
 
@@ -154,7 +160,7 @@ $cardWidth: 570px;
   transform: translateX(-50%);
 
   &-title {
-    @include fetch-theme-custom('color','modal-font-color');
+    @include fetch-theme-custom('color', 'modal-font-color');
     font-size: 20px;
     font-style: normal;
     text-transform: none;
@@ -184,7 +190,7 @@ $cardWidth: 570px;
     }
 
     &-title {
-      @include fetch-theme-custom('color','modal-font-color');
+      @include fetch-theme-custom('color', 'modal-font-color');
       font-size: 16px;
       font-weight: bold;
       margin-top: 16px;

@@ -1,12 +1,14 @@
 import { onMounted, ref } from 'vue'
-import { goDialog } from '@/utils'
+import { goDialog, setLocalStorage } from '@/utils'
 import { DialogEnum } from '@/enums/pluginEnum'
 import { ChartList } from '../../..'
 import { deleteProject, readProjectList } from '@/api/http'
 import localforage from '@/utils/localforage'
+
+const list = ref<ChartList>([])
+
 // 数据初始化
 export const useDataListInit = () => {
-  const list = ref<ChartList>([])
   const t = window['$t']
 
   const addProject = (data: any) => {
@@ -23,7 +25,13 @@ export const useDataListInit = () => {
 
   // 添加
   const addHandle = (data: any) => {
-    list.value.push({ id: data.id, title: data.id, release: true, label: data.id, type: data.description })
+    list.value.push({
+      id: data.id,
+      title: data.id,
+      release: true,
+      label: data.id,
+      type: data.description
+    })
   }
 
   // 删除
@@ -42,6 +50,7 @@ export const useDataListInit = () => {
             if (Array.isArray(data) && data.length > 0) {
               const newData = data.filter((item: any) => item.id !== cardData.id)
               await localforage.setItem('ProjectList', newData)
+              setLocalStorage('ProjectInfo', list.value)
             }
           })
           .catch(err => {
@@ -51,12 +60,20 @@ export const useDataListInit = () => {
     })
   }
 
-  const deleteAll = () => {
+  const deleteAll = async () => {
     list.value = []
+    setLocalStorage('ProjectInfo', [])
+    await localforage.setItem('ProjectList', [])
   }
 
-  const renameHandle = () => {
-    
+  const renameHandle = (data: { id: any; name: any }) => {
+    const targetItem = list.value.find(item => item.id === data.id)
+
+    if (targetItem) {
+      const newName = data.name
+      targetItem.label = newName
+      targetItem.title = newName
+    }
   }
 
   return {

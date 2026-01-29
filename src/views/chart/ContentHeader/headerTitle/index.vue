@@ -84,7 +84,7 @@ const getProjectNameByID = (id: any) => {
   info &&
     info.forEach((item: any) => {
       if (item.id.toString() === id) {
-        title = item.name
+        title = item.title
       }
     })
 
