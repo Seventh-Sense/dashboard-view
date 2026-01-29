@@ -45,8 +45,8 @@ export default {
 
   //msg
   msg_mod_success: '修改成功！',
-  enable_mod_fail: '使能设置失败！',
-  enable_mod_success: '使能设置成功！',
+  enable_mod_fail: '启用设置失败！',
+  enable_mod_success: '启用设置成功！',
   device_no_data: '当前没有添加设备！',
   msg_del_fail: '删除失败！',
   msg_read_fail: '读取数据失败！',
