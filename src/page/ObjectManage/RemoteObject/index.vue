@@ -73,6 +73,9 @@
             <template v-else-if="column.dataIndex === 'enabled'">
               <n-switch v-model:value="record.enabled" @click="onChange(record)" />
             </template>
+            <template v-else-if="column.dataIndex === 'device_type'">
+              {{ getDeviceTypeLabel(record.device_type) }}
+            </template>
           </template>
         </a-table>
       </div>
@@ -106,7 +109,8 @@ import {
   DeviceTypeEnum,
   sortByString,
   exportJsonToExcel,
-  processExcel
+  processExcel,
+  TypeOptions
 } from './utils/utils'
 import { ObjectList } from './components/ObjectList'
 import { DeviceSetModal } from './modal/DeviceSetModal'
@@ -191,6 +195,11 @@ const searchBottom = ref('rgba(255, 255, 255, 0.6)')
 // const cssStyle = ref({
 //   searchBottom: 'rgba(255, 255, 255, 0.6)'
 // })
+
+const getDeviceTypeLabel = (value: any) => {
+  const matchedOption = TypeOptions.find(option => option.value === value)
+  return matchedOption ? matchedOption.label : value
+}
 
 const setGlobalCssVar = () => {
   document.documentElement.style.setProperty('--search-bottom', searchBottom.value)

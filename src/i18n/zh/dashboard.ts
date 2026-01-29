@@ -103,7 +103,7 @@ export default {
   numerical: '数值',
   input_box: '输入框',
   door: '门',
-  humanSensor: '人在传感器',
+  humanSensor: '存在传感器',
   led: '灯',
   motor: '电机',
   waterSensor: '水浸传感器',

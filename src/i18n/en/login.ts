@@ -1,6 +1,6 @@
 export default {
   title_1: 'Welcome To Login',
-  title_2: 'Building Intelligent Machine',
+  title_2: 'Smart Building Vision Studio',
   user_placeholder: 'Please enter your username',
   password_placeholder: 'Please enter password',
   login_auto: "Auto Login",
