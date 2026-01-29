@@ -7,7 +7,7 @@ export default {
   save: '保存',
   exit: '退出',
   chart_component: '图表组件',
-  layer_control: '图层控制',
+  layer_control: '图层窗口',
   detail_setting: '详情设置',
   recoil: '后退',
   advance: '前进',

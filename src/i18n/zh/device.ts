@@ -63,7 +63,7 @@ export default {
   type: '类型',
   polling: '轮询(秒)',
   address: '地址',
-  enabled: '使能',
+  enabled: '启用',
   add_device: '新增设备',
   add_point: '新增对象',
   import_devices: '导入',

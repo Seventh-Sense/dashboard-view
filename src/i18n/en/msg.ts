@@ -20,7 +20,7 @@ export default {
     please_input_chart: 'Please enter at least one character!',
     creat_job_error: 'Creation failed!',
 
-    msg_error_1: 'Error property: write-access-denied.',
+    msg_error_1: 'Error Attribute: Write Access Denied.',
     msg_error_2: 'Execution failed.',
     msg_error_3: 'Please turn on the enable switch of this device!',
     msg_error_4: 'The point is offline and cannot perform the operation!',

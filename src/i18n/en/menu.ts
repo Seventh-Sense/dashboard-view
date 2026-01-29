@@ -6,5 +6,5 @@ export default {
   modbus_manage: 'Modbus',
   IP: 'IP',
   DashBoard: 'DashBoard',
-  device_manage: 'Device Manage',
+  device_manage: 'Device Management',
 }
