@@ -23,14 +23,11 @@ export const useLangStore = defineStore({
   },
   actions: {
     changeLang(lang: LangEnum): void {
-      const settingStore = useSettingStore()
       if (this.lang === lang) return
       this.lang = lang
       setLocalStorage(GO_LANG_STORE, this.$state)
 
-      if (settingStore.getChangeLangReload) {
-        reloadRoutePage()
-      }
+      reloadRoutePage()
     }
   }
 })
