@@ -6,8 +6,9 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #19162a;
+  background-color: #ffffff !important;
 }
+
 .first-loading-wrp > h1 {
   font-size: 128px;
 }

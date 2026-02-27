@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'dark-theme': designStore.darkTheme }">
     <n-space class="top" align="center">
-      <n-icon size="20" class="top-icon" @click="onBack">
+      <n-icon size="20" :depth="1" class="top-icon" @click="onBack">
         <ChevronBackOutlineIcon />
       </n-icon>
       <span class="top-title">{{ deviceData.device_name }}</span>
@@ -607,7 +607,13 @@ watch(
 }
 
 ::v-deep(.n-data-table-tbody .n-data-table-tr:nth-child(odd)) {
-  background-color: rgba(255, 255, 255, 0.07) !important;
+  background-color: rgba(34, 34, 34, 0.07) !important;
+}
+
+.dark-theme {
+  ::v-deep(.n-data-table-tbody .n-data-table-tr:nth-child(odd)) {
+    background-color: rgba(255, 255, 255, 0.07) !important;
+  }
 }
 
 ::v-deep(.n-data-table-td) {

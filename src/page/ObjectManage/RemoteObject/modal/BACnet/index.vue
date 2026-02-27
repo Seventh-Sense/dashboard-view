@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" :class="{ 'dark-theme': designStore.darkTheme }">
     <div class="content-title">
       <span class="content-porperty">{{ t('device.device_list') }}</span>
       <div style="display: flex; align-items: center; justify-content: flex-end; gap: 32px">
@@ -40,7 +40,9 @@ import { discoveryDevices, addDevice, getNetWorkCards } from '@/api/http'
 import { ref, inject, onMounted, onUnmounted } from 'vue'
 import { icon } from '@/plugins'
 import { DeviceTypeEnum } from '../../utils/utils'
+import { useDesignStore } from '@/store/modules/designStore/designStore'
 
+const designStore = useDesignStore()
 const { DownloadOutlineIcon } = icon.ionicons5
 defineProps({
   isEdit: {
@@ -279,11 +281,21 @@ const onDownload = async (record: DataType) => {
 }
 
 .ant-table-striped :deep(.table-striped2) td {
-  background: rgba(255, 255, 255, 0.07) !important;
+  background: rgba(34, 34, 34, 0.07) !important;
 }
 
 .ant-table-striped :deep(.table-striped2):hover td {
-  background: rgba(255, 255, 255, 0.07) !important;
+  background: rgba(34, 34, 34, 0.07) !important;
+}
+
+.dark-theme {
+  .ant-table-striped :deep(.table-striped2) td {
+    background: rgba(255, 255, 255, 0.07) !important;
+  }
+
+  .ant-table-striped :deep(.table-striped2):hover td {
+    background: rgba(255, 255, 255, 0.07) !important;
+  }
 }
 
 .ant-table-striped :deep(.table-striped2) td:first-child {

@@ -512,6 +512,18 @@ provide('refreshFunc', initData)
   }
 }
 
+:deep(.ant-table-cell-row-hover) {
+  background: rgba(34, 34, 34, 0.07) !important;
+}
+
+.ant-table-striped :deep(.table-striped2) td {
+  background: rgba(34, 34, 34, 0.07) !important;
+}
+
+.ant-table-striped :deep(.table-striped2):hover td {
+  background: rgba(34, 34, 34, 0.07) !important;
+}
+
 .dark-theme {
   :deep(.ant-table-cell-row-hover) {
     background: rgba(255, 255, 255, 0.07) !important;
