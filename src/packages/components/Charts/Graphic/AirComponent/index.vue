@@ -17,25 +17,35 @@
         {{ title }}
       </div>
       <div v-if="value < conditions" class="container-right">
-        <Icon name="checkCircle" type="mono-line" :color="{normal: '#3bd695'}" :size="icon_size" />
+        <Icon
+          name="checkCircle"
+          type="mono-line"
+          :color="{ normal: '#3bd695' }"
+          :size="icon_size"
+        />
         <span
           class="good"
           :style="{
             fontSize: icon_text_size + 'px'
           }"
         >
-          {{t('dashboard.excellent')}}
+          {{ t('dashboard.excellent') }}
         </span>
       </div>
       <div v-else class="container-right">
-        <Icon name="dismissCircle" type="mono-line" :color="{normal: '#f76f83'}" :size="icon_size" />
+        <Icon
+          name="dismissCircle"
+          type="mono-line"
+          :color="{ normal: '#f76f83' }"
+          :size="icon_size"
+        />
         <span
           class="bad"
           :style="{
             fontSize: icon_text_size + 'px'
           }"
         >
-          {{t('dashboard.bad')}}
+          {{ t('dashboard.bad') }}
         </span>
       </div>
     </div>
@@ -106,16 +116,22 @@ const bgStyle = computed(() => {
     image = air3
   }
   return {
-    backgroundImage: `url(${image})`,
+    backgroundImage: `url(${image})`
   }
 })
 
 function fixedByDecimal(num: any) {
-  if (decimal.value === 0) {
-    return Number(num).toFixed()
+  if (decimal) {
+    if (decimal.value === 0) {
+      return Number(num).toFixed()
+    } else {
+      return Number(num).toFixed(decimal.value)
+    }
   } else {
-    return Number(num).toFixed(decimal.value)
+    return num
   }
+
+  
 }
 
 watch(
