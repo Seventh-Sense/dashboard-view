@@ -486,7 +486,7 @@ export const msghandle = (load: { data: string; status: string }) => {
         break
 
       default:
-        window['$message'].warning(window['$t']('msg.msg_error_1'))
+        window['$message'].warning(window['$t']('msg.msg_error_2'))
         break
     }
   }

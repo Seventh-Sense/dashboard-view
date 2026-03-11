@@ -42,7 +42,7 @@
             <div v-else-if="key === 'description'" class="modal-content-editstyle">
               <div v-if="!editStates[key]" class="modal-content-editvalue">
                 <span>{{ val }}</span>
-                <n-icon size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
+                <n-icon v-if="isEdit" size="20" class="go-cursor-pointer" @click="() => enterEditMode(key)">
                   <EditIcon />
                 </n-icon>
               </div>
@@ -208,6 +208,10 @@ const { CloseIcon, CheckmarkIcon, CloseOutlineIcon } = icon.ionicons5
 
 const props = defineProps({
   isShowModal: {
+    type: Boolean,
+    required: true
+  },
+  isEdit: {
     type: Boolean,
     required: true
   },

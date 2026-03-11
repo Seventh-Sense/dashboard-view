@@ -83,6 +83,7 @@
       <PropertyDisplayModal
         v-if="isDisplay"
         v-model:isShowModal="isDisplay"
+        :isEdit="false"
         :displayData="displayData"
         :deviceData="deviceData"
       />
