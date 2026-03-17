@@ -22,7 +22,7 @@ const userPhotosList: ConfigType[] = getLocalStorage(StoreKey) || []
 const uploadFile = (callback: Function | null = null) => {
   const input = document.createElement('input')
   input.type = 'file'
-  input.accept = '.png,.jpg,.jpeg,.gif' // 这里只允许部分图片类型
+  input.accept = '.png,.jpg,.jpeg,.gif,.webp' // 这里只允许部分图片类型
   input.onchange = async () => {
     if (!input.files || !input.files.length) return
     const file = input.files[0]
@@ -31,7 +31,12 @@ const uploadFile = (callback: Function | null = null) => {
       window['$message'].warning(t('dashboard.upload_msg_err'))
       return false
     }
-    if (type !== FileTypeEnum.PNG && type !== FileTypeEnum.JPEG && type !== FileTypeEnum.GIF) {
+    if (
+      type !== FileTypeEnum.PNG &&
+      type !== FileTypeEnum.JPEG &&
+      type !== FileTypeEnum.GIF &&
+      type !== FileTypeEnum.WEBP
+    ) {
       window['$message'].warning(t('dashboard.upload_msg_err1'))
       return false
     }

@@ -118,7 +118,7 @@ export default {
   square_block: 'Square Block',
   circle_block: 'Circle Block',
   click_upload: 'Click to upload an image',
-  click_upload_msg: 'Currently, the images are only supported in PNG format. The current image storage limit is 5MB and they are only temporarily stored in the browser. Once exceeded, new images will not be cached.',
+  click_upload_msg: 'Currently, the images are only supported in PNG、JPG、GIF、WEBP format. The current image storage limit is 5MB and they are only temporarily stored in the browser. Once exceeded, new images will not be cached.',
   is_delete_pictrue: 'Delete this image?',
   //
   gauge_info: 'Dashboard',
