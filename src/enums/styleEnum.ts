@@ -7,7 +7,9 @@ export enum ThemeEnum {
 // 语言
 export enum LangEnum {
   ZH = 'ZH',
-  EN = 'EN'
+  ZH_TW = 'ZH_TW',
+  EN = 'EN',
+  JA = 'JA'
 }
 
 // 预览展示 （页面配置的适配方式）

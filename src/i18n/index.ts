@@ -7,6 +7,8 @@ import { LangEnum } from '@/enums/styleEnum'
 import { LangStateType } from '@/store/modules/langStore/langStore.d'
 import zh from './zh/index'
 import en from './en/index'
+import ja from './ja/index'
+import zhTW from './tw/index'
 
 const langStorage: LangStateType = getLocalStorage(StorageEnum.GO_LANG_STORE)
 
@@ -17,8 +19,16 @@ export const langList = [
     key: LangEnum.ZH
   },
   {
+    label: '繁體中文',
+    key: LangEnum.ZH_TW
+  },
+  {
     label: 'English',
     key: LangEnum.EN
+  },
+  {
+    label: '日本語',
+    key: LangEnum.JA
   }
 ]
 
@@ -29,7 +39,9 @@ const i18n = createI18n({
   fallbackLocale: langStorage?.lang || lang,
   messages: {
     [LangEnum.ZH]: zh,
-    [LangEnum.EN]: en
+    [LangEnum.ZH_TW]: zhTW,
+    [LangEnum.EN]: en,
+    [LangEnum.JA]: ja
   }
 })
 

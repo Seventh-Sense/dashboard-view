@@ -1,5 +1,3 @@
-import msg from "../en/msg";
-
 export default {
     //modbus
     modbus_msg_1: '请输入对象名称!',

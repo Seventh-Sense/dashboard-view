@@ -7,7 +7,8 @@
     :theme-overrides="overridesTheme"
     style="height: 100%"
   >
-    <a-config-provider :locale="lang.getLang === 'ZH' ? zhCN : enUS"
+    <a-config-provider
+      :locale="antLocale"
       :theme="{
         algorithm: darkTheme ? theme.darkAlgorithm : theme.defaultAlgorithm
       }"
@@ -32,9 +33,12 @@ import { computed, onMounted } from 'vue'
 import { theme } from 'ant-design-vue'
 import '@x-plateform/graphic-editor/dist/style.css'
 import '@x-plateform/common/dist/index.css'
-import enUS from 'ant-design-vue/es/locale/en_US';
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import enUS from 'ant-design-vue/es/locale/en_US'
+import jaJP from 'ant-design-vue/es/locale/ja_JP'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import zhTW from 'ant-design-vue/es/locale/zh_TW'
 import { useLangStore } from '@/store/modules/langStore/langStore'
+import { LangEnum } from '@/enums/styleEnum'
 //import { he } from 'element-plus/es/locale'
 
 const route = useRoute()
@@ -52,7 +56,20 @@ const hljsTheme = useCode()
 
 // 全局语言
 const { locale, dateLocale } = useLang()
-//测试提交
+
+const antLocale = computed(() => {
+  switch (lang.getLang) {
+    case LangEnum.ZH:
+      return zhCN
+    case LangEnum.ZH_TW:
+      return zhTW
+    case LangEnum.JA:
+      return jaJP
+    case LangEnum.EN:
+    default:
+      return enUS
+  }
+})
 </script>
 
 <style lang="scss" scoped>

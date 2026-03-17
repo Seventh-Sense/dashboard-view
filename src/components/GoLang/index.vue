@@ -32,8 +32,16 @@ const langList = [
     value: LangEnum.ZH
   },
   {
+    label: '繁體中文',
+    value: LangEnum.ZH_TW
+  },
+  {
     label: 'English',
     value: LangEnum.EN
+  },
+  {
+    label: '日本語',
+    value: LangEnum.JA
   }
 ]
 
