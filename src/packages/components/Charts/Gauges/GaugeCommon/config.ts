@@ -4,6 +4,7 @@ import { CreateComponentType } from '@/packages/index.d'
 import { chartInitConfig } from '@/settings/designSetting'
 import cloneDeep from 'lodash/cloneDeep'
 import i18n from '@/i18n/index'
+import { createI18nArray } from '@/packages'
 
 export const units = [
   {
@@ -44,7 +45,7 @@ export const units = [
   }
 ]
 
-export const caps = [
+export const caps = createI18nArray(() => [
   {
     label: i18n.global.t('dashboard.round'),
     value: 'round'
@@ -53,7 +54,7 @@ export const caps = [
     label: i18n.global.t('dashboard.square'),
     value: 'square'
   },
-]
+])
 
 export const decimals  = [
   {

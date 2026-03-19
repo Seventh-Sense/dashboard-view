@@ -1,6 +1,7 @@
+import { createI18nObject } from '@/packages'
 import { HistoryTargetTypeEnum, HistoryActionTypeEnum } from './chartHistoryStore.d'
 
-export const historyActionTypeName = {
+export const historyActionTypeName = createI18nObject(() => ({
   [HistoryActionTypeEnum.ADD]: window['$t']('dashboard.add'),
   [HistoryActionTypeEnum.DELETE]: window['$t']('dashboard.del'),
   [HistoryActionTypeEnum.UPDATE]: window['$t']('dashboard.update'),
@@ -20,4 +21,4 @@ export const historyActionTypeName = {
   [HistoryActionTypeEnum.SHOW]: window['$t']('dashboard.display'),
 
   [HistoryTargetTypeEnum.CANVAS]: window['$t']('dashboard.canvas_init'),
-}
+}))

@@ -39,7 +39,7 @@
         </n-space>
         <n-menu
           v-model:value="menuValue"
-          :options="menuOptionsInit(menuValue)"
+          :options="menuOptions"
           :collapsed-width="getAsideCollapsedWidth"
           :collapsed-icon-size="24"
           :icon-size="32"
@@ -61,6 +61,7 @@ import SVG_ICON from '@/svg/SVG_ICON'
 import { MenuOption } from 'naive-ui'
 import { useRouter } from 'vue-router'
 import { useDesignStore } from '@/store/modules/designStore/designStore'
+import { useI18n } from 'vue-i18n' 
 
 const designStore = useDesignStore()
 const router = useRouter()
@@ -69,7 +70,7 @@ const { getAsideCollapsedWidth } = toRefs(useSettingStore())
 
 const route = useRoute()
 const menuValue = ref(route.name)
-//const menuOptions = menuOptionsInit()
+let menuOptions = menuOptionsInit(menuValue)
 
 const defaultExpandedKeys = expandedKeys()
 

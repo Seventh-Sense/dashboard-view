@@ -10,7 +10,7 @@ import {
   ConfigType,
   FetchComFlagType
 } from '@/packages/index.d'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 
 const configModules: Record<string, { default: string }> = import.meta.glob(
   './components/**/config.vue',
@@ -37,7 +37,7 @@ export let packagesList: PackagesType = {
   [PackagesCategoryEnum.INFORMATIONS]: InformationList,
   //[PackagesCategoryEnum.TABLES]: TableList,
   [PackagesCategoryEnum.DECORATES]: DecorateList,
-  [PackagesCategoryEnum.PHOTOS]: PhotoList,
+  [PackagesCategoryEnum.PHOTOS]: PhotoList
   // [PackagesCategoryEnum.ICONS]: IconList
 }
 
@@ -126,13 +126,60 @@ export const fetchImages = async (targetData?: ConfigType) => {
   return ''
 }
 
-export function createI18nConfig<T>(config: T & {
-  title: () => string
-}) {
+export function createI18nConfig<T>(
+  config: T & {
+    title: () => string
+  }
+) {
   return reactive({
     ...config,
     get title() {
       return config.title()
     }
   }) as unknown as T
+}
+
+export function createI18nArray<T>(fn: () => T[]) {
+  return reactive(
+    new Proxy([], {
+      get(target, prop: string | symbol) {
+        // 每次访问都获取最新数组
+        const latestArray = fn()
+
+        // 1. 处理数组索引访问（0、1、2...）
+        if (typeof prop === 'string' && !isNaN(Number(prop))) {
+          return latestArray[Number(prop)]
+        }
+
+        // 2. 处理 Symbol.iterator（支持 for...of 遍历）
+        if (prop === Symbol.iterator) {
+          return latestArray[Symbol.iterator].bind(latestArray)
+        }
+
+        // 3. 处理数组属性与方法（length / map / filter / forEach 等）
+        const value = latestArray[prop as keyof T[]]
+        if (typeof value === 'function') {
+          // 绑定正确的 this，保证原生数组方法正常运行
+          return value.bind(latestArray)
+        }
+
+        return value
+      },
+
+      // 支持判断是否为数组
+      has(_, prop) {
+        return prop === 'length' || prop === Symbol.iterator || Array.isArray(fn())
+      }
+    })
+  )
+}
+
+
+export function createI18nObject<T extends object>(fn: () => T) {
+  return reactive(new Proxy({} as T, {
+    get(_, prop: string | symbol) {
+      const latestObj = fn()
+      return latestObj[prop as keyof T]
+    }
+  }))
 }

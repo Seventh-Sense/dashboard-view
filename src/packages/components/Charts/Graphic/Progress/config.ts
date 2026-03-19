@@ -4,8 +4,9 @@ import { ProgressConfig } from './index'
 import cloneDeep from 'lodash/cloneDeep'
 import { chartInitConfig } from '@/settings/designSetting'
 import i18n from '@/i18n/index'
+import { createI18nArray } from '@/packages'
 
-export const caps = [
+export const caps = createI18nArray(() => [
   {
     label: i18n.global.t('dashboard.round'),
     value: 'round'
@@ -14,7 +15,7 @@ export const caps = [
     label: i18n.global.t('dashboard.square'),
     value: 'square'
   },
-]
+])
 
 export const option = {
   dataset: 60,

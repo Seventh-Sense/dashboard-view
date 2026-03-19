@@ -5,6 +5,7 @@ import { LangEnum } from '@/enums/styleEnum'
 import { setLocalStorage, getLocalStorage, reloadRoutePage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import { useSettingStore } from '@/store/modules/settingStore/settingStore'
+import i18n from '@/i18n/index'
 
 const { GO_LANG_STORE } = StorageEnum
 const storageLang: LangStateType = getLocalStorage(GO_LANG_STORE)
@@ -26,8 +27,8 @@ export const useLangStore = defineStore({
       if (this.lang === lang) return
       this.lang = lang
       setLocalStorage(GO_LANG_STORE, this.$state)
-
-      //reloadRoutePage()
+      i18n.global.locale.value = lang
+      reloadRoutePage()
     }
   }
 })

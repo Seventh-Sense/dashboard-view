@@ -7,6 +7,7 @@ import { MenuOptionsItemType } from './useContextMenu.hook.d'
 import { MenuEnum } from '@/enums/editPageEnum'
 import cloneDeep from 'lodash/cloneDeep'
 import i18n from '@/i18n/index'
+import { createI18nArray } from '@/packages'
 
 const {
   CopyIcon,
@@ -37,7 +38,7 @@ export const divider = (n: number = 3) => {
 }
 
 // * 默认单组件选项
-export const defaultOptions: MenuOptionsItemType[] = [
+export const defaultOptions: MenuOptionsItemType[] = createI18nArray(() => [
   {
     label: i18n.global.t('dashboard.lock_'),
     key: MenuEnum.LOCK,
@@ -128,10 +129,10 @@ export const defaultOptions: MenuOptionsItemType[] = [
     icon: renderIcon(TrashIcon),
     fnHandle: chartEditStore.removeComponentList
   }
-]
+])
 
 // * 默认多选组件选项
-export const defaultMultiSelectOptions: MenuOptionsItemType[] = [
+export const defaultMultiSelectOptions: MenuOptionsItemType[] = createI18nArray(() => [
   {
     label: i18n.global.t('dashboard.create_groups'),
     key: MenuEnum.GROUP,
@@ -144,7 +145,7 @@ export const defaultMultiSelectOptions: MenuOptionsItemType[] = [
     icon: renderIcon(Carbon3DCursorIcon),
     fnHandle: chartEditStore.setUnGroup
   }
-]
+])
 
 // * 无数据传递拥有的选项
 const defaultNoItemKeys = [MenuEnum.PARSE, MenuEnum.CLEAR]

@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { PageEnum } from '@/enums/pageEnum'
 import { icon } from '@/plugins'
 import { StorageEnum } from '@/enums/storageEnum'
@@ -259,7 +259,7 @@ $carousel-image-height: 60vh;
         width: 440px;
 
         &-title {
-          @include fetch-theme-custom('color','login-font-color');
+          @include fetch-theme-custom('color', 'login-font-color');
           font-size: 40px;
           font-weight: bold;
         }
@@ -274,7 +274,7 @@ $carousel-image-height: 60vh;
       }
 
       &-footer {
-        @include fetch-theme-custom('color','login-font-color');
+        @include fetch-theme-custom('color', 'login-font-color');
         display: flex;
         justify-content: center;
         align-items: center;
@@ -288,7 +288,7 @@ $carousel-image-height: 60vh;
 }
 
 .title2 {
-  @include fetch-theme-custom('color','login-font-color');
+  @include fetch-theme-custom('color', 'login-font-color');
 }
 
 @media only screen and (max-width: 1200px) {
