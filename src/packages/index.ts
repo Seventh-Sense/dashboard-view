@@ -10,6 +10,7 @@ import {
   ConfigType,
   FetchComFlagType
 } from '@/packages/index.d'
+import { reactive } from 'vue'
 
 const configModules: Record<string, { default: string }> = import.meta.glob(
   './components/**/config.vue',
@@ -123,4 +124,15 @@ export const fetchImages = async (targetData?: ConfigType) => {
     }
   }
   return ''
+}
+
+export function createI18nConfig<T>(config: T & {
+  title: () => string
+}) {
+  return reactive({
+    ...config,
+    get title() {
+      return config.title()
+    }
+  }) as unknown as T
 }

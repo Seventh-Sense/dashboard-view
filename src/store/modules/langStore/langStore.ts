@@ -27,7 +27,7 @@ export const useLangStore = defineStore({
       this.lang = lang
       setLocalStorage(GO_LANG_STORE, this.$state)
 
-      reloadRoutePage()
+      //reloadRoutePage()
     }
   }
 })

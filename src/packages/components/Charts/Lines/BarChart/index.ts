@@ -1,15 +1,16 @@
 import { ConfigType, PackagesCategoryEnum, ChartFrameEnum } from '@/packages/index.d'
 import { ChatCategoryEnum, ChatCategoryEnumName } from '../../index.d'
 import i18n from '@/i18n/index'
+import { createI18nConfig } from '@/packages'
 
-export const BarChartConfig: ConfigType = {
+export const BarChartConfig: ConfigType = createI18nConfig({
   key: 'BarChart',
   chartKey: 'VBarChart',
   conKey: 'VCBarChart',
-  title: i18n.global.t('dashboard.bar'),
+  title: () => i18n.global.t('dashboard.bar'),
   category: ChatCategoryEnum.LINE,
   categoryName: ChatCategoryEnumName.LINE,
   package: PackagesCategoryEnum.CHARTS,
   chartFrame: ChartFrameEnum.ECHARTS,
   image: 'line.png'
-}
+})
