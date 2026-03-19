@@ -303,7 +303,7 @@ $contentHeight: 250px;
   .list-preview {
     @include fetch-theme-custom('border-color', 'button1-border-color');
     height: 34px;
-    width: 78px;
+    min-width: 78px;
     display: flex;
     justify-content: center;
     align-items: center;
