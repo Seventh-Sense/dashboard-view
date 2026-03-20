@@ -17,19 +17,22 @@
         <n-input-number v-model:value="optionData.fontSize" size="small"></n-input-number>
       </SettingItem>
     </SettingItemBox>
-    <setting-item-box v-for="option in optionData.options" :name="t('dashboard.enumerate')">
-      <setting-item :name="t('dashboard.text')">
+    <SettingItemBox v-for="option in optionData.options" :name="t('dashboard.enumerate')">
+      <SettingItem :name="t('dashboard.text')">
         <n-input v-model:value="option.label" size="small"></n-input>
-      </setting-item>
-      <setting-item :name="t('dashboard.value')">
+      </SettingItem>
+      <SettingItem :name="t('dashboard.value')">
         <n-input v-model:value="option.value" size="small" />
-      </setting-item>
-      <setting-item>
+      </SettingItem>
+      <SettingItem :name="t('dashboard.color')">
+        <n-color-picker size="small" :modes="['hex']" v-model:value="option.color"></n-color-picker>
+      </SettingItem>
+      <SettingItem>
         <n-icon size="18" color="white" @click="onDelete(option.key)" style="cursor: pointer">
           <DeleteIcon />
         </n-icon>
-      </setting-item>
-    </setting-item-box>
+      </SettingItem>
+    </SettingItemBox>
     <div @click="add" class="btn">
       <n-icon size="18" color="white">
         <AddIcon />
@@ -64,7 +67,8 @@ const add = () => {
   props.optionData.options.push({
     key: new Date().getTime(),
     label: '',
-    value: ''
+    value: '',
+    color: '#ffffff'
   })
 }
 
