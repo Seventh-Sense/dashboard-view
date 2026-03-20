@@ -38,6 +38,22 @@ export const units = [
     value: 'Pa'
   },
   {
+    label: 'kPa',
+    value: 'kPa'
+  },
+  {
+    label: 'mm',
+    value: 'mm'
+  },
+  {
+    label: 'r/m',
+    value: 'r/m'
+  },
+  {
+    label: 'A',
+    value: 'A'
+  },
+  {
     label: '%RH',
     value: '%RH'
   }

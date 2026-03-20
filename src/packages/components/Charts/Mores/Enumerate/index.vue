@@ -2,17 +2,17 @@
   <div
     class="container"
     :style="{
-      color: color,
+      color: textColor,
       fontSize: fontSize + 'px',
       height: h + 'px'
     }"
   >
-    <div class="digit-style">{{ transalteText(value) }}</div>
+    <div class="digit-style">{{ textDisplay }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType, toRefs, watch, ref } from 'vue'
+import { PropType, toRefs, watch, ref, computed } from 'vue'
 import { CreateComponentType } from '@/packages/index.d'
 import { isRealValue, parseData } from '@/utils'
 
@@ -28,21 +28,25 @@ const value = ref('0')
 const { fontSize, color, textAlign } = toRefs(props.chartConfig.option)
 const { w, h } = toRefs(props.chartConfig.attr)
 
-const transalteText = (data: string) => {
+const textInfo = computed(() => {
+  const data = value.value
   const options = props.chartConfig.option.options || []
 
-  if (data == null || data === '' || data === undefined) {
-    return 'null'
+  // 空值处理
+  if (data == null || data === '') {
+    return { display: 'null', color: color.value }
   }
 
-  if (options.length === 0) {
-    return data
+  // 匹配选项
+  const match = options.find((item: any) => item.value === data)
+  return {
+    display: match?.label || data,
+    color: match?.color || color.value
   }
+})
 
-  const matchedItem = options.find((item: any) => item.value === data)
-
-  return matchedItem?.label || data
-}
+const textDisplay = computed(() => textInfo.value.display)
+const textColor = computed(() => textInfo.value.color)
 
 watch(
   () => props.chartConfig.option.dataset,
