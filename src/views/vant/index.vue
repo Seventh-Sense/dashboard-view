@@ -113,7 +113,7 @@ const screenWidth = ref(window.innerWidth)
 const containerBgColor = ref('#fff')
 const router = useRouter()
 const enableSwipe = ref(true)
-const limit = ref(3)
+const limit = ref(5)
 const is_dark = ref(true)
 
 const formInline = reactive({

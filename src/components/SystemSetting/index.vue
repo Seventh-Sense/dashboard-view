@@ -63,7 +63,7 @@ const props = defineProps({
 
 const setData = reactive<any>({
   preview: {
-    limit: 3,
+    limit: 5,
     enableSwipe: true,
     isDark: true,
     polling_time: 3000,
