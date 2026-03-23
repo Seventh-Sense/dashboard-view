@@ -4,21 +4,29 @@
       <SettingItem :name="t('dashboard.value')">
         <n-input v-model:value="optionData.dataset" size="small"></n-input>
       </SettingItem>
-      <SettingItem></SettingItem>
-      <SettingItem :name="t('dashboard.on_value')">
+      <SettingItem>
+        <n-space>
+          <n-switch v-model:value="optionData.is_display_bg" size="small"></n-switch>
+          <n-text>
+            {{ t('dashboard.open') }}
+            <n-text :depth="3">{{ t('dashboard.writeable') }}</n-text>
+          </n-text>
+        </n-space>
+      </SettingItem>
+      <SettingItem v-show="optionData.is_display_bg" :name="t('dashboard.on_value')">
         <n-input v-model:value="optionData.avtive_value" size="small"></n-input>
       </SettingItem>
-      <SettingItem :name="t('dashboard.on_color')">
+      <SettingItem v-show="optionData.is_display_bg" :name="t('dashboard.on_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
           v-model:value="optionData.avtive_background"
         ></n-color-picker>
       </SettingItem>
-      <SettingItem :name="t('dashboard.off_value')">
+      <SettingItem v-show="optionData.is_display_bg" :name="t('dashboard.off_value')">
         <n-input v-model:value="optionData.inavtive_value" size="small"></n-input>
       </SettingItem>
-      <SettingItem :name="t('dashboard.off_color')">
+      <SettingItem v-show="optionData.is_display_bg" :name="t('dashboard.off_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"
@@ -33,7 +41,7 @@
       <SettingItem :name="t('dashboard.icon_size')">
         <n-input-number v-model:value="optionData.icon_size" :min="1" size="small" />
       </SettingItem>
-      <SettingItem :name="t('dashboard.border_color')">
+      <SettingItem v-show="optionData.is_display_bg" :name="t('dashboard.border_color')">
         <n-color-picker
           size="small"
           :modes="['hex']"

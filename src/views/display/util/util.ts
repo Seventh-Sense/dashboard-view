@@ -200,7 +200,7 @@ const handleBacnetBinding = (point: any, resData: any) => {
     }
 
     // 获取优先级数组
-    const priorityArray = load.property['priority-array']
+    const priorityArray = load?.property?.['priority-array']
     let priority = DEFAULT_PRIORITY
 
     if (priorityArray) {
@@ -209,7 +209,7 @@ const handleBacnetBinding = (point: any, resData: any) => {
     }
 
     // 获取对象标识符
-    const objUid = load.property['object-identifier']
+    const objUid = load?.property?.['object-identifier']
     let uid: string | undefined
     if (objUid !== null && objUid !== undefined) {
       if (Array.isArray(objUid)) {

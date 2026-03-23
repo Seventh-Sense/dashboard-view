@@ -12,6 +12,7 @@ export const option = {
     inavtive_value: '0',
     avtive_background: '#6666FFFF',
     inavtive_background: '#FFFFFF21',
+    is_display_bg: false,
     border_color: '#FFFFFF21',
 }
 

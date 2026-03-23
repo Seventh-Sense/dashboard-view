@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="is_display_bg"
     class="container"
     :style="{
       width: w + 'px',
@@ -8,6 +9,16 @@
       borderColor: border_color
     }"
     @click="onClick()"
+  >
+    <Icon :name="icon" :size="icon_size" />
+  </div>
+  <div
+    v-else
+    class="container2"
+    :style="{
+      width: w + 'px',
+      height: h + 'px',
+    }"
   >
     <Icon :name="icon" :size="icon_size" />
   </div>
@@ -41,7 +52,8 @@ const {
   inavtive_value,
   avtive_background,
   inavtive_background,
-  border_color
+  border_color,
+  is_display_bg
 } = toRefs(props.chartConfig.option)
 
 const { w, h } = toRefs(props.chartConfig.attr)
@@ -91,6 +103,14 @@ const onClick = throttle(
 .container {
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.13);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.container2 {
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
