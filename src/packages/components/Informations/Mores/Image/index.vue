@@ -77,8 +77,6 @@ watch(
   () => props.chartConfig.option.datavalue,
   (newData: any) => {
     currentValue.value = parseData(newData, 'string')
-
-    console.log('datavalue', currentValue.value)
   },
   {
     immediate: true
