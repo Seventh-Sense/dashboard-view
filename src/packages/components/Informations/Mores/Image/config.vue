@@ -15,7 +15,7 @@
         ></n-input>
       </setting-item>
       <setting-item :name="t('dashboard.value')">
-        <n-input v-model:value="picture.value" size="small" />
+        <n-input v-model:value="picture.value" size="small" :placeholder="t('dashboard.interval_value')"/>
       </setting-item>
       <setting-item v-if="picture.key !== 1">
         <n-icon size="18" color="white" @click="onDelete(picture.key)" style="cursor: pointer">
@@ -137,7 +137,7 @@ const add = () => {
     key: new Date().getTime(),
     url: '',
     name: '',
-    value: '0'
+    value: ''
   })
 }
 

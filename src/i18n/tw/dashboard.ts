@@ -335,5 +335,6 @@ export default {
   homepage: '首頁',
   edit_mode: '編輯模式',
   light_theme: '亮色主題',
-  enumerate: '列舉'
+  enumerate: '列舉',
+  interval_value: '(4,10]/5',
 }

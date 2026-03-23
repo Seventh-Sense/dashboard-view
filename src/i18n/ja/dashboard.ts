@@ -338,5 +338,6 @@ export default {
     edit_mode: '編集モード',
     light_theme: 'ライトテーマ',
     enumerate: '列挙',
+    interval_value: '(4,10]/5',
   }
   

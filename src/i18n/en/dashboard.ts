@@ -339,4 +339,5 @@ export default {
   edit_mode: 'Edit Mode',
   light_theme: 'Light Theme',
   enumerate: 'Enumerate',
+  interval_value: '(4,10]/5',
 }

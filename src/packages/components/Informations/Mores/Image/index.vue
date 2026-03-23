@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, shallowReactive, watch, toRefs, ref, computed } from 'vue'
+import { PropType, watch, toRefs, ref, computed } from 'vue'
 import { requireErrorImg } from '@/utils'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
@@ -25,53 +25,74 @@ const props = defineProps({
   }
 })
 
+// 解构属性
 const { w, h } = toRefs(props.chartConfig.attr)
 const { pictures, fit, borderRadius, dataset } = toRefs(props.chartConfig.option)
 
-const option = shallowReactive({
-  dataset: ''
-})
-
 const value = ref('0')
+
+// 核心计算：数学区间匹配 + 精确值匹配
 const url = computed(() => {
-  // 如果 pictures 数组不为空，则返回匹配的 URL，否则返回默认图片
-  if (pictures && pictures.value && pictures.value.length > 0) {
-    const matched = pictures.value.find((item: any) => item.value === value.value)
-    return matched?.url || pictures.value[0].url
+  const currentVal = Number(parseData(value.value, 'string'))
+  const imgList = pictures.value
+
+  // 遍历匹配规则
+  for (const item of imgList) {
+    const rule = String(item.value || '').trim()
+    if (!rule) continue
+
+    // 匹配数学区间：(4,10] / [4,10) / [4,10] / (4,10)
+    const intervalReg = /^([\(\[])(\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)([\)\]])$/
+    const match = rule.match(intervalReg)
+
+    if (match) {
+      const [, leftBracket, minStr, maxStr, rightBracket] = match
+      const min = Number(minStr)
+      const max = Number(maxStr)
+      let inRange = false
+
+      // 左边界
+      inRange = leftBracket === '[' ? currentVal >= min : currentVal > min
+      // 右边界
+      inRange = rightBracket === ']' ? inRange && currentVal <= max : inRange && currentVal < max
+
+      if (inRange) return item.url
+      continue
+    }
+
+    // 精确值匹配
+    const ruleVal = Number(rule)
+    if (!isNaN(ruleVal) && currentVal === ruleVal) {
+      return item.url
+    }
   }
 
-  return dataset!.value
+  // 匹配不到 → 强制使用第一张图片（你确认一定存在）
+  return imgList[0].url
 })
 
-const getStyle = (radius: number) => {
-  return {
-    borderRadius: `${radius}px`,
-    overflow: 'hidden'
-  }
-}
+// 样式
+const getStyle = (radius: number) => ({
+  borderRadius: `${radius}px`,
+  overflow: 'hidden'
+})
 
-// 编辑更新
+// 监听值更新
 watch(
   () => props.chartConfig.option.datavalue,
-  (newData: any) => {
+  (newData) => {
     value.value = parseData(newData, 'string')
   },
-  {
-    immediate: true
-  }
+  { immediate: true }
 )
 
+// 监听 dataset 同步到第一张图片
 watch(
   () => props.chartConfig.option.dataset,
-  (newData: any) => {
-    //console.log('dataset', props.chartConfig)
-    if (pictures && pictures.value[0].url) {
-      pictures.value[0].name = props.chartConfig.chartConfig.title
-      pictures.value[0].url = newData
-    }
+  (newData) => {
+    pictures.value[0].name = props.chartConfig.chartConfig.title
+    pictures.value[0].url = newData
   },
-  {
-    immediate: true
-  }
+  { immediate: true }
 )
 </script>

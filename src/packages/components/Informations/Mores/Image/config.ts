@@ -13,7 +13,7 @@ export const option = {
       key: 1,
       url: logo,
       name: 'init.png',
-      value: '0'
+      value: ''
     }
   ],
   // 适应方式
