@@ -1,9 +1,9 @@
 <template>
-  <div :style="getStyle(borderRadius)">
+  <div :style="containerStyle">
     <n-image
       :object-fit="fit"
       preview-disabled
-      :src="url"
+      :src="imgUrl"
       :fallback-src="requireErrorImg()"
       :width="w"
       :height="h"
@@ -13,10 +13,17 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, shallowReactive, watch, toRefs, ref, computed } from 'vue'
+import { PropType, watch, toRefs, ref, computed } from 'vue'
 import { requireErrorImg } from '@/utils'
 import { CreateComponentType } from '@/packages/index.d'
 import { parseData } from '@/utils'
+
+interface PictureItem {
+  key: number
+  url: string
+  name: string
+  value: number | { min: number; max: number }
+}
 
 const props = defineProps({
   chartConfig: {
@@ -28,47 +35,64 @@ const props = defineProps({
 const { w, h } = toRefs(props.chartConfig.attr)
 const { pictures, fit, borderRadius, dataset } = toRefs(props.chartConfig.option)
 
-const option = shallowReactive({
-  dataset: ''
+const currentValue = ref<string | number>('0')
+
+const containerStyle = computed(() => ({
+  borderRadius: `${borderRadius.value ?? 0}px`,
+  overflow: 'hidden'
+}))
+
+const imgUrl = computed(() => {
+  const picList = pictures.value as PictureItem[]
+  const defaultUrl = picList[0].url
+
+  // 转为数字类型进行范围判断
+  const numValue = Number(currentValue.value)
+
+  if (isNaN(numValue)) return defaultUrl
+
+  const matchedPic = picList.find(item => {
+    const val = item.value
+
+    // 范围配置
+    if (typeof val === 'object' && val !== null) {
+      const min = Number(val.min)
+      const max = Number(val.max)
+
+      // 关键：支持 min = max
+      if (min === max) return numValue === min
+      return numValue >= min && numValue <= max
+    }
+
+    // 精确值匹配
+    return String(val) === String(numValue)
+  })
+
+  // 找到返回对应url，没找到返回第一张 / 默认图片
+  return matchedPic?.url || defaultUrl
 })
-
-const value = ref('0')
-const url = computed(() => {
-  // 如果 pictures 数组不为空，则返回匹配的 URL，否则返回默认图片
-  if (pictures && pictures.value && pictures.value.length > 0) {
-    const matched = pictures.value.find((item: any) => item.value === value.value)
-    return matched?.url || pictures.value[0].url
-  }
-
-  return dataset!.value
-})
-
-const getStyle = (radius: number) => {
-  return {
-    borderRadius: `${radius}px`,
-    overflow: 'hidden'
-  }
-}
 
 // 编辑更新
 watch(
   () => props.chartConfig.option.datavalue,
   (newData: any) => {
-    value.value = parseData(newData, 'string')
+    currentValue.value = parseData(newData, 'string')
+
+    console.log('datavalue', currentValue.value)
   },
   {
     immediate: true
   }
 )
 
+// 监听上传图片 → 同步到第一张图
 watch(
   () => props.chartConfig.option.dataset,
-  (newData: any) => {
-    //console.log('dataset', props.chartConfig)
-    if (pictures && pictures.value[0].url) {
-      pictures.value[0].name = props.chartConfig.chartConfig.title
-      pictures.value[0].url = newData
-    }
+  (newUrl: any) => {
+    if (!newUrl) return
+    const firstPic = (pictures.value as PictureItem[])[0]
+    firstPic.url = newUrl
+    firstPic.name = props.chartConfig.chartConfig?.title || 'image'
   },
   {
     immediate: true

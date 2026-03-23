@@ -14,8 +14,11 @@
           @click="handleFileChange(picture.key)"
         ></n-input>
       </setting-item>
-      <setting-item :name="t('dashboard.value')">
-        <n-input v-model:value="picture.value" size="small" />
+      <setting-item :name="t('dashboard.min')">
+        <n-input-number v-model:value="picture.value.min" size="small"/>
+      </setting-item>
+      <setting-item :name="t('dashboard.max')">
+        <n-input-number v-model:value="picture.value.max" size="small"/>
       </setting-item>
       <setting-item v-if="picture.key !== 1">
         <n-icon size="18" color="white" @click="onDelete(picture.key)" style="cursor: pointer">
@@ -28,6 +31,7 @@
         <AddIcon />
       </n-icon>
     </div>
+    
     <setting-item-box :name="t('dashboard.style')">
       <setting-item :name="t('dashboard.type')">
         <n-select v-model:value="optionData.fit" size="small" :options="fitList"></n-select>
@@ -137,7 +141,10 @@ const add = () => {
     key: new Date().getTime(),
     url: '',
     name: '',
-    value: '0'
+    value: {
+      min: 0,
+      max: 100
+    }
   })
 }
 

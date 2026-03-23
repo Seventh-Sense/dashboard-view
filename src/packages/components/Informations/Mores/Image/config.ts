@@ -6,6 +6,7 @@ import logo from '@/assets/University_logo.png'
 
 export const option = {
   datavalue: '0',
+  //加载上传的图片
   dataset: logo,
   // 图片路径
   pictures: [
@@ -13,7 +14,10 @@ export const option = {
       key: 1,
       url: logo,
       name: 'init.png',
-      value: '0'
+      value: {
+        min: 0,
+        max: 100,
+      }
     }
   ],
   // 适应方式
