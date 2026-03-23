@@ -32,8 +32,8 @@
       class="content-container"
       @touchstart.passive="onTouchStart"
       @touchmove.passive="onTouchMove"
-      @touchend="onTouchEnd"
-      @touchcancel="onTouchCancel"
+      @touchend.passive="onTouchEnd"
+      @touchcancel.passive="onTouchCancel"
     >
       <div
         class="content-wrapper"
@@ -42,10 +42,10 @@
           transition: isAnimating ? 'transform 0.3s ease-out' : 'none'
         }"
       >
-        <!-- 只渲染当前页和相邻页面 -->
         <div
           v-for="(slide, index) in slides"
           :key="index"
+          v-memo="[currentIndex, index]"
           class="content-item"
           :style="{ width: `${screenWidth}px` }"
         >
@@ -94,25 +94,26 @@ const { GO_LOGIN_INFO_STORE } = StorageEnum
 const SWIPE_THRESHOLD = 50
 const ANIMATION_DURATION = 300
 const RENDER_RANGE = 1
-const EDGE_RESISTANCE = 0.05 // 进一步降低边缘阻力
+const EDGE_RESISTANCE = 0.05
 
 // 状态管理
 const flag = ref(false)
 const currentIndex = ref(0)
 const slides = ref<any[]>([])
 const offsetX = ref(0)
-const startX = ref(0)
-const startY = ref(0)
-const isSwiping = ref(false)
 const isAnimating = ref(false)
-const isHorizontal = ref<boolean | null>(null)
+
+// 滑动临时状态
+let startX = 0
+let startY = 0
+let isSwiping = false
+let isHorizontal: boolean | null = null
+
 const screenWidth = ref(window.innerWidth)
 const containerBgColor = ref('#fff')
-
 const router = useRouter()
-
-const enableSwipe = ref(true) // 默认启用滑动功能
-const limit = ref(3) //预览限制
+const enableSwipe = ref(true)
+const limit = ref(3)
 const is_dark = ref(true)
 
 const formInline = reactive({
@@ -120,38 +121,42 @@ const formInline = reactive({
   password: '123456'
 })
 
-// 计算属性：判断是否应该渲染某个页面
+// 计算属性
 const shouldRender = computed(() => (index: number) => {
   if (slides.value.length <= 5) return true
   return Math.abs(index - currentIndex.value) <= RENDER_RANGE
 })
 
-// 计算最后一页索引
 const lastPageIndex = computed(() => Math.max(0, slides.value.length - 1))
-
-// 检查是否在边界
 const isAtFirstPage = computed(() => currentIndex.value === 0)
 const isAtLastPage = computed(() => currentIndex.value === lastPageIndex.value)
 
+// 防抖 resize
+let resizeTimer: number | null = null
+const handleResize = () => {
+  if (resizeTimer) window.clearTimeout(resizeTimer)
+  resizeTimer = window.setTimeout(() => {
+    if (isSwiping || isAnimating.value) return
+    screenWidth.value = window.innerWidth
+    offsetX.value = -currentIndex.value * screenWidth.value
+  }, 100)
+}
+
 onMounted(() => {
-  //保存登录信息
   loadLogoInfo()
-
-  //读取配置
   loadConfig()
-
   screenWidth.value = window.innerWidth
   window.addEventListener('resize', handleResize)
   initTabs()
 
   return () => {
     window.removeEventListener('resize', handleResize)
+    if (resizeTimer) window.clearTimeout(resizeTimer)
   }
 })
 
 const loadLogoInfo = () => {
   let info = getLoginInfo()
-
   if (info !== null) {
     setLocalStorage(GO_LOGIN_INFO_STORE, cryptoEncode(info))
   } else {
@@ -165,44 +170,27 @@ const loadLogoInfo = () => {
       )
     )
   }
-
-  console.log('读取到登录信息:', info)
 }
 
-//
 const loadConfig = () => {
   try {
-    // 直接获取已解析的配置对象（无需再次JSON.parse）
     let config = getLocalStorage('SettingData')
-
-    // 严格校验配置的有效性：仅当为非空对象时才处理
-    // 排除 null/undefined/数组/字符串/数字等非对象类型
     if (
       config !== null &&
       config !== undefined &&
       typeof config === 'object' &&
       !Array.isArray(config)
     ) {
-      // 仅当字段存在时才更新，无默认值，不存在则保持原值
-      if (config.limit !== undefined) {
-        limit.value = config.limit
-      }
-      if (config.enableSwipe !== undefined) {
-        enableSwipe.value = config.enableSwipe
-      }
-      if (config.isDark !== undefined) {
-        is_dark.value = config.isDark
-      }
+      if (config.limit !== undefined) limit.value = config.limit
+      if (config.enableSwipe !== undefined) enableSwipe.value = config.enableSwipe
+      if (config.isDark !== undefined) is_dark.value = config.isDark
     }
-
-    console.log('读取到配置:', config)
   } catch (error) {
-    // 捕获可能的意外错误（如getLocalStorage内部异常），不修改任何值
-    console.error('加载配置时出错，未修改任何配置:', error)
+    console.error('加载配置出错:', error)
   }
 }
 
-// 初始化标签数据
+// 初始化
 const initTabs = async () => {
   flag.value = false
   try {
@@ -211,10 +199,7 @@ const initTabs = async () => {
       routerTurnByName(PageEnum.BASE_LOGIN_NAME, true)
       return
     }
-
     slides.value = list.filter((item: any) => item.content !== '""')
-
-    // 应用预览限制
     slides.value = slides.value.slice(0, limit.value)
     slides.value.forEach(item => {
       try {
@@ -230,70 +215,45 @@ const initTabs = async () => {
   }
 }
 
-// 窗口大小变化处理
-const handleResize = () => {
-  if (isSwiping.value || isAnimating.value) return
-  const oldWidth = screenWidth.value
-  screenWidth.value = window.innerWidth
-
-  // 重新计算偏移量，保持当前页面位置
-  if (oldWidth !== screenWidth.value) {
-    offsetX.value = -currentIndex.value * screenWidth.value
-  }
-}
-
-// 切换标签
+// 切换 tab
 const switchTab = (index: number) => {
   if (isAnimating.value || currentIndex.value === index) return
   animateToIndex(index)
 }
 
-// 触摸开始
+// 触摸
 const onTouchStart = (e: TouchEvent) => {
-  // 检查是否启用滑动功能
   if (!enableSwipe.value) return
-
   if (isAnimating.value || slides.value.length <= 1) return
 
   const touch = e.touches[0]
-  startX.value = touch.clientX
-  startY.value = touch.clientY
-  isSwiping.value = true
-  isHorizontal.value = null
+  startX = touch.clientX
+  startY = touch.clientY
+  isSwiping = true
+  isHorizontal = null
 }
 
-// 触摸移动 - 完全禁止边界滑动
 const onTouchMove = (e: TouchEvent) => {
-  // 检查是否启用滑动功能
-  if (!enableSwipe.value) return
-
-  if (!isSwiping.value || isAnimating.value || slides.value.length <= 1) return
+  if (!enableSwipe.value || !isSwiping || isAnimating.value || slides.value.length <= 1) return
 
   const touch = e.touches[0]
-  const diffX = touch.clientX - startX.value
-  const diffY = touch.clientY - startY.value
+  const diffX = touch.clientX - startX
+  const diffY = touch.clientY - startY
 
-  // 确定滑动方向
-  if (isHorizontal.value === null) {
+  if (isHorizontal === null) {
     const isHorizontalMove = Math.abs(diffX) > Math.abs(diffY)
-    const moveThreshold = 10 // 最小移动阈值
-
+    const moveThreshold = 10
     if (Math.abs(diffX) > moveThreshold || Math.abs(diffY) > moveThreshold) {
-      isHorizontal.value = isHorizontalMove
+      isHorizontal = isHorizontalMove
     }
   }
 
-  if (!isHorizontal.value) return
+  if (!isHorizontal) return
 
-  // 阻止默认行为，防止页面滚动
-  e.preventDefault()
+  const isSwipingRight = diffX > 0
+  const isSwipingLeft = diffX < 0
 
-  const isSwipingRight = diffX > 0 // 向右滑动（显示上一页）
-  const isSwipingLeft = diffX < 0 // 向左滑动（显示下一页）
-
-  // 严格的边界检查
   if (isAtFirstPage.value && isSwipingRight) {
-    // 第一页禁止右滑，只允许极小的视觉反馈
     const maxMove = 5
     const resistanceMove = Math.min(diffX * EDGE_RESISTANCE, maxMove)
     offsetX.value = -currentIndex.value * screenWidth.value + resistanceMove
@@ -301,79 +261,62 @@ const onTouchMove = (e: TouchEvent) => {
   }
 
   if (isAtLastPage.value && isSwipingLeft) {
-    // 最后一页禁止左滑，只允许极小的视觉反馈
     const maxMove = -5
     const resistanceMove = Math.max(diffX * EDGE_RESISTANCE, maxMove)
     offsetX.value = -currentIndex.value * screenWidth.value + resistanceMove
     return
   }
 
-  // 正常情况下的滑动
   offsetX.value = -currentIndex.value * screenWidth.value + diffX
 }
 
-// 触摸结束 - 确保严格的边界检查
-const onTouchEnd = (e: TouchEvent) => {
-  // 检查是否启用滑动功能
-  if (!enableSwipe.value) return
+const onTouchEnd = () => {
+  if (!enableSwipe.value || !isSwiping || isAnimating.value || slides.value.length <= 1) return
 
-  if (!isSwiping.value || isAnimating.value || slides.value.length <= 1) return
-
-  const touch = e.changedTouches[0]
-  const diffX = touch.clientX - startX.value
+  const diffX = offsetX.value + currentIndex.value * screenWidth.value
   const absDiffX = Math.abs(diffX)
-
   let newIndex = currentIndex.value
 
-  // 只有在水平滑动时才处理切换逻辑
-  if (isHorizontal.value && absDiffX > SWIPE_THRESHOLD) {
+  if (isHorizontal && absDiffX > SWIPE_THRESHOLD) {
     const isSwipingRight = diffX > 0
     const isSwipingLeft = diffX < 0
 
-    // 严格的边界检查
     if (isSwipingRight && !isAtFirstPage.value) {
-      // 向右滑动且不在第一页，切换到上一页
       newIndex = currentIndex.value - 1
     } else if (isSwipingLeft && !isAtLastPage.value) {
-      // 向左滑动且不在最后一页，切换到下一页
       newIndex = currentIndex.value + 1
     }
-    // 在边界情况下，newIndex 保持为 currentIndex.value，不会切换
   }
 
   animateToIndex(newIndex)
   resetSwipeState()
 }
 
-// 触摸取消
 const onTouchCancel = () => {
-  // 检查是否启用滑动功能
   if (!enableSwipe.value) return
-
-  if (isSwiping.value && !isAnimating.value) {
+  if (isSwiping && !isAnimating.value) {
     animateToIndex(currentIndex.value)
     resetSwipeState()
   }
 }
 
-// 重置滑动状态
 const resetSwipeState = () => {
-  isSwiping.value = false
-  isHorizontal.value = null
+  isSwiping = false
+  isHorizontal = null
 }
 
-// 动画切换到指定索引
+// 动画
+let animateTimer: number | null = null
 const animateToIndex = (index: number) => {
   if (isAnimating.value) return
-
-  // 确保索引在有效范围内
   const validIndex = Math.max(0, Math.min(index, lastPageIndex.value))
 
   isAnimating.value = true
   currentIndex.value = validIndex
   offsetX.value = -validIndex * screenWidth.value
 
-  setTimeout(() => {
+  if (animateTimer) window.clearTimeout(animateTimer)
+  animateTimer = window.setTimeout(() => {
     isAnimating.value = false
   }, ANIMATION_DURATION)
 }
@@ -397,8 +340,10 @@ const handleFloatingIconClick = () => {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  touch-action: none; /* 完全禁用默认触摸行为 */
   background-color: v-bind(containerBgColor);
+  touch-action: pan-y;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .tabs-bar {
@@ -413,6 +358,8 @@ const handleFloatingIconClick = () => {
   padding: 0 0px;
   overflow-x: auto;
   overflow-y: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .tabs-bar::-webkit-scrollbar {
@@ -429,6 +376,7 @@ const handleFloatingIconClick = () => {
   white-space: nowrap;
   user-select: none;
   transition: all 0.2s ease;
+  will-change: background, color;
 }
 
 .tabs-item.active {
@@ -443,31 +391,36 @@ const handleFloatingIconClick = () => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  touch-action: none; /* 禁用默认触摸行为 */
   background-color: v-bind(containerBgColor);
+  touch-action: none;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .content-wrapper {
   display: flex;
   height: 100%;
-  width: fit-content; /* 确保宽度正确 */
+  width: fit-content;
   will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .content-item {
   flex: 0 0 auto;
   height: 100%;
-  overflow: hidden; /* 临时禁用滚动，避免冲突 */
+  overflow: hidden;
   position: relative;
   background-color: v-bind(containerBgColor);
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
-/* 为 PreviewList 组件提供独立的滚动容器 */
 .content-item :deep(.preview-list-container) {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y; /* 只允许垂直滚动 */
+  touch-action: pan-y;
 }
 </style>
