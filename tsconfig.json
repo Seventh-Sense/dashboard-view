@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": ["es6", "ESNext", "dom"],
-    "types": ["vite/client", "lodash-es"],
+    "types": ["vite/client", "lodash-es", "mockjs"],
     "paths": {
       "@/*": ["src/*"],
       "/#/*": ["types/*"]

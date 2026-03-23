@@ -1,0 +1,26 @@
+[
+  {
+    "name": "test",
+    "uid": "1",
+    "property": {
+      "function": "03",
+      "parms": {
+        "address": 1,
+        "count": 1,
+        "data_type": "int16",
+        "byteorder": 1,
+        "wordorder": 1,
+        "divisor": 1
+      }
+    },
+    "rule": {
+      "min": 0,
+      "max": 100,
+      "increment": true
+    },
+    "device_id": "910d43b7-303f-433c-acf0-034bf63db720",
+    "id": "0c0b17ae-4677-40f2-891b-ff3931e95860",
+    "description": "",
+    "tags": ""
+  }
+]

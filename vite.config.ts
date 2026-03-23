@@ -126,6 +126,9 @@ export default ({ mode }: ConfigEnv) => {
       rollupOptions: rollupOptions,
       //brotliSize: brotliSize,
       chunkSizeWarningLimit: chunkSizeWarningLimit
+    },
+    optimizeDeps: {
+      include: ['mockjs']
     }
   })
 }

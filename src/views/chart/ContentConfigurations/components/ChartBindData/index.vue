@@ -132,7 +132,6 @@ const readDevices = async () => {
       console.warn('Non-OK response status:', res.status)
       return
     }
-    console.log('readDevices', res.data)
 
     res.data.map((device: any) => {
       deviceOptions.value.push({
@@ -201,7 +200,8 @@ watch(
               pointOptions.value.push({
                 label: point.name,
                 value: point.id,
-                uid: point.uid
+                uid: point.uid,
+                info: point
               })
             })
           }
