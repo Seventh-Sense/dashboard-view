@@ -147,8 +147,6 @@ const initTable = async () => {
   }
 }
 
-//重命名项目的回调函数
-const rProjectCallback = () => {}
 
 const onPreview = async () => {
   if (list.value.length > 0) {

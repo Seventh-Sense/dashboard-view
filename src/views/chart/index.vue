@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
-import { getLocalStorage, JSONParse, loadAsyncComponent } from '@/utils'
+import { getLocalStorage, JSONParse, loadAsyncComponent, setLocalStorage } from '@/utils'
 import { LayoutHeaderPro } from '@/layout/components/LayoutHeaderPro'
 import { useContextMenu } from './hooks/useContextMenu.hook'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
@@ -76,14 +76,18 @@ const { menuOptions, onClickOutSide, mousePosition, handleMenuSelect } = useCont
 onMounted(() => {
   const { id } = routerParamsInfo.params
   const previewId = typeof id === 'string' ? id : id[0]
-  
+
   readProject(previewId)
     .then((res: any) => {
-      //console.log('readProject', res.data.content === '{}', res.data.content, typeof res.data.content)
-      if (res.status === 'OK' && res.data && res.data.content !== '{}') {
-        nextTick(() => {
-          updateComponent(JSONParse(res.data.content), true, true)
-        })
+      if (res.status === 'OK' && res.data) {
+        if (res.data.content !== '{}') {
+          nextTick(() => {
+            updateComponent(JSONParse(res.data.content), true, true)
+          })
+        }
+
+        //保存title setLocalStorage('ProjectInfo', list.value)
+        setLocalStorage('currentTitle', res.data.name)
       }
     })
     .catch(err => {

@@ -3,104 +3,39 @@
     <n-icon size="20" :depth="3">
       <fish-icon></fish-icon>
     </n-icon>
-    <n-text @click="handleFocus">
+    <n-text>
       {{ $t('dashboard.workspace') }} -
-      <n-button v-show="!focus" secondary size="tiny">
+      <n-button secondary size="tiny">
         <span class="title">
           {{ comTitle }}
         </span>
       </n-button>
     </n-text>
-
-    <n-input
-      v-show="focus"
-      ref="inputInstRef"
-      size="small"
-      type="text"
-      maxlength="16"
-      show-count
-      :placeholder="$t('dashboard.input_name_text')"
-      v-model:value.trim="title"
-      @keyup.enter="handleBlur"
-      @blur="handleBlur"
-    ></n-input>
   </n-space>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
-import {
-  fetchRouteParamsLocation,
-  fetchRouteParams,
-  setTitle,
-  renderLang,
-  getLocalStorage
-} from '@/utils'
-import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { EditCanvasConfigEnum } from '@/store/modules/chartEditStore/chartEditStore.d'
+import { computed } from 'vue'
+import { fetchRouteParamsLocation, getLocalStorage } from '@/utils'
 import { icon } from '@/plugins'
 
 const { FishIcon } = icon.ionicons5
-const chartEditStore = useChartEditStore()
 
-const focus = ref<boolean>(false)
-const inputInstRef = ref(null)
+const t = window['$t']
 
 // 根据路由 id 参数获取项目信息
 const fetchProjectInfoById = () => {
   const id = fetchRouteParamsLocation()
 
-  if (id !== "") {
+  if (id !== '') {
     return id
   }
   return ''
 }
 
-const fetchProjectName = () => {
-  console.log(fetchRouteParams())
-
-  return ''
-}
-
-const title = ref<string>(fetchProjectInfoById() || '')
-const t = window['$t']
 const comTitle = computed(() => {
-  // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-  title.value = title.value.replace(/\s/g, '')
-  const id = title.value.length ? title.value : t('dashboard.new_project')
-  
-  const newTitle = getProjectNameByID(id)
-
-  setTitle(t('dashboard.workspace') + '-' + newTitle)
-  chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.PROJECT_NAME, newTitle)
-
-  return newTitle
+  return getLocalStorage('currentTitle')
 })
-
-const getProjectNameByID = (id: any) => {
-  let title = ''
-  let info = getLocalStorage('ProjectInfo')
-
-  info &&
-    info.forEach((item: any) => {
-      if (item.id.toString() === id) {
-        title = item.title
-      }
-    })
-
-  return title
-}
-
-const handleFocus = () => {
-  // focus.value = true
-  // nextTick(() => {
-  //   inputInstRef.value && (inputInstRef.value as any).focus()
-  // })
-}
-
-const handleBlur = () => {
-  focus.value = false
-}
 </script>
 <style lang="scss" scoped>
 .title {
