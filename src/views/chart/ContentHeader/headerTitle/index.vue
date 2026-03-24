@@ -16,22 +16,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { fetchRouteParamsLocation, getLocalStorage } from '@/utils'
+import { getLocalStorage } from '@/utils'
 import { icon } from '@/plugins'
 
 const { FishIcon } = icon.ionicons5
 
 const t = window['$t']
-
-// 根据路由 id 参数获取项目信息
-const fetchProjectInfoById = () => {
-  const id = fetchRouteParamsLocation()
-
-  if (id !== '') {
-    return id
-  }
-  return ''
-}
 
 const comTitle = computed(() => {
   return getLocalStorage('currentTitle')
