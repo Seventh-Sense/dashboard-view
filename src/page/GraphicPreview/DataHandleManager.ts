@@ -1,4 +1,4 @@
-import { IntervalTimeOut } from '@/views/display/util/util'
+import { getInfos, IntervalTimeOut, readValue } from '@/views/display/util/util'
 import DataManager from './DataManager'
 import { readPointsDataById } from '@/api/http'
 import cloneDeep from 'lodash/cloneDeep'
@@ -77,19 +77,54 @@ export default class DataHandleManager extends DataManager {
       return []
     }
 
+    console.log('uniquePointIds', uniquePointIds)
+
+    let points = await getInfos()
+
+    this.setValue(uniquePointIds, points, callbackMap)
+
     // 立即获取初始数据
-    try {
-      await this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
-    } catch (error) {
-      console.error('Initial points data fetch failed', error)
-    }
+    // try {
+    //   await this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+    // } catch (error) {
+    //   console.error('Initial points data fetch failed', error)
+    // }
 
     // 设置定时轮询
     this.intervalId = window.setInterval(() => {
-      this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+      //this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+      this.setValue(uniquePointIds, points, callbackMap)
     }, IntervalTimeOut())
 
     return []
+  }
+
+  private setValue = (load: any, points: any, callbackMap: Map<string, PointCallbackInfo[]>) => {
+    let data = readValue(load, points)
+
+    try {
+      data.forEach((item: any) => {
+        const callbackInfos = callbackMap.get(item.metric_id)
+        if (!callbackInfos) return
+
+        callbackInfos.forEach(({ callback, pointType }) => {
+          try {
+            let load = cloneDeep(item.value)
+            if (item.value === true || item.value === 'true') {
+              load = 1
+            } else if (item.value === false || item.value === 'false') {
+              load = 0
+            }
+            //console.log(`Updating point ${item.metric_id} with value:`, load, pointType)
+            callback(load, pointType)
+          } catch (err) {
+            console.error(`Error executing callback for point ${item.metric_id}`, err)
+          }
+        })
+      })
+    } catch (err) {
+      console.error('Failed to fetch points data', err)
+    }
   }
 
   private async fetchAndUpdatePoints(

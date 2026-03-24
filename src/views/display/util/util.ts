@@ -1,4 +1,4 @@
-import { getDeviceList, readPointValue } from '@/api/http'
+import { getDeviceList, readPointValue, readSubscribePoints } from '@/api/http'
 import { getLocalStorage } from '@/utils'
 
 export const IntervalTimeOut = () => {
@@ -226,3 +226,143 @@ const handleBacnetBinding = (point: any, resData: any) => {
     return { priority: DEFAULT_PRIORITY }
   }
 }
+
+//"0c0b17ae-4677-40f2-891b-ff3931e95860"
+//获取点位信息和规则
+export const getInfos = async () => {
+  try {
+    const res: any = await getDeviceList()
+
+    if (res.status !== 'OK') {
+      console.warn('Non-OK response status:', res.status)
+      return []
+    }
+
+    const deviceList = res.data
+    let points: any[] = []
+
+    for (const device of deviceList) {
+      try {
+        const pointRes: any = await readSubscribePoints(device.id)
+
+        if (pointRes.status !== 'OK') {
+          console.warn(`设备 ${device.id} 获取点位失败，状态：`, pointRes.status)
+          continue // 单个设备失败，跳过，不影响整体
+        }
+
+        if (Array.isArray(pointRes.data)) {
+          points.push(...pointRes.data)
+        }
+      } catch (err) {
+        console.error(`设备 ${device.id} 获取点位异常：`, err)
+        continue
+      }
+    }
+
+    console.log('最终整合的所有点位数据：', points)
+    return points
+  } catch (e) {
+    console.error('Failed to fetch devices:', e)
+    return []
+  }
+}
+
+/*
+{
+    "metric_id": "0c0b17ae-4677-40f2-891b-ff3931e95860",
+    "value": null,
+    "status": 0,
+    "timestamp": 1774317086
+}
+*/
+export const readValue = (pointIds: any[], pointList: any[]) => {
+  console.log('read value', pointIds, pointList)
+
+  if (!Array.isArray(pointIds) || !Array.isArray(pointList)) {
+    console.warn('data 或 points 不是数组')
+    return []
+  }
+
+  return pointIds.map(pointId => {
+    // 查找匹配的点位
+    const matchedPoint = pointList.find(item => item.id === pointId)
+
+    // 默认数据结构
+    const defaultData = {
+      metric_id: pointId,
+      value: 0,
+      status: 1,
+      timestamp: 1774317086
+    }
+
+    if (!matchedPoint) return defaultData
+
+    // 解析描述中的数值范围，格式：数字-数字
+    const { description = '' } = matchedPoint
+    const [min, max] = parseRange(description)
+
+    let decimalPlaces = 0
+
+    if (matchedPoint.property?.parms?.count) {
+      const count = Number(matchedPoint.property.parms.count)
+      // 确保是合法数字
+      if (!isNaN(count) && count >= 0) {
+        decimalPlaces = count
+      }
+    }
+
+    // 校验解析结果，不合法则使用默认值
+    if (isNaN(min) || isNaN(max) || min > max) {
+      console.warn(`点位 ${pointId} 描述格式不正确，无法拆分范围: ${description}`)
+      defaultData.value = getRandomInt(0, 100, decimalPlaces)
+    } else {
+      defaultData.value = getRandomInt(min, max, decimalPlaces)
+    }
+
+    return defaultData
+  })
+}
+
+/**
+ * 解析字符串中的数字范围 如 "10-50" → [10,50]
+ * @param description 待解析的描述字符串
+ * @returns 解析后的 [最小值, 最大值]
+ */
+const parseRange = (description: string): [number, number] => {
+  const match = description.match(/^(\d+)-(\d+)$/)
+  return match ? [Number(match[1]), Number(match[2])] : [NaN, NaN]
+}
+
+/**
+ * 生成指定范围的随机数（支持整数 / 指定位数小数）
+ * @param min 最小值
+ * @param max 最大值
+ * @param decimalPlaces 保留小数位数，默认 0（整数）
+ * @returns 随机数
+ */
+const getRandomInt = (min: number, max: number, decimalPlaces: number = 0): number => {
+  // 转数字并处理非法值
+  min = Number(min);
+  max = Number(max);
+
+  // 如果是 NaN，给默认值 0
+  if (isNaN(min)) min = 0;
+  if (isNaN(max)) max = 0;
+
+  // 交换大小，防止顺序错误
+  if (min > max) [min, max] = [max, min];
+
+  // 限制小数位 >= 0
+  decimalPlaces = Math.max(0, Math.floor(Number(decimalPlaces)) || 0);
+
+  // 生成随机数
+  const randomValue = Math.random() * (max - min) + min;
+
+  // 指定位数四舍五入
+  if (decimalPlaces === 0) {
+    return Math.floor(randomValue);
+  } else {
+    const multiplier = Math.pow(10, decimalPlaces);
+    return Math.round(randomValue * multiplier) / multiplier;
+  }
+};

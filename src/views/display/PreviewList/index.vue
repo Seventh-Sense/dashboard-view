@@ -43,7 +43,7 @@ import { defaultTheme, globalThemeJson } from '@/settings/chartThemes/index'
 import { PreviewListRender } from './PreviewListRender'
 
 import { readPointsDataById } from '@/api/http'
-import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../util/util'
+import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, getInfos, readValue, writeValue } from '../util/util'
 
 const props = defineProps({
   ProjectData: {
@@ -229,7 +229,7 @@ onMounted(async () => {
   }
 })
 
-const readValues = (dataList: any[]) => {
+const readValues = async (dataList: any[]) => {
   const safeDataList = Array.isArray(dataList) ? dataList : []
   let load = getAllDataIdsSafe(safeDataList)
 
@@ -238,13 +238,23 @@ const readValues = (dataList: any[]) => {
     interval = null
   }
 
-  readPointValue(load)
+  let points = await getInfos()
+  //readPointValue(load)
+  setValue(load, points)
 
   if (!interval) {
     interval = window.setInterval(() => {
-      readPointValue(load)
+      //readPointValue(load)
+      setValue(load, points)
     }, IntervalTimeOut())
   }
+}
+
+const setValue = (load: any, points: any) => {
+  let data = readValue(load, points)
+
+  //console.log('setValue', data)
+  chartData.componentList = writeValue(chartData.componentList, data)
 }
 
 const readPointValue = (load: any) => {

@@ -50,7 +50,14 @@ import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import { readPointsDataById } from '@/api/http'
 import { useRouter } from 'vue-router'
-import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../display/util/util'
+import {
+  IntervalTimeOut,
+  getAllDataIdsSafe,
+  getBindParams,
+  getInfos,
+  readValue,
+  writeValue
+} from '../display/util/util'
 import { FloatingIcon } from '../display/FloatingIcon'
 import { PageEnum } from '@/enums/pageEnum'
 
@@ -119,7 +126,7 @@ const handleFloatingIconClick = () => {
   }
 }
 
-const readValues = (dataList: any[]) => {
+const readValues = async (dataList: any[]) => {
   const safeDataList = Array.isArray(dataList) ? dataList : []
   let load: any = getAllDataIdsSafe(safeDataList)
 
@@ -128,11 +135,21 @@ const readValues = (dataList: any[]) => {
     interval = null
   }
 
-  readPointValue(load)
+  let points = await getInfos()
+  //readPointValue(load)
+  setValue(load, points)
 
   interval = window.setInterval(() => {
-    readPointValue(load)
+    //readPointValue(load)
+    setValue(load, points)
   }, IntervalTimeOut())
+}
+
+const setValue = (load: any, points: any) => {
+  let data = readValue(load, points)
+
+  //console.log('setValue', data)
+  chartEditStore.componentList = writeValue(chartEditStore.componentList, data)
 }
 
 const readPointValue = (load: any) => {
@@ -140,6 +157,7 @@ const readPointValue = (load: any) => {
     readPointsDataById(load)
       .then((res: any) => {
         if (res.status === 'OK') {
+          console.log('aaaa', res.data)
           chartEditStore.componentList = writeValue(chartEditStore.componentList, res.data)
         } else {
           console.log('no data!')
