@@ -8,16 +8,7 @@ import { MulLineChartConfig } from './MulLineChart/index'
 import { MulBarChartConfig } from './MulBarChart/index'
 import { SankeyChartConfig } from './SankeyChart/index'
 import { PieHalfChartConfig } from './PieHalfChart/index'
+import { SwitchModeConfig } from './SwitchMode/index'
+import { InputModeConfig } from './InputMode/index'
 
-export default [
-  LineChartConfig,
-  Line2ChartConfig,
-  MulLineChartConfig,
-  PieChartConfig,
-  PieHalfChartConfig,
-  BarChartConfig,
-  Bar2ChartConfig,
-  MulBarChartConfig,
-  HumidityChartConfig,
-  SankeyChartConfig
-]
+export default [HumidityChartConfig, SwitchModeConfig, InputModeConfig]

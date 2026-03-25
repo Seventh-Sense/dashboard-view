@@ -15,7 +15,11 @@
         ></n-input>
       </setting-item>
       <setting-item :name="t('dashboard.value')">
-        <n-input v-model:value="picture.value" size="small" :placeholder="t('dashboard.interval_value')"/>
+        <n-input
+          v-model:value="picture.value"
+          size="small"
+          :placeholder="t('dashboard.interval_value')"
+        />
       </setting-item>
       <setting-item v-if="picture.key !== 1">
         <n-icon size="18" color="white" @click="onDelete(picture.key)" style="cursor: pointer">
@@ -96,7 +100,7 @@ const fitList = [
 const uploadFile = (callback: Function | null = null) => {
   const input = document.createElement('input')
   input.type = 'file'
-  input.accept = '.png,.jpg,.jpeg,.gif' // 这里只允许部分图片类型
+  input.accept = '.png,.jpg,.jpeg,.gif,.webp' // 这里只允许部分图片类型
   input.onchange = async () => {
     if (!input.files || !input.files.length) return
     const file = input.files[0]
@@ -105,7 +109,12 @@ const uploadFile = (callback: Function | null = null) => {
       window['$message'].warning(`图片超出 ${backgroundImageSize}M 限制，请重新上传！`)
       return false
     }
-    if (type !== FileTypeEnum.PNG && type !== FileTypeEnum.JPEG && type !== FileTypeEnum.GIF) {
+    if (
+      type !== FileTypeEnum.PNG &&
+      type !== FileTypeEnum.JPEG &&
+      type !== FileTypeEnum.GIF &&
+      type !== FileTypeEnum.WEBP
+    ) {
       window['$message'].warning('文件格式不符合，请重新上传！')
       return false
     }

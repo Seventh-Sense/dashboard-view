@@ -1,5 +1,5 @@
 import { getDeviceList, readPointValue } from '@/api/http'
-import { getLocalStorage } from '@/utils'
+import { getLocalStorage, setLocalStorage } from '@/utils'
 
 export const IntervalTimeOut = () => {
   let pollingTime = 3000
@@ -50,6 +50,11 @@ export const writeValue = (componentList: any, data: any) => {
     } else if (component.key === 'Image') {
       component.option.timestamp = Date.now()
       component.option.datavalue = matchedData.value
+    } else if (component.key === 'SwitchMode') {
+      let value = getSwitchModeValue()
+
+      component.option.timestamp = Date.now()
+      component.option.dataset = value
     } else {
       component.option.timestamp = Date.now()
       component.option.dataset = matchedData.value
@@ -58,6 +63,20 @@ export const writeValue = (componentList: any, data: any) => {
   //console.log(chartEditStore.componentList)
 
   return componentList
+}
+
+const getSwitchModeValue = () => {
+  let value = getLocalStorage('SwitchMode')
+
+  if (value) {
+    return value
+  } else {
+    return 1
+  }
+}
+
+export const setSwitchModeValue = (value: any) => {
+  setLocalStorage('SwitchMode', value)
 }
 
 /**

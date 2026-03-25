@@ -3,11 +3,11 @@ import { ChatCategoryEnum, ChatCategoryEnumName } from '../../index.d'
 import i18n from '@/i18n/index'
 import { createI18nConfig } from '@/packages'
 
-export const HumidityChartConfig: ConfigType = {
-  key: 'HumidityChart',
-  chartKey: 'VHumidityChart',
-  conKey: 'VCHumidityChart',
-  title: '湿度控件',
+export const SwitchModeConfig: ConfigType = {
+  key: 'SwitchMode',
+  chartKey: 'VSwitchMode',
+  conKey: 'VCSwitchMode',
+  title: '开关4',
   category: ChatCategoryEnum.LINE,
   categoryName: ChatCategoryEnumName.LINE,
   package: PackagesCategoryEnum.CHARTS,
