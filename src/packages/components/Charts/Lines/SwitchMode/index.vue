@@ -58,7 +58,7 @@ const handleSwitchChange = throttle(
         }
 
         if (mode.value === 3) {
-          message.success('待机模式开启')
+          message.success('智能模式开启')
         }
       }
     } catch (error) {
@@ -77,8 +77,7 @@ const handleSwitchChange = throttle(
 watch(
   () => props.chartConfig.option.dataset,
   newVal => {
-
-    console.log('aaaaaaaaaa',newVal)
+    console.log('getSwitchMode',newVal)
     if (newVal === mode.value) {
       option.dataset = true
     } else {
