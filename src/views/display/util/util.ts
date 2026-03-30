@@ -320,7 +320,6 @@ export const readValue = (pointIds: any[], pointList: any[]) => {
     }
 
     console.log('test', defaultData, min, max)
-    
 
     return defaultData
   })
@@ -360,7 +359,19 @@ const getRandomInt = (min: number, max: number, decimalPlaces: number = 0): numb
   decimalPlaces = Math.max(0, Math.floor(Number(decimalPlaces)) || 0);
 
   // 生成随机数
-  const randomValue = Math.random() * (max - min) + min;
+  let randomValue;
+  if (min === max) {
+    // 范围相同 → 固定返回该值（满足 1-1=1）
+    randomValue = min;
+  } else {
+    if (decimalPlaces === 0) {
+      // 整数模式：包含 max（满足 0-1 返回 0 或 1）
+      randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+    } else {
+      // 小数模式
+      randomValue = Math.random() * (max - min) + min;
+    }
+  }
 
   // 指定位数四舍五入
   if (decimalPlaces === 0) {
