@@ -421,7 +421,7 @@ const handleFileUpload = (event: Event) => {
       const data = e.target?.result as ArrayBuffer
       const sheetsData = processExcel(data)
 
-      console.warn('Non-OK response status:', sheetsData)
+      console.log('response:', sheetsData)
       //const res: any = await addSubscribePoint(sheetsData.points)
 
       const res: any = await importData(sheetsData)
