@@ -319,17 +319,21 @@ export const readValue = (pointIds: any[], pointList: any[]) => {
       defaultData.value = getRandomInt(min, max, decimalPlaces)
     }
 
+    console.log('test', defaultData, min, max)
+    
+
     return defaultData
   })
 }
 
 /**
- * 解析字符串中的数字范围 如 "10-50" → [10,50]
+ * 解析字符串中的数字范围 如 "10.5-50.8" → [10.5, 50.8]（支持整数/小数）
  * @param description 待解析的描述字符串
  * @returns 解析后的 [最小值, 最大值]
  */
 const parseRange = (description: string): [number, number] => {
-  const match = description.match(/^(\d+)-(\d+)$/)
+  // 正则修改：支持整数、小数（正数）
+  const match = description.match(/^(\d+\.?\d*)-(\d+\.?\d*)$/)
   return match ? [Number(match[1]), Number(match[2])] : [NaN, NaN]
 }
 

@@ -42,6 +42,10 @@ export const units = [
     value: 'kPa'
   },
   {
+    label: 'mPa',
+    value: 'mPa'
+  },
+  {
     label: 'mm',
     value: 'mm'
   },
@@ -56,6 +60,10 @@ export const units = [
   {
     label: '%RH',
     value: '%RH'
+  },
+  {
+    label: 'seconds',
+    value: 'seconds'
   }
 ]
 
