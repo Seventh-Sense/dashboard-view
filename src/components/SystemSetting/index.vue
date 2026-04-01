@@ -35,7 +35,7 @@
           <n-gi>
             <div class="modal-caption">{{ $t('project.polling_time') }}</div>
             <div class="modal-item">
-              <n-input-number v-model:value="setData.preview.polling_time" :min="2000" />
+              <n-input-number v-model:value="setData.preview.polling_time" :min="0" />
             </div>
             <div class="modal-caption">{{ $t('project.is_dark') }}</div>
             <div class="modal-item">
