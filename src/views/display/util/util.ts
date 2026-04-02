@@ -1,3 +1,4 @@
+import { toString } from './../../../utils/type';
 import { getDeviceList, readPointValue } from '@/api/http'
 import { getLocalStorage, setLocalStorage } from '@/utils'
 
@@ -43,17 +44,28 @@ export const writeValue = (componentList: any, data: any) => {
 
     if (!matchedData) return
 
-    
+    const ddd = data.find((item: any) => item.tags === 'people_count')
+    // console.log('ddd', ddd.value, new Date().toLocaleString())
+
     //console.log(matchedData.property?.['present-value'])
     if (component.key === 'Online') {
       component.option.timestamp = Date.now()
       component.option.dataset = matchedData.status
     } else if (component.key === 'Image') {
-      component.option.timestamp = Date.now()
-      component.option.datavalue = matchedData.value
+      
+      if (component.request.bindInfo.device_type === 'ModbusTCP') {
+        let value = getSwitchModeValue()
+
+        component.option.timestamp = Date.now()
+        component.option.datavalue = value
+        //console.log('Image', value)
+      } else {
+        component.option.timestamp = Date.now()
+        component.option.datavalue = matchedData.value
+      }
     } else if (component.key === 'SwitchMode' || component.key === 'Enumerate') {
       let value = getSwitchModeValue()
-      
+
       component.option.timestamp = Date.now()
       component.option.dataset = value
     } else {
@@ -61,7 +73,6 @@ export const writeValue = (componentList: any, data: any) => {
       component.option.dataset = matchedData.value
     }
   })
-  
 
   return componentList
 }
@@ -69,7 +80,7 @@ export const writeValue = (componentList: any, data: any) => {
 const getSwitchModeValue = () => {
   let value = getLocalStorage('SwitchMode')
 
-  console.log('getSwitchModeValue', value)
+  //console.log('getSwitchModeValue', value)
   if (value) {
     return value
   } else {

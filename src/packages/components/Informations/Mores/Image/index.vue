@@ -63,6 +63,7 @@ const url = computed(() => {
     // 精确值匹配
     const ruleVal = Number(rule)
     if (!isNaN(ruleVal) && currentVal === ruleVal) {
+      //console.log(item.url)
       return item.url
     }
   }
@@ -81,6 +82,7 @@ const getStyle = (radius: number) => ({
 watch(
   () => props.chartConfig.option.datavalue,
   (newData) => {
+    //console.log('picture', newData)
     value.value = parseData(newData, 'string')
   },
   { immediate: true }
