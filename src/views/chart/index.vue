@@ -54,6 +54,7 @@ import { StorageEnum } from '@/enums/storageEnum'
 import { useRoute } from 'vue-router'
 import { downloadFile, readProject } from '@/api/http'
 import { useLangStore } from '@/store/modules/langStore/langStore'
+import { base64DecodeUtf8 } from '../preview/utils'
 
 const chartHistoryStoreStore = useChartHistoryStore()
 const chartEditStore = useChartEditStore()
@@ -111,15 +112,6 @@ const initData = (ip: string) => {
     .catch(err => {
       console.log(err)
     })
-}
-
-const base64DecodeUtf8 = (base64Str: string) => {
-  const binaryString = atob(base64Str)
-  const bytes = new Uint8Array(binaryString.length)
-  for (let i = 0; i < binaryString.length; i++) {
-    bytes[i] = binaryString.charCodeAt(i)
-  }
-  return new TextDecoder('utf-8').decode(bytes)
 }
 
 const initChart = (previewId: any) => {

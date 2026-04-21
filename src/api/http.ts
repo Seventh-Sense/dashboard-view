@@ -834,3 +834,23 @@ export const setConfigFile = async (ip: string, file: any, filename: string) => 
     throw error
   }
 }
+
+export const readPValue = async (data: any) => {
+  try {
+    const response = await post2(`/iot/read-points`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const writePValue = async (data: any) => {
+  try {
+    const response = await post2(`/iot/write-points`, data)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}

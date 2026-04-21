@@ -59,8 +59,6 @@ export const useThemeOverridesHook = () => {
         fontSize: '16px',
         borderRadius: '8px',
         itemHeight: '44px',
-        itemTextColorActive: 'rgba(255, 255, 255, 0.93)',
-        itemTextColorActiveHover: 'rgba(255, 255, 255, 0.93)'
       },
       Input: {
         border: 0,

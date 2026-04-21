@@ -3,11 +3,12 @@ import pick from 'lodash/pick'
 import { EchartsDataType } from '../index.d'
 import { globalThemeJson } from '@/settings/chartThemes/index'
 import type VChart from 'vue-echarts'
-import { readIotPoints, updatePoint } from '@/api/http'
+import { readIotPoints, updatePoint, writePValue } from '@/api/http'
 import i18n from '@/i18n/index'
 import { ref, onUnmounted } from 'vue'
 import { debounce } from 'lodash-es'
 import { includes } from './../../views/chart/ContentConfigurations/components/CanvasPage/components/CreateColorRenderChart/lineOptions'
+import router from '@/router'
 
 //动画闪烁时间
 export const animationTime = 3000
@@ -122,6 +123,47 @@ export const updateNodeData2 = async (bindInfo: any, data: any) => {
 }
 
 export const updateNodeData = async (load: any, data: any) => {
+  //console.log(load, data)
+  if (!load.bindParams.objectID) {
+    //console.log('no object_id', load.bindInfo)
+    window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
+    return false
+  }
+
+  try {
+    const route = router.currentRoute.value
+    const { id } = route.params
+
+    console.log(id)
+    const ip = typeof id === 'string' ? '' : id[1] || ''
+
+    const res: any = await writePValue({
+      device_address: ip,
+      device_type: load.bindParams.deviceType,
+      device_uid: load.bindParams.deviceID,
+      points: [
+        {
+          point_uid: load.bindParams.objectID,
+          data_type: load.bindParams.dataType,
+          value: data,
+          priority: 16
+        }
+      ]
+    })
+
+    //console.log('updateNodeData', res)
+    let isWriteSuccess = res.success && res.points?.length && res.points[0]?.success
+    if (!isWriteSuccess) {
+      window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
+    }
+  } catch (error) {
+    // 统一错误处理
+    console.warn('Update Node Data failed', error)
+    window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
+    return false
+  }
+}
+export const updateNodeData22 = async (load: any, data: any) => {
   if (!load.bindInfo.object_id) {
     //console.log('no object_id', load.bindInfo)
     window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))

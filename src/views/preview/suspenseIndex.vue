@@ -26,7 +26,6 @@
         </div>
       </div>
     </template>
-    <FloatingIcon @click="handleFloatingIconClick" />
   </div>
 </template>
 
@@ -40,7 +39,8 @@ import {
   clearStorage,
   keyRecordHandle,
   dragCanvas,
-  getPreviewInfo
+  getPreviewInfo,
+  getFileInfo
 } from './utils'
 import { useComInstall } from './hooks/useComInstall.hook'
 import { useScale } from './hooks/useScale.hook'
@@ -48,20 +48,20 @@ import { useStore } from './hooks/useStore.hook'
 import { PreviewScaleEnum } from '@/enums/styleEnum'
 import type { ChartEditStorageType } from './index.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
-import { readPointsDataById } from '@/api/http'
+import { readPointsDataById, readPValue } from '@/api/http'
 import { useRouter } from 'vue-router'
-import { IntervalTimeOut, getAllDataIdsSafe, getBindParams, writeValue } from '../display/util/util'
-import { FloatingIcon } from '../display/FloatingIcon'
-import { PageEnum } from '@/enums/pageEnum'
+import { IntervalTimeOut, getAllDataIdsSafe, writeValue } from '../display/util/util'
+import { useRoute } from 'vue-router'
 
 const t = window['$t']
 const router = useRouter()
+const routerParamsInfo = useRoute()
 
 //await getSessionStorageInfo()
-await getPreviewInfo()
+await getFileInfo(routerParamsInfo)
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
-setTitle(`${t('global.r_preview')}-${chartEditStore.editCanvasConfig?.projectName}`)
+setTitle(`${t('global.r_preview')}-Graphic`)
 
 const previewRefStyle = computed(() => {
   return {
@@ -88,17 +88,22 @@ const { show } = useComInstall(chartEditStore)
 keyRecordHandle()
 
 onMounted(async () => {
-  try {
-    //获取各种类型额外属性
-    const params = await getBindParams(chartEditStore.componentList)
-    if (params) {
-      chartEditStore.componentList = params
-    }
+  // try {
+  //   //获取各种类型额外属性
+  //   const params = await getBindParams(chartEditStore.componentList)
+  //   if (params) {
+  //     chartEditStore.componentList = params
+  //   }
 
-    readValues(chartEditStore.componentList)
-  } catch (error) {
-    console.error('Error during onMounted:', error)
-  }
+  //   readValues(chartEditStore.componentList)
+  // } catch (error) {
+  //   console.error('Error during onMounted:', error)
+  // }
+
+  let binds = getParamInfo(chartEditStore.componentList)
+
+  getValues(binds)
+  //console.log(binds)
 })
 
 onUnmounted(() => {
@@ -109,14 +114,111 @@ onUnmounted(() => {
   }
 })
 
-const handleFloatingIconClick = () => {
-  if (window.history.length > 1) {
-    router.back()
-  } else {
-    router.replace({
-      path: PageEnum.BASE_HOME_ITEMS
-    })
+const getParamInfo = (dataList: any[]) => {
+  const bindPoints: any[] = []
+  const uniqueKeys = new Set<string>()
+
+  for (const data of dataList) {
+    const { deviceID, objectID, deviceType, dataType } = data.request.bindParams
+    if (deviceID === '' || objectID === '') continue
+
+    const uniqueKey = `${deviceID}|${objectID}`
+
+    if (!uniqueKeys.has(uniqueKey)) {
+      uniqueKeys.add(uniqueKey)
+      bindPoints.push({
+        device_id: deviceID,
+        object_id: objectID,
+        device_type: deviceType,
+        data_type: dataType
+      })
+    } else {
+      //console.log(`跳过重复绑定点: device_id=${deviceID}, object_id=${objectID}`)
+    }
   }
+
+  return bindPoints
+}
+
+const getValues = (points: any[]) => {
+  if (interval) {
+    window.clearInterval(interval)
+    interval = null
+  }
+
+  getPointValue(points)
+
+  interval = window.setInterval(() => {
+    //getPointValue(points)
+  })
+}
+
+// 异步函数，支持 await
+const getPointValue = async (load: any[]) => {
+  // 空数组直接返回
+  if (!load.length) return
+
+  try {
+    const { id } = routerParamsInfo.params
+    // 简化 ip 赋值逻辑
+    const ip = typeof id === 'string' ? '' : id[1] || ''
+
+    // 遍历执行异步请求（这里用 for...of 替代 forEach，支持 await）
+    for (const item of load) {
+      try {
+        // 等待接口返回结果
+        const result: any = await readPValue({
+          device_address: ip,
+          device_type: item.device_type,
+          device_uid: item.device_id,
+          points: [
+            {
+              point_uid: item.object_id,
+              data_type: item.data_type,
+              priority: 16
+            }
+          ]
+        })
+
+        //console.log(result)
+
+        // 校验结果合法性
+        const isValidRead =
+          result.success && result.points?.length && result.points[0]?.present_value !== undefined
+
+        if (!isValidRead) {
+          continue
+        }
+
+        writePValue(result.points[0], item)
+      } catch (itemErr) {
+        // 单个请求失败，不影响其他请求执行
+        console.warn('单条点位读取失败：', item.object_id)
+      }
+    }
+  } catch (err) {
+    // 外层捕获：参数异常、循环外的逻辑错误
+    console.error('getPointValue 执行异常：', err)
+  }
+}
+
+const writePValue = (data: any, point: any) => {
+  chartEditStore.componentList.map((component: any) => {
+    const { deviceID, objectID } = component.request.bindParams
+
+    if (objectID === point.object_id) {
+      if (component.key === 'Online') {
+        component.option.timestamp = Date.now()
+        component.option.dataset = data.status
+      } else if (component.key === 'Image') {
+        component.option.timestamp = Date.now()
+        component.option.datavalue = data.present_value
+      } else {
+        component.option.timestamp = Date.now()
+        component.option.dataset =  data.present_value
+      }
+    }
+  })
 }
 
 const readValues = (dataList: any[]) => {

@@ -32,5 +32,6 @@ const comTitle = computed(() => {
   padding-left: 5px;
   padding-right: 5px;
   font-size: 15px;
+  color: #18181c;
 }
 </style>

@@ -51,17 +51,21 @@ const getOptions = () => {
       value: point.uid,
       label: point.point_name,
       deviceUid: device.uid,
-      deviceName: device.device_name
+      deviceName: device.device_name,
+      deviceType: device.protocol,
+      dataType: device.protocol === 'BACnet' ? point.property.object_type : point.property.data_type
     }))
   }))
 }
 
 const handleUpdateValue = (pointUid: string, selectedOptions: any) => {
-  //console.log(pointUid, selectedOptions)
+  console.log(pointUid, selectedOptions)
   //记录点位uid，和设备uid
   targetData.value.request.bindParams = {
     deviceID: selectedOptions.deviceUid,
-    objectID: pointUid
+    objectID: pointUid,
+    deviceType: selectedOptions.deviceType,
+    dataType: selectedOptions.dataType
   }
 }
 

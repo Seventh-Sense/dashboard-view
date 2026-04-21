@@ -3,6 +3,7 @@ import { StorageEnum } from '@/enums/storageEnum'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { useChartEditStore } from '@/store/modules/chartEditStore/chartEditStore'
 import localforage from '@/utils/localforage'
+import { downloadFile } from '@/api/http'
 
 const chartEditStore = useChartEditStore()
 
@@ -85,6 +86,31 @@ export const getPreviewInfo = () => {
   })
 }
 
+export const getFileInfo = async (params: any) => {
+  const { id } = params.params
+  const ip = typeof id === 'string' ? '' : id[1] || ''
+
+  try {
+    const result: any = await downloadFile(ip, 'objConfig/dashboard.json')
+
+    const hasValidData =
+      result && result.data && typeof result.data === 'string' && Number(result.file_size) > 0
+
+    if (hasValidData) {
+      const data = JSONParse(base64DecodeUtf8(result.data))
+
+      chartEditStore.editCanvasConfig = data.content?.editCanvasConfig || {}
+      chartEditStore.requestGlobalConfig = data.content?.requestGlobalConfig || {}
+      chartEditStore.componentList = data.content?.componentList || []
+    }
+
+    return ''
+  } catch (err) {
+    console.log(err)
+    throw err
+  }
+}
+
 //传入参数，获取数据
 // export const getPreviewInfoByInfo = (load: string) => {
 //   if (load === '') {
@@ -100,4 +126,13 @@ export const getPreviewInfo = () => {
 
 function getRandomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+export const base64DecodeUtf8 = (base64Str: string) => {
+  const binaryString = atob(base64Str)
+  const bytes = new Uint8Array(binaryString.length)
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i)
+  }
+  return new TextDecoder('utf-8').decode(bytes)
 }

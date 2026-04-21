@@ -12,8 +12,8 @@ axiosTwo.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const user = getLocalStorage('userToken')
 
-    //const token = user?.userInfo?.access_token
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc3Njc4MDUzMiwidHlwZSI6ImFjY2VzcyJ9.svPgDgs5LOk5GOmuLFyEuB2z3pdTEtKOqKzkzC1DxFU'
+    const token = user?.userInfo?.access_token
+    //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc3Njc4MDUzMiwidHlwZSI6ImFjY2VzcyJ9.svPgDgs5LOk5GOmuLFyEuB2z3pdTEtKOqKzkzC1DxFU'
     if (token) {
       (config.headers as any)['Authorization'] = `Bearer ${token}`
     }
