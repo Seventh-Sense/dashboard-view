@@ -31,6 +31,8 @@ const { id } = routerParamsInfo.params
 // id 标识
 const previewId = typeof id === 'string' ? id : id[0]
 
+const lang = typeof id === 'string' ? '' : id[1] || ''
+
 onMounted(() => {
   setTheme()
   setLang()
@@ -60,14 +62,22 @@ const setTheme = () => {
 }
 
 const setLang = () => {
-  const langStorage: LangStateType = getLocalStorage(StorageEnum.GO_LANG_STORE)
+  // const langStorage: LangStateType = getLocalStorage(StorageEnum.GO_LANG_STORE)
 
-  if (langStorage !== null) {
-    if (langStorage.lang === 'EN') {
-      window.graphicItemManager.switchLanguage('en-US')
-    } else {
-      window.graphicItemManager.switchLanguage('zh-CN')
-    }
+  // if (langStorage !== null) {
+  //   if (langStorage.lang === 'EN') {
+  //     window.graphicItemManager.switchLanguage('en-US')
+  //   } else {
+  //     window.graphicItemManager.switchLanguage('zh-CN')
+  //   }
+  // } else {
+  //   window.graphicItemManager.switchLanguage('zh-CN')
+  // }
+
+  if (lang === 'jp') {
+    window.graphicItemManager.switchLanguage('zh-CN')
+  } else if (lang === 'en') {
+    window.graphicItemManager.switchLanguage('en-US')
   } else {
     window.graphicItemManager.switchLanguage('zh-CN')
   }

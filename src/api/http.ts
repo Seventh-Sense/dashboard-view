@@ -660,7 +660,6 @@ export const addSubscribePoint = async (data: any) => {
   }
 }
 
-
 export const deleteSubscribePoint = async (id: any) => {
   try {
     const response = await del2(`/metric/` + id)
@@ -743,8 +742,8 @@ export const deleteJob = async (id: any) => {
 }
 
 interface ApiResponse<T = any> {
-  data: T;
-  status: number;
+  data: T
+  status: number
 }
 
 /**
@@ -754,30 +753,29 @@ interface ApiResponse<T = any> {
  */
 export const concurrentRequests = <T>(urls: string[]): Promise<ApiResponse<T>[]> => {
   // 创建axios请求数组
-  const requests = urls.map(url => 
+  const requests = urls.map(url =>
     get2(url).then(res => ({
       data: res.data,
       status: res.status
     }))
-  );
-  
-  // 等待所有请求完成
-  return Promise.all(requests);
-};
+  )
 
-export const executeParallelRequests  = <T>(data: any[]): Promise<ApiResponse<T>[]> => {
+  // 等待所有请求完成
+  return Promise.all(requests)
+}
+
+export const executeParallelRequests = <T>(data: any[]): Promise<ApiResponse<T>[]> => {
   // 创建axios请求数组
-  const requests = data.map(item => 
+  const requests = data.map(item =>
     post2(item.url, item.data).then(res => ({
       data: res.data,
       status: res.status
     }))
-  );
-  
-  // 等待所有请求完成
-  return Promise.all(requests);
-};
+  )
 
+  // 等待所有请求完成
+  return Promise.all(requests)
+}
 
 export const importData = async (data: any) => {
   try {
@@ -805,7 +803,33 @@ export const submitLicence = async (data: any) => {
     const response = await post2(`/license/submit`, data)
 
     return response
+  } catch (error) {
+    throw error
+  }
+}
 
+//Daikin
+export const downloadFile = async (ip: any, filename: string) => {
+  try {
+    const response = await post2(`/iot/file/download?device_address=${ip}&filename=${filename}`)
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const setConfigFile = async (ip: string, file: any, filename: string) => {
+  try {
+    const formData = new FormData()
+
+    formData.append('device_address', ip)
+    formData.append('file', file) // 文件
+    formData.append('filename', filename)
+
+    const response = await post2(`/iot/file/upload`, formData, ContentTypeEnum.FORM_DATA)
+
+    return response
   } catch (error) {
     throw error
   }

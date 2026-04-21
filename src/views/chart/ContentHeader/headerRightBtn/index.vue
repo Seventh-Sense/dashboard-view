@@ -31,7 +31,7 @@ import { syncData } from '../../ContentEdit/components/EditTools/hooks/useSyncUp
 import { icon } from '@/plugins'
 import { cloneDeep } from 'lodash'
 import { useDataListInit } from '@/views/project/items/components/ProjectItemsList/hooks/useData.hook'
-import { updateProject } from '@/api/http'
+import { setConfigFile, updateProject } from '@/api/http'
 import html2canvas from 'html2canvas'
 import { PageEnum } from '@/enums/pageEnum'
 import { useRemoveKeyboard } from '../../hooks/useKeyboard.hook'
@@ -84,61 +84,44 @@ const sendHandle = async () => {
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
 
-  //存储在菜单中
-  //addHandle({id: id, ...storageInfo})
-  //存储在本地浏览器中
-  //saveLocalStorage(previewId, storageInfo)
+  const ip = typeof id === 'string' ? '' : id[1] || ''
+  const lang = typeof id === 'string' ? '' : id[2] || ''
 
-  //console.log(storageInfo)
+  const file = new File(
+    [
+      JSON.stringify({
+        name: storageInfo.editCanvasConfig.projectName,
+        content: storageInfo,
+        cover: ''
+      })
+    ],
+    'dashboard.json',
+    { type: 'application/json' }
+  )
 
-  //const range = document.querySelector('.go-edit-range') as HTMLElement
-  // html2canvas(range, {
-  //   backgroundColor: null,
-  //   allowTaint: true,
-  //   useCORS: true
-  //   // svg: {
-  //   //   // 处理SVG
-  //   //   xmlns: true,
-  //   //   renderer: (svg: any) => {
-  //   //     // 将SVG转换为PNG
-  //   //     return `data:image/svg+xml;base64,${window.btoa(unescape(encodeURIComponent(svg)))}`
-  //   //   }
-  //   // }
-  // }).then((canvas: HTMLCanvasElement) => {
-  //   updateProject(previewId, {
-  //     name: storageInfo.editCanvasConfig.projectName,
-  //     content: JSONStringify(storageInfo),
-  //     //画布缩图
-  //     //cover: canvas.toDataURL()
-  //     cover: ''
-  //   })
-  //     .then(res => {
-  //       if (res) {
-  //         window['$message'].success(t('message.save_success'))
-  //       }
-  //       //console.log(res)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // })
-
-  updateProject(previewId, {
-      name: storageInfo.editCanvasConfig.projectName,
-      content: JSONStringify(storageInfo),
-      //画布缩图
-      //cover: canvas.toDataURL()
-      cover: ''
+  setConfigFile(ip, file, 'objConfig/dashboard.json')
+    .then((res: any) => {
+      window['$message'].success(t('message.save_success'))
     })
-      .then(res => {
-        if (res) {
-          window['$message'].success(t('message.save_success'))
-        }
-        //console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    .catch(err => {
+      console.log(err)
+    })
+  // updateProject(previewId, {
+  //   name: storageInfo.editCanvasConfig.projectName,
+  //   content: JSONStringify(storageInfo),
+  //   //画布缩图
+  //   //cover: canvas.toDataURL()
+  //   cover: ''
+  // })
+  //   .then(res => {
+  //     if (res) {
+  //       window['$message'].success(t('message.save_success'))
+  //     }
+  //     //console.log(res)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //   })
 }
 
 const saveLocalStorage = (id: any, storageInfo: any) => {
@@ -193,13 +176,13 @@ const btnList = [
     title: t('dashboard.save'),
     icon: renderIcon(SendIcon),
     event: sendHandle
-  },
-  {
-    select: true,
-    title: t('dashboard.exit'),
-    icon: renderIcon(LogOutOutlineIcon),
-    event: exitHandle
   }
+  // {
+  //   select: true,
+  //   title: t('dashboard.exit'),
+  //   icon: renderIcon(LogOutOutlineIcon),
+  //   event: exitHandle
+  // }
 ]
 
 const comBtnList = computed(() => {

@@ -1,25 +1,12 @@
 <template>
   <div v-if="isShow" class="go-chart-configurations-data">
-    <setting-item-box :name="$t('dashboard.devices')" :alone="true">
-      <n-select
-        size="small"
-        v-model:value="deviceID"
-        placeholder=""
-        :options="deviceOptions"
-        style="width: 260px"
-        clearable
-      />
-    </setting-item-box>
     <setting-item-box :name="$t('dashboard.point')" :alone="true">
-      <n-select
+      <n-cascader
+        v-model:value="value"
+        :options="options"
+        check-strategy="child"
         size="small"
-        v-model:value="pointID"
-        placeholder=""
-        :options="pointOptions"
-        @update:value="bindValue"
-        style="width: 260px"
-        clearable
-        :render-label="renderLabel"
+        @update:value="handleUpdateValue"
       />
     </setting-item-box>
   </div>
@@ -29,128 +16,58 @@
 import { onMounted, ref, h, watch } from 'vue'
 import { useTargetData } from '../hooks/useTargetData.hook'
 import { SettingItemBox } from '@/components/Pages/ChartItemSetting'
-import { getDeviceList, readPointValue, readSubscribePoints } from '@/api/http'
-import { NTooltip } from 'naive-ui'
+import { getLocalStorage } from '@/utils'
+import { useRoute } from 'vue-router'
 
 const { targetData } = useTargetData()
 
-const deviceID = ref('')
-const deviceType = ref('')
-const deviceAddress = ref('')
-const pointID = ref('')
-
-const deviceOptions = ref<any>([])
-const pointOptions = ref<any>([])
+const routerParamsInfo = useRoute()
 
 const isShow = ref(false)
 
-const bindValue = (value: any) => {
-  // 读取选取点位的"priorityArray"
-
-  // if (deviceType.value === 'bacnet') {
-  //   let defaultPriority = 16 // 默认优先级
-
-  //   const fetchPriority = async () => {
-  //     try {
-  //       const res = await readPointValue(deviceID.value)
-
-  //       if (!res.data?.length) return defaultPriority
-
-  //       const point = res.data.find((item: any) => item.metric_id === value)
-  //       if (!point) return defaultPriority
-
-  //       const priorityArray = point.property['priority-array']
-  //       if (!priorityArray) return defaultPriority
-
-  //       // 使用Object.entries简化查找逻辑
-  //       const validPriority = Object.entries(priorityArray).find(([_, val]) => val !== null)
-
-  //       return validPriority ? Number(validPriority[0]) : defaultPriority
-  //     } catch (error) {
-  //       console.error('Error fetching priority:', error)
-  //       return defaultPriority
-  //     }
-  //   }
-
-  //   // 立即执行异步函数
-  //   fetchPriority().then(priority => {
-  //     //console.log('priority', priority)
-  //     let uid = pointOptions.value.find((item: any) => item.value === value)?.uid || ''
-
-  //     targetData.value.request.bindParams = {
-  //       deviceID: deviceID.value,
-  //       deviceName: '',
-  //       deviceType: deviceType.value,
-  //       deviceAddress: deviceAddress.value,
-  //       objectID: value,
-  //       objectName: '',
-  //       objectPriority: priority,
-  //       objectUid: uid
-  //     }
-  //   })
-  // } else {
-  //   // 非bacnet情况的设置
-  //   targetData.value.request.bindParams = {
-  //     deviceID: deviceID.value,
-  //     deviceName: '',
-  //     deviceType: deviceType.value,
-  //     objectID: value,
-  //     objectName: '',
-  //     objectPriority: 16
-  //   }
-  // }
-
-  targetData.value.request.bindParams = {
-    deviceID: deviceID.value,
-    deviceName: '',
-    deviceType: deviceType.value,
-    objectID: value,
-    objectName: ''
-  }
-}
-
-const renderLabel = (option: any) => {
-  return h(
-    NTooltip,
-    { placement: 'top-start', trigger: 'hover' },
-    {
-      trigger: () => h('span', { class: 'truncated-text' }, option.label),
-      default: () => option.label
-    }
-  )
-}
+const value = ref<any>(null)
+const options = ref<any[]>([])
 
 onMounted(() => {
-  readDevices()
+  getOptions()
 })
 
-const readDevices = async () => {
-  try {
-    const res: any = await getDeviceList()
+const getOptions = () => {
+  const controllerInfo = getLocalStorage('controllerState')
+  if (!controllerInfo) {
+    return
+  }
 
-    if (res.status !== 'OK') {
-      console.warn('Non-OK response status:', res.status)
-      return
-    }
-    console.log('readDevices', res.data)
+  const { id } = routerParamsInfo.params
+  const ip = typeof id === 'string' ? '' : id[1] || ''
 
-    res.data.map((device: any) => {
-      deviceOptions.value.push({
-        label: device.name,
-        value: device.id,
-        type: device.protocol,
-        address: device.address
-      })
-    })
+  const devices = controllerInfo.controllerMap[ip]?.devices ?? []
+  if (!devices.length) return
 
-    //console.log('readDevices', deviceOptions.value)
-  } catch (error) {
-    console.log('readDevices', error)
+  options.value = devices.map((device: any) => ({
+    label: device.device_name,
+    value: device.uid,
+    children: device.points.map((point: any) => ({
+      value: point.uid,
+      label: point.point_name,
+      deviceUid: device.uid,
+      deviceName: device.device_name
+    }))
+  }))
+}
+
+const handleUpdateValue = (pointUid: string, selectedOptions: any) => {
+  //console.log(pointUid, selectedOptions)
+  //记录点位uid，和设备uid
+  targetData.value.request.bindParams = {
+    deviceID: selectedOptions.deviceUid,
+    objectID: pointUid
   }
 }
 
 //判断绑定数据是否显示
 const bindDataDisplay = (data: any) => {
+  //console.log('bindDataDisplay', data)
   let flag = false
 
   isShow.value = false
@@ -172,46 +89,14 @@ watch(
     if (newVal && newVal.chartConfig) {
       bindDataDisplay(newVal)
 
-      //console.log('targetData.value', newVal.request.bindParams)
       if (newVal.request.bindParams) {
-        deviceID.value = newVal.request.bindParams.deviceID
-        pointID.value = newVal.request.bindParams.objectID
+        // deviceID.value = newVal.request.bindParams.deviceID
+        // pointID.value = newVal.request.bindParams.objectID
+        value.value = newVal.request.bindParams.objectID
       }
     }
   },
   { deep: true, immediate: true }
-)
-
-watch(
-  () => deviceID.value,
-  newVal => {
-    //debugger
-    if (newVal !== '' && newVal !== null) {
-      //set type
-      const foundItem = deviceOptions.value.find((item: any) => item.value === newVal)
-      deviceType.value = foundItem?.type || ''
-      deviceAddress.value = foundItem?.address || ''
-
-      pointOptions.value = []
-      readSubscribePoints(newVal)
-        .then((res: any) => {
-          //console.log('readSubscribePoints', res.data)
-          if (res.status && res.status === 'OK') {
-            res.data.map((point: any) => {
-              pointOptions.value.push({
-                label: point.name,
-                value: point.id,
-                uid: point.uid
-              })
-            })
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
-  },
-  { immediate: true }
 )
 </script>
 

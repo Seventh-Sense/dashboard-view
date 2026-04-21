@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig, AxiosError, AxiosInstance } from 'axios'
 import { ResultEnum } from '@/enums/httpEnum'
 import { ErrorPageNameMap } from '@/enums/pageEnum'
-import { redirectErrorPage } from '@/utils'
+import { getLocalStorage, redirectErrorPage } from '@/utils'
 
 const axiosTwo: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API_2,
@@ -10,6 +10,14 @@ const axiosTwo: AxiosInstance = axios.create({
 
 axiosTwo.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    const user = getLocalStorage('userToken')
+
+    //const token = user?.userInfo?.access_token
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc3Njc4MDUzMiwidHlwZSI6ImFjY2VzcyJ9.svPgDgs5LOk5GOmuLFyEuB2z3pdTEtKOqKzkzC1DxFU'
+    if (token) {
+      (config.headers as any)['Authorization'] = `Bearer ${token}`
+    }
+
     return config
   },
   (error: AxiosError) => {

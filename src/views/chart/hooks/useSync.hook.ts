@@ -111,6 +111,7 @@ export const useSync = () => {
       chartHistoryStore.clearBackStack()
       chartHistoryStore.clearForwardStack()
     }
+    
     // 画布补丁处理
     projectData.editCanvasConfig = canvasVersionUpdatePolyfill(projectData.editCanvasConfig)
 

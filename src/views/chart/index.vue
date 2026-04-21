@@ -49,15 +49,17 @@ import { useSync } from '@/views/chart/hooks/useSync.hook'
 import { ChartEditStorage } from '@/store/modules/chartEditStore/chartEditStore.d'
 import { RequestBodyEnum, RequestHttpEnum, RequestHttpIntervalEnum } from '@/enums/httpEnum'
 import { ChartFrameEnum } from '@/packages/index.d'
-import { PreviewScaleEnum } from '@/enums/styleEnum'
+import { LangEnum, PreviewScaleEnum } from '@/enums/styleEnum'
 import { StorageEnum } from '@/enums/storageEnum'
 import { useRoute } from 'vue-router'
-import { readProject } from '@/api/http'
+import { downloadFile, readProject } from '@/api/http'
+import { useLangStore } from '@/store/modules/langStore/langStore'
 
 const chartHistoryStoreStore = useChartHistoryStore()
 const chartEditStore = useChartEditStore()
 const { updateComponent } = useSync()
 const routerParamsInfo = useRoute()
+const langStore = useLangStore()
 
 // 记录初始化
 chartHistoryStoreStore.canvasInit(chartEditStore.getEditCanvas)
@@ -77,6 +79,50 @@ onMounted(() => {
   const { id } = routerParamsInfo.params
   const previewId = typeof id === 'string' ? id : id[0]
 
+  const ip = typeof id === 'string' ? '' : id[1] || ''
+  const lang = typeof id === 'string' ? '' : id[2] || ''
+
+  //设置lang
+  setLanguage(lang)
+
+  initData(ip)
+
+  // initChart(previewId)
+})
+
+const filename = 'objConfig/dashboard.json'
+
+const initData = (ip: string) => {
+  downloadFile(ip, filename)
+    .then((result: any) => {
+      const hasValidData =
+        result && result.data && typeof result.data === 'string' && Number(result.file_size) > 0
+
+      if (hasValidData) {
+        let data = JSONParse(base64DecodeUtf8(result.data))
+
+        console.log('initData', data.content)
+
+        nextTick(() => {
+          updateComponent(data.content, true, true)
+        })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+const base64DecodeUtf8 = (base64Str: string) => {
+  const binaryString = atob(base64Str)
+  const bytes = new Uint8Array(binaryString.length)
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i)
+  }
+  return new TextDecoder('utf-8').decode(bytes)
+}
+
+const initChart = (previewId: any) => {
   readProject(previewId)
     .then((res: any) => {
       if (res.status === 'OK' && res.data) {
@@ -93,19 +139,20 @@ onMounted(() => {
     .catch(err => {
       console.log(err)
     })
+}
 
-  // const sessionStorageInfo = getLocalStorage(StorageEnum.GO_CHART_STORAGE_LIST) || []
-
-  // if (sessionStorageInfo.length > 0) {
-  //   sessionStorageInfo.forEach((data: any) => {
-  //     if (data.id === previewId) {
-  //       nextTick(() => {
-  //         updateComponent(data, false, true)
-  //       })
-  //     }
-  //   })
-  // }
-})
+const setLanguage = (lang: any) => {
+  console.log('lang', lang)
+  if (lang === 'jp') {
+    langStore.changeLang(LangEnum.JA)
+  } else if (lang === 'en') {
+    langStore.changeLang(LangEnum.EN)
+  } else if (lang === 'zh-tw') {
+    langStore.changeLang(LangEnum.ZH_TW)
+  } else {
+    langStore.changeLang(LangEnum.ZH)
+  }
+}
 
 onUnmounted(() => {
   nextTick(() => {
