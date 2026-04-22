@@ -27,8 +27,8 @@ export default ({ mode }: ConfigEnv) => {
   const isGraphic = env.VITE_APP_IS_GRAPHIC === 'true'
 
   return defineConfig({
-    //base: '/editor/',
-    base: '/',
+    base: '/editor/',
+    //base: '/',
     publicDir: isGraphic ? 'public' : false,
     // 路径重定向
     resolve: {

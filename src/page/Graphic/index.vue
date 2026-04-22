@@ -54,7 +54,7 @@ const initData = async () => {
       const data = JSONParse(base64DecodeUtf8(result.data))
       console.log(data)
       //graphicData.value = JSONParse('{}')
-      graphicData.value = data.content
+      graphicData.value = data
     } else {
       graphicData.value = JSONParse('{}')
     }
@@ -121,9 +121,17 @@ const onSave = (data: any, callback?: (success: boolean) => void) => {
   const file = new File(
     [
       JSON.stringify({
-        name: '',
-        content: JSONParse(data.data),
-        cover: ''
+        useTemplate: false,
+        templateRef: '',
+        data: data.data,
+        previewImage: '',
+        options: '',
+        reference: '',
+        name: 'Graphic',
+        description: null,
+        type: 'graphic',
+        digitalTags: [],
+        lastUpdateTime: ''
       })
     ],
     'graphic.json',

@@ -62,34 +62,34 @@ const onSubmit = async () => {
 
     let bindinfo = {}
 
-    if (infos[2] === 'bacnet') {
-      bindinfo = {
-        deviceID: infos[0],
-        deviceName: '',
-        deviceType: infos[2],
-        deviceAddress: infos[3],
-        objectID: infos[1],
-        objectName: '',
-        objectPriority: infos[4],
-        objectUid: infos[5] + ',' + infos[6]
-      }
-    } else {
-      bindinfo = {
-        deviceID: infos[0],
-        deviceName: '',
-        deviceType: infos[2],
-        objectID: infos[1],
-        objectName: '',
-        objectPriority: infos[4]
-      }
-    }
+    // if (infos[2] === 'bacnet') {
+    //   bindinfo = {
+    //     deviceID: infos[0],
+    //     deviceName: '',
+    //     deviceType: infos[2],
+    //     deviceAddress: infos[3],
+    //     objectID: infos[1],
+    //     objectName: '',
+    //     objectPriority: infos[4],
+    //     objectUid: infos[5] + ',' + infos[6]
+    //   }
+    // } else {
+    //   bindinfo = {
+    //     deviceID: infos[0],
+    //     deviceName: '',
+    //     deviceType: infos[2],
+    //     objectID: infos[1],
+    //     objectName: '',
+    //     objectPriority: infos[4]
+    //   }
+    // }
 
     let load = {
       bindParams: {
-        deviceID: '',
-        deviceType: '',
-        objectID: '',
-        dataType: '',
+        deviceID: infos[0],
+        deviceType: infos[2],
+        objectID: infos[1],
+        dataType: infos[3],
         objectName: ''
       }
     }
@@ -114,6 +114,7 @@ const onClose = () => {
   background: #{$--color-dark-modal-content};
   backdrop-filter: blur(50px);
   border-radius: 18px;
+  border: 0;
 
   &-title {
     font-size: 20px;

@@ -122,8 +122,49 @@ export const updateNodeData2 = async (bindInfo: any, data: any) => {
     return false
   }
 }
+const getPointType = (device_type: string, data_type: string) => {
+  let type = 'analog'
 
+  //console.log("device_type  data_type", device_type, data_type);
+  if (device_type === 'BACnet') {
+    if (
+      data_type === 'binary-input' ||
+      data_type === 'binary-output' ||
+      data_type === 'binary-value'
+    ) {
+      type = 'binary'
+    } else if (
+      data_type === 'multi-state-input' ||
+      data_type === 'multi-state-output' ||
+      data_type === 'multi-state-value'
+    ) {
+      type = 'multi-state'
+    } else {
+      type = 'analog'
+    }
+  } else if (device_type === 'ModbusTCP') {
+    if (data_type === 'bool' || data_type === 'boolean') {
+      type = 'binary'
+    } else {
+      type = 'analog'
+    }
+  } else if (device_type === 'KNX') {
+    if (
+      data_type === 'switch' ||
+      data_type === 'binary' ||
+      data_type === 'bool' ||
+      data_type === 'boolean'
+    ) {
+      type = 'binary'
+    } else if (data_type === 'multiState') {
+      type = 'multiState'
+    } else {
+      type = 'analog'
+    }
+  }
 
+  return type
+}
 
 export const updateNodeData = async (load: any, data: any) => {
   //console.log(load, data)
@@ -140,6 +181,18 @@ export const updateNodeData = async (load: any, data: any) => {
     console.log(id)
     const ip = typeof id === 'string' ? '' : id[1] || ''
 
+    let vv: any = null
+
+    let type = getPointType(load.bindParams.deviceType, load.bindParams.dataType)
+    console.log(type)
+    if (type === 'analog') {
+      vv = Number.isInteger(data) ? data + 0.000000001 : data
+    } else if (type === 'binary') {
+      vv = data === 1
+    } else {
+      vv = data
+    }
+
     const res: any = await writePValue({
       device_address: ip,
       device_type: load.bindParams.deviceType,
@@ -148,7 +201,7 @@ export const updateNodeData = async (load: any, data: any) => {
         {
           point_uid: load.bindParams.objectID,
           data_type: load.bindParams.dataType,
-          value: data,
+          value: vv,
           priority: 16
         }
       ]

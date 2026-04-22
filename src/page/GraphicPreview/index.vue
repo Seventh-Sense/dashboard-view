@@ -34,7 +34,7 @@ onMounted(async () => {
     if (hasValidData) {
       const data = JSONParse(base64DecodeUtf8(result.data))
 
-      projectInfo.value = data.content
+      projectInfo.value = data
     }
     // const list: any = await localforage.getItem('ProjectList')
 

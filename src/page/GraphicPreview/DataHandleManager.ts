@@ -1,7 +1,8 @@
 import { IntervalTimeOut } from '@/views/display/util/util'
 import DataManager from './DataManager'
-import { readPointsDataById } from '@/api/http'
+import { readPointsDataById, readPValue } from '@/api/http'
 import cloneDeep from 'lodash/cloneDeep'
+import router from '@/router'
 
 export enum PointAttrValueType {
   Analog = 'Analog',
@@ -49,6 +50,8 @@ export default class DataHandleManager extends DataManager {
     // 收集有效点ID
     const pointIds = new Set<string>()
 
+    const pload = new Map<string, any[]>()
+
     bindingPairs.forEach(([binding, callback]) => {
       if (!binding || !callback) return
 
@@ -70,6 +73,10 @@ export default class DataHandleManager extends DataManager {
         callback,
         pointType: binding.pointType
       })
+
+      if (!pload.has(pointId)) {
+        pload.set(pointId, parts)
+      }
     })
 
     const uniquePointIds = Array.from(pointIds)
@@ -79,14 +86,14 @@ export default class DataHandleManager extends DataManager {
 
     // 立即获取初始数据
     try {
-      await this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+      await this.fetchAndUpdatePoints(uniquePointIds, callbackMap, pload)
     } catch (error) {
       console.error('Initial points data fetch failed', error)
     }
 
     // 设置定时轮询
     this.intervalId = window.setInterval(() => {
-      this.fetchAndUpdatePoints(uniquePointIds, callbackMap)
+      this.fetchAndUpdatePoints(uniquePointIds, callbackMap, pload)
     }, IntervalTimeOut())
 
     return []
@@ -94,35 +101,77 @@ export default class DataHandleManager extends DataManager {
 
   private async fetchAndUpdatePoints(
     pointIds: string[],
-    callbackMap: Map<string, PointCallbackInfo[]>
+    callbackMap: Map<string, PointCallbackInfo[]>,
+    loads: any
   ) {
-    try {
-      const res = await readPointsDataById(pointIds)
-      if (!res.data || !Array.isArray(res.data)) {
-        console.warn('Invalid points data response', res)
-        return
-      }
+    const route = router.currentRoute.value
+    const idArr = route.params.id as string[]
+    const ip = idArr[1]
 
-      //console.log('Fetched points data:', res.data, pointIds)
-      res.data.forEach((item: any) => {
-        const callbackInfos = callbackMap.get(item.metric_id)
+    try {
+      for (const item of pointIds) {
+        //console.log('Fetched points data:', item, loads.get(item))
+        const params = loads.get(item)
+
+        const result: any = await readPValue({
+          device_address: ip,
+          device_type: params[2],
+          device_uid: params[0],
+          points: [
+            {
+              point_uid: item,
+              data_type: params[1],
+              priority: 16
+            }
+          ]
+        })
+
+        const isValidRead =
+          result.success && result.points?.length && result.points[0]?.present_value !== undefined
+
+        if (!isValidRead) {
+          continue
+        }
+        //console.log(result)
+
+        const callbackInfos = callbackMap.get(item)
+
         if (!callbackInfos) return
 
         callbackInfos.forEach(({ callback, pointType }) => {
           try {
-            let load = cloneDeep(item.value)
-            if (item.value === true || item.value === 'true') {
-              load = 1
-            } else if (item.value === false || item.value === 'false') {
-              load = 0
-            }
-            //console.log(`Updating point ${item.metric_id} with value:`, load, pointType)
-            callback(load, pointType)
+            callback(result.points[0]?.present_value, pointType)
           } catch (err) {
-            console.error(`Error executing callback for point ${item.metric_id}`, err)
+            console.error(`Error executing callback for point ${item}`, err)
           }
         })
-      })
+      }
+
+      // const res = await readPointsDataById(pointIds)
+      // if (!res.data || !Array.isArray(res.data)) {
+      //   console.warn('Invalid points data response', res)
+      //   return
+      // }
+
+      // res.data.forEach((item: any) => {
+      //   const callbackInfos = callbackMap.get(item.metric_id)
+      //   if (!callbackInfos) return
+
+      //   callbackInfos.forEach(({ callback, pointType }) => {
+      //     try {
+      //       let load = cloneDeep(item.value)
+      //       if (item.value === true || item.value === 'true') {
+      //         load = 1
+      //       } else if (item.value === false || item.value === 'false') {
+      //         load = 0
+      //       }
+      //       //console.log(`Updating point ${item.metric_id} with value:`, load, pointType)
+      //       callback(load, pointType)
+      //     } catch (err) {
+      //       console.error(`Error executing callback for point ${item.metric_id}`, err)
+      //     }
+      //   })
+      // })
     } catch (err) {
       console.error('Failed to fetch points data', err)
     }
