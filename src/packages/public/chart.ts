@@ -74,6 +74,7 @@ export const clickCyclicData = (value: string, options: string[]): string => {
 }
 
 //数据处理
+//graphic
 export const updateNodeData2 = async (bindInfo: any, data: any) => {
   if (!bindInfo.objectID) {
     window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))
@@ -122,6 +123,8 @@ export const updateNodeData2 = async (bindInfo: any, data: any) => {
   }
 }
 
+
+
 export const updateNodeData = async (load: any, data: any) => {
   //console.log(load, data)
   if (!load.bindParams.objectID) {
@@ -163,7 +166,8 @@ export const updateNodeData = async (load: any, data: any) => {
     return false
   }
 }
-export const updateNodeData22 = async (load: any, data: any) => {
+
+export const updateNodeDataback = async (load: any, data: any) => {
   if (!load.bindInfo.object_id) {
     //console.log('no object_id', load.bindInfo)
     window['$message'].warning(i18n.global.t('msg.gauge_msg_3'))

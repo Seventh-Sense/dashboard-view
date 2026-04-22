@@ -11,7 +11,7 @@ const chartRoutes: RouteRecordRaw = {
   name: ChartEnum.CHART_HOME_NAME,
   component: importPath['ChartEnum.CHART_HOME_NAME'],
   meta: {
-    title: 'XPlay',
+    title: 'XTool',
     isRoot: true,
     noKeepAlive: true,
   }

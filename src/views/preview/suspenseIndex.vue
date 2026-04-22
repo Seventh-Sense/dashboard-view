@@ -149,8 +149,8 @@ const getValues = (points: any[]) => {
   getPointValue(points)
 
   interval = window.setInterval(() => {
-    //getPointValue(points)
-  })
+    getPointValue(points)
+  }, 3000)
 }
 
 // 异步函数，支持 await

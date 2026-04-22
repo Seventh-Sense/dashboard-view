@@ -3,7 +3,6 @@
     <suspense>
       <GraphicSingle :ProjectData="projectInfo" />
     </suspense>
-    <FloatingIcon @click="handleFloatingIconClick" />
   </div>
 </template>
 
@@ -13,8 +12,9 @@ import { GraphicSingle } from './GraphicSingle'
 import { useRoute, useRouter } from 'vue-router'
 import localforage from '@/utils/localforage'
 import { JSONParse } from '@/utils'
-import { FloatingIcon } from '@/views/display/FloatingIcon'
 import { PageEnum } from '@/enums/pageEnum'
+import { downloadFile } from '@/api/http'
+import { base64DecodeUtf8 } from '@/views/preview/utils'
 
 const router = useRouter()
 const routerParamsInfo = useRoute()
@@ -25,20 +25,31 @@ const projectInfo = ref<any>({})
 
 onMounted(async () => {
   try {
-    const list: any = await localforage.getItem('ProjectList')
+    const ip = typeof id === 'string' ? '' : id[1] || ''
 
-    if (!Array.isArray(list) || list.length === 0) {
-      console.warn('No projects found in localforage.')
-      return
+    const result: any = await downloadFile(ip, 'objConfig/graphic.json')
+    const hasValidData =
+      result && result.data && typeof result.data === 'string' && Number(result.file_size) > 0
+
+    if (hasValidData) {
+      const data = JSONParse(base64DecodeUtf8(result.data))
+
+      projectInfo.value = data.content
     }
+    // const list: any = await localforage.getItem('ProjectList')
 
-    const matchItem = list.find(element => element?.id === id[0])
-    if (!matchItem) {
-      console.warn(`No project found with id: ${id}`)
-      return
-    }
+    // if (!Array.isArray(list) || list.length === 0) {
+    //   console.warn('No projects found in localforage.')
+    //   return
+    // }
 
-    projectInfo.value = JSONParse(matchItem.content)
+    // const matchItem = list.find(element => element?.id === id[0])
+    // if (!matchItem) {
+    //   console.warn(`No project found with id: ${id}`)
+    //   return
+    // }
+
+    //projectInfo.value = JSONParse(matchItem.content)
   } catch (error) {
     console.error('Error during GraphicPreview onMounted:', error)
   }

@@ -84,7 +84,17 @@ const onSubmit = async () => {
       }
     }
 
-    await updateNodeData2(bindinfo, value.value)
+    let load = {
+      bindParams: {
+        deviceID: '',
+        deviceType: '',
+        objectID: '',
+        dataType: '',
+        objectName: ''
+      }
+    }
+
+    await updateNodeData(load, value.value)
 
     emit('update:isShowModal', false)
   } else {

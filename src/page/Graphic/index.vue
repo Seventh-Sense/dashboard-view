@@ -14,11 +14,12 @@ import { GraphicEditor } from '@x-plateform/graphic-editor'
 import { onMounted, ref } from 'vue'
 import { goDialog, goHome, JSONParse, JSONStringify } from '@/utils'
 import { useRoute } from 'vue-router'
-import { readProject, updateProject } from '@/api/http'
+import { downloadFile, readProject, updateProject } from '@/api/http'
 import { getLocalStorage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import { LangStateType } from '@/store/modules/langStore/langStore.d'
 import { useDesignStore } from '@/store/modules/designStore/designStore'
+import { base64DecodeUtf8 } from '@/views/preview/utils'
 
 const designStore = useDesignStore()
 const graphicData = ref<any | null>(null)
@@ -37,18 +38,30 @@ onMounted(() => {
   setTheme()
   setLang()
 
-  readProject(previewId)
-    .then((res: any) => {
-      if (res.status === 'OK' && res.data && res.data.content !== '') {
-        graphicData.value = JSONParse(res.data.content)
-        //graphicData.value = JSONParse('{}')
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      graphicData.value = JSONParse('{}')
-    })
+  initData()
 })
+
+const initData = async () => {
+  try {
+    const ip = typeof id === 'string' ? '' : id[1] || ''
+
+    const result: any = await downloadFile(ip, 'objConfig/graphic.json')
+    
+    const hasValidData =
+      result && result.data && typeof result.data === 'string' && Number(result.file_size) > 0
+
+    if (hasValidData) {
+      const data = JSONParse(base64DecodeUtf8(result.data))
+
+      graphicData.value = data.content
+    } else {
+      graphicData.value = JSONParse('{}')
+    }
+  } catch (error) {
+    console.error('Error during Graphic onMounted:', error)
+    graphicData.value = JSONParse('{}')
+  }
+}
 
 const setTheme = () => {
   const body = document.body

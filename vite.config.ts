@@ -15,7 +15,7 @@ import svgLoader from 'vite-svg-loader'
 import zipPack from 'vite-plugin-zip-pack'
 import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from 'unplugin-vue-components/resolvers'
-import copy from 'rollup-plugin-copy';
+import copy from 'rollup-plugin-copy'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -24,10 +24,11 @@ function pathResolve(dir: string) {
 export default ({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd())
 
-  const isGraphic = env.VITE_APP_IS_GRAPHIC === 'true';
+  const isGraphic = env.VITE_APP_IS_GRAPHIC === 'true'
 
   return defineConfig({
-    base: '/',
+    base: '/editor/',
+    //base: '/',
     publicDir: isGraphic ? 'public' : false,
     // 路径重定向
     resolve: {
@@ -103,7 +104,7 @@ export default ({ mode }: ConfigEnv) => {
         supportTs: true,
         // 监视文件更改
         watchFiles: true
-      }),
+      })
       // 压缩
       // viteCompression({
       //   verbose: true,

@@ -11,7 +11,7 @@ const graphicRoutes: RouteRecordRaw = {
   name: GraphicEnum.CHART_GRAPHIC_NAME,
   component: importPath['GraphicEnum.CHART_GRAPHIC_NAME'],
   meta: {
-    title: 'XPlay',
+    title: 'XTool',
     isRoot: true,
     noKeepAlive: true,
   }

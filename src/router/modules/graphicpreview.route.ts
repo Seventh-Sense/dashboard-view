@@ -11,7 +11,7 @@ const graphicPreviewRoutes: RouteRecordRaw = {
   name: GraphicPreviewEnum.CHART_GRAPHIC_PREVIEW_NAME,
   component: importPath['GraphicPreviewEnum.CHART_GRAPHIC_PREVIEW_NAME'],
   meta: {
-    title: 'XPlay',
+    title: 'XTool',
     isRoot: true
   }
 }
