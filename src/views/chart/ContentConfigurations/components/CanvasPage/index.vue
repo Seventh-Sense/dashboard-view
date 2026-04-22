@@ -281,7 +281,7 @@ const switchSelectColorHandle = () => {
 
 // 清除颜色
 const clearColor = () => {
-  chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND, 'rgba(0, 0, 0, 0.2)')
+  chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.BACKGROUND, '#232324')
   if (canvasConfig.backgroundImage) {
     chartEditStore.setEditCanvasConfig(EditCanvasConfigEnum.SELECT_COLOR, false)
   }

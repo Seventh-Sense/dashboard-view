@@ -104,7 +104,7 @@ export const useChartEditStore = defineStore({
       // 混合模式
       blendMode: 'normal',
       // 默认背景色
-      background: 'rgba(0, 0, 0, 0.2)',
+      background: '#232324',
       backgroundImage: undefined,
       // 是否使用纯颜色
       selectColor: true,
@@ -256,7 +256,7 @@ export const useChartEditStore = defineStore({
         // 混合模式
         blendMode: 'normal',
         // 默认背景色
-        background: undefined,
+        background: '#232324',
         backgroundImage: undefined,
         // 是否使用纯颜色
         selectColor: true,

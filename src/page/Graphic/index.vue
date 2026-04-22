@@ -14,7 +14,7 @@ import { GraphicEditor } from '@x-plateform/graphic-editor'
 import { onMounted, ref } from 'vue'
 import { goDialog, goHome, JSONParse, JSONStringify } from '@/utils'
 import { useRoute } from 'vue-router'
-import { downloadFile, readProject, updateProject } from '@/api/http'
+import { downloadFile, readProject, setConfigFile, updateProject } from '@/api/http'
 import { getLocalStorage } from '@/utils'
 import { StorageEnum } from '@/enums/storageEnum'
 import { LangStateType } from '@/store/modules/langStore/langStore.d'
@@ -46,13 +46,14 @@ const initData = async () => {
     const ip = typeof id === 'string' ? '' : id[1] || ''
 
     const result: any = await downloadFile(ip, 'objConfig/graphic.json')
-    
+
     const hasValidData =
       result && result.data && typeof result.data === 'string' && Number(result.file_size) > 0
 
     if (hasValidData) {
       const data = JSONParse(base64DecodeUtf8(result.data))
-
+      console.log(data)
+      //graphicData.value = JSONParse('{}')
       graphicData.value = data.content
     } else {
       graphicData.value = JSONParse('{}')
@@ -113,24 +114,50 @@ const onSave = (data: any, callback?: (success: boolean) => void) => {
     data: data.data
   }
 
-  updateProject(previewId, {
-    name: load.name,
-    content: JSONStringify(load),
-    //画布缩图
-    //cover: canvas.toDataURL()
-    cover: ''
-  })
-    .then(res => {
-      if (res) {
-        window['$message'].success(t('message.save_success'))
-        callback && callback(true)
-      }
-      //console.log(res)
+  const ip = typeof id === 'string' ? '' : id[1] || ''
+
+  //console.log(data, JSONParse(data.data))
+
+  const file = new File(
+    [
+      JSON.stringify({
+        name: '',
+        content: JSONParse(data.data),
+        cover: ''
+      })
+    ],
+    'graphic.json',
+    { type: 'application/json' }
+  )
+
+  setConfigFile(ip, file, 'objConfig/graphic.json')
+    .then((res: any) => {
+      window['$message'].success(t('message.save_success'))
+      callback && callback(true)
     })
     .catch(err => {
       console.log(err)
       callback && callback(false)
     })
+
+  // updateProject(previewId, {
+  //   name: load.name,
+  //   content: JSONStringify(load),
+  //   //画布缩图
+  //   //cover: canvas.toDataURL()
+  //   cover: ''
+  // })
+  //   .then(res => {
+  //     if (res) {
+  //       window['$message'].success(t('message.save_success'))
+  //       callback && callback(true)
+  //     }
+  //     //console.log(res)
+  //   })
+  //   .catch(err => {
+  //     console.log(err)
+  //     callback && callback(false)
+  //   })
 }
 
 const showPreview = () => {}
