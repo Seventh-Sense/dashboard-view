@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { GraphicEditor } from '@x-plateform/graphic-editor'
 import { onMounted, ref } from 'vue'
-import { goDialog, goHome, JSONParse, JSONStringify } from '@/utils'
+import { goDialog, goHome, JSONParse, JSONStringify, setLocalStorage } from '@/utils'
 import { useRoute } from 'vue-router'
 import { downloadFile, readProject, setConfigFile, updateProject } from '@/api/http'
 import { getLocalStorage } from '@/utils'
@@ -32,11 +32,11 @@ const { id } = routerParamsInfo.params
 // id 标识
 const previewId = typeof id === 'string' ? id : id[0]
 
-const lang = typeof id === 'string' ? '' : id[1] || ''
+const lang = typeof id === 'string' ? '' : id[2] || ''
 
 onMounted(() => {
   setTheme()
-  setLang()
+  //setLang()
 
   initData()
 })
@@ -89,11 +89,15 @@ const setLang = () => {
   // }
 
   if (lang === 'jp') {
-    window.graphicItemManager.switchLanguage('zh-CN')
+    console.log('aaaaaaaaa')
+    //window.graphicItemManager.switchLanguage('ja-JP')
+    window.localStorage.setItem('language', 'ja-JP')
   } else if (lang === 'en') {
-    window.graphicItemManager.switchLanguage('en-US')
+    //window.graphicItemManager.switchLanguage('en-US')
+    window.localStorage.setItem('language', 'en-US')
   } else {
-    window.graphicItemManager.switchLanguage('zh-CN')
+    //window.graphicItemManager.switchLanguage('zh-CN')
+    window.localStorage.setItem('language', 'zh-CN')
   }
 }
 

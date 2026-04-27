@@ -72,7 +72,7 @@ export default ({ mode }: ConfigEnv) => {
         targets: [
           {
             src: 'version.txt',
-            dest: 'dist' // 明确指定复制到dist目录
+            dest: 'editor' // 明确指定复制到dist目录
           }
         ],
         hook: 'writeBundle', // 确保在打包完成后复制

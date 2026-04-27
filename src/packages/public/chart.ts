@@ -211,7 +211,10 @@ export const updateNodeData = async (load: any, data: any) => {
     let isWriteSuccess = res.success && res.points?.length && res.points[0]?.success
     if (!isWriteSuccess) {
       window['$message'].error(i18n.global.t('msg.gauge_msg_2'))
+      return false
     }
+
+    return true
   } catch (error) {
     // 统一错误处理
     console.warn('Update Node Data failed', error)
