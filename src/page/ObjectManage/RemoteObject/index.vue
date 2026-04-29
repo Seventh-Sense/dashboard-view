@@ -155,7 +155,12 @@ const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 72 
 const filteredData = computed(() => {
   if (keyword.value === '') return data.value
 
-  const searchTerm = keyword.value.toLowerCase()
+  let searchTerm = keyword.value.toLowerCase()
+
+  const matchList = ['bacnet/', 'bacnet/i', 'bacnet/ip']
+  if (matchList.includes(searchTerm)) {
+    searchTerm = 'bacnet'
+  }
 
   return data.value.filter(item => {
     return Object.values(item).some(value => {
