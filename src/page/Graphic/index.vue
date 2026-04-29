@@ -65,8 +65,12 @@ const setLang = () => {
   if (langStorage !== null) {
     if (langStorage.lang === 'EN') {
       window.graphicItemManager.switchLanguage('en-US')
-    } else {
+    } else if (langStorage.lang === 'JA') {
+      window.graphicItemManager.switchLanguage('ja-JP')
+    } else if (langStorage.lang === 'ZH') {
       window.graphicItemManager.switchLanguage('zh-CN')
+    } else if (langStorage.lang === 'ZH_TW') {
+      window.graphicItemManager.switchLanguage('zh-TW')
     }
   } else {
     window.graphicItemManager.switchLanguage('zh-CN')
