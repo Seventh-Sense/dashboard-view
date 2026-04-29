@@ -70,7 +70,7 @@
         />
       </div>
     </div>
-    <RenameModal :show="modalShow" :cardData="cardData" @close="closeHandle" />
+    <RenameModal v-if="modalShow" :show="modalShow" :cardData="cardData" @close="closeHandle" />
   </div>
 </template>
 

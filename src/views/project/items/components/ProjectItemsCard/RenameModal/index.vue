@@ -62,16 +62,22 @@ const project_type = ref<string>('dashboard')
 
 const data = ref<any>(null)
 
-watch(
-  () => props.show,
-  newValue => {
-    showRef.value = newValue
+// watch(
+//   () => props.show,
+//   newValue => {
+//     showRef.value = newValue
 
-    if (newValue) {
-      readData()
-    }
-  }
-)
+//     if (newValue) {
+//       readData()
+//     }
+//   }
+// )
+
+onMounted(() => {
+  showRef.value = true
+
+  readData()
+})
 
 const readData = () => {
   readProject(props.cardData.id)
