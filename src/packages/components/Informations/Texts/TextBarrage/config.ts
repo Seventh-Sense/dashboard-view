@@ -15,7 +15,7 @@ export const FontWeightObject = {
 }
 
 export const option = {
-  dataset: '让数字化看得见',
+  dataset: 'Text',
   fontSize: 56,
   fontColor: '#ffffff',
   fontWeight: 'normal',
