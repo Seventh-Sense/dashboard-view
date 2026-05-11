@@ -61,7 +61,7 @@ const routerParamsInfo = useRoute()
 await getFileInfo(routerParamsInfo)
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
-setTitle(`${t('global.r_preview')}-Graphic`)
+//setTitle(`${t('global.r_preview')}-Graphic`)
 
 const previewRefStyle = computed(() => {
   return {
