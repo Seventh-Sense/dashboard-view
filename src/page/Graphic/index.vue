@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { GraphicEditor } from '@x-plateform/graphic-editor'
+import { GraphicEditor } from '@x-plateform-mono/graphic-editor'
 import { onMounted, ref } from 'vue'
 import { goDialog, goHome, JSONParse, JSONStringify, setLocalStorage } from '@/utils'
 import { useRoute } from 'vue-router'

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { GraphicRender } from '@x-plateform/graphic-editor'
+import { GraphicRender } from '@x-plateform-mono/graphic-editor'
 import { ref, computed, watch, onUnmounted } from 'vue'
 import DataHandleManager from '../DataHandleManager'
 import { SetValueModal } from '../SetValueModal'
