@@ -36,7 +36,7 @@ const lang = typeof id === 'string' ? '' : id[2] || ''
 
 onMounted(() => {
   setTheme()
-  //setLang()
+  setLang()
 
   initData()
 })
