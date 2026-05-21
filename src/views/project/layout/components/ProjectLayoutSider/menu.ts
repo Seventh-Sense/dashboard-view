@@ -14,9 +14,9 @@ const adminMenus = (selectedKey: any) => [
     label: i18n.global.t('menu.device_manage'),
     key: PageEnum.BASE_REMOTE_MAN_NAME,
     icon: renderImage(
-      selectedKey === PageEnum.BASE_HOME_ITEMS_NAME
-        ? SVG_ICON.card_icons.modbus_sp
-        : SVG_ICON.card_icons.modbus_df,
+      selectedKey === PageEnum.BASE_REMOTE_MAN_NAME
+        ? SVG_ICON.card_icons.modbus_df
+        : SVG_ICON.card_icons.modbus_sp,
       '',
       32,
       32
@@ -33,7 +33,43 @@ const adminMenus = (selectedKey: any) => [
       32,
       32
     )
-  }
+  },
+  // {
+  //   label: i18n.global.t('menu.trend_manage'),
+  //   key: PageEnum.BASE_TREND_MANAGE_NAME,
+  //   icon: renderImage(
+  //     selectedKey === PageEnum.BASE_TREND_MANAGE_NAME
+  //       ? SVG_ICON.card_icons.Visualize_df
+  //       : SVG_ICON.card_icons.Visualize_sp,
+  //     '',
+  //     32,
+  //     32
+  //   )
+  // }
+  // {
+  //   label: i18n.global.t('menu.schedule_manage'),
+  //   key: PageEnum.BASE_SCHEDULE_MANAGE_NAME,
+  //   icon: renderImage(
+  //     selectedKey === PageEnum.BASE_SCHEDULE_MANAGE_NAME
+  //       ? SVG_ICON.card_icons.Visualize_df
+  //       : SVG_ICON.card_icons.Visualize_sp,
+  //     '',
+  //     32,
+  //     32
+  //   )
+  // },
+  // {
+  //   label: i18n.global.t('menu.notification_manage'),
+  //   key: PageEnum.BASE_NOTIFICATION_MANAGE_NAME,
+  //   icon: renderImage(
+  //     selectedKey === PageEnum.BASE_NOTIFICATION_MANAGE_NAME
+  //       ? SVG_ICON.card_icons.Visualize_df
+  //       : SVG_ICON.card_icons.Visualize_sp,
+  //     '',
+  //     32,
+  //     32
+  //   )
+  // }
 ]
 
 // 普通用户/游客菜单
@@ -48,6 +84,9 @@ const guestMenus = (selectedKey: any) => [
 export const menuOptionsInit = (selectedKey: any) => {
   const isAdmin = computed(getLoginUser)
 
-  return createI18nArray(() => (isAdmin.value ? adminMenus(selectedKey) : guestMenus(selectedKey)))
-}
+  console.log(selectedKey)
 
+  return createI18nArray(() =>
+    isAdmin.value ? adminMenus(selectedKey.value) : guestMenus(selectedKey.value)
+  )
+}

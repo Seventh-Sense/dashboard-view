@@ -9,6 +9,7 @@ const importPath = {
   'PageEnum.BASE_LOCAL_NAME': () => import('@/page/Home/index.vue'),
   'PageEnum.BASE_LOCAL_MAN_NAME': () => import('@/page/ObjectManage/LocalObject/index.vue'),
   'PageEnum.BASE_REMOTE_MAN_NAME': () => import('@/page/ObjectManage/RemoteObject/index.vue'),
+  'PageEnum.BASE_TREND_MANAGE_NAME': () => import('@/page/Trend/index.vue'),
   'PageEnum.BASE_MODBUS_MAN_NAME': () => import('@/page/ObjectManage/Modbus/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_NAME': () => import('@/views/project/mtTemplate/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME': () =>
@@ -77,6 +78,14 @@ const projectRoutes: RouteRecordRaw = {
       path: PageEnum.BASE_HOME_TEMPLATE_MARKET,
       name: PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME,
       component: importPath['PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME'],
+      meta: {
+        title: 'XPlay'
+      }
+    },
+    {
+      path: PageEnum.BASE_TREND_MANAGE,
+      name: PageEnum.BASE_TREND_MANAGE_NAME,
+      component: importPath['PageEnum.BASE_TREND_MANAGE_NAME'],
       meta: {
         title: 'XPlay'
       }

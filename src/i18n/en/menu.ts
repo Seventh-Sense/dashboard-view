@@ -7,4 +7,7 @@ export default {
   IP: 'IP',
   DashBoard: 'DashBoard',
   device_manage: 'Device Management',
+  trend_manage: 'Trend Management',
+  schedule_manage: 'Schedule Management',
+  notification_manage: 'Notification Management',
 }

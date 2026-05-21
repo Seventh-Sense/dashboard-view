@@ -49,6 +49,18 @@ export enum PageEnum {
   BASE_HOME_ITEMS = '/project/items',
   BASE_HOME_ITEMS_NAME = 'Project-Items',
 
+  // 趋势管理
+  BASE_TREND_MANAGE = '/trend',
+  BASE_TREND_MANAGE_NAME = 'TrendManage',
+
+  // 计划管理
+  BASE_SCHEDULE_MANAGE = '/schedule',
+  BASE_SCHEDULE_MANAGE_NAME = 'ScheduleManage',
+
+  // 通知管理
+  BASE_NOTIFICATION_MANAGE = '/notification',
+  BASE_NOTIFICATION_MANAGE_NAME = 'NotificationManage',
+
   //smart Lab
   BASE_LOCAL = '/local',
   BASE_LOCAL_NAME = 'Local',

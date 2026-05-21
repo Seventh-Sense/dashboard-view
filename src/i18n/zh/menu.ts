@@ -7,4 +7,7 @@ export default {
   IP: 'IP',
   DashBoard: '可视化',
   device_manage: '设备管理',
+  trend_manage: '趋势管理',
+  schedule_manage: '计划管理',
+  notification_manage: '通知管理',
 }
