@@ -46,18 +46,18 @@ const adminMenus = (selectedKey: any) => [
   //     32
   //   )
   // }
-  // {
-  //   label: i18n.global.t('menu.schedule_manage'),
-  //   key: PageEnum.BASE_SCHEDULE_MANAGE_NAME,
-  //   icon: renderImage(
-  //     selectedKey === PageEnum.BASE_SCHEDULE_MANAGE_NAME
-  //       ? SVG_ICON.card_icons.Visualize_df
-  //       : SVG_ICON.card_icons.Visualize_sp,
-  //     '',
-  //     32,
-  //     32
-  //   )
-  // },
+  {
+    label: i18n.global.t('menu.schedule_manage'),
+    key: PageEnum.BASE_SCHEDULE_MANAGE_NAME,
+    icon: renderImage(
+      selectedKey === PageEnum.BASE_SCHEDULE_MANAGE_NAME
+        ? SVG_ICON.card_icons.Visualize_df
+        : SVG_ICON.card_icons.Visualize_sp,
+      '',
+      32,
+      32
+    )
+  },
   // {
   //   label: i18n.global.t('menu.notification_manage'),
   //   key: PageEnum.BASE_NOTIFICATION_MANAGE_NAME,
