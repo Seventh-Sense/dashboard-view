@@ -78,6 +78,7 @@ export default {
   import_devices: '匯入',
   export_devices: '匯出',
   refresh: '重新整理',
+  download: '下載',
 
   vendor: '廠商',
   id: '識別碼',

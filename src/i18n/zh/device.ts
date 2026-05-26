@@ -78,6 +78,7 @@ export default {
   import_devices: '导入',
   export_devices: '导出',
   refresh: '刷新',
+  download: '下载',
 
   vendor: '厂商',
   id: '标识',

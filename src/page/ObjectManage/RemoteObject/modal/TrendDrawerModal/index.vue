@@ -23,35 +23,42 @@
       <div class="drawer-content">
         <!-- 时间选择器 -->
         <div class="time-selector">
-          <n-space align="center" class="time-range">
-            <n-date-picker
-              v-model="startTime"
-              type="datetime"
-              :placeholder="$t('device.start_time')"
-              @update:value="onTimeChange"
-            />
-            <span class="time-separator">~</span>
-            <n-date-picker
-              v-model="endTime"
-              type="datetime"
-              :placeholder="$t('device.end_time')"
-              @update:value="onTimeChange"
-            />
+          <div class="time-row">
+            <div class="time-range">
+              <n-date-picker
+                v-model="startTime"
+                type="datetime"
+                :placeholder="$t('device.start_time')"
+                @update:value="onTimeChange"
+              />
+              <span class="time-separator">至</span>
+              <n-date-picker
+                v-model="endTime"
+                type="datetime"
+                :placeholder="$t('device.end_time')"
+                @update:value="onTimeChange"
+              />
+            </div>
+            <n-button class="action-button" @click="refreshData">
+              {{ $t('device.refresh') }}
+            </n-button>
+            <n-button class="action-button" @click="downloadData">
+              {{ $t('device.download') }}
+            </n-button>
+          </div>
+          <div class="quick-row">
             <n-button-group class="quick-select">
               <n-button
                 v-for="option in timeOptions"
                 :key="option.value"
-                :type="selectedTimeOption === option.value ? 'primary' : 'default'"
+                :type="selectedTimeOption === option.value ? 'primary' : 'tertiary'"
                 size="small"
                 @click="selectTimeRange(option.value)"
               >
                 {{ option.label }}
               </n-button>
             </n-button-group>
-            <n-button class="refresh-button" @click="refreshData">
-              {{ $t('device.refresh') }}
-            </n-button>
-          </n-space>
+          </div>
         </div>
 
         <!-- 图表容器 -->
@@ -266,10 +273,27 @@ const updateChart = () => {
         }
       },
       axisLabel: {
-        color: '#888',
-        rotate: 45,
+        color: '#666',
         fontSize: 11,
-        fontWeight: 500
+        fontWeight: 400,
+        interval: 'auto',
+        formatter: (value: string) => {
+          const parts = value.split(' ')
+          if (parts.length >= 2) {
+            return `{date|${parts[0]}}\n{time|${parts[1]}}`
+          }
+          return value
+        },
+        rich: {
+          date: {
+            color: '#888',
+            fontSize: 10
+          },
+          time: {
+            color: '#666',
+            fontSize: 11
+          }
+        }
       },
       axisTick: {
         show: false
@@ -408,6 +432,30 @@ const handleResize = () => {
 // 刷新数据
 const refreshData = () => {
   fetchHistoryData()
+}
+
+// 下载数据
+const downloadData = () => {
+  if (chartData.value.length === 0) {
+    return
+  }
+  
+  const start = startTime.value ? formatDateTime(startTime.value) : 'N/A'
+  const end = endTime.value ? formatDateTime(endTime.value) : 'N/A'
+  
+  const csvHeader = '\uFEFF时间,数值\n'
+  const csvContent = chartData.value.map(d => `${d.time},${d.value.toFixed(2)}`).join('\n')
+  const csv = `${csvHeader}${csvContent}`
+  
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `trend_data_${start.replace(/[/:]/g, '-')}_${end.replace(/[/:]/g, '-')}.csv`
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
 }
 
 // 关闭抽屉
@@ -576,9 +624,8 @@ onUnmounted(() => {
 
 .time-selector {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 12px;
   padding: 16px 20px;
   background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(36, 36, 66, 0.8) 100%);
   border-radius: 14px;
@@ -587,56 +634,58 @@ onUnmounted(() => {
     0 4px 20px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
 
-  &:hover {
-    border-color: rgba(102, 102, 255, 0.3);
-    box-shadow: 
-      0 6px 24px rgba(0, 0, 0, 0.35),
-      0 0 30px rgba(102, 102, 255, 0.1);
+  .time-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
   }
 
   .time-range {
-    flex: 1;
     display: flex;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    flex: 1;
   }
 
   .time-separator {
-    color: #6666FF;
-    font-weight: 500;
-    padding: 0 8px;
+    color: #888;
     font-size: 14px;
-    opacity: 0.8;
+    padding: 0 4px;
+  }
+
+  .action-button {
+    flex-shrink: 0;
+  }
+
+  .quick-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid rgba(102, 102, 255, 0.1);
   }
 
   .quick-select {
-    margin-left: auto;
+    display: flex;
+    gap: 4px;
   }
 }
 
-.refresh-button {
-  padding: 9px 20px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 14px;
-  background: rgba(102, 102, 255, 0.15);
-  color: #a8a8ff;
-  border: 1px solid rgba(102, 102, 255, 0.3);
+.action-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  background: rgba(102, 102, 255, 0.12);
+  color: #9999FF;
+  border: 1px solid rgba(102, 102, 255, 0.25);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background: rgba(102, 102, 255, 0.25);
-    border-color: rgba(102, 102, 255, 0.5);
-    box-shadow: 0 4px 15px rgba(102, 102, 255, 0.3);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
+    background: rgba(102, 102, 255, 0.2);
   }
 }
 

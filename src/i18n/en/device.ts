@@ -77,6 +77,7 @@ export default {
   import_devices: 'Import',
   export_devices: 'Export',
   refresh: 'Refresh',
+  download: 'Download',
 
   vendor: 'Vendor',
   id: 'ID',

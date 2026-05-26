@@ -78,6 +78,7 @@ export default {
     import_devices: 'インポート',
     export_devices: 'エクスポート',
     refresh: '更新',
+    download: 'ダウンロード',
   
     vendor: 'メーカー',
     id: '識別子',
