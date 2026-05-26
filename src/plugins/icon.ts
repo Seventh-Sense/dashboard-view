@@ -117,6 +117,7 @@ import {
   DocumentImport as DocumentImportIcon,
   DocumentExport as DocumentExportIcon,
   Export as ExportIcon,
+  ChartLine as ChartLineIcon,
 } from '@vicons/carbon'
 
 const ionicons5 = {
@@ -328,6 +329,7 @@ const carbon = {
   DocumentImportIcon,
   DocumentExportIcon,
   ExportIcon,
+  ChartLineIcon,
 }
 
 // https://www.xicons.org/#/ 还有很多

@@ -87,6 +87,11 @@
         :deviceData="deviceData"
         :editData="displayData"
       />
+      <TrendDrawerModal
+        v-if="isTrend"
+        v-model:isShow="isTrend"
+        :initData="displayData"
+      />
     </div>
   </div>
 </template>
@@ -111,12 +116,13 @@ import type { DataTableColumns } from 'naive-ui'
 import { KNXPropertyModal } from '../../modal/KNXPropertyModal'
 import { OPCUAPropertyModal } from '../../modal/OPCUAPropertyModal'
 import { OPCUAWriteModal } from '../../modal/OPCUAWriteModal'
+import { TrendDrawerModal } from '../../modal/TrendDrawerModal'
 import { useDesignStore } from '@/store/modules/designStore/designStore'
 
 const designStore = useDesignStore()
 
 const { ChevronBackOutlineIcon } = icon.ionicons5
-const { DeleteIcon, EditIcon } = icon.carbon
+const { DeleteIcon, EditIcon, ChartLineIcon } = icon.carbon
 
 const emit = defineEmits(['goback'])
 const props = defineProps({
@@ -142,6 +148,9 @@ const isKNXEdit = ref(false)
 const isOPCUA = ref(false)
 const isOPCUAWrite = ref(false)
 const isOPCUAEdit = ref(false)
+
+//Trend
+const isTrend = ref(false)
 
 const height = ref(Number(document.documentElement.clientHeight) - 80 - 32 - 60 - 90)
 
@@ -183,9 +192,14 @@ const columns: DataTableColumns<PointData> = [
   {
     title: '',
     key: 'actions',
-    width: 120,
+    width: 150,
     render(row, index) {
       return [
+        h(
+          NIcon,
+          { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onTrend(row) },
+          () => h(ChartLineIcon)
+        ),
         h(
           NIcon,
           { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onEdit(row) },
@@ -285,7 +299,8 @@ const periodicReading = () => {
       !isModbus.value &&
       !isKNX.value &&
       !isOPCUA.value &&
-      !isOPCUAWrite.value
+      !isOPCUAWrite.value &&
+      !isTrend.value
     ) {
       periodicFunc()
     }
@@ -402,7 +417,9 @@ const onDiscovery = () => {
   }
 }
 
-const onReset = (row: PointData) => {}
+const onTrend = (row: PointData) => {
+  isTrend.value = true
+}
 
 const onEdit = (row: PointData) => {
   console.log('edit row', row)
