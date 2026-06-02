@@ -5,6 +5,7 @@ import dashboard from './dashboard'
 import message from './message'
 import device from './device'
 import msg from './msg'
+import schedule from './schedule'
 
 const global = {
   doc_addr: '文件位址',
@@ -46,5 +47,6 @@ export default {
   dashboard,
   message,
   device,
-  msg
+  msg,
+  schedule,
 }
