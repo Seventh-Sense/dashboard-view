@@ -11,6 +11,7 @@ const importPath = {
   'PageEnum.BASE_REMOTE_MAN_NAME': () => import('@/page/ObjectManage/RemoteObject/index.vue'),
   'PageEnum.BASE_TREND_MANAGE_NAME': () => import('@/page/Trend/index.vue'),
   'PageEnum.BASE_SCHEDULE_MANAGE_NAME': () => import('@/page/Schedule/index.vue'),
+  'PageEnum.BASE_NOTIFICATION_MANAGE_NAME': () => import('@/page/NotificationManage/index.vue'),
   'PageEnum.BASE_MODBUS_MAN_NAME': () => import('@/page/ObjectManage/Modbus/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_NAME': () => import('@/views/project/mtTemplate/index.vue'),
   'PageEnum.BASE_HOME_TEMPLATE_MARKET_NAME': () =>
@@ -99,6 +100,14 @@ const projectRoutes: RouteRecordRaw = {
         title: 'XPlay'
       }
     },
+    {
+      path: PageEnum.BASE_NOTIFICATION_MANAGE,
+      name: PageEnum.BASE_NOTIFICATION_MANAGE_NAME,
+      component: importPath['PageEnum.BASE_NOTIFICATION_MANAGE_NAME'],
+      meta: {
+        title: 'XPlay'
+      }
+    }
   ]
 }
 
