@@ -195,11 +195,11 @@ const columns: DataTableColumns<PointData> = [
     width: 150,
     render(row, index) {
       return [
-        h(
-          NIcon,
-          { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onTrend(row) },
-          () => h(ChartLineIcon)
-        ),
+        // h(
+        //   NIcon,
+        //   { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onTrend(row) },
+        //   () => h(ChartLineIcon)
+        // ),
         h(
           NIcon,
           { size: 24, style: 'margin-right: 24px;cursor: pointer;', onClick: () => onEdit(row) },

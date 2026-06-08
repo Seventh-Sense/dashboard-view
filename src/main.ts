@@ -1,3 +1,21 @@
+if (typeof window !== "undefined") {
+  // 先保证 window.crypto 一定存在
+  if (!window.crypto) {
+    (window as any).crypto = {};
+  }
+
+  // 自动补上缺少的 randomUUID
+  if (!(window.crypto as any).randomUUID) {
+    (window.crypto as any).randomUUID = function () {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    };
+  }
+}
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router, { setupRouter } from '@/router'

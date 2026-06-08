@@ -20,6 +20,9 @@
         class="radios-item"
         :key="mode.key"
         @click="onClick(mode.value)"
+        :style="{
+          fontSize: title_size + 'px'
+        }"
         :class="option.dataset === mode.value ? 'active' : 'inactive'"
       >
         {{ mode.label }}

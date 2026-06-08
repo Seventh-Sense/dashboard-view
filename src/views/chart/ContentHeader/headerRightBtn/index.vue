@@ -84,6 +84,11 @@ const sendHandle = async () => {
   // id 标识
   const previewId = typeof id === 'string' ? id : id[0]
 
+  //const name = storageInfo.editCanvasConfig.projectName;
+
+  
+  const name = getLocalStorage('currentTitle')
+
   //存储在菜单中
   //addHandle({id: id, ...storageInfo})
   //存储在本地浏览器中
@@ -124,7 +129,7 @@ const sendHandle = async () => {
   // })
 
   updateProject(previewId, {
-      name: storageInfo.editCanvasConfig.projectName,
+      name: name,
       content: JSONStringify(storageInfo),
       //画布缩图
       //cover: canvas.toDataURL()
