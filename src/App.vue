@@ -31,7 +31,7 @@ import { useDarkThemeHook, useThemeOverridesHook, useCode, useLang } from '@/hoo
 import { useRoute } from 'vue-router'
 import { computed, onMounted } from 'vue'
 import { theme } from 'ant-design-vue'
-import '@x-plateform/graphic-editor/dist/index.css'
+import '@x-plateform/graphic-editor/dist/style.css'
 import '@x-plateform-mono/common/dist/index.css'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import jaJP from 'ant-design-vue/es/locale/ja_JP'

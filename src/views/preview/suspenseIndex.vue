@@ -61,7 +61,7 @@ const router = useRouter()
 await getPreviewInfo()
 const chartEditStore = useChartEditStore() as unknown as ChartEditStorageType
 
-setTitle(`${t('global.r_preview')}-${chartEditStore.editCanvasConfig?.projectName}`)
+//setTitle(`${t('global.r_preview')}-${chartEditStore.editCanvasConfig?.projectName}`)
 
 const previewRefStyle = computed(() => {
   return {
