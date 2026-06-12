@@ -15,7 +15,8 @@ export default {
 
     //login
     login_msg_1: '登录成功!',
-    login_msg_2: '登录失败!',
+    login_msg_2: '用户名或密码错误!',
+    login_msg_3: '硬件检查失败，请联系管理员!',
 
     please_input_chart: '请输入至少一个字符!',
 

@@ -810,3 +810,15 @@ export const submitLicence = async (data: any) => {
     throw error
   }
 }
+
+//判断硬件是否支持登录
+export const checkLoginSupport = async () => {
+  try {
+    const response = await get2(`/login`)
+
+    return response
+
+  } catch (error) {
+    throw error
+  }
+}

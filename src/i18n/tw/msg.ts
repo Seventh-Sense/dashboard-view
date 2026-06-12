@@ -15,7 +15,8 @@ export default {
 
     //login
     login_msg_1: '登入成功!',
-    login_msg_2: '登入失敗!',
+    login_msg_2: '使用者名稱或密碼錯誤!',
+    login_msg_3: '硬體檢查失敗，請聯絡管理員!',
 
     please_input_chart: '請輸入至少一個字元!',
 

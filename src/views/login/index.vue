@@ -108,7 +108,7 @@ import { VersionModal } from './modal/VersionModal'
 import { ContactModal } from './modal/ContactModal'
 import { LicenceModal } from './modal/LicenceModal'
 import { GoLang } from '@/components/GoLang'
-import { getLicenceStatus } from '@/api/http'
+import { checkLoginSupport, getLicenceStatus } from '@/api/http'
 
 const { GO_LOGIN_INFO_STORE } = StorageEnum
 const t = window['$t']
@@ -168,25 +168,38 @@ const handleSubmit = (e: Event) => {
   })
 }
 
-const loginInto = (username: string, password: string) => {
+const loginInto = async (username: string, password: string) => {
   if (
     (username === 'admin' && password === '123456') ||
     (username === 'user' && password === '123456')
   ) {
     loading.value = true
 
-    setLocalStorage(
-      GO_LOGIN_INFO_STORE,
-      cryptoEncode(
-        JSON.stringify({
-          username,
-          password
-        })
-      )
-    )
-    window['$message'].success(t('msg.login_msg_1'))
+    try {
+      const res: any = await checkLoginSupport()
 
-    routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
+      if (res.status !== 'OK') {
+        window['$message'].error(t('msg.login_msg_3'))
+        return
+      }
+
+      setLocalStorage(
+        GO_LOGIN_INFO_STORE,
+        cryptoEncode(
+          JSON.stringify({
+            username,
+            password
+          })
+        )
+      )
+      window['$message'].success(t('msg.login_msg_1'))
+      routerTurnByName(PageEnum.BASE_HOME_ITEMS_NAME, true)
+    } catch (error) {
+      window['$message'].error(t('msg.login_msg_3'))
+      console.error('checkLoginSupport error:', error)
+    } finally {
+      loading.value = false
+    }
   } else {
     window['$message'].error(t('msg.login_msg_2'))
   }

@@ -28,14 +28,14 @@
         </n-space>
       </n-layout-header>
       <n-layout-content>
-        <monaco-editor
+        <!-- <monaco-editor
           v-model:modelValue="content"
           language="json"
           :editorOptions="{
             lineNumbers: 'on',
             minimap: { enabled: true }
           }"
-        />
+        /> -->
       </n-layout-content>
     </n-layout>
   </div>
@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MonacoEditor } from '@/components/Pages/MonacoEditor'
+// import { MonacoEditor } from '@/components/Pages/MonacoEditor'
 import { SavePageEnum } from '@/enums/editPageEnum'
 import { getSessionStorageInfo } from '../preview/utils'
 import { setSessionStorage, JSONStringify, JSONParse, setTitle, goDialog } from '@/utils'

@@ -15,7 +15,8 @@ export default {
 
     //login
   login_msg_1: 'ログインに成功しました！',
-  login_msg_2: 'ログインに失敗しました！',
+  login_msg_2: 'ユーザー名またはパスワードが正しくありません！',
+  login_msg_3: 'ハードウェアチェックに失敗しました。管理者に連絡してください！',
 
   please_input_chart: '少なくとも1文字入力してください！',
 

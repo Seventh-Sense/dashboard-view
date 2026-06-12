@@ -10,7 +10,7 @@ import {
 } from './build/constant'
 import viteCompression from 'vite-plugin-compression'
 import { viteMockServe } from 'vite-plugin-mock'
-import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+//import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import svgLoader from 'vite-svg-loader'
 import zipPack from 'vite-plugin-zip-pack'
 import Components from 'unplugin-vue-components/vite'
@@ -90,9 +90,9 @@ export default ({ mode }: ConfigEnv) => {
         dts: true // 生成 TypeScript 声明文件
       }),
       svgLoader(),
-      monacoEditorPlugin({
-        languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html']
-      }),
+      // monacoEditorPlugin({
+      //   languageWorkers: ['editorWorkerService', 'typescript', 'json', 'html']
+      // }),
       viteMockServe({
         mockPath: '/src/api/mock',
         // 开发打包开关

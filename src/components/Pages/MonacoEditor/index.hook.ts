@@ -1,11 +1,11 @@
 import { ref, onBeforeUnmount, nextTick } from 'vue'
 import { useDesignStore } from '@/store/modules/designStore/designStore'
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
+//import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
 
 export const useMonacoEditor = (language = 'javascript') => {
   const designStore = useDesignStore()
 
-  let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
+  //let monacoEditor: monaco.editor.IStandaloneCodeEditor | null = null
   let initReadOnly = false
   const el = ref<HTMLElement | null>(null)
 

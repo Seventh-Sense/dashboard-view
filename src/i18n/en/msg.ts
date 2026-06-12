@@ -15,7 +15,8 @@ export default {
 
     //login
     login_msg_1: 'Login successful!',
-    login_msg_2: 'Login failure!',
+    login_msg_2: 'Username or password is incorrect!',
+    login_msg_3: 'Hardware check failed, please contact administrator!',
 
     please_input_chart: 'Please enter at least one character!',
     creat_job_error: 'Creation failed!',
