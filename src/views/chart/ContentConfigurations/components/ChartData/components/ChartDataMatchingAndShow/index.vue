@@ -28,7 +28,7 @@
     <n-timeline-item v-show="filterShow" color="#97846c" :title="TimelineTitleEnum.FILTER">
       <n-space :size="18" vertical>
         <n-text depth="3">过滤器默认处理接口返回值的「data」字段</n-text>
-        <chart-data-monaco-editor></chart-data-monaco-editor>
+        <!-- <chart-data-monaco-editor></chart-data-monaco-editor> -->
       </n-space>
     </n-timeline-item>
     <n-timeline-item type="success" :title="TimelineTitleEnum.CONTENT">
@@ -84,7 +84,7 @@ import { ChartFrameEnum } from '@/packages/index.d'
 import { RequestDataTypeEnum } from '@/enums/httpEnum'
 import { icon } from '@/plugins'
 import { DataResultEnum, TimelineTitleEnum } from '../../index.d'
-import { ChartDataMonacoEditor } from '../ChartDataMonacoEditor'
+// import { ChartDataMonacoEditor } from '../ChartDataMonacoEditor'
 import { useFile } from '../../hooks/useFile.hooks'
 import { useTargetData } from '../../../hooks/useTargetData.hook'
 import isObject from 'lodash/isObject'

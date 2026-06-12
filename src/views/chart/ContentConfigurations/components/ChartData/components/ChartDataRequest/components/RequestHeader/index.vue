@@ -48,22 +48,22 @@
 
           <!-- json  -->
           <template v-else-if="requestParamsBodyType === RequestBodyEnum['JSON']">
-            <monaco-editor
+            <!-- <monaco-editor
               v-model:modelValue="requestParams[RequestParamsTypeEnum.BODY][requestParamsBodyType]"
               width="600px"
               height="200px"
               language="json"
-            />
+            /> -->
           </template>
 
           <!-- xml  -->
           <template v-else-if="requestParamsBodyType === RequestBodyEnum['XML']">
-            <monaco-editor
+            <!-- <monaco-editor
               v-model:modelValue="requestParams[RequestParamsTypeEnum.BODY][requestParamsBodyType]"
               width="600px"
               height="200px"
               language="html"
-            />
+            /> -->
           </template>
         </div>
       </div>
@@ -77,9 +77,9 @@
         <setting-item-box name="键名">
           <n-tag type="primary" :bordered="false" style="width: 40px; font-size: 16px"> sql </n-tag>
         </setting-item-box>
-        <setting-item-box name="键值">
+        <!-- <setting-item-box name="键值">
           <monaco-editor v-model:modelValue="requestSQLContent['sql']" width="600px" height="200px" language="sql" />
-        </setting-item-box>
+        </setting-item-box> -->
       </template>
     </div>
   </n-space>
@@ -87,7 +87,7 @@
 
 <script setup lang="ts">
 import { ref, toRefs, PropType } from 'vue'
-import { MonacoEditor } from '@/components/Pages/MonacoEditor'
+// import { MonacoEditor } from '@/components/Pages/MonacoEditor'
 import { RequestHeaderTable } from '../RequestHeaderTable/index'
 import { SettingItemBox, SettingItem } from '@/components/Pages/ChartItemSetting'
 import { useTargetData } from '@/views/chart/ContentConfigurations/components/hooks/useTargetData.hook'

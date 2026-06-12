@@ -49,7 +49,7 @@
               <n-tag type="info">
                 <span class="func-keyword">function</span>&nbsp;&nbsp;filter(data, res)&nbsp;&nbsp;{
               </n-tag>
-              <monaco-editor v-model:modelValue="filter" width="660px" height="500px" language="javascript" />
+              <!-- <monaco-editor v-model:modelValue="filter" width="660px" height="500px" language="javascript" /> -->
               <n-tag type="info">}</n-tag>
             </n-space>
           </div>
@@ -103,7 +103,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, toRef, toRefs, toRaw, reactive } from 'vue'
 import { useTargetData } from '../../../hooks/useTargetData.hook'
-import { MonacoEditor } from '@/components/Pages/MonacoEditor'
+// import { MonacoEditor } from '@/components/Pages/MonacoEditor'
 import { icon } from '@/plugins'
 import { goDialog, toString } from '@/utils'
 import { customizeHttp } from '@/api/http'
