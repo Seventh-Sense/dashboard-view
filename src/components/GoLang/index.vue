@@ -20,7 +20,6 @@ import { useLangStore } from '@/store/modules/langStore/langStore'
 import { LangEnum } from '@/enums/styleEnum'
 import { onMounted, ref, computed } from 'vue'
 import { icon } from '@/plugins'
-import { setLocalStorage } from '@/utils'
 
 const { ChevronDownOutlineIcon } = icon.ionicons5
 
