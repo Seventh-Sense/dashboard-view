@@ -20,6 +20,7 @@ import { useLangStore } from '@/store/modules/langStore/langStore'
 import { LangEnum } from '@/enums/styleEnum'
 import { onMounted, ref, computed } from 'vue'
 import { icon } from '@/plugins'
+import { setLocalStorage } from '@/utils'
 
 const { ChevronDownOutlineIcon } = icon.ionicons5
 
@@ -60,13 +61,27 @@ onMounted(() => {
 const handleSelect = (key: LangEnum, option: any) => {
   value.value = key
   locale.value = key
+
+  let language = ''
+  if (key === 'EN') {
+    language = 'en-US'
+  } else if (key === 'JA') {
+    language = 'ja-JP'
+  } else if (key === 'ZH') {
+    language = 'zh-CN'
+  } else if (key === 'ZH_TW') {
+    language = 'zh-TW'
+  }
+  setLocalStorage('language', language)
+
+
   langStore.changeLang(key)
 }
 </script>
 
 <style lang="scss" scoped>
 .lang-style {
-  @include fetch-theme-custom('color','login-font-color');
+  @include fetch-theme-custom('color', 'login-font-color');
   cursor: pointer;
   font-size: 14px;
   margin-right: 6px;
