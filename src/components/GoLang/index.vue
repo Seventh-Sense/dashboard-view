@@ -72,8 +72,7 @@ const handleSelect = (key: LangEnum, option: any) => {
   } else if (key === 'ZH_TW') {
     language = 'zh-TW'
   }
-  setLocalStorage('language', language)
-
+  localStorage.setItem('language', language)
 
   langStore.changeLang(key)
 }
