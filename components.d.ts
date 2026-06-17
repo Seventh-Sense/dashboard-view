@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AIFloatElf: typeof import('./src/components/AIFloatElf/index.vue')['default']
     ChartGlobImage: typeof import('./src/components/Pages/ChartGlobImage/index.vue')['default']
     CollapseItem: typeof import('./src/components/Pages/ChartItemSetting/CollapseItem.vue')['default']
     ColorList: typeof import('./src/components/Pages/ThemeColorSelect/components/ColorList.vue')['default']

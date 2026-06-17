@@ -24,6 +24,8 @@ import {
   PersonOutline as PersonOutlineIcon,
   LogOutOutline as LogOutOutlineIcon,
   ChatboxEllipses as ChatboxEllipsesIcon,
+  ChatbubbleEllipsesOutline as ChatbubbleEllipsesIcon,
+  Sparkles as SparklesIcon,
   LockOpenOutline as LockOpenOutlineIcon,
   LockClosedOutline as LockClosedOutlineIcon,
   HelpCircleOutline as HelpOutlineIcon,
@@ -146,6 +148,10 @@ const ionicons5 = {
   PersonOutlineIcon,
   // 更多（省略号）
   ChatboxEllipsesIcon,
+  // 聊天
+  ChatbubbleEllipsesIcon,
+  // AI 精灵
+  SparklesIcon,
   // 月亮
   MoonIcon,
   // 太阳

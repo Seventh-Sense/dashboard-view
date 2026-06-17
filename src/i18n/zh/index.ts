@@ -6,6 +6,7 @@ import message from './message'
 import device from './device'
 import msg from './msg'
 import schedule from './schedule'
+import aiFloatElf from './aiFloatElf'
 
 const global = {
   doc_addr: '文档地址',
@@ -50,4 +51,5 @@ export default {
   device,
   msg,
   schedule,
+  aiFloatElf,
 }

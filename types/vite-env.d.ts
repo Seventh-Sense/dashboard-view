@@ -10,4 +10,7 @@ interface ImportMetaEnv {
   VITE_DEV_PATH: string
   // 生产地址
   VITE_PRO_PATH: string
+  // Ollama 配置
+  VITE_OLLAMA_BASE_URL: string;
+  VITE_OLLAMA_MODEL: string;
 }

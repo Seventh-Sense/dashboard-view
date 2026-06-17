@@ -17,6 +17,8 @@
       <go-app-provider>
         <I18n></I18n>
         <router-view :key="routeKey"></router-view>
+        <!-- AI 悬浮小球 -->
+        <AIFloatElf />
       </go-app-provider>
       <!-- </n-theme-editor> -->
     </a-config-provider>
@@ -39,6 +41,7 @@ import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import zhTW from 'ant-design-vue/es/locale/zh_TW'
 import { useLangStore } from '@/store/modules/langStore/langStore'
 import { LangEnum } from '@/enums/styleEnum'
+import AIFloatElf from '@/components/AIFloatElf/index.vue'
 //import { he } from 'element-plus/es/locale'
 
 const route = useRoute()
