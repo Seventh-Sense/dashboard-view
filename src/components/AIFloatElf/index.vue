@@ -462,9 +462,9 @@ const handleSend = async () => {
     // 如果是被取消的请求
     if (error.name === 'AbortError') {
       if (messages.value[aiMessageIndex]?.content) {
-        messages.value[aiMessageIndex].content += '\n\n[已取消回复]'
+        messages.value[aiMessageIndex].content += t('aiFloatElf.reply_cancelled_suffix')
       } else {
-        messages.value[aiMessageIndex].content = '已取消回复。'
+        messages.value[aiMessageIndex].content = t('aiFloatElf.reply_cancelled')
       }
       return
     }
@@ -475,15 +475,15 @@ const handleSend = async () => {
     // 检查是否是 Ollama 服务未启动
     const available = await checkOllamaAvailable()
     if (!available) {
-      message.error('Ollama 服务未启动，请先启动 Ollama')
+      message.error(t('aiFloatElf.ollama_not_started'))
     } else {
-      message.error(error.message || '请求失败，请稍后重试')
+      message.error(t('aiFloatElf.request_failed'))
     }
 
     // 添加错误提示消息
     messages.value.push({
       role: 'ai',
-      content: '抱歉，我暂时无法回复。请确保 Ollama 服务已启动。',
+      content: t('aiFloatElf.ai_unavailable'),
       time: getCurrentTime()
     })
   } finally {
