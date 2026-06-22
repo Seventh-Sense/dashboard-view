@@ -18,7 +18,7 @@
         <I18n></I18n>
         <router-view :key="routeKey"></router-view>
         <!-- AI 悬浮小球 -->
-        <AIFloatElf />
+        <!-- <AIFloatElf /> -->
       </go-app-provider>
       <!-- </n-theme-editor> -->
     </a-config-provider>
