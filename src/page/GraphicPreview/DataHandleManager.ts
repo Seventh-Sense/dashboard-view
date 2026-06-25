@@ -120,7 +120,7 @@ export default class DataHandleManager extends DataManager {
           points: [
             {
               point_uid: item,
-              data_type: params[1],
+              data_type: params[3],
               priority: 16
             }
           ]
