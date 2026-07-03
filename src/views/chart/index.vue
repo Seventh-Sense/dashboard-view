@@ -85,9 +85,6 @@ onMounted(() => {
             updateComponent(JSONParse(res.data.content), true, true)
           })
         }
-
-        //保存title setLocalStorage('ProjectInfo', list.value)
-        setLocalStorage('currentTitle', res.data.name)
       }
     })
     .catch(err => {

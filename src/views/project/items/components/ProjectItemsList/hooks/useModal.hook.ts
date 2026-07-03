@@ -6,6 +6,7 @@ import {
   getSessionStorage,
   JSONParse,
   routerTurnByPath,
+  setLocalStorage,
   setSessionStorage
 } from '@/utils'
 import { Chartype } from '../../../index.d'
@@ -33,6 +34,11 @@ export const useModalDataInit = () => {
   const editHandle = (cardData: Chartype) => {
     if (!cardData) return
     let path: string
+
+    //设置编辑页面 项目名字
+    setLocalStorage('currentTitle', cardData.title)
+
+    //console.log(cardData)
 
     if (cardData.type && cardData.type === 'graphic') {
       path = fetchPathByName(GraphicEnum.CHART_GRAPHIC_NAME, 'fullPath')

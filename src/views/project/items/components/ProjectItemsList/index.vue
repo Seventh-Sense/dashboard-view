@@ -139,14 +139,27 @@ const initTable = async () => {
       addProject(item)
     })
 
-    setLocalStorage('ProjectInfo', list.value)
+    let arr: any[] = []
+
+    res.data.map((item: any) => {
+      arr.push({
+        id: item.id,
+        title: item.name,
+        release: true,
+        label: item.name,
+        image: item.cover,
+        time: item.time,
+        type: item.description
+      })
+    })
+
+    setLocalStorage('ProjectInfo', arr)
   } catch (e) {
     console.error('initTable error occurred:', e)
   } finally {
     flag.value = false
   }
 }
-
 
 const onPreview = async () => {
   if (list.value.length > 0) {

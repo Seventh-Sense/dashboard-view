@@ -113,6 +113,8 @@ const onPositiveClick = async () => {
     }
 
     addProject(res?.data)
+
+    initTable()
   } catch (e) {
     console.error('Failed to handle onPositiveClick:', e);
   } finally {
